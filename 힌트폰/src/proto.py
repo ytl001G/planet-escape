@@ -351,7 +351,7 @@ function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
 setInterval(() => S && sbar(), 20000);
 function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은 시간 비율만큼 링이 남음
 function timerBox() {
-  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? `<small class="prog" data-prog>진행도 ${S.prog}%</small>` : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
+  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? `<small class="prog" data-prog>진행도 ${S.view === 'intro' ? 50 : S.prog}%</small>` : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
 }
 function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
@@ -741,7 +741,7 @@ $('pv-ed-in').onclick = () => {
 $('pv-ed-reset').onclick = () => { ED = { text: {}, color: {}, size: {} }; edSave(); edApplyStyle(); edBuild(); render(); edMsg('모두 되돌렸어요'); };
 edApplyStyle();
 
-$('pv-prog').oninput = e => { S.prog = +e.target.value; const el = scr.querySelector('[data-prog]'); if (el) el.textContent = `진행도 ${S.prog}%`; };
+$('pv-prog').oninput = e => { S.prog = +e.target.value; const el = scr.querySelector('[data-prog]'); if (el && S.view !== 'intro') el.textContent = `진행도 ${S.prog}%`; };
 reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 감
 })();
 </script>
