@@ -80,7 +80,7 @@ def kbd(o):  # 자체 키보드: 숫자 1줄 + 영문 3줄 + 지우기
 def entry(o, typed=False, pct=None, code='ABCD', open_=False, acc='lily'):
     bar = 'bar' if acc == 'lily' else 'vfill'
     out = R(30+o, 90, 230, 44, 'n')
-    if not typed and pct is None and not open_: out += kbd(o)  # 처음 들어오면 키보드가 올라와 있음
+    if not typed and pct is None and not open_: out += R(30+o, 90, 230, 44, 'lily') + kbd(o)  # 입력 칸을 누른 상태: 칸 테두리 강조 + 키보드
     if typed:
         out += f'<text x="{46+o}" y="118" font-size="16" font-weight="700" font-family="IBM Plex Mono, monospace" letter-spacing="2">{code}</text>'  # 코드는 가리지 않고 글자 그대로
     # 버튼은 평소 회색, 눌러서 내용이 펼쳐진 쪽만 보라
@@ -115,7 +115,7 @@ hintB = (hint(290, 70, 60, '힌트 1', ['특정 동작을 통해 숨겨진', '�
          + R(320, 206+D, 230, 46, 'n') + T(435, 234+D, '다음 힌트', 13, 700, 'middle', 't-lily'))
 body = C(0, '47:12', '힌트코드') + entry(0) + H(290, '47:12') + hintB
 replace_section('6. 코드 입력 화면', section('6. 코드 입력 화면', svg(580, 520,
-    '코드 입력 화면 두 가지 상태. 왼쪽은 입력 칸 아래 힌트 보기 버튼과 진행도 버튼. 오른쪽은 힌트 보기를 누른 뒤 힌트 1과 2가 열려 있고 다음 힌트 버튼. 정답 보기는 힌트를 다 본 뒤에만 나타난다.', body, 600)))
+    '코드 입력 화면 두 가지 상태. 왼쪽은 입력 칸을 눌러 아래에서 키보드가 올라온 상태(앱에 들어갔을 때는 키보드 없음), 입력 칸 아래 힌트 보기 버튼과 진행도 버튼. 오른쪽은 힌트 보기를 누른 뒤 힌트 1과 2가 열려 있고 다음 힌트 버튼. 정답 보기는 힌트를 다 본 뒤에만 나타난다.', body, 600)))
 # 7. 진행도 버튼: 코드를 넣고 누르면 버튼 자리에 %
 body = C(0, '44:20', '힌트코드') + entry(0, typed=True, pct='38%')
 replace_section('7. 진행도 버튼을 눌렀을 때', section('7. 진행도 버튼을 눌렀을 때', svg(290, 520,

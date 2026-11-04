@@ -420,7 +420,7 @@ function render() {
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>운영자 호출</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar();
   const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
-  const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); render(); $('pv-chatin').focus(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
+  const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); render(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
   if (S.view === 'pattern' && !S.phase.startsWith('end') && !S.offline) bindPattern();
   panel();
 }
@@ -449,8 +449,8 @@ function act(a) {
   if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
-  if (a === 'story') { S.kb = true; S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
-  if (a === 'codes') { S.kb = true; S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
+  if (a === 'story') { S.kb = false; S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
+  if (a === 'codes') { S.kb = false; S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
   if (a === 'done' && S.phase === 'p1') { S.view = 'done'; render(); return; }
   if (a === 'hint') {
     const c = check(S.code); if (!c) return;
