@@ -14,7 +14,7 @@ addEventListener('load', () => {
       q('.room').click(); q('.mapx').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); }],
     [6900, () => { log(!open(), 'Esc로 닫힘'); q('.room').click(); q('.mapov').click(); }],
     [7100, () => { log(!open(), '바깥 눌러 닫힘'); q('.room').click(); press('목표 완료'); log(!open(), '목표 완료 연출 때 닫힘'); }],
-    [9200, () => { log(!open(), '다음 목표에서도 닫힌 채'); q('.room').click(); log(hi() && /--ch-ophelia/.test(hi().getAttribute('style')), '오펠리아 방 노랑'); log(scr.querySelectorAll('.mapbox polyline.trail').length === 1 && scr.querySelectorAll('.mapbox rect.lock').length === 3, '지나온 길 점선 · 아직 갈 차례 아닌 방 3개 회색'); q('.mapx').click(); press('2부로 · 비아 등장'); }],
+    [9200, () => { log(!open(), '다음 목표에서도 닫힌 채'); q('.room').click(); log(hi() && /--ch-ophelia/.test(hi().getAttribute('style')), '오펠리아 방 노랑'); log(scr.querySelectorAll('.mapbox path.trail').length === 1 && scr.querySelectorAll('.mapbox rect.lock').length === 3, '지나온 길 곡선 · 아직 갈 차례 아닌 방 3개 회색'); q('.mapx').click(); press('2부로 · 비아 등장'); }],
     [19000, () => { log(!q('.room[data-act]') && !open(), '2부에는 지도 버튼 없음');
       const pre = document.createElement('pre'); pre.id = 'testout'; pre.textContent = out.join('\n'); document.body.prepend(pre); }],
   ];

@@ -96,10 +96,17 @@ CSS = r'''
 #proto .idle .timer circle { stroke-width: 4.5; }
 #proto .pre .timer .tp { stroke: var(--c0); }  /* 안전 모드 전엔 어느 화면이든 흰 링 (연결 끊김 포함) */
 #proto .lb { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
-#proto .lb-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-#proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+
+
+#proto .lb-top { display: grid; grid-template-columns: 76px 1fr; gap: 10px; height: 76px; }
+#proto .lb-chatbox { height: 76px; border-radius: 16px; display: grid; } #proto .lb-chat { height: 100%; gap: 4px; align-content: center; }
+#proto .lb-chat i { width: 40px; height: 40px; border-radius: 12px; }
+#proto .lb-goal { height: 76px; box-sizing: border-box; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; gap: 2px; position: relative; overflow: hidden; }
+#proto .lb-goal .lbl { font-size: 10px; line-height: 1.2; } #proto .lb-goal .goal { font-size: 15px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#proto .lb-goal .center { flex-direction: row; gap: 10px; justify-content: flex-start; } #proto .lb-goal .bigck { width: 34px; height: 34px; } #proto .lb-goal .bigck svg { width: 18px; height: 18px; }
+#proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; } #proto .lb-goal .bia .say { padding: 6px 10px; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
-#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
 #proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
 #proto .lb-code .srow { grid-template-columns: 1fr 84px; }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; padding-right: 104px; }
@@ -181,6 +188,7 @@ CSS = r'''
 #proto .lb-pct { font: 700 14px var(--body); } #proto .lb-pct i { width: 100%; }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
 #proto .bia .av { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 12px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
+#proto .vplay { display: inline-grid; place-items: center; color: var(--c2); } #proto .bia .say.vplay { padding: 8px 12px; }
 #proto .bia .say { background: rgba(24,21,30,.75); border: 1.5px solid rgba(255,255,255,.14); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
 #proto .wave { display: flex; gap: 4px; align-items: center; height: 46px; justify-content: center; }
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
@@ -188,6 +196,9 @@ CSS = r'''
 #proto .center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
 #proto .recov { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-size: 14px; line-height: 1.5; color: #d8d3df; text-align: left; }
 #proto .timer.start { cursor: pointer; }
+#proto .offov { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; justify-content: center; padding: 200px 22px 40px; background: rgba(8,6,12,.96); }
+#proto .offov.lb-off { justify-content: flex-end; padding: 0 22px 44px; } #proto .offov .center { flex: none; }
+#proto .offon .timer { z-index: 5; }
 #proto .offmsg { margin: 0; font: 700 17px var(--display); color: #f2eef6; }
 #proto .load { width: 160px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; }
 #proto .load b { display: block; height: 100%; width: 0; background: var(--c1); border-radius: 3px; }
@@ -278,6 +289,7 @@ const D = __DATA__, BG = __BG__, SH = __SHIELDS__, APPICON = __APPICON__;
 const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
+  spk: '<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 8 H7 L12 4 V18 L7 14 H3 Z" fill="currentColor"/><path d="M15 8 Q17 11 15 14 M17.5 5.5 Q21 11 17.5 16.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
   shift: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 2 9.5h4V16h6V9.5h4z"/></svg>',
   del: '<svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 1.5h13a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H8L1.5 9z"/><path d="M12 6l6 6M18 6l-6 6"/></svg>',
   bulb: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
@@ -351,14 +363,15 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 }
 
 function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트 아래
-  const chat = `<div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div>`;
+  g = g.replace(bars(), '');  // 시안 B 목표 칸은 작게: 정해지지 않은 설명 줄은 뺌
+  const chat = `<div class="glass lb-chatbox"><div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div></div>`;
   return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
   const c = S.code && codeOK(S.code), p = c && c.part ? c.part : part();
   const pct = c && c.pct != null ? `<div class="pct lb-pct t${p}"><span><small>진행도</small> ${c.pct}%</span><i><b style="width:${c.pct}%"></b></i></div>` : '';  // 입력 칸 안 오른쪽에 겹쳐 띄움: 창 크기 그대로
-  return `<div class="lb-used">힌트 사용 ${Object.keys(S.used).length}회</div><div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">힌트 보기</div></div></div>`;
+  return `<div class="lb-used">힌트 사용 ${Object.keys(S.used).length}회</div><div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">힌트 보기</div></div></div>`;
 }
 function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트 보기 → 다음 → 정답)
   const { body } = hintBody();
@@ -378,7 +391,7 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av" style="font-size:18px">V</div>${S.biaTalk ? '<div class="say">음성 재생 중</div>' : ''}</div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
+    g = `<div class="bia"><div class="av" style="font-size:18px">V</div>${S.biaTalk ? `<div class="say vplay" role="img" aria-label="음성 재생 중">${ICON.spk}</div>` : ''}</div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   if (LAYOUT === 'b') return layB(t0, S.phase === 'pre' ? '' : g);  // 배치 시안 B
@@ -390,11 +403,13 @@ function vMain() {
 function mapSvg(hi) {  // 지금 갈 방은 인물 색 · 지나온 길은 점선 · 아직 갈 차례가 아닌 방은 회색
   const { inset: i, rx } = D.map, R = Object.fromEntries(D.map.rooms.map(r => [r[0], r]));
   const order = D.goals.map(g => g[1].replace(/의 방$/, '')), cur = order.indexOf(hi, S.goal) < 0 ? S.goal : order.indexOf(hi, S.goal);
-  const went = order.slice(0, cur + 1).filter((n, k, a) => R[n] && n !== a[k - 1]);
+  const went = [...new Set(order.slice(0, cur + 1))].filter(n => R[n]);  // 처음 간 차례대로 한 번씩 (재방문은 방 색만 다시)
   const later = n => !order.slice(0, cur + 1).includes(n);
   const pt = n => { const [, x, y, w, h] = R[n]; return `${x + w / 2},${y + h / 2 - 10}`; };
-  const trail = went.length > 1 ? `<polyline class="trail" points="${went.map(pt).join(' ')}" style="fill:none;stroke:rgba(242,238,246,.6);stroke-width:2;stroke-dasharray:4 4;stroke-linejoin:round"/>`
-    + went.slice(0, -1).map(n => `<circle class="trail" cx="${pt(n).split(',')[0]}" cy="${pt(n).split(',')[1]}" r="3" style="fill:rgba(242,238,246,.75)"/>`).join('') : '';
+  const P = went.map(n => pt(n).split(',').map(Number));
+  // 지나온 길: 방 사이를 부드러운 곡선으로 (점선 꺾은선 대신)
+  const d = P.length > 1 ? 'M' + P[0].join(' ') + P.slice(1).map((q, k) => { const o = P[k], mx = (o[0] + q[0]) / 2, my = (o[1] + q[1]) / 2 - 18; return ` Q${mx} ${my} ${q[0]} ${q[1]}`; }).join('') : '';
+  const trail = d ? `<path class="trail" d="${d}" style="fill:none;stroke:rgba(242,238,246,.55);stroke-width:2;stroke-linecap:round"/>` + P.slice(0, -1).map(([x, y]) => `<circle class="trail" cx="${x}" cy="${y}" r="3" style="fill:rgba(242,238,246,.8)"/>`).join('') : '';
   const locks = D.map.rooms.filter(([n]) => n !== hi && later(n)).map(([n, x, y, w, h]) => `<rect class="lock" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:rgba(140,136,148,.28)"/>`).join('');
   const zones = locks + trail + D.map.rooms.map(([n, x, y, w, h]) => n === hi
     ? `<rect class="zone" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:${NM[n]};fill-opacity:.42"/><text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" style="fill:#fff;font:700 15px var(--body)">${n}</text>`
@@ -433,8 +448,8 @@ function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안
     } else if (c.kind === 'voice') {
       const n = c.steps.length, i = Math.min(st, n + 1) - 1;  // i === n: 6단계 뒤, 심장 소리만 반복
       const SPK = Object.assign({ 비아: 'var(--ch-bia)' }, NM);
-      const inner = i < n
-        ? c.steps[i].map(([who, t]) => `<div class="vline"><span class="spk"><i style="background:${SPK[who]}"></i>${esc(who)}</span><span>${esc(t)}</span></div>`).join('') + wave()
+      const inner = i < n  // 대사 글은 PC에 · 폰엔 말하는 사람 색 점과 재생 아이콘만
+        ? `<div class="vline"><span class="vplay" role="img" aria-label="음성 재생 중">${ICON.spk}</span>${[...new Set(c.steps[i].map(([who]) => who))].map(who => `<span class="spk" aria-label="${esc(who)}"><i style="background:${SPK[who]}"></i></span>`).join('')}</div>` + wave()
         : `<div class="center" style="padding:22px 0"><span class="heart" aria-label="심장 소리">${ICON.heart}</span></div>`;
       body += `<div class="card h2" style="gap:12px">${inner}<div class="vdots">${c.steps.map((_, k) => `<span style="background:${k <= i ? 'var(--c2)' : 'rgba(255,255,255,.2)'}"></span>`).join('')}</div></div>`;
     }
@@ -526,7 +541,7 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:var(--c1)">') + '<div class="stripes"></div>';
   const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">음성 재생 중</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
+  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say vplay" role="img" aria-label="음성 재생 중">${ICON.spk}</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
@@ -537,8 +552,9 @@ function vEnd() {
   const L = ['공개 구조 신호 송출 중.', '좌표 전송 중.', '생체 반응 전송 중.', '여기는 알파. 여기는 알파…'];
   return `<div class="center" style="gap:14px">${ICON.sig}${L.slice(0, Math.min(st - 1, 4)).map((t, i) => `<b style="font-size:16px${i === 3 ? ';color:color-mix(in srgb, var(--c2), white 8%)' : ''}" class="${i === 3 ? 'blink' : ''}">${t}</b>`).join('')}</div>`;
 }
-function vOffline() {
-  return timerBox() + `<div class="guide glass"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p><div class="recov">예시 문구</div></div></div>` + dock(false);
+function vOffline() {  // 연결 끊김: 메인 화면 위를 통째로 덮고, 타이머만 그 자리 그 모양으로 위에 보임
+  S.kb = S.ckb = S.hpop = false;
+  return vMain() + `<div class="offov${LAYOUT === 'b' ? ' lb-off' : ''}" role="alert"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p><div class="recov">예시 문구</div></div></div>`;
 }
 
 function render() {
@@ -550,7 +566,7 @@ function render() {
   else if (S.offline) h = vOffline();
   else h = ({ main: vMain, codes: vCodes, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
-  scr.innerHTML = h; sbar(); edText();
+  scr.innerHTML = h; sbar(); edText(); scr.classList.toggle('offon', !!S.offline && !S.phase.startsWith('end'));
   const fi = (S.kb && $('pv-in')) || (S.ckb && $('pv-chatin'));  // 키보드가 떠 있으면 칸에 초점 · 글자 끝에 커서 (맨 앞으로 가던 버그)
   if (fi) { fi.focus({ preventScroll: true }); const L = fi.value.length; try { fi.setSelectionRange(L, L); } catch (e) {} }
   const inp = $('pv-in'); if (inp && S.view === 'main') inp.oninput = () => setCode(inp.value);
