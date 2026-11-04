@@ -1,0 +1,800 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>개발 가이드</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="404bdb91-743d-81fe-bfc4-fdb9cf0d3cbc" class="page sans"><header><h1 class="page-title" dir="auto">개발 가이드</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><h3 id="40dbdb91-743d-803f-b7b1-f6b1552f8d50" class="" dir="auto">7-2. 공통 컴포넌트</h3><table id="40dbdb91-743d-80d6-a421-e30f468336ca" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="40dbdb91-743d-80b0-ba74-e2ccdf09eecd" dir="ltr"><th id="RFeb" class="simple-table-header-color simple-table-header">컴포넌트</th><th id="T={]" class="simple-table-header-color simple-table-header" style="width:252px">구현 요소</th><th id="mDZh" class="simple-table-header-color simple-table-header">시킬 놈</th></tr></thead><tbody><tr id="40dbdb91-743d-80f2-b93d-f8453e65671f" dir="ltr"><td id="RFeb" class="">암호 입력 화면</td><td id="T={]" class="" style="width:252px">입력 필드, 한/영·IME 처리, 온스크린 키보드 여부(터치 모니터 결정에 따름), 제출 콜백, 오답 흔들림, 정답 해제 애니메이션, 입력 잠금 상태</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-805b-a5cb-d22cd09e923e" dir="ltr"><td id="RFeb" class="">알림창</td><td id="T={]" class="" style="width:252px">타이핑 효과, 자동 닫힘/대기</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-80c3-9249-c718ddb1a174" dir="ltr"><td id="RFeb" class="">통신 로그 뷰어</td><td id="T={]" class="" style="width:252px">채팅형 말풍선, 순차 노출 옵션, 말소·잠금 구간 렌더, [더보기] 접기</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-8080-8e4e-e8c830c816bf" dir="ltr"><td id="RFeb" class="">일지 뷰어</td><td id="T={]" class="" style="width:252px">날짜 섹션, 강조 글자, 다른 글꼴 블록, 스크롤</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-8049-b085-cb6854711e63" dir="ltr"><td id="RFeb" class="">메모 뷰어</td><td id="T={]" class="" style="width:252px">손글씨 톤 레이아웃, 서명</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-80af-ac24-e77f74655857" dir="ltr"><td id="RFeb" class="">바탕화면</td><td id="T={]" class="" style="width:252px">아이콘, 잠금 표시, 선택·실행 콜백</td><td id="mDZh" class="">(B)</td></tr><tr id="40dbdb91-743d-80e0-abbd-e308f5399ea2" dir="ltr"><td id="RFeb" class="">유휴·암전 화면</td><td id="T={]" class="" style="width:252px">완전 암전, 점등 연출</td><td id="mDZh" class="">(D)</td></tr><tr id="40dbdb91-743d-8061-90ba-eb90e5b53ae9" dir="ltr"><td id="RFeb" class="">음성 재생 표시</td><td id="T={]" class="" style="width:252px">재생 중 파형·진행 표시</td><td id="mDZh" class="">(D)</td></tr><tr id="40dbdb91-743d-8044-8ecd-c7b148c1096a" dir="ltr"><td id="RFeb" class="">화면 전환 효과</td><td id="T={]" class="" style="width:252px">페이드, 글리치, 셧다운 등 트랜지션 세트</td><td id="mDZh" class="">(D)</td></tr></tbody></table><h3 id="40dbdb91-743d-80b4-8c47-e6b1978bda8b" class="" dir="auto">7-3. 메인 컴퓨터 연출</h3><ul id="40dbdb91-743d-80ca-a070-fa118cd666a7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D: 부팅·로그인 시퀀스 애니메이션.</li></ul><ul id="40dbdb91-743d-8046-ae89-c43042d0a21b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D: 기억 검색 오류 → 안전 모드 전환 연출(오류 로그 → 경고 → 계정 5개 잠김).</li></ul><ul id="40dbdb91-743d-80c6-a967-e4c425127d8a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D: 안전 모드 현황판 카드 상태 전환 애니메이션, 현재 차례 강조.</li></ul><ul id="40dbdb91-743d-803a-b3bb-d474ecc534d4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">C: ALONE 입력 화면 색 단서 배치·등장.</li></ul><ul id="40dbdb91-743d-8057-b270-dd8991c24fa2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">C: 화면 정지·글리치 → 주황 V 등장(CSS 또는 캔버스).</li></ul><ul id="40dbdb91-743d-8045-867e-c2db86ac2aba" class="bulleted-list" dir="auto"><li style="list-style-type:disc">C: LOVE 인터랙션: 글자 타일 컴포넌트, 입력 차단 상태, 타일 소멸 애니메이션(외부에서 순차 지시 가능), V 등장, 드래그&amp;드롭(터치·마우스), 슬롯 스냅, 완성 판정 콜백, VEA↔EVA 모핑.</li></ul><ul id="40dbdb91-743d-80d3-8a90-cd92abcb1768" class="bulleted-list" dir="auto"><li style="list-style-type:disc">C: 레버 활성화 안내 화면.</li></ul><ul id="40dbdb91-743d-8044-a1af-c81eea1bc7d9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D: 탈출 엔딩: 시스템 로그가 하나씩 꺼지는 셧다운 → 암전.</li></ul><ul id="40dbdb91-743d-8000-add7-f5e27e95041c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D: 행성 엔딩: 좌표·생체 반응 스크롤, &quot;여기는 알파&quot; 반복 송출 화면.</li></ul><h3 id="40dbdb91-743d-804f-9dc3-f12b7bca0c8b" class="" dir="auto">7-4. 오펠리아 기록집 (A)</h3><ul id="40dbdb91-743d-8076-8605-ed28bba81a95" class="bulleted-list" dir="auto"><li style="list-style-type:disc">페이지 넘김 UI(스와이프·버튼), 양방향, 넘김 애니메이션.</li></ul><ul id="40dbdb91-743d-8076-9e59-df171e3bcd23" class="bulleted-list" dir="auto"><li style="list-style-type:disc">페이지 모델: 앞쪽·뒤쪽 섹션, 구역별 잠금 페이지 삽입, 섹션 노출 여부는 props.</li></ul><ul id="40dbdb91-743d-8085-b8ec-f34eb92c321b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">강조 글자 렌더, 48일 침입 글꼴 페이지, 노아 숨겨진 기록 페이지 삽입 연출.</li></ul><ul id="40dbdb91-743d-806a-96e4-cf1a877c0b68" class="bulleted-list" dir="auto"><li style="list-style-type:disc">낭독 하이라이트: 문단 id를 받으면 해당 문단으로 스크롤·강조.</li></ul><h3 id="40dbdb91-743d-800a-acfb-e90ee64ef569" class="" dir="auto">7-5. 알렉스·노아·에바 (A)</h3><ul id="40dbdb91-743d-8029-8195-f09b4dddf81c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">알렉스: 로그 말소→잠금 표시 전환 연출, 2부 로그 더보기.</li></ul><ul id="40dbdb91-743d-8009-a128-cc515336b39e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">노아: 메모·노란 암시 레이아웃, 2차 암호칸 동시 표시.</li></ul><ul id="40dbdb91-743d-80c5-ac0a-fbffc9789933" class="bulleted-list" dir="auto"><li style="list-style-type:disc">에바: 암전→점등, 비상 이륙 시스템 패널(계기 애니메이션), 마지막 기록 이름 치환(토큰 단위 글자 교체, 색 유지, 순차 재생), 메일 뷰.</li></ul><h3 id="40dbdb91-743d-8041-8eef-f44ac1946024" class="" dir="auto">7-6. 힌트폰 (이현민)</h3><ul id="40dbdb91-743d-808c-9ccd-e2e46270a3fe" class="bulleted-list" dir="auto"><li style="list-style-type:disc">앱 셸: 상태바, 탭 또는 화면 전환, 세로 레이아웃.</li></ul><ul id="40dbdb91-743d-80b5-a805-f8e7aa8fdab1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">1부 퀘스트 홈: 목표 카드, 우주선 지도 SVG 하이라이트, 안전 모드 감지 알림 애니메이션.</li></ul><ul id="40dbdb91-743d-80de-856d-f2bb8d904b7f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">2부 비아 챗: 메시지 리스트, 순차 등장, 타이핑 인디케이터, 아바타, 자동 스크롤.</li></ul><ul id="40dbdb91-743d-80bd-a04c-cc9032ec7404" class="bulleted-list" dir="auto"><li style="list-style-type:disc">모드 전환 연출(릴리 프로그램 → 비아).</li></ul><ul id="40dbdb91-743d-807d-a762-d3e0c59da9c8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">힌트 입력(키패드/텍스트)과 힌트 렌더: 헤드리스 컴포넌트에 스타일 입히기, 단계 이동·정답·오류 상태.</li></ul><ul id="40dbdb91-743d-80c7-8acc-d136d0d44fd8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">스토리 카드 템플릿(인물색·서명).</li></ul><ul id="40dbdb91-743d-804c-b8a6-f676e367e0f4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">보너스 패턴 락: 3×3 드로잉 UI. 판정은 서버로 보내고 화면은 그리기와 결과 표시만.</li></ul><ul id="40dbdb91-743d-8086-b543-c61d8b2e57f6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">성공 카드, 연결 상태 표시.</li></ul><h3 id="40dbdb91-743d-8028-93db-c9e9c4f3f933" class="" dir="auto">7-7. 콘텐츠·소재 제작 (전체)</h3><ul id="40dbdb91-743d-805e-aac8-e9f97d7025cc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">원고 교정 후 데이터 파일화, 마크업 적용 검수.</li></ul><ul id="40dbdb91-743d-8007-8679-e87449ae5f20" class="bulleted-list" dir="auto"><li style="list-style-type:disc">우주선 지도 SVG(방별 하이라이트 레이어), 주황 V·VEA 로고, ALONE 타일 소재, 아이콘.</li></ul><ul id="40dbdb91-743d-80d1-a400-e5c81e0a97ba" class="bulleted-list" dir="auto"><li style="list-style-type:disc">글꼴 라이선스 확인, 손글씨·침입자 글꼴 확보.</li></ul><h3 id="40dbdb91-743d-80ca-8b09-c9fe38e948a9" class="" dir="auto">7-8. 품질·실기 검증 (전체)</h3><ul id="40dbdb91-743d-80ae-b779-d47723cac9b9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">실제 모니터 해상도·비율, 터치 입력, 한글 IME, 자동 포커스.</li></ul><ul id="40dbdb91-743d-803f-83ed-e22ae3e3bbf1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">저사양 기기 애니메이션 성능, 3~4시간 세션 메모리 누수.</li></ul><ul id="40dbdb91-743d-8034-b8b3-cda93d54b465" class="bulleted-list" dir="auto"><li style="list-style-type:disc">모든 state 조합 스냅샷 검수(디버그 패널 기준).</li></ul><ul id="40dbdb91-743d-80ee-b464-d1a46bc893bc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">오프라인·새로고침 후 같은 state로 복원되는지 확인(RoomKit 연동 전 단계에서는 로컬 mock으로).</li></ul><p id="40dbdb91-743d-80c4-a706-ef038997562a" class="" dir="auto">
+</p><p id="40dbdb91-743d-80c8-8cfe-f1a04e639057" class="" dir="auto">
+</p><p id="40dbdb91-743d-80c7-8b11-e901e326f4f9" class="" dir="auto">대체로 쓸 만하지만, 그대로 가면 <strong>A가 과부하, B가 병목, C·D와 A 사이에 중복/의존이 생기는</strong> 세 군데가 걸립니다. 저장소 현황(<code>master</code>의 플레이스홀더 컴포넌트, <code>feat/design-fx</code> 예시)과 대조해 본 결과입니다.</p><p id="40dbdb91-743d-80ed-8aa4-f7608788b60a" class="" dir="auto"><strong>1. A가 가장 무겁다</strong></p><ul id="40dbdb91-743d-8052-8733-de5e409b0c97" class="bulleted-list" dir="auto"><li style="list-style-type:disc">오펠리아 기록집(양방향 넘김·페이지 모델·낭독 하이라이트)만으로도 LOVE 인터랙션과 맞먹는 단일 최대 작업입니다.</li></ul><ul id="40dbdb91-743d-80f0-bf44-c9e74ab77561" class="bulleted-list" dir="auto"><li style="list-style-type:disc">여기에 알렉스·노아·에바까지 방 4개를 얹었습니다. 특히 에바는 암전→점등, 계기 애니메이션, 토큰 단위 이름 치환, 메일 뷰까지 네 가지가 따로 놉니다.</li></ul><ul id="40dbdb91-743d-80e1-92df-c8ba35f0789a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">게다가 A의 작업은 전부 B의 뷰어(일지·통신 로그·메모) 위에 올라가므로, B가 끝나기 전엔 A가 제대로 시작을 못 합니다.</li></ul><p id="40dbdb91-743d-80a2-a3c4-dd6d808d6158" class="" dir="auto"><strong>2. B는 모두의 선행 작업이라 1주차 병목</strong></p><ul id="40dbdb91-743d-806b-80c7-ce69a124eeee" class="bulleted-list" dir="auto"><li style="list-style-type:disc">암호 입력·알림창·뷰어 3종·바탕화면은 A·C·D가 전부 기다리는 기반입니다.</li></ul><ul id="40dbdb91-743d-8005-b631-cd1e7a7014ee" class="bulleted-list" dir="auto"><li style="list-style-type:disc">다행히 <code>master</code>에 props 계약과 쇼케이스가 이미 있어서, B가 &quot;계약 먼저 고정 → 스타일 나중&quot;으로 가면 나머지는 플레이스홀더 위에서 병렬 진행이 가능합니다. 이 순서를 명시해 두는 게 좋습니다.</li></ul><ul id="40dbdb91-743d-803d-a478-c4252188bdcb" class="bulleted-list" dir="auto"><li style="list-style-type:disc">온스크린 키보드 + 한글 IME 여부가 미정인데, 들어가면 B 분량이 크게 늘어납니다. 터치 모니터 결정을 먼저 받으세요.</li></ul><ul id="40dbdb91-743d-800b-9427-ecea1dbb85bd" class="bulleted-list" dir="auto"><li style="list-style-type:disc">현재 <code>DocumentDialog.tsx</code> 하나가 모든 문서 종류를 다 받고 있어서, B의 뷰어 3종과 A의 방 4개가 한 파일에 몰립니다. 뷰어별로 파일을 먼저 쪼개야 충돌이 안 납니다.</li></ul><p id="40dbdb91-743d-80af-be8d-cb870341b6f5" class="" dir="auto"><strong>3. 중복·누락</strong></p><ul id="40dbdb91-743d-8069-8b52-e23902bc5645" class="bulleted-list" dir="auto"><li style="list-style-type:disc">글리치: C(화면 정지·글리치→V)와 D(전환 효과 세트의 글리치)가 따로 만들게 됩니다. D가 만들고 C가 쓰는 걸로 정리.</li></ul><ul id="40dbdb91-743d-80fb-8523-f1b8387a398e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">알렉스 말소→잠금 전환·[더보기]: B의 통신 로그 뷰어가 이미 말소·잠금·더보기를 렌더하므로 A의 알렉스 항목과 겹칩니다.</li></ul><ul id="40dbdb91-743d-8006-bd69-f936ae365b03" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이메일 뷰어: 6-2엔 4번째 레이아웃으로 있는데 7-2엔 빠져서 에바 메일 뷰가 A에게 떨어집니다.</li></ul><ul id="40dbdb91-743d-8096-b330-f147592b4d0a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">7-7·7-8 &quot;전체&quot;: 지도 SVG(힌트폰·현황판), 주황 V(C·힌트폰), ALONE 타일(C)은 선행 소재인데 주인이 없습니다. 디버그 패널·스냅샷 검수도 한 명이 맡아야 합니다.</li></ul><p id="40dbdb91-743d-80b0-978a-d2d27dc70a21" class="" dir="auto"><strong>제안 조정</strong></p><ul id="40dbdb91-743d-800e-81ca-eb7acbc90d00" class="bulleted-list" dir="auto"><li style="list-style-type:disc">A 김주원) 오펠리아 + 노아.</li></ul><ul id="40dbdb91-743d-802e-b323-ed9bbdf29a71" class="bulleted-list" dir="auto"><li style="list-style-type:disc">B 정석현) 암호 입력, 알림창, 뷰어 4종(메일 추가), 알렉스 전환. </li></ul><ul id="40dbdb91-743d-80f9-90ae-cf364298d1d8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">C 김호현) 바탕화면 + 레버 안내 + ALONE 색 단서 + 주황 V 등장 + LOVE. 메인 컴퓨터 화면 주인으로 일관됩니다.</li></ul><ul id="40dbdb91-743d-80ef-962b-d69f2a64665a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">D 이서준) 기존 연출 전부 + 에바(암전→점등은 이미 D의 유휴·암전 항목, 계기·이름 치환은 연출) + 글리치 공용화</li></ul><ul id="40dbdb91-743d-80c1-923a-c74702176a8b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이현민: 힌트폰 그대로. <code>phone/</code>이 분리돼 있어 독립성이 가장 좋습니다. 지도 SVG는 이현민이 만들고 현황판(D)이 재사용.</li></ul><ul id="40dbdb91-743d-8089-8e88-fc1bbfaadfa5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">홍은기: 전체검수</li></ul><p id="40dbdb91-743d-809d-8672-f73426cd2642" class="" dir="auto">이렇게 하면 A·B·C·D 분량이 &quot;큰 것 하나 + 작은 것 몇 개&quot; 수준으로 비슷해지고, 같은 파일을 두 사람이 만지는 곳이 줄어듭니다.</p><p id="40dbdb91-743d-80d9-867c-e50d54afd345" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

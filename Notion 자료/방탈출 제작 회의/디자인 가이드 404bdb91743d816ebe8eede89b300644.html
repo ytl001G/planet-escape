@@ -1,0 +1,802 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>디자인 가이드</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="404bdb91-743d-816e-be8e-ede89b300644" class="page sans"><header><h1 class="page-title" dir="auto">디자인 가이드</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="40cbdb91-743d-80d2-92b3-d1f0c6bda36e" class="" dir="auto">이하 가이드에서 모르는 내용 있으면 언제든 물어보세요!! (디자인부장 박재은 / 총괄 홍은기 등) </p><p id="46507e78-f861-4c11-b174-a167ffd16049" class="" dir="auto">공통 명칭·색·진행은 <a href="%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EC%A4%80%20404bdb91743d81ee89bce01acf4d9395.html" data-notion-page-id="404bdb91-743d-81ee-89bc-e01acf4d9395" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">공통 기준</a>을 따름 &lt;&lt;  이것도 참고!!</p><p id="40cbdb91-743d-8048-9804-dfa5412f2235" class="" dir="auto"><a href="https://app.notion.com/p/3b8bdb91743d80918376cc63bf53705a?pvs=21" data-notion-page-id="3b8bdb91-743d-8091-8376-cc63bf53705a" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9"><span class="icon" data-emoji="📕"></span>시나리오</a> </p><h2 id="40cbdb91-743d-8084-b044-ca7b3855133a" class="" dir="auto">1. 진행 일정</h2><ul id="40cbdb91-743d-8060-b543-f4eac8f45fd5" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>분배 회의 11/3(화) </strong>: 가이드 및 시나리오 소개, 파트 분배</li></ul><ul id="40cbdb91-743d-806e-b972-f879ae13ff1e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>1차 마감 기한 11/8(일</strong>): 중간 점검. 원본 파일 제작, 필요 주요 물품 주문 완료. 가능한 1차 제작까지 완료</li></ul><ul id="40cbdb91-743d-8052-989b-e2cf7bbe0420" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>최종 마감 기한 11/13(금)</strong>: 진짜최종. 수정 등을 거쳐  </li></ul><ul id="40cbdb91-743d-80ee-966c-cd18074e589a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>방탈출 베타 11/14(토)~15(일): </strong><mark class="highlight-red" data-notion-highlight="red"><strong>가능한 학교에 있어주세요(피드백 반영, 개선을 위함)</strong></mark></li></ul><ul id="40cbdb91-743d-8013-962c-f1d27ce1b965" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>방탈출 운영 11/16(월)~11/22(일)</strong>: 유지보수, 문제 난이도 조정 등 필요 시 </li></ul><h2 id="40cbdb91-743d-806d-92d3-e15dcb6061b0" class="" dir="auto">2. 디자인 자가점검</h2><ul id="40cbdb91-743d-8066-8081-d043f392ef41" class="bulleted-list" dir="auto"><li style="list-style-type:disc">문제/소품/문서가 금고/서랍/상자에 들어있는 경우, 들어가는 크기인지 반드시 확인<ul id="40cbdb91-743d-806d-a97d-d0fb0b293456" class="bulleted-list" dir="auto"><li style="list-style-type:circle">금고(캐비넷) 규격: 바닥면 35cm x 40cm, 높이 35cm</li></ul><figure id="40cbdb91-743d-80bf-b3f9-c0d4275c0423" class="image" data-notion-image="image%202.png" dir="ltr"><a href="image%202.png"><img style="width:288px" src="image%202.png"/></a></figure></li></ul><ul id="40cbdb91-743d-80b4-aba2-d77efd9f7508" class="bulleted-list" dir="auto"><li style="list-style-type:disc">(위 조건을 만족하는 선에서) 가독성 좋고, 크고, 명확하게</li></ul><ul id="40cbdb91-743d-8033-bee1-e79fce7f0f33" class="bulleted-list" dir="auto"><li style="list-style-type:disc">지류 소품은 가능한 코팅(동방에 손 코팅 용지/ 열코팅기가 있습니다) </li></ul><h2 id="40cbdb91-743d-80be-9590-eebba9bd46f3" class="" dir="auto">3. 구매 가이드</h2><p id="40cbdb91-743d-80c4-adbe-f3299085f74a" class="block-color-blue" data-notion-highlight="blue" dir="auto"><mark class="highlight-default" data-notion-highlight="default"><strong>링크</strong></mark><strong>:</strong><em><strong> </strong></em><em><strong><a href="https://docs.google.com/spreadsheets/d/1PLgEjGnmtiMvNcySlMUibGFsM3X_m5V9-CFJU6ShyZY/edit?usp=drive_link">26 가을 정기 방탈출 물품 구매목록(스프레드시트)</a></strong></em></p><ul id="40cbdb91-743d-8091-8b97-d849a522ba42" class="bulleted-list" dir="auto"><li style="list-style-type:disc">총 예산 100만~150만(예약 이후 예상 수익에 따라 조정될 수 있음)</li></ul><ul id="40cbdb91-743d-80e7-bbc3-cb73e3914bc4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">배송일자 반드시 확인!! (가격&lt;빠른 배송)</li></ul><ul id="40cbdb91-743d-80d2-b9c5-f197a8832d60" class="bulleted-list" dir="auto"><li style="list-style-type:disc">폼에 물품 올리면 톡방에 보고</li></ul><ul id="40cbdb91-743d-80b3-aec8-c0a7076a0cd9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">급한 경우 사비집행도 ok.<ul id="40cbdb91-743d-804a-85f4-e80c130f66fa" class="bulleted-list" dir="auto"><li style="list-style-type:circle">단, 영수증(거래내역서/카드매출전표) 반드시 증빙 필요.</li></ul><ul id="40cbdb91-743d-80e9-9167-ff850f7bbe26" class="bulleted-list" dir="auto"><li style="list-style-type:circle">증빙내역은 구매목록 시트 or 총무(송종혁) 님께 개인톡으로 전달.</li></ul></li></ul><p id="40cbdb91-743d-80cd-b4b1-e13da55d38e2" class="" dir="auto">
+</p><h2 id="40cbdb91-743d-80f8-867c-e32b6e13832d" class="" dir="auto">4. 로고</h2><div id="40cbdb91-743d-808e-9c20-f08e0210ec3e" class="column-list" data-notion-column-list="" dir="auto"><div id="40cbdb91-743d-80b7-99ca-cd456abcd446" style="width:43.75%" class="column" data-notion-column-ratio="0.4375" dir="auto"><figure id="404bdb91-743d-8031-9a44-c79c9c3eabc4" class="image" data-notion-image="%E1%84%8C%E1%85%A6%E1%84%86%E1%85%A9%E1%86%A8_%E1%84%8B%E1%85%A5%E1%86%B9%E1%84%8B%E1%85%B3%E1%86%B7_252.png" dir="ltr"><a href="%E1%84%8C%E1%85%A6%E1%84%86%E1%85%A9%E1%86%A8_%E1%84%8B%E1%85%A5%E1%86%B9%E1%84%8B%E1%85%B3%E1%86%B7_252.png"><img style="width:288px" src="%E1%84%8C%E1%85%A6%E1%84%86%E1%85%A9%E1%86%A8_%E1%84%8B%E1%85%A5%E1%86%B9%E1%84%8B%E1%85%B3%E1%86%B7_252.png"/></a><figcaption>총괄이 개발새발로 그린 로고 스케치본<br/>(사용하지 마세요)</figcaption></figure><figure id="40dbdb91-743d-8013-ac04-d1a373ca22f8" class="image" data-notion-image="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.svg" dir="ltr"><a href="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.svg"><img src="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.svg"/></a><figcaption>svg</figcaption></figure><figure id="40dbdb91-743d-8085-ae5a-e7f0e11fcde6" class="image" data-notion-image="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.png" dir="ltr"><a href="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.png"><img src="%E1%84%92%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%E1%84%90%E1%85%A1%E1%86%AF%E1%84%8E%E1%85%AE%E1%86%AF_%E1%84%85%E1%85%A9%E1%84%80%E1%85%A9_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC.png"/></a><figcaption>png</figcaption></figure><p id="40dbdb91-743d-801d-a7f7-f62138d214e5" class="" dir="auto">
+</p></div><div id="40cbdb91-743d-80a1-a4fb-f592e4c7b484" style="width:56.25%" class="column" data-notion-column-ratio="0.5625" dir="auto"><ul id="404bdb91-743d-8058-b7a4-ef653a268fbf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">상징: 행성, 제온 원자, 여섯 개의 인격, X자에서 탈출하는 화살표 </li></ul><ul id="40cbdb91-743d-80d5-b8d0-f1f384f2f2b0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">방탈출 로고인 동시에 알파 연구팀의 로고임</li></ul><p id="40dbdb91-743d-80fa-92a6-ce632fd23b8e" class="" dir="auto">
+</p></div></div><h2 id="40cbdb91-743d-80b3-9dae-d63dd423c501" class="" dir="auto">5. 공간 구성</h2><figure id="404bdb91-743d-80de-99dc-e4754ffb8190" class="image" data-notion-image="image%203.png" dir="ltr"><a href="image%203.png"><img style="width:703.984375px" src="image%203.png"/></a></figure><h3 id="40cbdb91-743d-808c-88d2-ed00f1b7a53f" class="" dir="auto">5.1. 공간 구성 개요 </h3><ul id="40cbdb91-743d-8026-8649-f72fae1a9956" class="bulleted-list" dir="auto"><li style="list-style-type:disc">장소: 동방 - 알렉스/릴리/오펠리아/노아/에바의 방(구역)으로 구분</li></ul><ul id="40cbdb91-743d-8034-b306-f47b84c8ac39" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기기: 릴리 동컴, 나머지 네 구역 태블릿 배치</li></ul><ul id="40cbdb91-743d-804a-9e6e-e2fee85a59da" class="bulleted-list" dir="auto"><li style="list-style-type:disc">문제에 필요한 물품들 + 각 구역의 색상과 인물 컨셉에 맞는 인테리어 소품들로 구성(레드 헤링 주의)</li></ul><h3 id="40cbdb91-743d-80fc-a2ba-e6d67cfb2d69" class="" dir="auto">5.2. 구역 상세 구성</h3><details id="40cbdb91-743d-80ac-be2b-caa5e9287e41" open="" class="toggle" dir="auto"><summary><mark class="highlight-red" data-notion-highlight="red">알렉스의 방</mark></summary><div class="indented"><ul id="40cbdb91-743d-80d8-9caa-fade5e060fbd" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">단말기(태블릿)</span><div class="indented"></div></li></ul><ul id="40cbdb91-743d-807b-8f62-d84eb5e23791" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">금고: 2부 문제 10 자료 보관, 릴리 방 서랍의 열쇠로 연다</span><div class="indented"></div></li></ul></div></details><details id="40cbdb91-743d-805b-9842-cc1871437ab3" open="" class="toggle" dir="auto"><summary><mark class="highlight-yellow" data-notion-highlight="yellow">오펠리아의 방</mark></summary><div class="indented"><ul id="40dbdb91-743d-8009-aece-f35005bb175c" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">단말기(태블릿): 보고서 열람·암호 입력</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-80fa-8452-ce15fc1e69eb" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">금고: 2부 문제 11 자료(7세그먼트 문제지·스토리카드 11) 보관. 1부에는 잠겨 있음(2부에 여는 방법 미정)</span><div class="indented"></div></li></ul></div></details><details id="40cbdb91-743d-8039-a072-d206942b717d" open="" class="toggle" dir="auto"><summary><mark class="highlight-teal" data-notion-highlight="teal">노아의 방</mark></summary><div class="indented"><ul id="40dbdb91-743d-80c7-874d-fa1ad97d566c" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">단말기(태블릿)</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-80b5-8a73-f9fbc84ff571" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">책장: 문제 4 책 여섯 권, 맨 위에 레버와 노아의 포스트잇</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-80b5-8d10-fce4e0f6f3c0" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">큐브 선반(3층)·포스터·일지: 문제 12</span><div class="indented"></div></li></ul></div></details><details id="40cbdb91-743d-80ba-b4dd-f2d425d628e0" open="" class="toggle" dir="auto"><summary><mark class="highlight-blue" data-notion-highlight="blue">에바의 방</mark></summary><div class="indented"><ul id="40dbdb91-743d-803c-84ae-d253d9ba8a48" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">단말기(태블릿)</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-801b-9f1c-e83f2940452f" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">금고: 2부에 태블릿의 본인 확인 기록으로 열림(1부에는 ‘본인 확인이 필요합니다.’ 표시). 여는 방식(전자식 잠금/운영자 개방)은 미정. 머리띠 상자·핸드벨·보너스 자료·눈금 부품이 함께 들어가는지 크기 확인</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-808f-afba-d6653b844789" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">레버상자(빈): 레버 모양 폼, 에바의 쪽지</span><div class="indented"></div></li></ul><ul id="311cfb2f-406b-4d37-b032-6cd6ea3de740" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">핸드벨 자리: 바닥에 색칠, 시작 위치 표시(문제 13)</span><div class="indented"></div></li></ul></div></details><details id="40dbdb91-743d-8073-afed-e6342f1e317f" open="" class="toggle" dir="auto"><summary><mark class="highlight-purple" data-notion-highlight="purple">릴리의 방</mark></summary><div class="indented"><ul id="40dbdb91-743d-8009-b22c-d8e6f27c1085" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">단말기(컴퓨터): 메인 컴퓨터</span><div class="indented"></div></li></ul><ul id="40dbdb91-743d-807b-95c4-de3b33b96d7c" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">레버 거치대: 메인 컴퓨터 옆 책상에 고정</span><div class="indented"></div></li></ul><ul id="78c37d81-2fc1-4a86-8a64-aec8e6ed991d" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">서랍: 알렉스 금고 열쇠(열쇠고리 소품)</span><div class="indented"></div></li></ul><ul id="979c847f-a9eb-4f79-825d-d518a92566c0" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">사원증·힌트폰: 시작할 때 책상 위</span><div class="indented"></div></li></ul><ul id="1aeee954-e127-49d7-b69a-68ae7158d0fd" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">문제 14 벽 자료</span><div class="indented"></div></li></ul><ul id="ba463b6e-5809-412e-90fb-502f614b8c6c" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">금고: 문제 14 자료 A를 종이로 넣을 때만</span><div class="indented"></div></li></ul></div></details><p id="40cbdb91-743d-8001-8ae0-ced2c65cf519" class="" dir="auto">
+</p><hr id="40cbdb91-743d-809f-9192-fd8392929289" dir="auto"/><h2 id="40cbdb91-743d-80f0-8929-ed040e6600ac" class="" dir="auto">6. 디자인 역할 분배</h2><p id="40cbdb91-743d-80c1-bffb-d03b6301b054" class="" dir="auto">작성 방법: 상태란에 진행상태 체크, 비고가 있다면 비고란 수정(비고란이 작다면 본문 참고 써두고 본문에 작성해도 ok)</p><div id="40cbdb91-743d-8053-98e3-d1770dcb37dc" class="collection-content" dir="ltr"><h4 class="collection-title">분배 표</h4><div class="collection-content-wrapper"><table class="collection-content"><colgroup><col style="width:18.726591760299627%"/><col style="width:26.217228464419474%"/><col style="width:9.363295880149813%"/><col style="width:9.363295880149813%"/><col style="width:36.32958801498127%"/></colgroup><thead><tr><th><span class="icon property-icon"><img src="https://app.notion.com/icons/hashtag_gray.svg" style="width:14px;height:14px;display:block"/></span>숫자</th><th><span class="icon property-icon"><img src="https://app.notion.com/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>이름</th><th><span class="icon property-icon"><img src="https://app.notion.com/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>담당</th><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><th><span class="icon property-icon"><img src="https://app.notion.com/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>비고</th></tr></thead><tbody><tr id="40cbdb91-743d-801e-a8e8-fc7ccaaaa5a3"><td class="cell-VP`r">1</td><td class="cell-title"><a href="%ED%8F%AC%EC%8A%A4%ED%84%B0%2040cbdb91743d801ea8e8fc7ccaaaa5a3.html" data-notion-page-id="40cbdb91-743d-801e-a8e8-fc7ccaaaa5a3" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">포스터</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-orange">최유주</span></td><td class="cell-]r?d"><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>진행 중</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80cd-a783-cf1c60f48e33"><td class="cell-VP`r">2</td><td class="cell-title"><a href="%ED%9E%8C%ED%8A%B8%ED%8F%B0%20UI%2040cbdb91743d80cda783cf1c60f48e33.html" data-notion-page-id="40cbdb91-743d-80cd-a783-cf1c60f48e33" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">힌트폰 UI</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-gray">이윤태</span><span class="selected-value select-value-color-purple">이현민</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-8001-ae14-d5128856dbdf"><td class="cell-VP`r">3</td><td class="cell-title"><a href="%EB%8B%A8%EB%A7%90%EA%B8%B0%20UI%2040cbdb91743d8001ae14d5128856dbdf.html" data-notion-page-id="40cbdb91-743d-8001-ae14-d5128856dbdf" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">단말기 UI</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-brown">이효주</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80f0-83fe-cf584097bf20"><td class="cell-VP`r">4</td><td class="cell-title"><a href="%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD%20%EB%AC%B8%EC%84%9C%2040cbdb91743d80f083fecf584097bf20.html" data-notion-page-id="40cbdb91-743d-80f0-83fe-cf584097bf20" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">주의사항 문서</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-gray">이윤태</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80b2-9a50-dbf95f97bd35"><td class="cell-VP`r">5</td><td class="cell-title"><a href="%EB%A6%B4%EB%A6%AC%EC%9D%98%20%ED%8C%80%EC%9B%90%20%EA%B4%80%EC%B0%B0%20%EA%B8%B0%EB%A1%9D%2040cbdb91743d80b29a50dbf95f97bd35.html" data-notion-page-id="40cbdb91-743d-80b2-9a50-dbf95f97bd35" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">릴리의 팀원 관찰 기록</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-blue">김서현</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80f6-ba81-d2f08cd156b9"><td class="cell-VP`r">6</td><td class="cell-title"><a href="%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%B9%B4%EB%93%9C%20(%ED%94%84%EB%A1%A4%EB%A1%9C%EA%B7%B8,%200~16),%20%EC%AA%BD%EC%A7%80%2040cbdb91743d80f6ba81d2f08cd156b9.html" data-notion-page-id="40cbdb91-743d-80f6-ba81-d2f08cd156b9" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">스토리카드 (프롤로그, 0~16), 쪽지</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-yellow">김민재</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80fd-95c3-ed28bab5f02c"><td class="cell-VP`r">7</td><td class="cell-title"><a href="%EC%82%AC%EC%9B%90%EC%A6%9D,%20%EC%95%94%ED%98%B8%ED%8C%90(%EB%AC%B8%EC%A0%9C%200,%20%EB%AC%B8%EC%A0%9C%207)%2040cbdb91743d80fd95c3ed28bab5f02c.html" data-notion-page-id="40cbdb91-743d-80fd-95c3-ed28bab5f02c" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">사원증, 암호판(문제 0, 문제 7)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-brown">고하준</span></td><td class="cell-]r?d"><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>진행 중</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80fd-ac31-f34b0381629f"><td class="cell-VP`r">8</td><td class="cell-title"><a href="%EC%95%8C%EB%A0%89%EC%8A%A4%20%EB%AC%B8%EC%A0%9C(%EB%AC%B8%EC%A0%9C%202,%20%EB%AC%B8%EC%A0%9C%2010)%2040cbdb91743d80fdac31f34b0381629f.html" data-notion-page-id="40cbdb91-743d-80fd-ac31-f34b0381629f" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">알렉스 문제(문제 2, 문제 10)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-blue">김서현</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80ea-82c0-d4e988b03aa8"><td class="cell-VP`r">9</td><td class="cell-title"><a href="%EB%85%B8%EC%95%84%EC%9D%98%20%EC%B1%85(%EB%AC%B8%EC%A0%9C%204)%2040cbdb91743d80ea82c0d4e988b03aa8.html" data-notion-page-id="40cbdb91-743d-80ea-82c0-d4e988b03aa8" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">노아의 책(문제 4) </a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-orange">김두현</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80c5-b53b-efc371864b38"><td class="cell-VP`r">10</td><td class="cell-title"><a href="%EB%A7%90%EC%9E%A5%EB%82%9C%20%EA%B7%B8%EB%A6%BC%20(%EB%AC%B8%EC%A0%9C6)%2040cbdb91743d80c5b53befc371864b38.html" data-notion-page-id="40cbdb91-743d-80c5-b53b-efc371864b38" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">말장난 그림 (문제6)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-red">서민준</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-803a-8429-efff0493af89"><td class="cell-VP`r">11</td><td class="cell-title"><a href="%EB%A0%88%EB%B2%84%20%EA%B4%80%EB%A0%A8%2040cbdb91743d803a8429efff0493af89.html" data-notion-page-id="40cbdb91-743d-803a-8429-efff0493af89" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">레버 관련</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-default">윤예준</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>진행 중</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80f1-833d-cc02fc239242"><td class="cell-VP`r">12</td><td class="cell-title"><a href="7%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8%20%EB%AC%B8%EC%A0%9C%EC%A7%80(%EB%AC%B8%EC%A0%9C%2011)%2040cbdb91743d80f1833dcc02fc239242.html" data-notion-page-id="40cbdb91-743d-80f1-833d-cc02fc239242" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">7세그먼트 문제지(문제 11)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-red">서민준</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-802b-a596-ff0789e1d54e"><td class="cell-VP`r">13</td><td class="cell-title"><a href="%EB%85%B8%EC%95%84%EC%9D%98%20%EC%9D%BC%EC%A7%80,%20%ED%8F%AC%EC%8A%A4%ED%84%B0,%20%ED%81%90%EB%B8%8C(%EB%AC%B8%EC%A0%9C%2012)%2040cbdb91743d802ba596ff0789e1d54e.html" data-notion-page-id="40cbdb91-743d-802b-a596-ff0789e1d54e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">노아의 일지, 포스터, 큐브(문제 12)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-yellow">김민재</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-804d-85c9-db89bc73af84"><td class="cell-VP`r">14</td><td class="cell-title"><a href="%ED%95%B8%EB%93%9C%EB%B2%A8,%20%EB%B3%B4%EB%84%88%EC%8A%A4%20%EB%AC%B8%EC%A0%9C(%EB%AC%B8%EC%A0%9C%2013,%20%EB%AC%B8%EC%A0%9C%2013%205)%2040cbdb91743d804d85c9db89bc73af84.html" data-notion-page-id="40cbdb91-743d-804d-85c9-db89bc73af84" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">핸드벨, 보너스 문제(문제 13, 문제 13.5)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-green">김서연</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80f3-b677-e33cef8eb5ce"><td class="cell-VP`r">15</td><td class="cell-title"><a href="%EC%97%90%EB%B0%94%EC%9D%98%20%EB%A8%B8%EB%A6%AC%EB%9D%A0%2040cbdb91743d80f3b677e33cef8eb5ce.html" data-notion-page-id="40cbdb91-743d-80f3-b677-e33cef8eb5ce" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">에바의 머리띠</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-default">윤예준</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>진행 중</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80e1-805a-cfee484c4658"><td class="cell-VP`r">16</td><td class="cell-title"><a href="%ED%82%A4%EB%B3%B4%EB%93%9C%20%EA%B4%80%EB%A0%A8(%EB%AC%B8%EC%A0%9C%2014)%2040cbdb91743d80e1805acfee484c4658.html" data-notion-page-id="40cbdb91-743d-80e1-805a-cfee484c4658" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">키보드 관련(문제 14)</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-green">김서연</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40cbdb91-743d-80cd-b044-df1c2b7b1fd2"><td class="cell-VP`r">17</td><td class="cell-title"><a href="%EC%97%94%EB%94%A9%20%EC%B1%85%EC%9E%90%2040cbdb91743d80cdb044df1c2b7b1fd2.html" data-notion-page-id="40cbdb91-743d-80cd-b044-df1c2b7b1fd2" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">엔딩 책자</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-red">서민준</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC"></td></tr><tr id="40dbdb91-743d-80f5-9c8e-e7e7dcc5ba24"><td class="cell-VP`r">18</td><td class="cell-title"><a href="%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4%2040dbdb91743d80f59c8ee7e7dcc5ba24.html" data-notion-page-id="40dbdb91-743d-80f5-9c8e-e7e7dcc5ba24" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">인테리어</a></td><td class="cell-ZWfc"><span class="selected-value select-value-color-brown">고하준</span><span class="selected-value select-value-color-orange">김두현</span><span class="selected-value select-value-color-blue">김서현</span><span class="selected-value select-value-color-gray">이윤태</span><span class="selected-value select-value-color-yellow">홍은기</span></td><td class="cell-]r?d"><span class="status-value"><div class="status-dot"></div>시작 전</span></td><td class="cell-d&gt;iC">문서정비</td></tr></tbody></table></div><br/><br/></div><p id="40cbdb91-743d-8001-b924-f3fb4fd872d3" class="" dir="auto"> 자물쇠 세팅 윤태</p><p id="40dbdb91-743d-80a9-8ea0-d48793c4f1dd" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

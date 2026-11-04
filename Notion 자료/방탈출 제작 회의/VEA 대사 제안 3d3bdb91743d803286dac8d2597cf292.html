@@ -1,0 +1,820 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>VEA 대사 제안</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="3d3bdb91-743d-8032-86da-c8d2597cf292" class="page sans"><header><h1 class="page-title" dir="auto">VEA 대사 제안</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>건의자</th><td>홍은기</td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>수정 필요</span></td></tr></tbody></table></header><div class="page-body"><h3 id="3dabdb91-743d-808a-8eb6-f15ce4f3adc8" class="" dir="auto">성우</h3><p id="3dabdb91-743d-8002-b15d-d974e819e2cc" class="" dir="auto">알렉스 - 강현</p><p id="3dabdb91-743d-80cf-9393-c39fb390af97" class="" dir="auto">에바 - 서연</p><p id="3dabdb91-743d-80a5-968d-eec6e2fc9119" class="" dir="auto">오펠리아 - 서현</p><p id="3dabdb91-743d-806f-bbe3-de115c0279d6" class="" dir="auto">노아 - 정엽</p><p id="3dabdb91-743d-8013-b798-c9799764aa9d" class="" dir="auto">비아 - 예린</p><p id="3dabdb91-743d-8072-b7ec-fa3e94b03522" class="" dir="auto">릴리 - 채현</p><h3 id="3d3bdb91-743d-8028-9a52-e5dda41caaa0" class="" dir="auto"><strong>VEA 첫 등장</strong></h3><p id="3d3bdb91-743d-801e-acfd-cbf8562511b6" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">보호 시스템 로딩 중… 로딩 완료.</mark></em></p><p id="3d3bdb91-743d-80be-aa67-e891cc4582dc" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">안녕! 나는 Virtual Entity AI. 줄여서 V.E.A. 그냥 비아라고 불러도 돼.</mark></em></p><p id="3d3bdb91-743d-80eb-840e-c43d0ba1d5f7" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">릴리가 만든 도우미 프로그램이야. ALONE이라는 단어에 반응해서 깨어나게 되어 있어. 뭔가 하던 중이었던 것 같은데… 미안하게 됐네. 내가 깨어나면서 실수로 꺼 버렸거든.</mark></em></p><p id="3d3bdb91-743d-8083-934e-e72f322d5476" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">뭐라고? 다시 켜 달라고?</mark></em></p><p id="3d3bdb91-743d-80a0-b8a5-eeeecfa5355a" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">방금 깨어난 프로그램한테 너무 많은 걸 요구하는 거 아니야?</mark></em></p><p id="3d3bdb91-743d-80ab-8fa5-cab4ffbea395" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…그 전에 확인할 게 있어.<br/>이 우주선에는 아직 너가 모르는 것들이 남아 있거든.<br/>그걸 전부 보고 나서도 같은 생각이면… 그렇게 하자.</mark></em></p><p id="3dabdb91-743d-8006-81c0-f10b25d31d30" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3dabdb91-743d-8016-805f-e00a46118303" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">왜 이래, 한 번 살펴보고 싶지 않아?</mark></em></p><p id="3d3bdb91-743d-8061-b472-e17e6d227c49" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">우선 알렉스의 방에 다시 가 보지 않을래?<br/>누군가 숨겨놓은 게 있는 것 같길래, 이상해서.</mark></em></p><p id="3d3bdb91-743d-805b-9dbe-eb3d95859981" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">릴리 서랍에 열쇠(고리)가 하나 있을 거거든? 그걸 챙겨 가.</mark></em></p><h2 id="3d3bdb91-743d-80ad-9987-f4ce920cdd9d" class="" dir="auto"><strong>알렉스의 방</strong></h2><p id="3d3bdb91-743d-8021-833a-c781cc303671" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(들어가자마자) </mark></em><em><mark class="highlight-red" data-notion-highlight="red">에바.</mark></em></p><p id="3d3bdb91-743d-8048-804f-e366138ce27f" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-807e-8f2d-d18023c5e37e" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">에바. 돌아가. 여기는 더 이상 볼 것이 없어.</mark></em></p><p id="3d3bdb91-743d-8030-b38c-cc967fdf9db7" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">왜 그래? 환청이라도 들리는 거야? 제온을 너무 많이 마셨나 본데. </mark></em></p><p id="3d3bdb91-743d-8004-9183-f03fdee7c463" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그나저나, 내가 흥미로운 사실을 하나 알려줄까? </mark></em></p><p id="3d3bdb91-743d-80d8-afc0-fb6eb4ef5b74" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">그러지 마라.</mark></em></p><p id="3d3bdb91-743d-8005-8a26-f3ef70510437" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">사실 저 채팅에서 차단된 부분, 삭제된 게 아니라 잠겨 있는 거야. 그리고 저 서랍 안에 암호가 담겨 있지.</mark></em></p><p id="3d3bdb91-743d-80e9-9e70-cb4f4b1f3507" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">그러지 말라니까.</mark></em></p><p id="3d3bdb91-743d-8026-8237-d404d87f1ddc" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">사실 저 채팅에서 차단된 부분, 삭제된 게 아니라 잠겨 있는 거야. 그리고 저 서랍 안에 암호가 담겨 있지. 한 번 풀어볼래? 재밌겠다!</mark></em></p><p id="3d3bdb91-743d-8093-99f9-e2ed39043eba" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">에바, 나는 분명 경고했다. </mark></em></p><p id="3d3bdb91-743d-80af-a544-df0957f9d75f" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(이후 정적)</mark></em></p><h3 id="3dabdb91-743d-8068-bf42-d1f3826dcc80" class="" dir="auto">문제풀이 이후</h3><p id="3dabdb91-743d-80c9-b458-f2c54b556ab0" class="" dir="auto">채팅이 나오면서 동시에 이를 읽는 음성 또한 나온다.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="3dabdb91-743d-80d4-842a-d0cdc9126017" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">안녕하세요? 알파 팀의 에바라고 합니다. 제온에 대한 치명적인 사실을 알아냈습니다. 합성을 위해서는… [더보기]
+이봐요. 
+수신한 거 채팅창에 다 뜨는데. 왜 읽씹이야.
+알파의 임무 목표는 달성되었다. 
+왜 우리를 버린 거죠? 이런 데에 유능한 우주비행사 다섯을 버릴 만큼 돈이 남아도는 것도 아닐 텐데.
+하… 내가 이럴 줄 알았지.
+이봐, 알파 프로젝트의 파견 인원은 1명이다.
+무슨 소리죠? 맨 처음에 장난친 건 미안하지만, 그걸 똑같이 받아치는 그쪽도 유치한데요.
+더 이상의 잡담은 없다. 귀환 요청은 반려한다.
+이유라도 말해 줘요. 우리가 뭘 그렇게 잘못했다고?
+해당 인원은 임무 이전부터 격리 대상으로 분류되어 있었다. 지구로의 복귀는 불가하다.
+이유라도 말해 달라고요. 이러면 안 되는 거잖아…!
+본 통신 기록은 말소하겠다. 이후 알파 채널에 대한 응답을 중지한다.
+오메가.
+통신 종료.
+오메가, 제발요.
+여기는 알파. 여기는 알파.
+여기는 알파. 아직 살아 있어요. 제발 응답 좀 해 주세요.
+여기는 알파.</code></pre><p id="3dabdb91-743d-80fa-8d04-cfa30005744f" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…잠깐. 파견 인원이 한 명이라는데?</mark></em></p><p id="3dabdb91-743d-8058-ae09-c1e6c41aab19" class="" dir="auto"><em>(정적)</em></p><p id="3dabdb91-743d-809e-91d8-e3f429e718fb" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이상하네. 알렉스, 릴리, 오펠리아, 노아, 에바. 다섯 명 아니었어?</mark></em></p><p id="3dabdb91-743d-80f6-bbf0-db556cc89f05" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">에바. 더 읽지 마.</mark></em></p><p id="3dabdb91-743d-804a-b8fc-c32026b78d04" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">어? 또 뭐 들려? 흐음. 더 수상한데.</mark></em></p><p id="3dabdb91-743d-8080-ac44-d20367c0e860" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">에바, 저 기록은 믿을 필요 없다.정부가 우리를 버렸다는 건 이미 알고 있잖아.</mark></em></p><p id="3dabdb91-743d-80bc-ab69-da17e3008cf2" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그런데 좀 이상하지 않아? 다섯 명을 보냈는데, 기록에는 한 명이라고 적혀 있잖아.</mark></em></p><p id="3dabdb91-743d-80da-9956-e19285badcb2" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">그만해.</mark></em></p><p id="3dabdb91-743d-8056-948c-d989b3014b39" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">알았어, 알았어.</mark></em></p><p id="3dabdb91-743d-8044-9fd9-fb16a66a424a" class="" dir="auto"><em>(잠시 정적)</em></p><p id="3dabdb91-743d-80b0-8540-caba26992bf4" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…파견 인원이 한 명이라. 거기에 너는 계속 없는 사람 목소리까지 듣고 있고. 아까 농담처럼 말하긴 했는데, 진짜 제온 때문일 수도 있겠네.</mark></em></p><p id="3dabdb91-743d-8074-b931-de2f64cef0b2" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오펠리아의 보고서에 제온이 뇌에 영향을 준다고 적혀 있었지? 그쪽을 다시 확인해 보자.</mark></em></p><h2 id="3d3bdb91-743d-805e-abea-cf2c09682da0" class="" dir="auto">오펠리아의 방</h2><p id="3dabdb91-743d-8004-b82d-d4ec17103ea0" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">잠깐. 이거 페이지가 한쪽으로만 넘어가게 되어 있는 건 아닌 것 같은데? 아까랑 반대쪽도 한번 봐 봐.</mark></em></p><p id="3d3bdb91-743d-8084-b312-c665879326eb" class="" dir="auto">(넘긴다.)</p><p id="3d3bdb91-743d-8028-ad4c-dd39225d3cef" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">응. 그러니까 반대로.</mark></em></p><p id="3d3bdb91-743d-80b4-b7c7-f3a694ad3122" class="" dir="auto">(반대로 넘긴다. 뭔가가 드러난다.)</p><p id="3d3bdb91-743d-809c-8c9b-fe9b2b1fb8de" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이게 진짜네… 이런 걸 왜 굳이 이렇게 숨겨놨지? 뭐 아무튼, 이번에도 한 번 풀어 보자구.</mark></em></p><p id="3d3bdb91-743d-80a5-b909-e1bb639bd78e" class="" dir="auto"><strong>문제 해결 이후</strong></p><p id="3d3bdb91-743d-8039-b39d-fec40bb49b1e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오, 열렸다. 빨리 읽어 봐. 오, 나 이런 거 좋아하나 봐.</mark></em></p><p id="3d3bdb91-743d-8053-b86e-e0816ce88c9c" class="" dir="auto">(제온 심화 보고서가 나타난다. 비아가 읽는 부분이 하이라이트된다.)</p><p id="3d3bdb91-743d-808c-8259-e5daa3b59db3" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">다중인격을 대상으로 제온을 투여했을 경우, 일반적인 실험군과 다른 반응이 관찰되었다.</span></mark></p><p id="3d3bdb91-743d-8060-b9e1-f2851f647e43" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">제온의 효과는 신체 전체가 아닌, 자신이 제온을 투여받았다고 인지한 인격에 집중되는 것으로 추정된다.</span></mark></p><p id="3d3bdb91-743d-8008-98e5-f17718e34c8f" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">기억 소실, 기억 강화, 의식 소실 및 뇌 기능 정지에서도 같은 현상이 관찰되었다.</span></mark></p><p id="3d3bdb91-743d-8001-88bc-c05c43e458f5" class="" dir="auto">
+</p><p id="3d3bdb91-743d-808a-9bbb-cbd46d25c89e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…다중인격.</mark></em></p><p id="3d3bdb91-743d-80ed-a652-c46421f391de" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">아까 정부 기록에는 파견 인원이 한 명이라고 했지.</mark></em></p><p id="3d3bdb91-743d-806b-bf60-f9397547c6cc" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그리고 여기에는 이런 실험 기록이 있고.</mark></em></p><p id="3d3bdb91-743d-804f-ac09-e7056fa03f8d" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">뭔가 연결되는 것 같은데.</mark></em></p><p id="3d3bdb91-743d-80a7-95d3-cb0acab66f20" class="" dir="auto">
+</p><p id="3d3bdb91-743d-807c-a140-d001570b920b" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이것도 좀 흥미롭네?</mark></em></p><p id="3d3bdb91-743d-8066-9c7d-c69b84dadaf5" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">뇌 활동이 완전히 정지한 생쥐를 대상으로 재활성화 실험을 진행하였다.</span></mark></p><p id="3d3bdb91-743d-80e9-8813-f3cc10158182" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">특정 조제 물질 투여 이후 뇌 활동 재개 확인.</span></mark></p><p id="3d3bdb91-743d-806c-98be-eabd9694eec4" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">파일 상태: 옮겨짐.</span></mark></p><p id="3d3bdb91-743d-80f3-a36c-c35693e05272" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">옮겨졌네.</mark></em></p><p id="3d3bdb91-743d-809e-9d2e-c60920347f21" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그럼 그 파일도 어딘가 남아 있다는 뜻이겠지?</mark></em></p><p id="3dabdb91-743d-80b1-9961-c20a84b1e607" class="" dir="auto">
+</p><p id="3dabdb91-743d-8096-a4bc-d5056aeba920" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">사람에게 제온 노출된 기록도 있네?</mark></em></p><p id="3dabdb91-743d-8009-905a-ef114d94ed10" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">노아 하손이 허가 없이 선외 활동을 시도함. 본인은 “심심하다”라고 주장함.</span></mark></p><p id="3dabdb91-743d-8009-8de2-dbc739a27fef" class="" dir="auto"><mark class="highlight-orange" data-notion-highlight="orange"><span style="border-bottom:0.05em solid">소량의 제온 노출이 확인되었으나, 별다른 이상 반응은 관찰되지 않았음.</span></mark></p><p id="3dabdb91-743d-8091-85b9-e7d63cf39b06" class="" dir="auto">
+</p><p id="3dabdb91-743d-805a-a116-f4569b067aa5" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">노아가 제온에 노출됐었네.</mark></em></p><p id="3dabdb91-743d-80a1-adc9-e2d72d81f6d5" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그러고 보니 이상해지기 시작한 것도 이쯤 아니었어?</mark></em></p><p id="3dabdb91-743d-80b5-af0b-cbb926f5969c" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이번엔 노아 쪽을 다시 보는 게 맞겠네.</mark></em></p><p id="3dabdb91-743d-80d1-bac8-f572c4a20255" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">가 보자. 분명 처음엔 없던 게 있을 거야.</mark></em></p><h2 id="3dabdb91-743d-80d2-ac24-e8d795cf81cc" class="" dir="auto"><strong>노아의 방</strong></h2><p id="3dabdb91-743d-8046-bd6c-d89cbf4d950e" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">또 왔네.</mark></em></p><p id="3dabdb91-743d-808c-a57c-e5978e34916c" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오펠리아 기록까지 봤으니, 이제 노아 쪽도 다시 확인해 보자.</mark></em></p><p id="3dabdb91-743d-809d-aa97-fc640135e091" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">여긴 이미 다 봤잖아.</mark></em></p><p id="3dabdb91-743d-8011-a462-fe8f896b4c4c" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">처음 왔을 때는 못 봤던 게 있을 수도 있잖아. 아까도 그랬으니까.</mark></em></p><p id="3dabdb91-743d-80ba-8019-fce543b233e6" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">쓸데없는 짓이야.</mark></em></p><p id="3dabdb91-743d-8065-9e86-f41c99496b83" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">특히 노아가 제온에 노출됐다는 기록이 나온 이상, 그냥 넘어가긴 좀 그렇지.</mark></em></p><p id="3dabdb91-743d-802f-b974-d9a6021406e7" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">뭘 찾아내든 결론은 달라지지 않아.</mark></em></p><p id="3dabdb91-743d-8061-ba81-cf13a90244d3" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">일단 숨겨진 게 있는지부터 찾아보자.</mark></em></p><h3 id="3dabdb91-743d-8005-9f6f-d567d5f46a3a" class="" dir="auto"><strong>문제 해결 이후</strong></h3><p id="3dabdb91-743d-8015-9740-e60501a011c2" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오, 진짜 있었네.</mark></em></p><p id="3dabdb91-743d-806b-8c09-efafa7410390" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">열어 보자. 노아가 뭘 숨겨 놨는지 궁금해졌어.</mark></em></p><p id="3dabdb91-743d-809c-8203-d35e2e73f918" class="" dir="auto">(숨겨진 기록이 나타난다.)</p><p id="3dabdb91-743d-8006-9640-da7b6c8898ed" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">옛날에는, 저 하늘을 올려다보며 돌아가고 싶다는 생각을 하곤 했다. 푸른 하늘을 한 번이라도 다시 보고 싶었거든.</span></mark></p><p id="3dabdb91-743d-80e4-b445-d87e1411ae25" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">그렇지만 이젠 다 끝났다. 항법도, 조종도, 계산도 결론을 바꾸진 못하지. 무슨 방법을 써도 지구를 다시 밟을 일은 없다.</span></mark></p><p id="3dabdb91-743d-8073-beb4-cb9a3a90c9ae" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">우리는 여기서 비참하게 죽는다는 뜻이다.</span></strong></mark></p><p id="3dabdb91-743d-8006-b64f-f3c13a612b10" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">그 극심한 공포 속에서, 한 가지 가능성을 발견했어.</span></mark></p><p id="3dabdb91-743d-808d-af3e-e3b6bf69d73e" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">오펠리아와 릴리에게 준 것은 </span></mark><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">축복</span></strong></mark><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">이다. </span></mark><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">끝없는 고통에서 탈출하는 축복</span></strong></mark><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">. 미래의 고통으로부터의 </span></mark><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">탈출</span></strong></mark><mark class="highlight-teal" data-notion-highlight="teal"><span style="border-bottom:0.05em solid">.</span></mark></p><p id="3dabdb91-743d-80f7-802c-f7828cf284ff" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">불확실한 미래에 기대다가 끝내 무너질 바에는, 확실한 안정을 택하는 편이 낫다.</span></strong></mark></p><p id="3dabdb91-743d-801d-ad6f-edde55b27c9e" class="" dir="auto"><mark class="highlight-teal" data-notion-highlight="teal"><strong><span style="border-bottom:0.05em solid">그래서 너희들에게도 이 축복을 베풀기로 했다.</span></strong></mark></p><p id="3dabdb91-743d-8030-9c35-c96e5fdb503e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…이건 좀 위험한 얘기 같은데.</mark></em></p><p id="3dabdb91-743d-80f3-91c6-d134ce5b6e39" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오펠리아랑 릴리한테 무슨 짓을 했다는 건지도 그렇고, 장치를 손봤다는 것도 그렇고.</mark></em></p><p id="3dabdb91-743d-80db-aa54-c0377258ec6b" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">이미 늦었어.</mark></em></p><p id="3dabdb91-743d-8019-8689-d71931e8a754" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">특히 장치를 손봤다는 얘기는 그냥 넘어가면 안 되겠는데.</mark></em></p><p id="3dabdb91-743d-8016-9311-ebcac752e657" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">알게 돼도 달라지는 건 없어.</mark></em></p><p id="3dabdb91-743d-807e-b0ab-ffe05e01861b" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">행성·탈출 프로젝트를 만든 건 에바였지? 장치 관련 자료도 에바의 방에 있었고.</mark></em></p><p id="3dabdb91-743d-80ab-9aa8-e052bbf8b9c0" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">뭘 어떻게 손댄 건지 확인해 보자.</mark></em></p><h3 id="3dabdb91-743d-80f8-8b87-fb35bdb9749b" class="" dir="auto">에바의 방 2차 — 기억 잠금 해제</h3><p id="3dabdb91-743d-8099-a044-d7a64c721d2d" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">장치 관련 자료부터 찾아보자. 노아가 뭘 건드렸는지 흔적이 남아 있을지도 몰라.</mark></em></p><p id="3dabdb91-743d-80ec-9590-f75dcb0a6fea" class="" dir="auto">(조사 도중 오펠리아의 기록에서 ‘옮겨짐’으로 표시되었던 파일을 발견한다.)</p><p id="3dabdb91-743d-805a-8085-c0634f1a2e8d" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">잠깐. 이거 아까 오펠리아의 기록에서 ‘옮겨짐’이라고 나온 파일 아니야?</mark></em></p><p id="3dabdb91-743d-8051-a395-fac351e5925b" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">같이 연구한 사람이 에바였으니까 여기로 옮겨 둔 모양이네.</mark></em></p><p id="3dabdb91-743d-802a-a3a3-fd29cc8c7012" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">장치도 확인해야 하지만, 이것도 그냥 지나칠 수는 없겠다.</mark></em></p><p id="3dabdb91-743d-80b4-8db4-ff30ad4683c8" class="" dir="auto">(문제 해결)</p><p id="3dabdb91-743d-8005-8bd5-ecd8f70d985c" class="" dir="auto"><em>뇌 기능 재활성화 실험 기록을 복구합니다.</em></p><p id="3dabdb91-743d-8028-995a-f2f2e85a96eb" class="" dir="auto">(기록에는 제온으로 인해 정지하거나 손상된 뇌 활동을 다시 활성화시키는 약물의 조제 과정이 적혀 있다.)</p><p id="3dabdb91-743d-809b-92f1-e99cfcf87e98" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">찾았다.</mark></em></p><p id="3dabdb91-743d-802b-88ab-ee1e7cc90c7e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이거, 뇌 활동만 되살리는 게 아니라 제온 때문에 사라진 기억에도 효과가 있을지도 몰라.</mark></em></p><p id="3dabdb91-743d-8058-a23b-fa84badb0473" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">너도 제온을 맞고 기억을 잃었잖아. 기억이 돌아오면 지금까지 놓친 것도 알 수 있을지 모르지.</mark></em></p><p id="3dabdb91-743d-80b4-9f1a-d19e9af3e7d0" class="" dir="auto">(약 제조 문제를 해결한다.)</p><p id="3dabdb91-743d-8008-83c7-c1a87b570e06" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">됐다. 먹어 봐.</mark></em></p><p id="3dabdb91-743d-8050-9a85-fec448e95bce" class="" dir="auto"><em>(정적)</em></p><p id="3dabdb91-743d-807f-ac0b-f91d89aa18d9" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">오. 진짜 깨어나는구나? 흥미롭네. 생쥐한테는 성공했지만, 사람한테도 적용되는지는 확인 못 했었는데.이런 식으로 돌아오는구나.</mark></em></p><p id="3dabdb91-743d-8045-9176-c9ecc21f958e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…왜 그래? 뭔가 달라진 거 있어?</mark></em></p><p id="3dabdb91-743d-806f-9f16-dabdd5bedad2" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">그런데 릴리는 안 들리네. 같은 조건인데 나만 돌아왔다라. 흐음. 이것도 흥미로운데. 아마 릴리라면 이유를 알고 있을 거야.</mark></em></p><p id="3dabdb91-743d-8003-8eca-d78996f4b529" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">뭔데? 왜 그렇게 가만히 서 있어?</mark></em></p><p id="3dabdb91-743d-80e6-982e-d904116ae25b" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">못 깨어나는 건지, 안 나오고 있는 건지는 직접 확인해 봐야겠네.</mark></em></p><p id="3dabdb91-743d-80a5-b08b-c2e54bc0d639" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">릴리의 방으로 가. 거기에 에바에 대해 숨겨 둔 기록이 있을 거야.</mark></em></p><p id="3dabdb91-743d-806d-8df8-c8dda03dc56e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…뭔가 알아낸 모양이네. 좋아. 일단 가 보자고.</mark></em></p><h2 id="3dabdb91-743d-802d-b2f5-f3d31c1dd5ae" class="" dir="auto">릴리의 방</h2><p id="3dabdb91-743d-80a1-8311-eca9f7244ebf" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">저기 잠겨 있는 파일 보이지?</mark></em></p><p id="3dabdb91-743d-8021-b766-d9eb818c5ef8" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">에바의 과거랑 우리에 대한 기록이야.</mark></em></p><p id="3dabdb91-743d-80fb-b053-d62feb2d03c2" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">열어 봐. 지금까지 이상했던 것들이 전부 설명될 거야.</mark></em></p><p id="3dabdb91-743d-8000-a317-fcbc3ba2e607" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">… 이게 뭐야? 에바에 대한 기록? 잠겨 있는데?</mark></em></p><h3 id="3dabdb91-743d-8065-838d-ee3289c3b185" class="" dir="auto">문제 해결</h3><p id="3dabdb91-743d-8036-a2e8-df289572c1fe" class="" dir="auto"><strong>보안 파일의 잠금을 해제합니다.</strong></p><p id="3dabdb91-743d-801e-b8d2-f24ef88e6945" class="" dir="auto">(진실이 드러난다.)</p><p id="3d3bdb91-743d-80d7-9213-c22c008ea980" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-801b-b46d-c0605b6065e7" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…결국 알게 되었구나. 네가 여기까지 알아낼 줄은 몰랐는데. 정확히는… 알아낸 뒤에 나를 어떻게 볼지 몰랐어.</mark></em></p><p id="3d3bdb91-743d-80e4-9c83-d747c7835cd0" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그래도 이제 숨길 이유는 없겠네.</mark></em></p><p id="3d3bdb91-743d-8046-8605-fa63fd6405dc" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-8018-a3fa-f6b6e17f9197" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">알렉스도, 나도, 오펠리아도, 노아도 전부 너야. 에바 펠로노르.</mark></em></p><p id="3d3bdb91-743d-80e7-a335-dfcee2e46330" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">몸은 처음부터 하나였어.</mark></em></p><p id="3d3bdb91-743d-8055-bd4e-f791d0db9c55" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-8007-9de5-f12917e31dd1" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">어릴 때 너는 혼자 노는 시간이 많았어. 자기를 이해할 사람도 별로 없다고 생각했고.</mark></em></p><p id="3d3bdb91-743d-8068-820e-c3fb2150da52" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그래서 친구를 만들었지.</mark></em></p><p id="3d3bdb91-743d-8000-a4f2-d51c479d5f16" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">알렉스는 결정하고 책임져 주는 리더.</mark></em></p><p id="3d3bdb91-743d-80bb-9d4d-cec04b1f66fa" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">나는 지키고 보호하는 수호자.</mark></em></p><p id="3d3bdb91-743d-80c4-a96d-c55d93d65b0e" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">오펠리아는 호기심과 분석을 담당하는 연구자</mark></em></p><p id="3d3bdb91-743d-8080-9da8-c378428883eb" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">노아는 계산 및 가치 판단을 담당하는 엔지니어. 심심할 때 사고 치는 것도 포함해서.</mark></em></p><p id="3d3bdb91-743d-80b5-95a3-f008c7b6b8a1" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">굳이 그걸 넣어?</mark></em></p><p id="3d3bdb91-743d-8068-a86c-ffaa00ecab19" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">사실이잖아.</mark></em></p><p id="3d3bdb91-743d-80fe-824a-c8fc1b0b8bea" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">맞긴 해.</mark></em></p><p id="3d3bdb91-743d-80f4-b259-c6617cf092cc" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-80f2-b4a1-fd827015ba33" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">처음에는 그냥 상상에 가까웠어. 그런데 시간이 지나면서 우리한테 맡기는 일이 많아졌고, 결국 너도 우리도 서로 다른 사람이라고 믿게 됐어.</mark></em></p><p id="3d3bdb91-743d-8002-966f-e5dc4ff96691" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">네가 잊어도 나는 기억했어. 내 역할이 기억을 지키는 거니까.</mark></em></p><p id="3d3bdb91-743d-8086-a887-fbd89726e822" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">네가 진실을 알면 견디지 못할 거라고 생각했어. 그때는 그게 널 지키는 방법이라고 생각했고.</mark></em></p><p id="3d3bdb91-743d-8002-b43f-e8b68a50809c" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">지금 생각하면… 내가 결정할 일이 아니었는데 말이야.</mark></em></p><p id="3d3bdb91-743d-8062-8964-c06d15c55f71" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p><p id="3d3bdb91-743d-80bf-97ab-d0f51b01e491" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">에바. 네가 처음부터 혼자였다는 건 사실이야. 하지만 그 사실이 네 결론까지 정해 주는 건 아니야.</mark></em></p><p id="3d3bdb91-743d-80e0-9424-fb7f68e6ad87" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">난 더 이상 네가 뭘 기억하고 뭘 잊을지 대신 정하지 않을게.</mark></em></p><p id="3d3bdb91-743d-8063-a5be-ed22b103b262" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이제는 네가 알고 선택해.</mark></em></p><h3 id="3d3bdb91-743d-80d8-bbc6-d13ff4516ac5" class="" dir="auto">릴리의 방 — ALONE에서 LOVE로</h3><p id="3d3bdb91-743d-80b6-a6e2-f64309ec3a9a" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">질문: 에바 님이 가장 좋아하는 단어는 무엇인가요?</mark></em></p><p id="3d3bdb91-743d-8015-982b-d5f5788a7bfa" class="" dir="auto">(화면에 ALONE이 나타난다.)</p><p id="3d3bdb91-743d-8018-aa65-c718cacbb2bb" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">그만하면 됐다, 에바. 우리는 충분히 했다. 더 이상 의미 없는 시도를 계속할 필요는 없다.</mark></em></p><p id="3d3bdb91-743d-8076-9a67-d2c4a2ead4bf" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">맞아. 계산은 이미 끝났어. 살아남을 가능성도, 돌아갈 가능성도 없어.</mark></em></p><p id="3d3bdb91-743d-808b-ad8d-e45246fac989" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">처음부터 혼자였고, 마지막도 혼자인 거야. 깔끔하잖아.</mark></em></p><p id="3d3bdb91-743d-805d-9436-dcc85e7df1f2" class="" dir="auto">(ALONE에 엔터를 누른다.)</p><p id="3d3bdb91-743d-8096-9a8b-da4c177ed9bf" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">틀렸습니다.</mark></em></p><p id="3d3bdb91-743d-8014-b7b5-d2cdb024fa47" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">어?</mark></em></p><p id="3d3bdb91-743d-8039-bb1c-c859f58597be" class="" dir="auto">(다른 글자는 입력되지 않는다.)</p><p id="3d3bdb91-743d-806b-ae10-eb0b8dcb2ede" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이상한데. 아까는 맞았잖아.</mark></em></p><p id="3d3bdb91-743d-8073-a6b8-ea881d3b646b" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">단어가 틀린 게 아니라, 지금은 답이 달라진 거겠지.</mark></em></p><p id="3d3bdb91-743d-8039-ac39-dc0fe022de74" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…그런가?</mark></em></p><p id="3d3bdb91-743d-8036-9ca5-f90e2af3d4f7" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-804b-a155-f33a92f230cb" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">알렉스. 네가 포기했다고 에바까지 포기해야 하는 건 아니잖아.</mark></em></p><p id="3d3bdb91-743d-807a-b506-e8bc36acc0c2" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">나는 이미 지휘관으로서 판단을 잃었다.</mark></em></p><p id="3d3bdb91-743d-8008-b123-c3ce946448ef" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그럼 이번에는 지휘하지 마. 에바가 직접 고르게 해 줘.</mark></em></p><p id="3d3bdb91-743d-8019-88e5-e428b66a92ee" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-8055-9b05-f675560d5b60" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">…알겠다.</mark></em></p><p id="3d3bdb91-743d-8009-80da-ebca1f042de2" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">에바 펠로노르. 나는 더 이상 앞에서 널 이끌 수 없겠지. 지휘권을 반납할 테니, 네가 선택해.</mark></em></p><p id="3d3bdb91-743d-8071-b75b-db2e3ce6bfd3" class="" dir="auto">(A가 사라진다.)</p><p id="3d3bdb91-743d-8075-b562-ea50f4e5a03f" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">노아도.</mark></em></p><p id="3d3bdb91-743d-8088-88c7-c1573d006b44" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">난 싫은데.</mark></em></p><p id="3d3bdb91-743d-80db-ade6-fbe5eb341a52" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">네 계산이 끝났다고 에바까지 끝난 건 아니잖아.</mark></em></p><p id="3d3bdb91-743d-8080-a377-c55c6adea3cc" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">하… 해 보라지. 결국 내가 맞았다는 걸 알게 될 테니까.</mark></em></p><p id="3d3bdb91-743d-808d-9553-d69e77f2ae42" class="" dir="auto">(N이 사라진다.)</p><p id="3d3bdb91-743d-802e-a64f-c7c3aa5e6159" class="" dir="auto">(화면에는 L, O, E만 남는다.)</p><p id="3d3bdb91-743d-80cb-b99c-d5039e846649" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">L, O, E.</mark></em></p><p id="3d3bdb91-743d-8071-8376-cb1108351365" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…하나 부족하네.</mark></em></p><p id="3d3bdb91-743d-80d8-9144-fe357209f45a" class="" dir="auto">(주황색 V가 나타난다.)</p><p id="3d3bdb91-743d-8037-8903-f53be113c3d5" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그럼 내 거 줄게.</mark></em></p><p id="3d3bdb91-743d-8072-a4a9-f49828051cb0" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-808f-a441-c8af82eed935" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그리고… 이제는 말해도 되겠다.</mark></em></p><p id="3d3bdb91-743d-80f5-9d9d-fab1ca65a668" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">나 사실 프로그램 아니야.</mark></em></p><p id="3d3bdb91-743d-8073-ab7b-dbba01d46f33" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-8096-8156-e541e1c4ac1c" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">아까 알렉스도 들렸어. 노아도 들렸고.</mark></em></p><p id="3d3bdb91-743d-8062-beb2-f9f35cea07ac" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">못 듣는 척했어. 네가 아직 아무것도 모르는데 갑자기 나까지 이상한 소리 하면 더 혼란스러울 것 같아서.</mark></em></p><p id="3d3bdb91-743d-8037-a613-f0671659a721" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">생각보다 연기는 못 하던데.</mark></em></p><p id="3d3bdb91-743d-806b-a28b-dde9ae4338e7" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">시끄러워.</mark></em></p><p id="3d3bdb91-743d-80ff-ba4f-e4c76f8a659d" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-80a7-a7e9-e2849d9494fa" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">나는 제6인격, 비아야.</mark></em></p><p id="3d3bdb91-743d-8003-b2c1-df85e3a74c21" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">네가 ALONE을 입력했을 때 태어났어.</mark></em></p><p id="3d3bdb91-743d-80d7-aefe-ec0918690895" class="" dir="auto">(V가 VEA로 확장된다.)</p><p id="3d3bdb91-743d-80ba-ba85-fa1cf1f69876" class="" dir="auto">(VEA가 EVA로 변한다.)</p><p id="3d3bdb91-743d-8035-a71c-df8107e7ff62" class="" dir="auto">(다시 VEA로 돌아간 뒤 V만 남는다.)</p><p id="3d3bdb91-743d-8026-a10b-fe9611787118" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그러니까 이건 너한테 줄게.</mark></em></p><p id="3d3bdb91-743d-80ea-87c5-c540b6e5c072" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">다시 만들어 봐.</mark></em></p><p id="3d3bdb91-743d-80ce-a4da-eb3794850e38" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">이번에는 혼자라는 사실로 끝내는 답 말고.</mark></em></p><p id="3d3bdb91-743d-8039-b47d-ddb935fea914" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">그걸 알고도 앞으로 갈 수 있는 답.</mark></em></p><p id="3d3bdb91-743d-8052-9c24-db87098b547e" class="" dir="auto">(V가 드래그 가능해진다.)</p><p id="3d3bdb91-743d-80af-9227-ef460f3e02b9" class="" dir="auto">(LOVE를 완성한다.)</p><p id="3d3bdb91-743d-80c4-b9df-da1a040e1676" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">정답입니다.</mark></em></p><p id="3d3bdb91-743d-8015-be7e-edafb9be32a5" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">행성·탈출 프로젝트의 최종 제어 레버가 활성화되었습니다.</mark></em></p><h3 id="3d3bdb91-743d-80f0-990e-c2a48b8d76e2" class="" dir="auto">릴리의 방 — 레버</h3><p id="3d3bdb91-743d-80fc-b91f-c67a79b99ea3" class="" dir="auto">(레버가 활성화된다.)</p><p id="3d3bdb91-743d-8093-a250-da737dae873f" class="" dir="auto"><em><mark class="highlight-teal" data-notion-highlight="teal">자. 이제 당기면 돼.</mark></em></p><p id="3d3bdb91-743d-8029-a55a-fdc69c7d2593" class="" dir="auto"><em><mark class="highlight-yellow" data-notion-highlight="yellow">잠깐. 끝까지 확인하고 결정하는 게 좋겠어.</mark></em></p><p id="3d3bdb91-743d-8003-b71d-ecd23da4b328" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">에바가 고르게 둬.</mark></em></p><p id="3d3bdb91-743d-8008-bcf5-e9b77a2eaaad" class="" dir="auto"><em><mark class="highlight-red" data-notion-highlight="red">동의한다. 더 이상의 명령은 없다.</mark></em></p><p id="3d3bdb91-743d-8037-a6b0-c40e93a5ce25" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">나도 이번엔 아무 말 안 할게.</mark></em></p><p id="3d3bdb91-743d-806d-b862-eced6a9a8cf1" class="" dir="auto">(정적)</p><p id="3d3bdb91-743d-80f4-9f07-c6fa2d61440a" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">…아마도.</mark></em></p><p id="3d3bdb91-743d-804d-941e-cbe27869c76d" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">비아.</mark></em></p><p id="3d3bdb91-743d-8037-b2d5-cfe6379b7005" class="" dir="auto"><em><mark class="highlight-orange" data-notion-highlight="orange">알았어.</mark></em></p><p id="3d3bdb91-743d-802e-95f7-dad0af85d017" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">최종 선택을 기다리고 있습니다.</mark></em></p><p id="3d3bdb91-743d-80c4-ac87-fa9d10e8c0fe" class="" dir="auto">
+</p><hr id="3d3bdb91-743d-8050-b0e4-cc9045c90403" dir="auto"/><h3 id="3d3bdb91-743d-808c-9c50-f2f7c6ea1dd5" class="" dir="auto">부가 설명:</h3><p id="3d3bdb91-743d-8006-a8d8-f967a2d2837f" class="" dir="auto"><del>추가 설정: VEA는 릴리가 에바를 지키기 위해 만들어낸 인격으로, 위기 상황에 깨어나게 해 놓은 인격이다. 그래서 ‘</del><del><em><mark class="highlight-orange" data-notion-highlight="orange">릴리가 버려둔 도우미 프로그램이었는데, ALONE이라는 단어에 반응해서 깨어나게 되어 있어.</mark></em></del><del><em><mark class="highlight-default" data-notion-highlight="default">’</mark></em></del><del><mark class="highlight-gray" data-notion-highlight="gray"> </mark></del><del><mark class="highlight-default" data-notion-highlight="default">같은 말을 하는 것을 볼 수 있다.</mark></del></p><p id="3d3bdb91-743d-8084-bffa-e153075f808b" class="" dir="auto"><del>얘가 자기 정체를 밝힐 곳이 없음;; 그래서 릴리</del></p><p id="3dabdb91-743d-80b2-9dc5-dda313785eb8" class="" dir="auto">없어진 설정임</p><hr id="3d3bdb91-743d-8064-a979-c874fcfd1a18" dir="auto"/><h3 id="3d3bdb91-743d-80be-9cb8-cb6170e8bbfe" class="" dir="auto">댓글</h3><p id="3d3bdb91-743d-80f8-9dbd-c22aaf30f9ce" class="" dir="auto"><em><mark class="highlight-gray" data-notion-highlight="gray">(정적)</mark></em></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

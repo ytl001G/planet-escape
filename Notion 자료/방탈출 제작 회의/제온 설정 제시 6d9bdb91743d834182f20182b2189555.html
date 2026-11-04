@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제온 설정 제시</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="6d9bdb91-743d-8341-82f2-0182b2189555" class="page sans"><header><h1 class="page-title" dir="auto">제온 설정 제시</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>건의자</th><td>홍은기</td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value select-value-color-purple"><div class="status-dot status-dot-color-purple"></div>논의 필요</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>유형</th><td><span class="selected-value select-value-color-orange">스토리 수정</span></td></tr></tbody></table></header><div class="page-body"><h3 id="3bbbdb91-743d-8001-92fd-d599d1ac08fe" class="" dir="auto">수정 부분:</h3><p id="3bbbdb91-743d-803c-9752-d27b95a4ea2c" class="" dir="auto">제온의 효과</p><hr id="3bbbdb91-743d-80bc-ae56-fb533c4beaf0" dir="auto"/><h3 id="3bbbdb91-743d-80a4-a4b8-e50883e4c434" class="" dir="auto">수정 관련 사유:</h3><p id="3bbbdb91-743d-8003-86a8-f54240e05a56" class="" dir="auto">현재 제온은 기억 강화·소거, 뇌사, 특정 인격의 사망, 뇌사 복구, 노아의 이상 증세 등 여러 사건에 사용되고 있음.</p><p id="3bbbdb91-743d-8032-9f0b-f3303441096e" class="" dir="auto">각 사건을 별개의 효과로 취급하기보다 <strong>제온이 뇌에 영향을 주는 방식과 다중인격자에게 적용되는 규칙</strong>을 먼저 확정하고, 나머지 사건을 이 규칙 안에서 설명하는 편이 자연스러움.</p><p id="3bbbdb91-743d-8085-b415-fd1589b52839" class="" dir="auto">현재 시나리오에는 생쥐를 대상으로 한 기억 실험, 고농도 제온에 의한 뇌사, 뇌사한 생쥐의 뇌 활동 복구 실험, 다중인격 대상의 제온 적용 규칙 등이 이미 작성되어 있음.</p><hr id="3bbbdb91-743d-806b-bbe4-f741764ed94a" dir="auto"/><h3 id="3bbbdb91-743d-807e-85ac-dbff990b08ba" class="" dir="auto">현재 제온 설정:</h3><p id="3bbbdb91-743d-80b6-a8b3-eef749dfeb9b" class="" dir="auto"><strong>1. 제온은 뇌에 직접적으로 영향을 주는 물질이다.</strong></p><p id="3bbbdb91-743d-801a-b270-f387f43b5e13" class="" dir="auto">오펠리아는 주로 생쥐를 대상으로 제온 실험을 진행함.</p><ul id="3bbbdb91-743d-806a-8de7-cf80d57f963c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 강화</li></ul><ul id="3bbbdb91-743d-8084-8541-d023e4d76a70" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 소거</li></ul><ul id="3bbbdb91-743d-8048-9a78-cc1a3f18a9ba" class="bulleted-list" dir="auto"><li style="list-style-type:disc">지능 강화</li></ul><hr id="3bbbdb91-743d-80e5-b459-ffba33bd57ba" dir="auto"/><p id="3bbbdb91-743d-80d3-9edb-e55496a60bd3" class="" dir="auto"><strong>2. 고농도 제온은 뇌사를 일으킨다.</strong></p><p id="3bbbdb91-743d-805f-88b1-d464b018a4f3" class="" dir="auto">제온의 양이 높아지면 기억 변화 수준을 넘어 뇌 기능 자체를 정지시킬 수 있음.</p><p id="3bbbdb91-743d-80e8-b935-da266e392609" class="" dir="auto">따라서 제온에는 별도의 ‘인격 제거 능력’이 있는 것이 아니라, <strong>치사량의 제온이 해당 인격에게 적용되면 그 인격이 사망하는 것</strong>임.</p><p id="3bbbdb91-743d-803a-af46-dbed71ea3125" class="" dir="auto">오펠리아가 사라진 사건 역시 이 원리로 설명함. 오펠리아 인격이 치사량의 제온을 마셨다고 인식했고, 그 결과 오펠리아 인격이 사망.</p><hr id="3bbbdb91-743d-80a9-a4c0-f905e995f983" dir="auto"/><p id="3bbbdb91-743d-80af-a655-da8dec16eb9d" class="" dir="auto"><strong>3. 다중인격자의 경우 제온의 효과는 제온을 섭취했다고 인식한 인격에게 적용된다.</strong></p><p id="3bbbdb91-743d-80f4-8651-ee528ee06ad3" class="" dir="auto">같은 육체를 공유하고 있더라도, 특정 인격이 자신이 제온을 마셨거나 투여받았다고 인식한다면 기억 변화나 사망 등의 효과가 해당 인격을 중심으로 발생함.</p><p id="3bbbdb91-743d-801b-beeb-cad831b89c24" class="" dir="auto">이 규칙은 2부에서 <strong>다중인격이 확인된 생쥐를 이용한 추가 실험</strong>으로 밝혀진 것으로 설정할 수 있음.</p><p id="3bbbdb91-743d-80b0-853d-c6f73901dce9" class="" dir="auto">1부에서는 일반적인 생쥐 실험만 공개하고, 2부에서 일부 실험체가 복수 인격을 가지고 있었다는 사실과 인격별 제온 반응 기록을 추가로 공개함.</p><hr id="3bbbdb91-743d-80b3-8754-ee54041eeaa2" dir="auto"/><h3 id="3bbbdb91-743d-801d-a193-fd6dd0aa4cd8" class="" dir="auto">에바의 기억 상실:</h3><p id="3bbbdb91-743d-80e8-8454-ff9f8fd108bf" class="" dir="auto">에바가 게임 시작 시 기억을 잃은 이유는 <strong>노아 인격이 에바 인격에게 제온을 마시게 했기 때문</strong>임.</p><p id="3bbbdb91-743d-80df-ada5-c8268674f9ae" class="" dir="auto">1부에서는 노아가 에바를 붙잡아 제온을 주입한 것처럼 보이지만, 실제로는 같은 육체 안에서 발생한 인격 간의 사건임. 노아가 신체의 제어권을 가진 상태에서 제온을 투여했고, 에바는 자신이 노아에게 제온을 강제로 투여받았다고 인식함. 따라서 제온의 기억 소거 효과는 에바 인격에게 적용되고, 에바는 대부분의 기억을 잃은 상태로 릴리의 방에서 깨어남.</p><p id="3bbbdb91-743d-8031-a3c1-fb10669c8f51" class="" dir="auto">즉 에바의 기억 상실은 별도의 설정이 아니라 <strong>기존 제온의 기억 소거 효과 + 인격별 적용 규칙</strong>으로 설명함.</p><hr id="3bbbdb91-743d-8007-a591-d7c68843f62b" dir="auto"/><h3 id="3bbbdb91-743d-8034-88f9-f03664b18d66" class="" dir="auto">오펠리아의 사망:</h3><p id="3bbbdb91-743d-8045-ab13-def7e011c4c3" class="" dir="auto">오펠리아 역시 같은 규칙을 사용함.</p><p id="3bbbdb91-743d-80e8-8f5c-df7b6ae2b260" class="" dir="auto">1부에서는 노아가 실제 인물인 오펠리아를 대상으로 치사량의 제온 실험을 진행하여 죽인 것으로 보임.</p><p id="3bbbdb91-743d-8022-bf62-eb1aded70c57" class="" dir="auto">2부에서 모든 인물이 에바 내부의 인격이었다는 사실이 밝혀지면서, 실제로는 <strong>노아 인격이 오펠리아 인격에게 치사량의 제온을 투여한 사건</strong>으로 재해석됨.</p><p id="3bbbdb91-743d-80fe-a490-f04126de829b" class="" dir="auto">오펠리아는 자신이 제온을 투여받았다고 인식했고, 제온의 뇌사 효과가 오펠리아 인격에 적용되어 사망함.</p><p id="3bbbdb91-743d-809b-bd8c-ebb88b7e58d5" class="" dir="auto">‘인격 제거’라는 별도의 능력을 만들 필요는 없음.</p><p id="3bbbdb91-743d-803f-acf4-fca11813103d" class="" dir="auto">릴리 또한 같은 방식으로 사망.</p><hr id="3bbbdb91-743d-8075-aa25-d9081e82e230" dir="auto"/><h3 id="3bbbdb91-743d-80ea-99b5-d35e9c0d25fc" class="" dir="auto">뇌사 복구 실험:</h3><p id="3bbbdb91-743d-804d-a86e-ddc355fd4a26" class="" dir="auto">오펠리아와 에바는 제온이 뇌사를 일으킬 수 있다는 사실을 발견한 이후, 반대로 <strong>이미 뇌 활동이 멈춘 실험체를 다시 활성화시키는 연구</strong>도 진행함.</p><p id="3bbbdb91-743d-8060-a721-ca84d70336ed" class="" dir="auto">오펠리아의 2부 심화 보고서에는 뇌사한 생쥐를 다시 활동하게 하는 실험을 진행했다는 사실만 남아 있고, 결과 파일은 다른 장소로 옮겨진 상태로 표시됨.</p><p id="3bbbdb91-743d-80a2-8e5f-e9c006ab8919" class="" dir="auto">이후 에바의 방 2부에서 해당 결과 파일을 발견함.</p><p id="3bbbdb91-743d-8039-ad66-e6878b91780d" class="" dir="auto">기록에는 뇌 활동이 멈춘 실험체를 다시 활성화시키기 위해 사용했던 약물의 조제 과정이 남아 있으며, 플레이어는 이를 따라 뇌사 복구 약을 만듦.</p><p id="3bbbdb91-743d-809c-8f98-eeea823f0fc3" class="" dir="auto">이 약은 이후 사망했던 오펠리아 인격을 다시 깨우는 데 사용됨.</p><p id="3bbbdb91-743d-8040-8114-fdecb582a82c" class="" dir="auto">즉 제온 연구의 흐름은 다음과 같음.</p><p id="3bbbdb91-743d-803d-a693-f35175f1d024" class="" dir="auto"><strong>기억 조절 발견 → 고농도에서 뇌사 발견 → 뇌사 상태 복구 연구 → 복구 성공</strong></p><p id="3bbbdb91-743d-80a7-af30-da04a946e5f9" class="" dir="auto">이를 통해 오펠리아가 사망했다가 다시 등장하는 과정까지 하나의 연구 흐름으로 연결할 수 있음.</p><hr id="3bbbdb91-743d-8020-be36-f6b8982ed4c1" dir="auto"/><h3 id="3bbbdb91-743d-80d0-bd34-ea4c76d386ee" class="" dir="auto">오펠리아의 연구 보고서:</h3><p id="3bbbdb91-743d-8043-8714-ce0cc3657cb4" class="" dir="auto"><strong>1부에서 공개되는 내용</strong></p><ul id="3bbbdb91-743d-80aa-a5d7-c28b8eb8d4df" class="bulleted-list" dir="auto"><li style="list-style-type:disc">실험 대상은 생쥐</li></ul><ul id="3bbbdb91-743d-801b-bb12-c1999ee62ce8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">제온은 뇌에 직접적인 영향을 줌</li></ul><ul id="3bbbdb91-743d-8049-9d9c-c3e0dd212c3b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 강화 가능</li></ul><ul id="3bbbdb91-743d-8086-b3c1-ed5d16a4ceef" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 소거 가능</li></ul><ul id="3bbbdb91-743d-80a4-a59d-f084b65b1fbf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 강화 효과를 이용한 치매 치료 가능성 발견</li></ul><ul id="3bbbdb91-743d-80d2-9e20-f74e447872f7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">높은 양에서는 뇌사 발생</li></ul><ul id="3bbbdb91-743d-8009-9b48-ce89db6a181d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">제온 자체 합성 성공</li></ul><ul id="3bbbdb91-743d-80e4-87cf-e4a24e2f5086" class="bulleted-list" dir="auto"><li style="list-style-type:disc">합성 연구 결과를 알렉스에게 전달</li></ul><p id="3bbbdb91-743d-80d2-b8ed-e6e1cf885a6e" class="" dir="auto"><strong>2부에서 공개되는 내용</strong></p><ul id="3bbbdb91-743d-805d-beca-d21c6175138b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">일부 실험체에서 복수의 인격이 확인됨</li></ul><ul id="3bbbdb91-743d-80a6-b64e-c922cc919b40" class="bulleted-list" dir="auto"><li style="list-style-type:disc">다중인격 실험체에게 제온을 투여한 결과, 제온을 섭취했다고 인식한 인격에게 효과가 나타남</li></ul><ul id="3bbbdb91-743d-8098-8e17-d85e6b25a244" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기억 조작뿐 아니라 치사량의 제온에 의한 사망 역시 같은 원리로 적용됨</li></ul><ul id="3bbbdb91-743d-806f-a861-d8d28142ea8d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">뇌사한 생쥐의 뇌 활동을 다시 활성화시키는 실험을 진행함</li></ul><ul id="3bbbdb91-743d-8045-883e-e543e9aeadc6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">뇌사 복구 실험의 결과 파일은 에바의 방으로 옮겨짐</li></ul><ul id="3bbbdb91-743d-8059-ba54-d2594308b249" class="bulleted-list" dir="auto"><li style="list-style-type:disc">실험 도중 제온 누출 사고가 있었음</li></ul><p id="3bbbdb91-743d-80e4-8b10-f8437a5d721a" class="" dir="auto">이렇게 하면 1부에서는 제온이 단순히 기억과 뇌에 영향을 주는 물질처럼 보이고, 2부에서 인격별 적용 규칙이 공개되면서 이전 사건들이 다시 해석됨.</p><hr id="3bbbdb91-743d-8072-b3da-ca2aa66757ba" dir="auto"/><h3 id="3bbbdb91-743d-807e-a584-cb39fad79e00" class="" dir="auto">VEA 관련 설정:</h3><p id="3bbbdb91-743d-802b-8036-e48d783909e7" class="" dir="auto">VEA는 <strong>제온을 투여하면 일반적으로 만들어지는 인격이 아님.</strong></p><p id="3bbbdb91-743d-806d-8e35-cdf551aa95ce" class="" dir="auto">VEA는 안락사 장치가 작동하는 과정에서 새롭게 생성된 <strong>제6인격</strong>임.</p><p id="3bbbdb91-743d-80e6-bfa3-c74554e8d3cc" class="" dir="auto">따라서 오펠리아의 연구 보고서에 ‘일정량 이상의 제온을 투여하면 새로운 인격이 생성된다’는 일반적인 효과는 넣지 않음.</p><p id="3bbbdb91-743d-8054-9de7-c4e19b75c142" class="" dir="auto">인격 생성은 제온의 기본 효과와 분리해서 생각함.</p><p id="3bbbdb91-743d-80df-a1dc-ebdfbcfcaccf" class="" dir="auto">현재 시나리오에서도 VEA는 마지막에 자신을 제6인격이라고 밝히는 구조로 되어 있음.</p><hr id="3bbbdb91-743d-80b9-8fc3-c18d073c3a32" dir="auto"/><h3 id="3bbbdb91-743d-8018-8088-f813e8a79f19" class="" dir="auto">노아의 제온 노출:</h3><p id="3bbbdb91-743d-80f5-a7b2-c6afb9c1c8b4" class="" dir="auto">현재 유일하게 추가 논의가 필요한 부분임.</p><p id="3bbbdb91-743d-80e1-9437-eedaaf46a49f" class="" dir="auto">기존 설정은</p><p id="3bbbdb91-743d-80ef-9319-d093e491185c" class="" dir="auto"><strong>오펠리아의 실험실에서 제온이 유출됨 → 지나가던 노아가 제온을 마심 → 다른 인격들의 생각을 어렴풋이 읽게 됨</strong></p><p id="3bbbdb91-743d-80ec-b035-fab71ecde449" class="" dir="auto">이었음.</p><p id="3bbbdb91-743d-8027-b22d-ef6c6c535799" class="" dir="auto">하지만 오펠리아와 노아가 실제로는 같은 육체를 공유하고 있기 때문에, ‘오펠리아가 있는 실험실을 지나가던 노아가 우연히 마셨다’는 표현을 그대로 사용할 수 없음.</p><p id="3bbbdb91-743d-8051-895f-d21ea28fa852" class="" dir="auto">따라서 다음 두 부분을 다시 정해야 함.</p><p id="3bbbdb91-743d-80a6-9171-c564802f6a10" class="" dir="auto"><strong>노아 인격이 어떤 과정으로 유출된 제온에 노출되었는가.</strong></p><p id="3bbbdb91-743d-80ee-bc67-d1377cb07be5" class="" dir="auto"><strong>왜 그 결과가 기억 소거나 뇌사가 아니라 다른 인격들의 생각을 인식하는 현상으로 나타났는가.</strong></p><p id="3bbbdb91-743d-8011-af99-e6c4e71f00c7" class="" dir="auto">이 부분은 현재 설정만으로 확정할 수 없으므로 추가 논의가 필요함.</p><hr id="3bbbdb91-743d-80cc-a6a1-d28d53de1738" dir="auto"/><h3 id="3bbbdb91-743d-80e3-a41e-fdc0af205ee3" class="" dir="auto">현재 제온 설정 요약:</h3><p id="3bbbdb91-743d-8007-af11-ccc127de7c74" class="" dir="auto"><strong>확정된 설정</strong></p><p id="3bbbdb91-743d-8081-b746-e361064040a6" class="" dir="auto">제온은 뇌에 직접적인 영향을 준다.</p><p id="3bbbdb91-743d-80e2-9002-c5121860a02b" class="" dir="auto">기억을 강화하거나 소거할 수 있다.</p><p id="3bbbdb91-743d-80db-b85e-e543890c9c33" class="" dir="auto">효과는 조건에 따라 어느 정도 의도적으로 조절할 수 있다.</p><p id="3bbbdb91-743d-805f-8168-e4eb743ae735" class="" dir="auto">고농도에서는 뇌사 및 사망에 이를 수 있다.</p><p id="3bbbdb91-743d-80c7-b97c-cfd0193a8aa0" class="" dir="auto">제온의 치사 효과로 특정 인격이 사망할 수 있다.</p><p id="3bbbdb91-743d-80cf-9cfd-c1313d686da1" class="" dir="auto">다중인격자의 경우 제온을 섭취했다고 인식한 인격에게 효과가 적용된다.</p><p id="3bbbdb91-743d-8029-b82e-d1fc7a2f470b" class="" dir="auto">에바의 기억 상실은 노아가 에바 인격에게 제온을 마시게 한 결과다.</p><p id="3bbbdb91-743d-804e-8cc8-fc538b5440c9" class="" dir="auto">오펠리아의 사망 역시 치사량의 제온이 오펠리아 인격에 적용된 결과다.</p><p id="3bbbdb91-743d-806b-af24-d96c2e00d4f9" class="" dir="auto">오펠리아와 에바는 뇌사한 생쥐의 뇌 활동을 다시 활성화시키는 실험에 성공했다.</p><p id="3bbbdb91-743d-80dd-a3c5-d7a29d2befbf" class="" dir="auto">해당 연구를 이용해 이후 오펠리아 인격을 다시 깨운다.</p><p id="3bbbdb91-743d-80cb-a9a1-e3d9011c8638" class="" dir="auto">오펠리아의 기본 연구 대상은 생쥐다.</p><p id="3bbbdb91-743d-80e4-8f70-ca023c00cfe7" class="" dir="auto">2부에서는 다중인격이 확인된 생쥐의 추가 실험 결과를 공개할 수 있다.</p><p id="3bbbdb91-743d-8095-829a-f80fd9ba068e" class="" dir="auto">제온 자체 합성에 성공했고 결과는 알렉스를 통해 정부에 전달되었다.</p><p id="3bbbdb91-743d-806c-b014-e702681d8ae9" class="" dir="auto">VEA는 제온의 일반적인 효과로 생성된 것이 아니라 안락사 장치 작동 과정에서 태어난 제6인격이다.</p><p id="3bbbdb91-743d-80bc-a0f8-c2a58d1c455b" class="" dir="auto"><strong>추가 논의가 필요한 설정</strong></p><p id="3bbbdb91-743d-80f4-a8d7-e4908b784658" class="" dir="auto">노아가 제온 유출 사고에 노출되는 구체적인 과정. ⇒ 노아가 오펠리아 실험실에 의심스러운거 찔러보다가 마셨다 정도로 할까?</p><p id="3bbbdb91-743d-806a-9b2b-fe1ccb9affb3" class="" dir="auto">다중인격 생쥐를 설정에서 없애버릴 방안 (있어도되긴함)</p><p id="3bdbdb91-743d-804e-9b7f-e60ac8ca3953" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,800 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>공통 기준</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="404bdb91-743d-81ee-89bc-e01acf4d9395" class="page sans"><header><h1 class="page-title" dir="auto">공통 기준</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="c2a2670c-75eb-4aaa-b9d8-2d4f5601f07f" class="" dir="auto">작성 기준: <time datetime="2026-10-25" data-notion-date-format="relative">@2026년 10월 25일</time></p><p id="2c6102df-a339-42e4-9943-c114b72aa52d" class="" dir="auto">디자인부·개발팀의 공동 작업 기준이다. 각 문제 원문의 확정 내용과 필자의 후속 수정만 옮겼다. 빈칸은 새 그림·설명·치수·선택이 필요한 자리이며, 임의의 값으로 제작하지 않는다. ‘기획 확정’과 ‘실물·프로그램 제작 완료’는 별도로 확인한다.</p><p id="40cbdb91-743d-807b-b81a-e7758576d71e" class="" dir="auto"><strong>시나리오가 이해가 안 된다면 총괄(홍은기)에게 갠톡</strong></p><h2 id="522ba302-cd24-4b2d-a940-3fda95ca2a3e" class="" dir="auto">1. 문서 역할과 사용 순서</h2><table id="2e29bc7a-1d76-4472-9a45-fb1c59bed1b6" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="9d87b60f-d94b-4698-9982-65e6f2c8bc31" dir="ltr"><th id="]Hz`" class="simple-table-header-color simple-table-header">문서</th><th id="AAv&gt;" class="simple-table-header-color simple-table-header" style="width:354px">역할</th></tr></thead><tbody><tr id="827e7120-7859-4917-9bc2-2f2b6d418771" dir="ltr"><td id="]Hz`" class=""><a href="https://app.notion.com/p/3b8bdb91743d80918376cc63bf53705a?pvs=21" data-notion-page-id="3b8bdb91-743d-8091-8376-cc63bf53705a" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9"><span class="icon" data-emoji="📕"></span>시나리오</a></td><td id="AAv&gt;" class="" style="width:354px">이야기·대사·기록 원문과 장면별 비교안</td></tr><tr id="96fdae65-e54e-414c-a5ba-eed1c16d8286" dir="ltr"><td id="]Hz`" class=""><a href="https://app.notion.com/p/403bdb91743d81a79354ef7dfdbd364e?pvs=21" data-notion-page-id="403bdb91-743d-81a7-9354-ef7dfdbd364e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">행성·탈출 전체 수정 및 제작 계획서</a></td><td id="AAv&gt;" class="" style="width:354px">미정 결정·할 일·완료 상태</td></tr><tr id="1f324cfa-cd20-4306-8150-32977fb0a5ec" dir="ltr"><td id="]Hz`" class=""><a href="%EA%B3%B5%ED%86%B5%20%EA%B8%B0%EC%A4%80%20404bdb91743d81ee89bce01acf4d9395.html" data-notion-page-id="404bdb91-743d-81ee-89bc-e01acf4d9395" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">공통 기준</a></td><td id="AAv&gt;" class="" style="width:354px">공통 명칭·색·진행·적용 범위</td></tr><tr id="26002c7a-d5ed-4fce-87af-26f446d19ce4" dir="ltr"><td id="]Hz`" class=""><a href="%EB%94%94%EC%9E%90%EC%9D%B8%20%EA%B0%80%EC%9D%B4%EB%93%9C%20404bdb91743d816ebe8eede89b300644.html" data-notion-page-id="404bdb91-743d-816e-be8e-ede89b300644" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">디자인 가이드</a></td><td id="AAv&gt;" class="" style="width:354px">그림·인쇄물·화면의 제작 조건과 기존 도안</td></tr><tr id="44650a9e-cb50-464c-a1c6-c9873300c044" dir="ltr"><td id="]Hz`" class=""><a href="%EA%B0%9C%EB%B0%9C%20%EA%B0%80%EC%9D%B4%EB%93%9C%20404bdb91743d81febfc4fdb9cf0d3cbc.html" data-notion-page-id="404bdb91-743d-81fe-bfc4-fdb9cf0d3cbc" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">개발 가이드</a></td><td id="AAv&gt;" class="" style="width:354px">입력 판정·기록 공개·상태 전환·운영 기능</td></tr><tr id="09b2dd2c-7dda-4ff9-95bc-9cbeabc677cd" dir="ltr"><td id="]Hz`" class=""><a href="https://app.notion.com/p/404bdb91743d8198aa07e47ae29f45c5?pvs=21" data-notion-page-id="404bdb91-743d-8198-aa07-e47ae29f45c5" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">디자인/개발 연결표</a></td><td id="AAv&gt;" class="" style="width:354px">디자인 산출물과 실제 구현 위치·동작을 연결</td></tr></tbody></table><p id="66216bb5-2927-4ecf-9c8c-186283aa0b4b" class="" dir="auto">원문에 비교안이 여러 개 있으면 확정된 공통 부분만 사용한다. 미정 사양의 최종 값은 빈칸으로 둔다. 변경 시 원문을 고친 뒤 해당 가이드와 연결표를 함께 갱신한다. 정답과 단서의 글자·순서·색·좌표는 기획 조건이다.</p><h2 id="d01b0b18-f411-4587-a4e3-00232340c8df" class="" dir="auto">2. 명칭·대표색</h2><p id="15b7602c-f851-42b7-9c38-41b82c8ef04d" class="" dir="auto"><strong>『행성·탈출』 프로젝트</strong>의<strong> </strong>가운데 기호는 가운뎃점 ‘·’이다. 이를 빼먹으면 안 됨. 프로젝트 이름은 『』로 감싼다: 『탈출』, 『행성』, 『행성·탈출』, 『노아의 방주』, 『알파』.</p><table id="28bac516-6e40-4b98-8764-8cfd76e02a4a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="d5c25a46-e224-4e92-9254-401f2906579e" dir="ltr"><th id="MStd" class="simple-table-header-color simple-table-header">인물</th><th id="oJU^" class="simple-table-header-color simple-table-header">문제용 영문명</th><th id="&gt;h\O" class="simple-table-header-color simple-table-header">대표색</th><th id="i[uQ" class="simple-table-header-color simple-table-header">원색 (변경해도 됨)</th><th id="QRJ]" class="simple-table-header-color simple-table-header">파스텔 (변경해도 됨)</th></tr></thead><tbody><tr id="151e6671-4683-4a48-8f5e-b28ea1c7bfc3" dir="ltr"><td id="MStd" class="">알렉스 / 알렉산더 블랙우드</td><td id="oJU^" class="">ALEX</td><td id="&gt;h\O" class="">빨강</td><td id="i[uQ" class="">#E53935</td><td id="QRJ]" class="">#F8CCCC</td></tr><tr id="f33828b4-07d2-4fa5-bdb6-8971f7ba113a" dir="ltr"><td id="MStd" class="">릴리 스펙터</td><td id="oJU^" class="">LILY</td><td id="&gt;h\O" class="">보라</td><td id="i[uQ" class="">#8E24AA</td><td id="QRJ]" class="">#E6D3F0</td></tr><tr id="cbccda42-279a-474d-9709-c860a1717788" dir="ltr"><td id="MStd" class="">오펠리아 그린</td><td id="oJU^" class="">OPHELIA</td><td id="&gt;h\O" class="">노랑</td><td id="i[uQ" class="">#FDD835</td><td id="QRJ]" class="">#FFF3BD</td></tr><tr id="4b03f320-cb7a-4ef6-b686-abdafdd1134b" dir="ltr"><td id="MStd" class="">노아 하손</td><td id="oJU^" class="">NOAH</td><td id="&gt;h\O" class="">초록</td><td id="i[uQ" class="">#43A047</td><td id="QRJ]" class="">#D2EBD3</td></tr><tr id="2f69484f-4abc-4a7d-b2d6-ef874013fde3" dir="ltr"><td id="MStd" class="">에바 펠로노르</td><td id="oJU^" class="">EVA</td><td id="&gt;h\O" class="">파랑</td><td id="i[uQ" class="">#1E88E5</td><td id="QRJ]" class="">#CCE2FA</td></tr><tr id="a8deeec4-8081-4310-aea9-6acc76f605ae" dir="ltr"><td id="MStd" class="">비아</td><td id="oJU^" class="">VEA</td><td id="&gt;h\O" class="">주황</td><td id="i[uQ" class="">#FB8C00</td><td id="QRJ]" class="">#FFE0BD</td></tr></tbody></table><div id="40cbdb91-743d-8041-85e4-c9cb723edee6" class="column-list" data-notion-column-list="" dir="auto"><div id="40cbdb91-743d-80b8-b4b8-f571d7b2ae40" style="width:37.5%" class="column" data-notion-column-ratio="0.375" dir="auto"><figure id="40cbdb91-743d-80f0-959c-c69506a9ebe2" class="image" data-notion-image="image.png" dir="ltr"><a href="image.png"><img style="width:240px" src="image.png"/></a></figure></div><div id="40cbdb91-743d-80c6-aa11-ca50b11af18d" style="width:62.5%" class="column" data-notion-column-ratio="0.625" dir="auto"><p id="40cbdb91-743d-80df-a5ed-f3390212ea63" class="" dir="auto">총괄 노트: 컬러코드 안 지켜도 전혀 상관없습니다 다만 색을 쓰는 문제는 빨주노초파보의 감은 있어야 해요. </p><p id="40cbdb91-743d-80ab-9f1c-f5bace3e1907" class="" dir="auto">가령 오른쪽에는 AI로 뽑은 포스터 예시 (컬러코드 전혀 신경 안 쓴 빛바랜 어두운 빨노초파보가 있습니다. 주황색은 파란색쪽에 빛으로 살짝 들어가있고)</p><p id="40cbdb91-743d-80fe-afb7-d7d55c6fda96" class="" dir="auto">아무튼 쨍한 디자인은 눈만 아플테니… 컬러코드는 진짜 그냥 참고만 하세요</p><p id="40cbdb91-743d-8050-95fd-d0bcec0411fe" class="" dir="auto">감사합니다 다들 화이팅입니다</p><p id="40cbdb91-743d-8017-862d-c40914101a23" class="" dir="auto">
+</p></div></div><h2 id="26444bb5-04b1-46ba-8bf0-543923084170" class="" dir="auto">3. 전체 진행과 정보 공개</h2><p id="23d8192d-fd4b-4745-9bef-58be43e608c2" class="" dir="auto">시작·1부: 릴리 이름 입력·본인 확인 → 알렉스 → 오펠리아 → 노아 → 오펠리아 재방문 → 에바 → 릴리.<br/>전환부: EVA 재입력 → ALONE → 비아 등장.<br/>2부: 알렉스 → 오펠리아 → 노아의 장치 조작 위협 확인 → 에바의 의심 기록으로 인격의 진실 확인·인격 복구 → 릴리의 과거 진실 공개.<br/>클라이맥스: LOVE → 레버 → 선택에 따른 엔딩.</p><table id="4e9f7b9b-81fb-49e0-bddb-810cc0db100a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="18f7c639-ef74-4086-897b-869ded487736" dir="ltr"><th id="P^G=" class="simple-table-header-color simple-table-header">시점</th><th id=":ou=" class="simple-table-header-color simple-table-header">플레이어에게 전달할 내용</th><th id="q{?I" class="simple-table-header-color simple-table-header" style="width:322px">제작상 주의</th></tr></thead><tbody><tr id="53e8054e-69a7-49a9-8cca-6f91664516da" dir="ltr"><td id="P^G=" class="">시작</td><td id=":ou=" class="">기억을 잃고 릴리의 사원증을 발견</td><td id="q{?I" class="" style="width:322px">처음부터 EVA나 다중인격 반전을 화면에 노출하지 않는다</td></tr><tr id="47b16a7c-4a0d-441a-9b4c-143c6d883fe7" dir="ltr"><td id="P^G=" class="">1부</td><td id=":ou=" class="">각 인물의 기록으로 범인을 추적</td><td id="q{?I" class="" style="width:322px">인물들이 별개 사람처럼 인식되는 주관적 장면을 유지</td></tr><tr id="e0e45850-6817-4ba5-8b86-cb44afaf7287" dir="ltr"><td id="P^G=" class="">EVA 재입력</td><td id=":ou=" class="">자신이 릴리의 방으로 도망친 에바임을 추론</td><td id="q{?I" class="" style="width:322px">이름의 반전과 다중인격 공개를 같은 단계로 합치지 않는다</td></tr><tr id="ff959d29-7f84-4e58-903d-3805aa478bdf" dir="ltr"><td id="P^G=" class="">ALONE</td><td id=":ou=" class="">다섯 이름으로 혼자라는 상태를 구성, 비아 등장</td><td id="q{?I" class="" style="width:322px">제6인격 설명의 최종 공개 장면은 후반부</td></tr><tr id="6614ba2e-40a3-497c-9355-c71229f93bf5" dir="ltr"><td id="P^G=" class="">2부</td><td id=":ou=" class="">파견·제온·인격의 진실 확인, 인격 복구</td><td id="q{?I" class="" style="width:322px">‘마지막 기록’의 이름 치환은 릴리의 방 2부에서 문제 14로 보안 파일이 열린 뒤, 릴리가 ‘그래도 이제 숨길 이유는 없겠네.’라고 말한 직후 실행</td></tr><tr id="90fd871b-6377-4d9e-8eb1-3bc9d76e1ec6" dir="ltr"><td id="P^G=" class="">LOVE</td><td id=":ou=" class="">좋아하는 단어가 바뀌는 선택</td><td id="q{?I" class="" style="width:322px">질문은 유지한다. LOVE 성공이 자동 엔딩은 아니다</td></tr><tr id="8459f631-0010-4857-8cd9-87c15c6a4cb0" dir="ltr"><td id="P^G=" class="">탈출 / 행성</td><td id=":ou=" class="">전원 차단과 공개 구조 신호의 서로 다른 결말</td><td id="q{?I" class="" style="width:322px">레버 조작은 문제 16을 따른다. 아래는 바로 내릴 수 있고, 위는 눈금 부품을 끼우고 각도를 맞춰야 올라간다</td></tr><tr id="219ed0a4-ff8e-4b50-8a42-f0270e9e5ad1" dir="ltr"><td id="P^G=" class="">책자·후일담</td><td id=":ou=" class="">본편 이후 이야기와 추가 정보</td><td id="q{?I" class="" style="width:322px">방탈출이 끝난 뒤 배부한다. 엔딩·보너스별 내용은 책자 안의 조건 표시로 구분한다</td></tr></tbody></table><p id="b12bba8e-ac01-4d1b-b2b3-6813facc535e" class="" dir="auto">릴리의 방 1부에서 읽는 ‘마지막 기록’에는 노아가 에바와 릴리를 공격했고 귀환 계획을 막았다는 정황(“그 계획대로 해 봤자 못 돌아가.”)만 넣는다. 귀환용 추진 연료를 폐기했다는 사실은 2부 노아의 기록에서 드러난다. 인격이 자신과 어떻게 연결되는지 이해하는 장면은 에바의 방 2부에서 에바의 비공개 의심 메모로 공개한다. 오펠리아의 실험 기록은 앞선 복선이며, 노아의 방에서는 이름 치환을 실행하지 않는다. 릴리의 방 2부는 어린 시절과 인격의 탄생 과정을 설명한다.</p><h2 id="698eacb7-6513-4796-84ce-62261263e75b" class="" dir="auto">4. 문제별 확정 범위와 원문</h2><table id="c0d84ecf-6946-44c6-9f71-ec345f3e68c2" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="0313787b-04ee-4c7c-88b3-9a9d428504ea" dir="ltr"><th id="slF`" class="simple-table-header-color simple-table-header">문제</th><th id="~PwZ" class="simple-table-header-color simple-table-header">구역</th><th id="iJgO" class="simple-table-header-color simple-table-header">정답 / 결과</th><th id="Zjy]" class="simple-table-header-color simple-table-header">원문</th><th id="XOtR" class="simple-table-header-color simple-table-header">비고</th></tr></thead><tbody><tr id="bc1fd016-d628-41cc-b75d-5b79b43488b4" dir="ltr"><td id="slF`" class="">0</td><td id="~PwZ" class="">릴리</td><td id="iJgO" class="">LILY</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/04cd502eebe44b0e95bf811a626d98d0?pvs=21" data-notion-page-id="04cd502e-ebe4-4b0e-95bf-811a626d98d0" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">이름 입력</a></td><td id="XOtR" class=""></td></tr><tr id="b7ead68d-683b-47a9-a7e4-ce945464c064" dir="ltr"><td id="slF`" class="">1</td><td id="~PwZ" class="">릴리</td><td id="iJgO" class="">플라나리아</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/92362ac2905249dc9adf362ade94dd72?pvs=21" data-notion-page-id="92362ac2-9052-49dc-9adf-362ade94dd72" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">본인 확인 절차</a></td><td id="XOtR" class=""></td></tr><tr id="26f4640d-a70a-47a7-b829-ebb2d6e867c0" dir="ltr"><td id="slF`" class="">2</td><td id="~PwZ" class="">알렉스 </td><td id="iJgO" class="">STAR</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/1-3a8bdb91743d809bbdd4d62b5d9a868d?pvs=21" data-notion-page-id="3a8bdb91-743d-809b-bdd4-d62b5d9a868d" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">알렉스 1부 (항법판)</a></td><td id="XOtR" class=""></td></tr><tr id="5146bedf-b151-4135-808a-bab1d84fda89" dir="ltr"><td id="slF`" class="">3</td><td id="~PwZ" class="">오펠리아 </td><td id="iJgO" class="">REPORT(계정) / 끝없는탐구(보고서)</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/1-3a8bdb91743d80268cebe0fae40c979e?pvs=21" data-notion-page-id="3a8bdb91-743d-8026-8ceb-e0fae40c979e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">오펠리아 1부 (보고서)</a></td><td id="XOtR" class=""></td></tr><tr id="137752d1-7581-4397-ae82-2f8f18824118" dir="ltr"><td id="slF`" class="">4</td><td id="~PwZ" class="">노아 </td><td id="iJgO" class="">PLANET, ESCAPE(계정)</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/1-3c2bdb91743d80fc8895d000cbb91232?pvs=21" data-notion-page-id="3c2bdb91-743d-80fc-8895-d000cbb91232" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">노아 1부 (책장)</a></td><td id="XOtR" class=""></td></tr><tr id="3a3f31d1-aa5c-4e1a-8f97-d20963e1ccdf" dir="ltr"><td id="slF`" class="">5</td><td id="~PwZ" class="">오펠리아 (재방문)</td><td id="iJgO" class="">최적해</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/3bebdb91743d80599f1bd3b658b97075?pvs=21" data-notion-page-id="3bebdb91-743d-8059-9f1b-d3b658b97075" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">노아의 숨겨진 기록</a></td><td id="XOtR" class=""></td></tr><tr id="6573bc61-956b-4ae7-ba2d-b251ccb9102c" dir="ltr"><td id="slF`" class="">6</td><td id="~PwZ" class="">에바 </td><td id="iJgO" class="">JOIN</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/1-3c3bdb91743d80738da3d0a4fee0d95f?pvs=21" data-notion-page-id="3c3bdb91-743d-8073-8da3-d0a4fee0d95f" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">에바 1부 (말장난)</a></td><td id="XOtR" class=""></td></tr><tr id="2f7dab4f-9887-455a-8c89-559de2e33d69" dir="ltr"><td id="slF`" class="">7</td><td id="~PwZ" class="">릴리 </td><td id="iJgO" class="">NONE</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/1-396bdb91743d80718a13f590329cb285?pvs=21" data-notion-page-id="396bdb91-743d-8071-8a13-f590329cb285" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">릴리 1부 (사원증)</a></td><td id="XOtR" class=""></td></tr><tr id="38127f16-711c-4bea-a337-f2b7bb947d6b" dir="ltr"><td id="slF`" class="">8</td><td id="~PwZ" class="">릴리 </td><td id="iJgO" class="">EVA</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/fdadf8e1d0bd4ebbb03d4b155587d0c7?pvs=21" data-notion-page-id="fdadf8e1-d0bd-4ebb-b03d-4b155587d0c7" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">이름 재입력</a></td><td id="XOtR" class="">문제 0과 같은 입력 UI(사원증을 다시 쓰는 건 문제 7)</td></tr><tr id="c6881733-59e5-45e9-8bae-b3307069ac43" dir="ltr"><td id="slF`" class="">9</td><td id="~PwZ" class="">릴리 </td><td id="iJgO" class="">ALONE</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/ALONE-be3693f62041466b83af4c0d3de484c4?pvs=21" data-notion-page-id="be3693f6-2041-466b-83af-4c0d3de484c4" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">본인 확인 절차 (ALONE)</a></td><td id="XOtR" class=""></td></tr><tr id="96cde909-b2e5-4f2b-9b53-4c447afba359" dir="ltr"><td id="slF`" class="">10</td><td id="~PwZ" class="">알렉스 </td><td id="iJgO" class="">QUIT</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/2-39cbdb91743d802ca794e0b98bed01af?pvs=21" data-notion-page-id="39cbdb91-743d-802c-a794-e0b98bed01af" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">알렉스 2부 (마인드맵)</a></td><td id="XOtR" class="">문제 2의 별자리 카드들 재활용</td></tr><tr id="d8887a57-4f32-4d0d-a8cd-7769d3793249" dir="ltr"><td id="slF`" class="">11</td><td id="~PwZ" class="">오펠리아 </td><td id="iJgO" class="">HEAL</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/2-7-3aebdb91743d80d18cb1eba61dea42bd?pvs=21" data-notion-page-id="3aebdb91-743d-80d1-8cb1-eba61dea42bd" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">오펠리아 2부 (7세그먼트)</a></td><td id="XOtR" class=""></td></tr><tr id="22adb715-3842-4bf7-9634-702cc7916b88" dir="ltr"><td id="slF`" class="">12</td><td id="~PwZ" class="">노아 </td><td id="iJgO" class="">-</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/2-3aebdb91743d805e9eabf078e382f034?pvs=21" data-notion-page-id="3aebdb91-743d-805e-9eab-f078e382f034" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">노아 2부 (큐브)</a></td><td id="XOtR" class=""></td></tr><tr id="0e635e38-58e9-4895-bd71-7effcfe0d09f" dir="ltr"><td id="slF`" class="">13</td><td id="~PwZ" class="">에바 </td><td id="iJgO" class="">RDLLDRRULULR</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/2-3a8bdb91743d801bb228cee4f0028fda?pvs=21" data-notion-page-id="3a8bdb91-743d-801b-b228-cee4f0028fda" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">에바 2부 (핸드벨)</a></td><td id="XOtR" class=""></td></tr><tr id="e150a560-575f-40fd-b7f2-c51b8bb16df6" dir="ltr"><td id="slF`" class="">14</td><td id="~PwZ" class="">릴리 </td><td id="iJgO" class="">4610</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/2-3aebdb91743d80528564e239fe300e8e?pvs=21" data-notion-page-id="3aebdb91-743d-8052-8564-e239fe300e8e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">릴리 2부 (키보드)</a></td><td id="XOtR" class=""></td></tr><tr id="9a15d125-a4f4-45dd-8280-3a01dcc89b56" dir="ltr"><td id="slF`" class="">15</td><td id="~PwZ" class="">릴리 / 최종 콘솔 </td><td id="iJgO" class="">LOVE</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/LOVE-6cf27f39deb841c594862577d4b3c4ee?pvs=21" data-notion-page-id="6cf27f39-deb8-41c5-9486-2577d4b3c4ee" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">본인 확인 절차 (LOVE)</a></td><td id="XOtR" class=""></td></tr><tr id="251c299f-ab8d-4990-bff7-93a667fea481" dir="ltr"><td id="slF`" class="">16</td><td id="~PwZ" class="">릴리 / 최종 레버 </td><td id="iJgO" class="">레버를 위로 올려야 함</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/3f47d3a500d64ef58c960568242a042d?pvs=21" data-notion-page-id="3f47d3a5-00d6-4ef5-8c96-0568242a042d" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">엔딩 선택</a></td><td id="XOtR" class=""></td></tr><tr id="0ec0b943-8eda-43d7-9a1c-aebca50da66a" dir="ltr"><td id="slF`" class="">보너스 문제 (13.5)</td><td id="~PwZ" class="">에바</td><td id="iJgO" class="">패턴 그리기</td><td id="Zjy]" class=""><a href="https://app.notion.com/p/3bbbdb91743d803bb36fc2733a67af62?pvs=21">에바 보너스 문제 (첫말잇기)</a></td><td id="XOtR" class=""></td></tr></tbody></table><h2 id="cf562777-3a26-4fa0-bb89-e555a297bbe4" class="" dir="auto">5. 공간·기기·공통 화면</h2><h3 id="c7800341-2fb7-48b2-998e-cdaaf01e96cf" class="" dir="auto">릴리의 핸드폰 — 퀘스트·힌트 안내 기준</h3><p id="46f86197-21ae-4395-a1c5-371c999c2947" class="" dir="auto">힌트폰은 이야기 속 ‘릴리의 핸드폰’이다. 현재 해야 할 일과 다음 조사 장소를 퀘스트처럼 안내하고, 필요한 경우 현재 문제의 힌트를 제공한다.</p><ul id="bcc99ffc-488f-41ab-8d8a-e20ca93f1bbb" class="bulleted-list" dir="auto"><li style="list-style-type:disc">1부: 릴리가 미리 만들어 둔 프로그램이 안전 모드를 해제하는 순서를 안내한다. 알렉스 → 오펠리아 → 노아 → 오펠리아 재방문 → 에바 → 릴리 순으로 현재 목표를 보여 준다.</li></ul><ul id="64d1c134-8499-44c7-8f66-c253f3a22675" class="bulleted-list" dir="auto"><li style="list-style-type:disc">2부: 비아가 힌트폰에 들어와 안내하는 연출로 전환한다. 비아는 이미 확인한 기록과 현재 상황을 바탕으로 다음 조사 방향을 제시한다.</li></ul><ul id="e52596a4-432b-40e7-a119-5c1b8f25f1af" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이동·진행 안내와 퍼즐의 단계별 힌트는 구별한다. 문제 1에 별도 힌트·힌트 코드를 만들지 않는 기준은 유지한다.</li></ul><ul id="87d49a3f-1a90-4c33-8e44-7bc95070c2bc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">목표 완료는 실제 문제·기록·승인 상태에 맞춰 갱신하며, 다음 기록이나 반전·정답을 먼저 공개하지 않는다.</li></ul><ul id="4b4a538c-0147-45f5-925c-f4982174edf7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">휴대폰에서의 비아 안내는 기존 제6인격 설정에 맞춘 화면 연출이다. 실제 AI 프로그램이거나 릴리가 만든 인격이라는 설정으로 바꾸지 않는다.</li></ul><p id="19dbd9bc-0555-46e3-bc96-bb1e4b13a626" class="" dir="auto">디자인팀은 모바일 화면을 디자인하고, 개발팀은 이를 실행하는 퀘스트·힌트 안내 앱을 제작한다. 상세 화면·상태 연결은 <a href="%EB%94%94%EC%9E%90%EC%9D%B8%20%EA%B0%80%EC%9D%B4%EB%93%9C%20404bdb91743d816ebe8eede89b300644.html" data-notion-page-id="404bdb91-743d-816e-be8e-ede89b300644" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">디자인 가이드</a>와 <a href="%EA%B0%9C%EB%B0%9C%20%EA%B0%80%EC%9D%B4%EB%93%9C%20404bdb91743d81febfc4fdb9cf0d3cbc.html" data-notion-page-id="404bdb91-743d-81fe-bfc4-fdb9cf0d3cbc" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">개발 가이드</a>에서 관리한다.</p><p id="1defcc86-f084-45f5-8c8a-2377e24b0d39" class="" dir="auto">공간은 동아리방을 커튼으로 구분한다. 잠금문 대신 프로그램의 단계·열람 조건을 사용한다. 릴리에 메인 컴퓨터를 둔다. 확보 목표는 릴리 메인 컴퓨터 1대, 알렉스·오펠리아·노아·에바 태블릿 4대, 힌트폰 1대다. 확보 완료를 뜻하지 않는다. 모든 단말기는 네트워크로 연결하고 방별 조명은 구역을 밝히는 무드등 수준이다.</p><p id="f9deb9a3-fba2-4a67-99ab-2de1a39b3c3c" class="" dir="auto"><strong>기존 시나리오 방 배치 그림</strong></p><figure id="404bdb91-743d-806d-a933-fb3392712fc0" class="image" data-notion-image="image%201.png" dir="ltr"><a href="image%201.png"><img style="width:703.984375px" src="image%201.png"/></a></figure><p id="404bdb91-743d-802d-a44d-f5cc3ccf8ddd" class="" dir="auto">
+</p><table id="77a0fb99-4837-4a50-8c95-a23fb0ad2d57" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="68a6960f-ab61-40b9-90cf-7a8168fb7680" dir="ltr"><th id="nwcG" class="simple-table-header-color simple-table-header">항목</th><th id="G]G]" class="simple-table-header-color simple-table-header">확정 방향</th><th id="eTfi" class="simple-table-header-color simple-table-header" style="width:283px">최종 실측·장비값</th></tr></thead><tbody><tr id="266df13b-dd7f-44ae-bc41-afde388c9380" dir="ltr"><td id="nwcG" class="">릴리 단말기</td><td id="G]G]" class="">메인 입력·승인·전환부</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="96e97f94-f540-42ba-b587-bbe4581c816e" dir="ltr"><td id="nwcG" class="">알렉스·노아·에바 단말기</td><td id="G]G]" class="">방별 문제·기록 열람</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="d7e49b7c-d61d-481d-9b3d-c461554d67b3" dir="ltr"><td id="nwcG" class="">오펠리아 태블릿</td><td id="G]G]" class="">보고서 드래그·앞뒤 페이지·암호 입력</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="8690c811-fc64-4769-bef2-d22d45b3b8a2" dir="ltr"><td id="nwcG" class="">힌트폰</td><td id="G]G]" class="">릴리의 핸드폰: 현재 퀘스트·다음 진행 방향·문제 힌트 제공. 1부 릴리 프로그램 / 2부 비아 안내</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="4c307cad-e4f8-4557-939c-ec6d726279fb" dir="ltr"><td id="nwcG" class="">공유기·네트워크</td><td id="G]G]" class="">단말기 간 진행 상태 공유</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="6ed3600b-4a90-47fb-a240-a9efee9fa4c2" dir="ltr"><td id="nwcG" class="">조명·음향</td><td id="G]G]" class="">구역 안내·장면 연출</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="ec3d15b7-0483-46b3-8485-d881b3445b60" dir="ltr"><td id="nwcG" class="">최종 콘솔·레버</td><td id="G]G]" class="">ALONE 직후(아래만)와 LOVE 이후 활성화</td><td id="eTfi" class="" style="width:283px"></td></tr><tr id="578780d7-38b9-483e-8e9e-244a5afd61e8" dir="ltr"><td id="nwcG" class="">머리띠</td><td id="G]G]" class="">착용은 감지하지 않는다. 안쪽 장치 코드를 에바 방 태블릿 ‘뇌파 전송’ 화면에 입력한다</td><td id="eTfi" class="" style="width:283px"></td></tr></tbody></table><table id="7445e8e2-fa31-4887-8de3-33da8b26c5ba" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="7651526f-4b78-45a2-9d9d-64eb5bd0a02e" dir="ltr"><th id="bOQA" class="simple-table-header-color simple-table-header">작성 항목</th><th id="[Y\N" class="simple-table-header-color simple-table-header" style="width:444px">내용</th></tr></thead><tbody><tr id="f3684338-6ce7-4dd1-8e66-ba4b54c8d945" dir="ltr"><td id="bOQA" class="">실측 공간 배치도</td><td id="[Y\N" class="" style="width:444px"></td></tr><tr id="591dfbef-9812-4143-afc6-d8b0df62b831" dir="ltr"><td id="bOQA" class="">기기 부족 시 최종 운영 구성</td><td id="[Y\N" class="" style="width:444px">알렉스·노아·에바 방 단말기는 승인 코드 입력과 기록 열람(문제 2·4·6·10·12·13)에 필요해 뺄 수 없다. 오펠리아는 보고서를 읽어야 해서 태블릿이 있어야 함. 기기가 부족할 때의 대안은 미정.</td></tr><tr id="83d80693-9678-4e40-8d63-74d3e59cdbf2" dir="ltr"><td id="bOQA" class="">공통 화면 와이어프레임</td><td id="[Y\N" class="" style="width:444px"></td></tr><tr id="bdae8e75-9d9d-481d-b849-97ddc3cc9184" dir="ltr"><td id="bOQA" class="">실물과 화면이 겹치는 위치·크기·배율</td><td id="[Y\N" class="" style="width:444px"></td></tr><tr id="feabeff8-e201-4f5c-a938-96cf4cb6d601" dir="ltr"><td id="bOQA" class="">책자 배포·후일담</td><td id="[Y\N" class="" style="width:444px">방탈출이 끝난 뒤 배부한다. 엔딩·보너스별 내용은 책자 안의 조건 표시로 구분한다</td></tr></tbody></table><h2 id="1291b3f4-8b78-4f30-9a91-2cf5ce15e78b" class="" dir="auto">6. 두 팀이 함께 지킬 연결 기준</h2><h3 id="cb5c361b-3aef-4d79-b8f6-6ee0418b2f03" class="" dir="auto">오펠리아 기록·암호 입력 기준</h3><p id="4c29fb70-edc5-47df-b8d0-78ab93669013" class="" dir="auto">노아의 암호 ‘최적해’(문제 5)와 공동 연구 기록의 암호 ‘HEAL’(문제 11)은 모두 오펠리아 1부에서 ‘끝없는탐구’를 입력했던 동일한 보고서 암호 입력칸에 입력한다.</p><p id="5af6ade7-46b8-4c5c-84cd-c345dd68c31d" class="" dir="auto">문제 11의 ‘HEAL’을 입력하면 ‘제온 공동 연구 기록’이 열린다. 공동 연구자는 오펠리아 그린·에바 펠로노르다. 개인 연구와 구분하기 위해 두 사람의 공동 연구 기록은 따로 모아 두었다. 문제지가 2부 오펠리아 방 금고에 있으므로 1부에는 열리지 않는다. 무단 열람이 확인된 이후에는 해당 구역에도 잠금을 적용했다.</p><ul id="b51ff03e-0147-48f0-b451-8696faec6468" class="bulleted-list" dir="auto"><li style="list-style-type:disc">디자인은 정답을 이루는 글자·색·배열·겹침 위치를 비교적 보존한다. 개발은 같은 정답·배열을 사용한다.</li></ul><ul id="e87774d1-f134-4263-bab3-65bd9b6c23ee" class="bulleted-list" dir="auto"><li style="list-style-type:disc">사원증은 문제 0·7이 같은 소품을 사용한다. </li></ul><ul id="404bdb91-743d-80f7-b981-c8404bc308d0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">별자리 필름은 문제 2·10이 같은 8장을 사용한다.</li></ul><ul id="720d59d0-c327-471c-85c3-84a57e98959d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">색이 단서인 문구와 선은 별도로 식별해 전달한다. </li></ul><ul id="a94b2948-3373-4cc4-abea-d9a0dbaed791" class="bulleted-list" dir="auto"><li style="list-style-type:disc">‘마지막 기록’ 치환 시 인물 이름만 EVA에 해당하는 ‘에바’로 바꾸며, 글자색·방 이름을 유지한다. 치환 전·후 상태를 구분한다.</li></ul><h2 id="cb0b507b-ab89-4f76-8637-6e8d2f54e54d" class="" dir="auto">7. 인계 기록</h2><p id="c54c0127-d110-43d0-82b6-94b1f8668e53" class="" dir="auto">일감과 완료 체크는 <a href="https://app.notion.com/p/403bdb91743d81a79354ef7dfdbd364e?pvs=21" data-notion-page-id="403bdb91-743d-81a7-9354-ef7dfdbd364e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">행성·탈출 전체 수정 및 제작 계획서</a>에서 관리한다. 이 문서에는 적용 사양만 둔다.</p><p id="405bdb91-743d-80d0-8ca0-e1dde592c0da" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

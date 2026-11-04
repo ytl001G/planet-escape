@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>NPC 가이드</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="407bdb91-743d-8189-8f85-f83f42dcfcc0" class="page sans"><header><h1 class="page-title" dir="auto">NPC 가이드</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><blockquote id="5c392bf9-0420-44f8-aacf-04a23636546c" class="" dir="auto">2인 운영을 전제로 한 초안. 수동 연출의 정확한 발생 시점, 복구 방법, 소품별 시작 위치는 아직 정해지지 않았다.</blockquote><h2 id="8c68bd12-e1b0-446b-ab6f-96e6ae52c54e" class="" dir="auto">공통 원칙</h2><ul id="9a7c3588-b12f-472c-aa74-89bb9218fd6a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">총괄 관리인원 1명, 일반 관리인원 1명으로 운영한다.</li></ul><ul id="9cd46964-a738-46f8-9561-ecf4ede22090" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자에게 현재 진행 단계 이후의 정답·기록·반전을 먼저 공개하지 않는다.</li></ul><ul id="7d8005a3-e442-403a-9a87-ca7b1703877c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">문제 정답, 기록 열람, 인물 승인, 다음 장면 진입을 각각 구별한다.</li></ul><ul id="bb3b35d9-65f4-4bde-9e74-c2187a50b954" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기기 오류나 소품 이상을 발견하면 일반 관리인원이 총괄에게 즉시 전달한다.</li></ul><ul id="8eac7e41-c0a5-4ba9-95be-f25f98344fc7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">진행 상태 변경, 연출 재실행, 회차 종료 판단은 총괄이 담당한다.</li></ul><h2 id="ceec934f-931c-4182-9867-639f08210384" class="" dir="auto">총괄 관리인원</h2><h3 id="d7f2f044-2775-45e1-900f-982de78c7b64" class="" dir="auto">시작 전</h3><ul id="2fc734ea-87e2-40ac-9fe0-fad574d713b5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">메인 컴퓨터·방별 단말기·힌트폰의 회차 시작 상태를 확인한다.</li></ul><ul id="ec17838d-5041-4daa-aea2-85ab2838dfce" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이전 회차의 입력·승인·힌트·연출·엔딩 기록이 남아 있지 않은지 확인한다.</li></ul><ul id="4e6363fe-e27b-4b20-a141-e762bec91064" class="bulleted-list" dir="auto"><li style="list-style-type:disc">소품 배치 완료 여부를 일반 관리인원에게 확인한다.</li></ul><ul id="ab77aea1-d216-44b7-b3a1-192c58f126a4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">모든 기기와 음향이 준비된 뒤 시작을 진행한다.</li></ul><h3 id="1510b7b9-31e4-47b1-8b1c-1567155ccb60" class="" dir="auto">진행 중</h3><ul id="c7380ebe-97e9-4996-83be-7057b86d3c22" class="bulleted-list" dir="auto"><li style="list-style-type:disc">현재 문제, 기록 열람, 인물 승인, 힌트폰 목표가 같은 단계에 있는지 확인한다.</li></ul><ul id="98dfec1f-52a8-43db-a8d6-44efcb192da7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자의 문제 관련 질문과 힌트 요청에 답한다.<ul id="117c4164-1e1a-40e7-b85c-4c7d5f789562" class="bulleted-list" dir="auto"><li style="list-style-type:circle">진행 장소 안내와 퍼즐 풀이 힌트를 구별한다.</li></ul><ul id="b11f28fb-4ccb-4e18-83fc-67e0950f2273" class="bulleted-list" dir="auto"><li style="list-style-type:circle">현재 문제에 해당하는 정보만 제공한다.</li></ul><ul id="9f58593a-d06d-47e4-9854-4e911b2c6e0e" class="bulleted-list" dir="auto"><li style="list-style-type:circle">문제 1에는 별도 퍼즐 힌트를 제공하지 않는다.</li></ul><ul id="772245d8-0b6f-4da4-a02c-056da6013fc0" class="bulleted-list" dir="auto"><li style="list-style-type:circle">보너스 패턴 문제의 풀이 힌트를 제공하지 않는다.</li></ul></li></ul><ul id="d584161a-30a3-4ed6-8fa4-531e1f20add8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">자동 진행되는 장면의 시작·종료와 중복 재생 여부를 확인한다.</li></ul><h3 id="5dab8393-05fd-450e-9aa3-882f43a517bd" class="" dir="auto">자동화할 수 없는 이벤트</h3><ul id="6e4e6aec-f7af-4e3c-9eab-524dce12663d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">복구제 소품의 복용 연출을 확인한다.<ul id="bbc78ce8-061f-473d-81eb-0837203dfed3" class="bulleted-list" dir="auto"><li style="list-style-type:circle">확인 후에만 오펠리아 복귀 음성이 이어지도록 진행한다.</li></ul></li></ul><ul id="e4a0ba19-1c47-4843-9126-d7f7fac42300" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자가 예상하지 못한 방식으로 문제를 풀거나 소품을 다룬 경우 진행 가능 여부를 판단한다.</li></ul><ul id="9eae274d-df54-408c-93a2-09f3b501e5c0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">힌트폰의 운영자 호출과 현장 질문에 상황에 맞춰 응답한다.</li></ul><ul id="1fed64c8-41ba-4eec-9eda-7a2c7c92a2f0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">엔딩 종료 후 참가자에게 이야기와 선택 결과를 설명하며 마무리한다.</li></ul><h3 id="1975211b-3f15-4491-bfed-fbc3f9bebece" class="" dir="auto">에러 시 복구가 필요한 이벤트</h3><ul id="a6cb2497-7338-4689-be26-eae62ca69af4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기기 연결 끊김 또는 화면 멈춤</li></ul><ul id="82de3743-475d-4efa-b0b6-f7387dded4d1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">정답 입력 후 기록·승인·다음 목표가 갱신되지 않음</li></ul><ul id="b0851a6b-a175-4b3e-aff8-e73245d3a6d1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">음성·영상·조명이 재생되지 않거나 중복 실행됨</li></ul><ul id="32db95dc-bc31-44a4-bd0b-f2662a5ea252" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이미 본 기록이 잠기거나 다음 단계 자료가 먼저 공개됨</li></ul><ul id="0f6d5665-4899-43af-bc9d-4eb1901e8e3b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">레버 입력이 인식되지 않거나 엔딩이 중복 실행됨</li></ul><ul id="58697c34-594b-4baa-b906-12062cb0fb57" class="bulleted-list" dir="auto"><li style="list-style-type:disc">복구 전 현재 진행 단계와 참가자가 실제로 확인한 자료를 확인한다.</li></ul><ul id="568d25d2-5d6c-4b03-a45a-55655e432ba8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">복구 후 메인 컴퓨터·방별 기기·힌트폰의 상태가 일치하는지 확인한다.</li></ul><h3 id="a41bd229-dba7-4f98-8b94-dd9c65aad5f2" class="" dir="auto">엔딩·회차 종료</h3><ul id="dcff4a37-a926-41c6-acf5-acf460163cca" class="bulleted-list" dir="auto"><li style="list-style-type:disc">LOVE 완료 후 레버가 활성화되고, 그 전의 조작으로 엔딩이 실행되지 않는지 확인한다.</li></ul><ul id="e4c75481-85c2-4152-96b3-22c6e851b043" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자가 레버를 움직인 뒤 선택한 방향의 엔딩이 자동으로 한 번만 실행되는지 확인한다.</li></ul><ul id="66ec3df9-ea7a-4c6b-9ccf-c2b4e334550c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">보너스 성공 여부가 행성 엔딩의 후일담에 반영되는지 확인한다.</li></ul><ul id="3999963a-f671-4d0b-9917-ca074383be92" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자 퇴장 후 디지털 진행 상태를 초기화한다.</li></ul><ul id="a3a3dffd-9abd-4c0b-9890-6e493cc97ccc" class="bulleted-list" dir="auto"><li style="list-style-type:disc">일반 관리인원의 실물 리셋 완료 보고를 받은 뒤 다음 회차 준비 완료를 판단한다.</li></ul><h2 id="6d2ee3a4-2307-4004-8154-1b1b07fd751a" class="" dir="auto">레버 자동화 사양 — 제작 제안</h2><ul id="ee703599-2bb5-46a2-a42c-196a1d9603d8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">플레이어가 레버를 직접 움직이고, 장치가 위·아래 위치 신호를 감지한다.</li></ul><ul id="b3149531-7bba-4460-89f6-42af0d1010e1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">LOVE 완료 전에는 레버 신호가 들어와도 엔딩을 실행하지 않는다.</li></ul><ul id="15a6c117-9fce-46a8-9465-bdb32599a5ca" class="bulleted-list" dir="auto"><li style="list-style-type:disc">LOVE 완료 후 레버가 중립 위치에 있음을 확인하고, 그 뒤 새로 발생한 첫 유효 방향 신호만 처리한다.</li></ul><ul id="574d3ff6-d17f-40b1-a709-3680395b59f4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">아래쪽 신호는 탈출 엔딩, 위쪽 신호는 행성 엔딩에 연결한다.</li></ul><ul id="fe01345b-f189-4bd0-abcf-c10447bb2a6b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">레버가 중간에 걸리거나 접점이 튀는 경우에는 어느 엔딩도 실행하지 않는다.</li></ul><ul id="98930173-70d8-4ea6-9b7a-bda0fefbc21a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">한 엔딩이 확정되면 반복 조작으로 다른 엔딩이 실행되지 않게 한다.</li></ul><ul id="2062d60f-a824-45b2-b7fa-3f45e42a9c63" class="bulleted-list" dir="auto"><li style="list-style-type:disc">엔딩 화면·음향·조명과 보너스 후일담 조건을 같은 회차 상태에 연결한다.</li></ul><ul id="5d7da74b-30f1-4fe9-b572-3e2f8ef6b52a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">중립 위치가 없는 레버를 쓰는 경우 LOVE 전 조작을 막을 물리적 잠금 또는 동등한 장치를 마련한다.</li></ul><ul id="ceeef3a0-7150-4cb5-a38e-701d30d69838" class="bulleted-list" dir="auto"><li style="list-style-type:disc">탈출 엔딩의 전원 종료는 연출로 처리하고, 운영·복구에 필요한 장치 전원은 유지한다.</li></ul><ul id="c40b7d11-e4e4-4eb1-a274-f5551dbf86b2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">센서·스위치 종류, 연결 방식, 고장 시 복구 절차는 제작 단계에서 정한다.</li></ul><h2 id="36ea9e05-dbda-4c2c-b3b8-44d5b155dd3c" class="" dir="auto">일반 관리인원</h2><h3 id="2146bffd-bbc7-46fe-8977-e7b079b7b564" class="" dir="auto">시작 전</h3><ul id="61998027-f8c5-41b1-9ea8-b7de60d3f50f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자를 맞이하고 기존 시작 전 안내를 진행한다.</li></ul><ul id="9d19f2c8-bdc6-4800-ba3b-d67365ae8cd8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">‘릴리의 팀원 관찰 기록’을 입장 전에 읽도록 전달한다.</li></ul><ul id="a6ed2827-fe4d-4a97-b3fb-0b05b1b95acf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">기록을 참가자 한 명이 들고 입장하도록 안내한다.</li></ul><ul id="eb2b90de-c5ee-47dc-bf3f-0f5b3fef4336" class="bulleted-list" dir="auto"><li style="list-style-type:disc">힌트폰 사용과 운영자 호출 방법을 안내한다.</li></ul><ul id="99d9d5a2-b789-4b66-aed0-8000d127612f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">금고·자물쇠는 문제의 단서에 따라 열고, 힘으로 열거나 임의로 분해하지 않도록 안내한다.</li></ul><ul id="8e8ee991-b421-4f91-bda0-dc1fbc58cea3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">소품과 기기의 시작 배치를 확인한 뒤 총괄에게 준비 완료를 보고한다.</li></ul><h3 id="8408eef4-9dc0-483e-9fc2-e10e59781222" class="" dir="auto">진행 중</h3><ul id="e4dd5e63-9f83-4655-8298-d45bd61f3bf9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자 호출에 응대하고 질문 종류를 확인한다.</li></ul><ul id="373df76d-5017-4453-9419-28615e53e98c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">문제 풀이·정답·스토리 관련 질문은 총괄에게 전달한다.</li></ul><ul id="cb8a749f-9a36-45e9-a271-189e915df92b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">소품 파손, 기기 이상, 안전 문제를 확인해 총괄에게 즉시 전달한다.</li></ul><ul id="2d66d1cd-5fcb-472b-acfb-e2065872a5bf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">총괄이 진행 상태를 확인하는 동안 현장 참가자 응대를 담당한다.</li></ul><h3 id="7a159e2e-1df0-42bd-b05e-01627d48ce34" class="" dir="auto">종료 후·다음 회차 준비</h3><ul id="4d2dbc24-3881-4f41-99ba-bead8b54d7ab" class="bulleted-list" dir="auto"><li style="list-style-type:disc">참가자 퇴장을 안내한다.</li></ul><ul id="27ecdd5a-2606-4e8a-b59b-7bc8dc0c3790" class="bulleted-list" dir="auto"><li style="list-style-type:disc">사용한 소품을 회수하고 시작 상태로 복원한다.</li></ul><ul id="047821b5-dd12-451b-ad48-69e95a707326" class="bulleted-list" dir="auto"><li style="list-style-type:disc">사원증, 별자리 필름, 책, 금고·열쇠, 핸드벨, 복구제 상자·약 소품, 문제 카드를 확인한다.</li></ul><ul id="76b0792f-c39c-454d-ab23-511dc3c79cb6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">단말기·힌트폰·음향 장치의 물리적 상태를 확인한다.</li></ul><ul id="83b5bfd1-43de-466e-8e11-bab9170d108a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">실물 리셋 완료를 총괄에게 보고한다.</li></ul><h2 id="a04170c6-f7f5-479b-91fc-d37febe9ccfe" class="" dir="auto">두 사람의 인계 기준</h2><ul id="e53694e3-a261-42be-abbb-ed83135f1ec0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">시작: 일반 관리인원 소품 배치 완료 보고 → 총괄 디지털 상태 확인 → 참가자 입장</li></ul><ul id="ff660639-10fb-4123-8bc2-889465a3c9d4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">오류: 일반 관리인원 현장 상황 전달 → 총괄 진행 상태 확인·복구 → 일반 관리인원 참가자 안내</li></ul><ul id="74a8c46a-6757-4aea-b009-2c2f6dc6ae70" class="bulleted-list" dir="auto"><li style="list-style-type:disc">다음 회차: 일반 관리인원 실물 리셋 → 총괄 디지털 리셋 → 두 사람 모두 준비 완료 확인</li></ul><h2 id="ee03ffba-9d9b-4ca9-9baa-a405940acfcd" class="" dir="auto">아직 작성할 운영 자료</h2><ul id="3cb73df2-5046-4616-be77-f19b91bc6745" class="bulleted-list" dir="auto"><li style="list-style-type:disc">장면별 자동 진행·사람 확인·오류 복구 구분표</li></ul><ul id="dd8117b9-b421-4b9a-ac8a-23ee26cdde5e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">장면별 정확한 발생 시점과 복구 방법</li></ul><ul id="129ba153-4c2c-4565-9c89-54d7b2aee340" class="bulleted-list" dir="auto"><li style="list-style-type:disc">소품별 시작 위치 사진</li></ul><ul id="634743df-98ce-4778-ad78-aa8996eebb9d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">실물·디지털 리셋 완료 확인표</li></ul><h2 id="bc0cbd47-a9bd-41c3-b78a-35a841ae068d" class="" dir="auto">관련 문서</h2><ul id="84db5439-2784-42bd-a406-75ffb79b9994" class="bulleted-list" dir="auto"><li style="list-style-type:disc">시나리오: <a href="https://app.notion.com/p/3b8bdb91743d80918376cc63bf53705a?pvs=21" data-notion-page-id="3b8bdb91-743d-8091-8376-cc63bf53705a" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9"><span class="icon" data-emoji="📕"></span>시나리오</a></li></ul><ul id="302f37b2-733e-4e87-b941-99f4add6db00" class="bulleted-list" dir="auto"><li style="list-style-type:disc">개발 가이드: <a href="%EA%B0%9C%EB%B0%9C%20%EA%B0%80%EC%9D%B4%EB%93%9C%20404bdb91743d81febfc4fdb9cf0d3cbc.html" data-notion-page-id="404bdb91-743d-81fe-bfc4-fdb9cf0d3cbc" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">개발 가이드</a></li></ul><ul id="908ca652-26e0-4ce6-be5d-e658fa8c9af1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">행성·탈출 전체 수정 및 제작 계획서: <a href="https://app.notion.com/p/403bdb91743d81a79354ef7dfdbd364e?pvs=21" data-notion-page-id="403bdb91-743d-81a7-9354-ef7dfdbd364e" data-notion-space-id="917bdb91-743d-81a4-b822-0003ae347ad9">행성·탈출 전체 수정 및 제작 계획서</a></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

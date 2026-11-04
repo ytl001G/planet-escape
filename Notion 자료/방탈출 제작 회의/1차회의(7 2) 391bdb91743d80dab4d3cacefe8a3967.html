@@ -1,0 +1,799 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1차회의(7/2)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="391bdb91-743d-80da-b4d3-cacefe8a3967" class="page sans"><header><h1 class="page-title" dir="auto">1차회의(7/2)</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><p id="393bdb91-743d-80b3-807b-c4d69ba48e6b" class="" dir="auto">피드백 및 답글 정리</p><hr id="391bdb91-743d-8076-b628-ee3f1eda9652" dir="auto"/><p id="395bdb91-743d-8029-b79f-c0fe6c5cbbde" class="" dir="auto">
+</p><h3 id="391bdb91-743d-80f3-8c7f-f843fe8c58ab" class="" dir="auto">1. 노아 / 비상 이륙 장치 / 헬멧</h3><p id="391bdb91-743d-80cb-ac4c-da5b72f5c3d5" class="" dir="auto"><strong>피드백:</strong> 노아가 에바의 방에서 비상 이륙 계획을 발견하고, 이를 막기 위해 에바, 릴리를 급습한 건데, 이후 비상 이륙 장치를 탈출선이 아닌 고통 종료 절차로 받아들인 게 잘 이해가 가지 않아요. 제가 이해한 게 맞다면 노아는 에바가 고통 없이 죽는 것이 최적의 판단이라 생각하는 인격인데, 그러면 비상 이륙 장치로 에바가 탈출하는 것을 내버려두는 게 맞지 않나 하는 생각이 듭니다.</p><p id="391bdb91-743d-800d-9948-fdf34ccb3188" class="" dir="auto"><strong>답글 정리:</strong> 노아가 비상 이륙 장치를 처음부터 안락사 장치로 이해한 것이 아니라, 에바가 만든 비상 이륙 장치를 노아가 안락사 장치로 바꿔놓은 것입니다. <strong>현재 줄거리에는 이 부분이 자세히 적혀 있지 않아 오해할 수 있으므로, 노아가 장치를 조작했다는 묘사를 추가해야 합니다.</strong> 원래 비상 이륙 장치는 에바가 만든 탈출 장치였고, 노아는 이를 발견한 뒤 에바가 혼자 탈출하려 한다고 오해합니다. 이후 노아는 안정용 산소 공급 장치였던 헬멧에 산소 대신 제온 카트리지를 연결합니다. 그 결과 비상 이륙 절차는 겉으로는 탈출 절차처럼 보이지만, 실제로는 고통 종료 절차가 됩니다.</p><hr id="391bdb91-743d-8013-b8be-dbf1e53ecb38" dir="auto"/><p id="391bdb91-743d-8007-b58d-f698f59a38d0" class="" dir="auto"><strong>피드백:</strong> 헬멧 착용 여부가 갖는 의미가 잘 와닿지 않음. 사실 헬멧 자체도 LOVE 상태 입력 후 등장하는 건데, 이게 고통 없이 삶을 끝내는 방법인 게 조금 부자연스럽다 생각합니다.</p><p id="391bdb91-743d-807e-b8eb-eb7c23f00928" class="" dir="auto"><strong>답글 정리:</strong> 헬멧은 LOVE 이후에 처음 등장하는 장치가 아니라, 1부 에바의 방에서 이미 도면으로 등장합니다. 다만 플레이어가 이를 놓칠 수 있으므로 헬멧 도면의 존재감은 더 키울 필요가 있습니다. 진짜 고민해야 할 부분은 헬멧의 존재 자체보다, 여러 명의 플레이어가 한 명의 헬멧 착용을 어떻게 수행할 것인가입니다. 헬멧을 쓰는 것은 능동적인 행동이라서 좋지만, 다인 플레이에서 한 명만 헬멧을 쓰는 연출은 어색할 수 있습니다. 단순히 버튼을 누르거나 코드를 입력하는 선택은 너무 정적이므로, <strong>헬멧 착용과 같은 감성을 유지하되 다인 플레이에 맞는 방식으로 바꿀 제안이 필요합니다.</strong></p><hr id="391bdb91-743d-8024-ae32-e9c9f5c8b4fe" dir="auto"/><p id="391bdb91-743d-8072-8e9a-d5c8ba68df85" class="" dir="auto"><strong>피드백:</strong> 비상 이륙 장치가 왜 안락사 장치가 되었는지에 대한 설명이 부족합니다.</p><p id="391bdb91-743d-8014-9727-faeb2cfb1d7a" class="" dir="auto"><strong>답글 정리:</strong> 설정상 노아가 장치를 변경해놓은 것으로 정리합니다. 안정용 산소 공급 장치인 헬멧에 산소 대신 제온 카트리지를 넣어 안락사를 시도한 것입니다. 추가로 비상 이륙 장치가 원래 있었는지, 에바가 직접 만든 장치인지, 에바가 장치가 안락사 장치로 바뀐 것을 알고 있었는지, 연료는 어디에 쓰였는지도 정리해야 합니다. <strong>이에 대한 수정이 필요합니다. </strong>현재 제가 생각하는 가장 깔끔한 방향은 에바가 실제 탈출을 위해 비상 이륙 장치를 만들었고, 노아가 그 장치를 망가뜨린 것으로 가는 것입니다. 노아는 헬멧에 제온을 연결했고, 남은 연료는 밖에 버렸습니다. 그래서 후반에 LOVE를 찾았더라도 여전히 “정말 탈출할 수 있는가”는 불확실하며, 이 불확실성이 헬멧 착용 엔딩의 명분이 됩니다.</p><hr id="391bdb91-743d-8067-8850-d4bba9b160db" dir="auto"/><h3 id="391bdb91-743d-801b-bc2b-ebd7fdbfcc0e" class="" dir="auto">2. VEA 설정</h3><p id="391bdb91-743d-809f-ba50-e15471a1a643" class="" dir="auto"><strong>피드백:</strong> VEA가 등장하는 당위성이 애매하다 생각함. VEA 역시 릴리가 ALONE 상태인 에바의 기억 복구를 돕기 위해 만든 AI라는 설정 같은 게 있어야 할 것 같음.</p><p id="391bdb91-743d-8008-934d-e80a239ad580" class="" dir="auto"><strong>답글 정리:</strong> VEA는 릴리나 오펠리아가 만든 단순 AI가 아니라, 제온 때문에 생겨난 제6인격입니다. 다만 처음에는 자신을 AI처럼 설명합니다. 처음에는 알렉스의 대사를 완전히 무시하지만, 후반으로 갈수록 알렉스, 노아와 자연스럽게 대화합니다. 이 변화가 VEA 역시 인격이라는 복선이 됩니다. 또한 VEA는 EVA의 애너그램입니다. <strong>이 사실을 밝히는 장면이 현재 시나리오에 부족하므로 추가가 필요합니다.</strong></p><hr id="391bdb91-743d-80e4-9a75-ca59bcd380d6" dir="auto"/><p id="391bdb91-743d-80c1-8dba-d85e207bbf31" class="" dir="auto"><strong>피드백:</strong> VEA도 인격 중 하나였다라고 하면 이상할까요? 인격 중 하나였는데 모종의 이유로 힘을 내지 못하게 되었다가 제온의 영향으로 다시 살아나게 된…</p><p id="391bdb91-743d-8018-a694-dfc12432f4a4" class="" dir="auto"><strong>답글 정리:</strong> VEA는 이미 제6인격으로 설정되어 있습니다. 다만 이 설정이 현재 시나리오 안에서 충분히 드러나지 않습니다. VEA가 AI인 척하는 이유, VEA가 알렉스의 목소리를 처음에는 무시하는 이유, VEA가 나중에는 알렉스와 노아와 대화하게 되는 이유, EVA와 VEA의 철자가 연결되는 장면, VEA가 생존 의지를 상징한다는 설명이 추가되어야 합니다.<strong> 이에 대한 수정/추가가 필요합니다.</strong></p><hr id="391bdb91-743d-8043-9b39-c1fa322ffbbd" dir="auto"/><h3 id="391bdb91-743d-80f5-beea-faf18969b186" class="" dir="auto">3. 텍스트 분량 / 음성 연출</h3><p id="391bdb91-743d-80d5-b1bd-fc4837592286" class="" dir="auto"><strong>피드백:</strong> 텍스트양 줄이는 작업이 필요할 것 같아요. 알렉스 통신 기록은 음성으로 대체해도 될 것 같습니다. 알렉스의 목소리를 미리 들려줄 겸.</p><p id="391bdb91-743d-8027-8008-fab5a7c93a67" class="" dir="auto"><strong>답글 정리:</strong> 음성과 텍스트를 함께 주는 방식은 매우 좋습니다. 음성은 분위기와 감정을 전달하고, 텍스트는 플레이어가 다시 확인할 수 있는 기록으로 남깁니다. 알렉스 통신 기록뿐 아니라 현재 있는 대부분의 주요 텍스트도 이 방식으로 처리할 수 있습니다. 다만 성우 작업량이 늘어나므로 모든 기록을 전부 음성화하기보다는 핵심 기록부터 우선 적용하는 것이 좋습니다. 우선 적용하면 좋은 부분은 알렉스 통신 기록, 릴리의 마지막 기록, VEA 첫 등장, 노아의 2부 기록, 헬멧 엔딩 분기입니다.<strong> 이가 들어갈 만한 부분의 정리가 필요합니다.</strong></p><hr id="391bdb91-743d-8066-a830-c5083fa88be5" dir="auto"/><p id="391bdb91-743d-801f-a946-f406179323f2" class="" dir="auto"><strong>피드백:</strong> 15문제면 적지 않은 양인데 스토리 자체도 길어서 방탈출 시간이 늘어나든지 해야 할 것 같아요. 이 스토리에 문제를 풀게 하려면 1시간에는 절대 불가능할 것 같습니다.</p><p id="391bdb91-743d-80b4-83c5-e71c93cf99b6" class="" dir="auto"><strong>답글 정리:</strong> 1시간 안에 끝내는 것은 불가능합니다. 현재는 75~80분 정도를 생각하고 있으며, 길어도 90분 안에는 끝내는 것이 목표입니다. 다만 1시간을 넘으면 몰입이 떨어질 수 있다는 의견도 있으므로, 아예 뇌절을 쳐서 2시간 구조로 만들고 더 많은 것을 보여주는 방향도 검토할 수 있습니다. 현재는 75~90분 구조를 우선으로 두되, 실제 문제 수와 텍스트 양을 보고 조정하는 것이 좋습니다.</p><hr id="391bdb91-743d-80b7-9dea-dbeba7499f3d" dir="auto"/><h3 id="391bdb91-743d-8020-9a1c-d1af6525209c" class="" dir="auto">4. 진행 방식 / 기록 읽기 유도</h3><p id="391bdb91-743d-807e-9dec-f5ed32e12d59" class="" dir="auto"><strong>피드백:</strong> 방 입장 → 문제 → 해결 → 사건에 대한 기록과 전말 → 다음 방이 반복되는데 이 때 기록을 다 읽고 자연스럽게 다음 방으로 넘어갈 수 있도록 하는 장치가 필요할 것 같습니다.</p><p id="391bdb91-743d-8070-9486-d2001829c24b" class="" dir="auto"><strong>답글 정리:</strong> 스토리를 읽지 않고도 문제를 풀 수는 있지만, 구조상 기록을 보지 않고 넘어가기는 어렵습니다. 문제를 풀고 코드를 입력하면 바로 다음 문제가 뜨는 것이 아니라, 잠금이 해제된 폴더와 그 안의 파일들이 먼저 나옵니다. 즉, 플레이어가 기록을 확인하지 않으려면 의도적으로 스킵해야 합니다. 그래도 사전 공지는 필요합니다. “이 방탈출은 문제 풀이뿐 아니라 기록 확인이 중요한 구조입니다. 각 문제를 푼 뒤 열리는 파일과 음성 기록을 확인해야 전체 이야기를 이해할 수 있습니다. 다음 문제로 넘어가기 전, 새로 열린 기록을 먼저 확인해 주세요.” 정도의 안내를 넣으면 좋습니다.</p><hr id="391bdb91-743d-8003-ae1c-c5c5c6b25769" dir="auto"/><p id="391bdb91-743d-80f7-8ace-c43cda2080bc" class="" dir="auto"><strong>피드백:</strong> 조명은 방 개수와 구조상 어렵긴 할 듯? 아니면 동방 전등이 아닌 다른 조명을 쓰거나.</p><p id="391bdb91-743d-80c3-93f0-e811df67a5ad" class="" dir="auto"><strong>답글 정리:</strong> 조명 연출은 방 개수와 구조상 어렵습니다. 동방 전등을 직접 쓰는 방식은 현실성이 낮을 수 있습니다. 대신 캄캄한 빈 상자를 주고 안쪽을 관찰하게 하는 문제를 사용할 수 있습니다. 또는 릴리의 일기장 문제를 아예 교체하는 것도 가능합니다. 현재 릴리 문제를 그대로 쓰기 어렵다는 점에는 동의합니다. 방 전체 조명 조작은 피하고, 작은 상자, 블랙박스, 손전등, 야광 요소 등으로 축소하는 것이 좋습니다. 릴리의 역할인 보호, 기억 잠금, 내부를 지키는 인격과 연결되면 더 자연스럽습니다. <strong>이에 대한 수정이 필요합니다.</strong></p><hr id="391bdb91-743d-80db-b02d-ef42b5a2f211" dir="auto"/><h3 id="391bdb91-743d-80ce-a8f5-f8871fb85557" class="" dir="auto">5. LOVE / 최종 문제 정당화</h3><p id="391bdb91-743d-8063-ba67-ea2a039d9954" class="" dir="auto"><strong>피드백:</strong> 마지막 LOVE를 완성시키려면, 개인적으로는 오펠리아도 호의적인 인격이라는 게 나타나는 부분이 있으면 좋을 것 같습니다.</p><p id="391bdb91-743d-8026-a40a-d4a396bc430b" class="" dir="auto"><strong>답글 정리:</strong> A는 알렉산더입니다. 알렉산더는 대장으로서의 역할을 포기했기 때문에 제거됩니다. N은 노아입니다. 노아는 에바를 자살로 몰아가는 빌런 역할이므로 제거됩니다. 오펠리아는 연구와 분석에 치중된 인격입니다. 오펠리아는 에바를 직접 죽음으로 몰아가는 인격이 아니며, 진실을 이해하는 데 필요한 인격입니다. 따라서 제거할 이유가 없습니다. 제거할 이유가 없는 인격은 남는 것이 자연스럽습니다. 정리하면 A는 제거, L은 보호와 기억 잠금, O는 연구와 분석, N은 제거, E는 본래 인격, V는 생존 의지입니다.</p><hr id="391bdb91-743d-80a0-a875-df03858cb387" dir="auto"/><p id="391bdb91-743d-80f7-bb5b-d86f66ceb7d5" class="" dir="auto"><strong>피드백:</strong> 전반적으로 제거해야 하는 인격과 추가해야 하는 인격이 무엇인지, 그리고 V가 하필 세 번째 위치에 들어가는 이유가 조금 더 잘 정당화되면 좋겠습니다.</p><p id="391bdb91-743d-809e-9ab6-f71a68d0cdd1" class="" dir="auto"><strong>답글 정리:</strong> A와 N이 제거되는 이유는 명확합니다. A는 역할을 포기한 대장 인격이고, N은 자살을 유도하는 포기 인격입니다. V가 N의 자리에 들어가면 LOVE가 됩니다. 이는 단순히 말이 되는 단어를 만드는 것이 아니라, N이라는 편집증적이고 자살 충동적인 인격의 자리를 V라는 살아가려는 인격이 대체하는 구조로 볼 수 있습니다. 즉, ALONE은 현재 상태이고, A와 N은 이제 에바를 살리지 못하는 인격입니다. N의 자리에 VEA가 들어오면서 포기 충동이 있던 자리에 생존 의지가 들어갑니다. 그래서 ALONE은 LOVE가 됩니다.</p><hr id="391bdb91-743d-80c5-8a3d-c5d74d0c9882" dir="auto"/><p id="391bdb91-743d-801a-9495-eef438b55e02" class="" dir="auto"><strong>피드백:</strong> 최종 문제의 답인 LOVE에 대한 메시지가 전반에 섞여있도록 해야 함. 갑자기 나타나니 어색함.</p><p id="391bdb91-743d-8033-9785-d7cd47c477a1" class="" dir="auto"><strong>답글 정리:</strong> LOVE는 갑자기 등장하면 어색합니다. 전반부부터 살아가기 위한 노력이 조금씩 들어가야 합니다. 릴리는 에바를 속인 것이 아니라 살리기 위해 기억을 잠갔다는 점, 오펠리아는 진실을 분석하고 이해하게 해 주는 인격이라는 점, VEA는 마지막에 새로 등장한 AI가 아니라 에바 안에 남아 있던 생존 의지라는 점, 노아의 결론이 죽음이라면 VEA의 결론은 그래도 살아보기라는 점을 여러 곳에 심어야 합니다. LOVE는 낭만적 사랑이 아니라, 혼자라는 사실을 죽음의 결론으로 받아들이지 않는 선택입니다.<strong> 이에 대한 수정이 필요합니다.</strong></p><hr id="391bdb91-743d-80f5-a81f-c3609114687c" dir="auto"/><h3 id="391bdb91-743d-8076-bbb7-dabb30cc20e9" class="" dir="auto">6. 환청 / 인격 대화 연출</h3><p id="391bdb91-743d-8047-873b-d43b29c630d5" class="" dir="auto"><strong>피드백:</strong> 환청에 대해서도 좀 더 연출이 매끄러워야 함. 현재 대사가 제미나이풍이라 너무 구리고, 하나하나 클릭해서 대사 봐야 하는 시스템도 나중에 고쳐야 할 것 같음.</p><p id="391bdb91-743d-806f-ac59-f5ceb2819ba1" class="" dir="auto"><strong>답글 정리:</strong> 알렉스, 노아, VEA가 모두 에바 안의 목소리라는 사실이 한 번에 드러나면 안 됩니다. 처음에는 알렉스의 목소리가 실제 통신처럼 들려야 합니다. 하지만 화면에는 통신 수신 표시가 뜨지 않아야 합니다. VEA는 처음에는 알렉스의 말을 못 듣는 척하거나 일부러 무시합니다. 그러다가 후반에는 알렉스, 노아와 자연스럽게 대화하면서, VEA 역시 외부 AI가 아니라 에바 안의 인격임을 드러냅니다. 대사는 전체적으로 줄이고, 클릭으로 하나하나 넘기는 방식도 추후 개선이 필요합니다.<strong> 이에 대한 수정이 필요합니다.</strong></p><h3 id="391bdb91-743d-8024-a7b6-ff45f4e67912" class="" dir="auto">7. 공간 구조 / 방 배치</h3><p id="391bdb91-743d-8015-bbd2-f130f1457d7d" class="" dir="auto"><strong>피드백:</strong> 5개의 방이 들어가야 하는데 유기적으로 왔다 갔다 하려면 공간을 정말 잘 쪼개야겠다는 생각이 듭니다. 각 방의 공간이 너무 작아질 것 같아서 좀 큰 공간을 빌리거나 해야 할 것 같습니다.</p><p id="391bdb91-743d-80d2-a624-edaf0b803077" class="" dir="auto"><strong>답글 정리:</strong> 2×2 구조로 4개의 방을 만들고, 한가운데에 릴리의 방을 두는 방식이 좋습니다. 동선상으로도 완벽하고, 스토리상으로도 자연스럽습니다. 외견상으로는 중심 방에 메인 컴퓨터가 있으니 보안 전문가인 릴리가 중앙 방을 쓰게 된 것입니다. 2부의 내면 구조로 보아도, 다른 인격을 지켜주는 역할인 릴리가 중앙에서 전체를 관리하는 것이 자연스럽습니다.<strong> 이에 대한 논의가 필요합니다.</strong></p><h3 id="391bdb91-743d-8013-9a8e-c38413ec9b49" class="" dir="auto">8. 다인 플레이 몰입 / ALONE 정당화</h3><p id="391bdb91-743d-809b-be92-e5fee2426f3b" class="" dir="auto"><strong>피드백:</strong> 다인 플레이에서 플레이어들이 “지금 릴리, 즉 에바가 혼자 있다”를 유추하기 힘들 수도 있을 것 같습니다. 우리 세 명인데 답이 ALONE이 말이 돼? 다른 게 있겠지, 라고 생각할 수도 있습니다.</p><p id="391bdb91-743d-807d-8a85-c2dc2f2af1b8" class="" dir="auto"><strong>답글 정리:</strong> 크게 문제가 되지는 않을 것 같습니다. 맨 처음 방탈출을 소개할 때 “여러분은 한 명의 사람입니다”와 같이 개인이라는 설정을 넣어두면 됩니다. 처음에는 “아, 우리가 릴리인가 보다”라고 받아들이고, 나중에는 “우리는 릴리의 여러 인격들인가?”라고 생각할 수 있어 오히려 좋을 수 있습니다. 다만 초반부터 단독 탑승자, 단일 생체 반응 같은 표현을 조금씩 넣어두면 ALONE으로 이어지는 흐름이 더 자연스러워집니다.</p><p id="395bdb91-743d-80f5-a741-dd45a95a5b2b" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

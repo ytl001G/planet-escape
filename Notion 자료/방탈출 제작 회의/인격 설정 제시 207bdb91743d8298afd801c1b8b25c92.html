@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>인격 설정 제시</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="207bdb91-743d-8298-afd8-01c1b8b25c92" class="page sans"><header><h1 class="page-title" dir="auto">인격 설정 제시</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>건의자</th><td>홍은기</td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value select-value-color-purple"><div class="status-dot status-dot-color-purple"></div>논의 필요</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>유형</th><td><span class="selected-value select-value-color-orange">스토리 수정</span></td></tr></tbody></table></header><div class="page-body"><h3 id="3bbbdb91-743d-80e5-b472-dcfafc62e3a7" class="" dir="auto">수정 부분:</h3><p id="3bbbdb91-743d-80e6-863b-fb8be7fc65db" class="" dir="auto">인격 관련 설정 전반</p><hr id="3bbbdb91-743d-8031-8955-c8d03a67bf5e" dir="auto"/><h3 id="3bbbdb91-743d-809b-8fa7-fb95191c428f" class="" dir="auto">수정 관련 사유:</h3><p id="3bbbdb91-743d-8077-89bd-d917620c426e" class="" dir="auto">현재 시나리오에서는 알렉스, 릴리, 오펠리아, 노아가 모두 에바 내부의 인격이지만, 1부에서는 실제로 존재하는 여러 사람처럼 행동하고 서로 대화하며 기록을 남긴 것으로 묘사됨.</p><p id="3bbbdb91-743d-8062-8bf4-feb6d9a1504f" class="" dir="auto">따라서 다음 부분의 설정을 명확히 할 필요가 있음.</p><ol type="1" id="3bbbdb91-743d-800c-a369-f0f71adaf7da" class="numbered-list" start="1" dir="auto"><li>에바가 언제부터 각 인격을 실제 사람처럼 인식했는가.</li></ol><ol type="1" id="3bbbdb91-743d-8017-8d6f-e84df596150c" class="numbered-list" start="2" dir="auto"><li>실제 육체가 하나인데 여러 인격이 서로 대화하거나 싸우는 장면을 어떻게 해석해야 하는가.</li></ol><ol type="1" id="3bbbdb91-743d-8010-8a5f-c67f523a509a" class="numbered-list" start="3" dir="auto"><li>각 인격이 자신이 에바의 일부라는 사실을 알고 있는가.</li></ol><ol type="1" id="3bbbdb91-743d-8095-bda4-cb192662a0c5" class="numbered-list" start="4" dir="auto"><li>서로 다른 인격이 남긴 기록과 행동을 어떻게 설명할 것인가.</li></ol><ol type="1" id="3bbbdb91-743d-80aa-9f63-e0d54732860e" class="numbered-list" start="5" dir="auto"><li>노아가 다른 인격에게 영향을 미치는 장면을 별도의 ‘주도권’ 설정 없이 어떻게 설명할 것인가.</li></ol><p id="3bbbdb91-743d-8090-bb70-c4d03597bf55" class="" dir="auto">현재 시나리오에서도 2부에서 모든 인물이 에바의 인격이었다는 사실과, 1부의 사건들이 실제로는 한 사람에게 일어난 일이었다는 반전이 핵심으로 사용되고 있음.</p><hr id="3bbbdb91-743d-80f1-ac79-cf7656580870" dir="auto"/><h3 id="3bbbdb91-743d-80c8-9d0e-d745d8fdc57d" class="" dir="auto">현재 인격 설정:</h3><p id="3bbbdb91-743d-80cd-8783-d6bb78165c63" class="" dir="auto"><strong>1. 에바는 어릴 때부터 여러 인격을 가지고 있었다.</strong></p><p id="3bbbdb91-743d-80ee-a10a-d85e2fa43f7a" class="" dir="auto">에바는 어릴 때부터 알렉스, 릴리, 오펠리아, 노아와 같은 인격을 만들어냈다.</p><p id="3bbbdb91-743d-80f0-8032-f690e8b9e14e" class="" dir="auto">처음에는 자신이 만들어낸 친구라는 사실을 어느 정도 알고 있었지만, 오랜 시간 이들과 함께 지내면서 점차 각 인격을 자신과 분리된 실제 친구처럼 받아들이게 됨.</p><p id="3bbbdb91-743d-80b7-99a0-c13a74f3be3d" class="" dir="auto">따라서 에바는 제온에 노출되기 전부터 이들을 실제 사람처럼 보고, 듣고, 함께 행동한다고 인식하고 있었음.</p><p id="3bbbdb91-743d-805f-8ac3-d6a710dd3236" class="" dir="auto"><strong>제온은 이 현상을 만들어내거나 심화시키지 않음.</strong></p><p id="3bbbdb91-743d-8005-bc27-fe460556647c" class="" dir="auto">제온과 인격의 직접적인 관계는 별도로 존재하며, 에바가 다른 인격들을 실제 사람처럼 인식하는 현상 자체는 원래부터 있었던 것임.</p><hr id="3bbbdb91-743d-8047-b3e0-e9735d7b8c0c" dir="auto"/><p id="3bbbdb91-743d-8083-8c8c-f091624e8e0a" class="" dir="auto"><strong>2. 실제로 존재하는 육체는 에바 한 명뿐이다.</strong></p><p id="3bbbdb91-743d-8047-bded-f9fd9b4694d7" class="" dir="auto">알렉스, 릴리, 오펠리아, 노아가 서로 대화하거나 싸우고, 한 사람이 다른 사람의 방으로 이동하는 것처럼 묘사되더라도 실제로 여러 사람이 움직인 것은 아님.</p><p id="3bbbdb91-743d-8078-b73c-e6d94cb74cf5" class="" dir="auto"><strong>실제로는 모든 행동을 에바 한 명이 하고 있음.</strong></p><p id="3bbbdb91-743d-8068-8f45-e591615e8ed8" class="" dir="auto">다만 각 인격이 사건을 인식할 때는 다른 인격들이 자신의 앞에 존재하고, 각각 독립적으로 행동하고 있는 것처럼 받아들임.</p><p id="3bbbdb91-743d-80c5-bbf9-d29fe6761961" class="" dir="auto">따라서</p><p id="3bbbdb91-743d-805e-bcb8-cce5b55f719b" class="" dir="auto">노아가 에바를 공격한다.</p><p id="3bbbdb91-743d-8090-91d4-c562dc9a0c28" class="" dir="auto">릴리가 에바의 밧줄을 풀어준다.</p><p id="3bbbdb91-743d-8034-8786-d6b71d853721" class="" dir="auto">에바가 노아를 뿌리치고 달아난다.</p><p id="3bbbdb91-743d-80c4-91a6-e675c7581e7b" class="" dir="auto">와 같은 장면도 실제 육체의 움직임 자체는 에바 한 명에게서 일어난 행동임.</p><p id="3bbbdb91-743d-808b-a219-e77aed10401f" class="" dir="auto">하지만 최종적인 결과는 각 인격이 인식한 사건과 동일하게 남음.</p><hr id="3bbbdb91-743d-80e4-b814-dc1fc92f7024" dir="auto"/><h3 id="3bbbdb91-743d-80fe-9531-c1bd717d5667" class="" dir="auto">인격 간 상호작용:</h3><p id="3bbbdb91-743d-806c-aa10-e412833a6b64" class="" dir="auto">각 인격은 다른 인격을 실제 사람처럼 인식하기 때문에 서로 대화하고 행동하는 장면도 자연스럽게 여러 사람 사이의 사건으로 기억함.</p><p id="3bbbdb91-743d-8039-9764-cf8f479e28ed" class="" dir="auto">따라서 현재 시나리오에 존재하는 메모, 일지, 통신 기록 등도 <strong>각 인격이 자신이 경험했다고 믿는 1인칭 시점을 기록한 문서</strong>라고 볼 수 있음.</p><p id="3bbbdb91-743d-80df-97f6-c446936a9a97" class="" dir="auto">예를 들어 에바가</p><p id="3bbbdb91-743d-803b-a2cc-ce8bb2ecbbb1" class="" dir="auto">“노아가 나를 붙잡았다.”</p><p id="3bbbdb91-743d-80df-9a96-f8cd0ff7ef8f" class="" dir="auto">라고 기록했다면, 실제로 노아라는 별개의 사람이 에바를 붙잡은 것은 아님.</p><p id="3bbbdb91-743d-8072-818b-ca94009b7429" class="" dir="auto">하지만 에바 인격에게는 실제로 노아에게 붙잡힌 것과 동일한 사건으로 인식되었기 때문에 기록 역시 그렇게 남음.</p><hr id="3bbbdb91-743d-8051-8de5-c854a655f60f" dir="auto"/><h3 id="3bbbdb91-743d-8087-b253-fbe7d3a1fa5d" class="" dir="auto">기록물의 진실 연출:</h3><p id="3bbbdb91-743d-8014-bd5f-d3970523093c" class="" dir="auto">1부에서는 모든 기록을 기존처럼 알렉스, 릴리, 오펠리아, 노아, 에바라는 서로 다른 사람이 작성한 것처럼 보여줌.</p><p id="3bbbdb91-743d-80a4-930d-c962b502d2bd" class="" dir="auto">2부에서 진실이 밝혀지는 시점에 대표적인 기록 하나를 다시 보여주며, 문장 속 인물 이름이 하나씩 <strong>에바</strong>로 바뀌는 연출을 사용함.</p><p id="3bbbdb91-743d-80e9-bf87-db790cbf4da2" class="" dir="auto">예를 들어</p><p id="3bbbdb91-743d-8018-9c1b-eeea63b6e371" class="" dir="auto"><strong>오펠리아 → 에바</strong></p><p id="3bbbdb91-743d-8027-8155-de51aae88a4c" class="" dir="auto"><strong>노아 → 에바</strong></p><p id="3bbbdb91-743d-80b6-8479-deac1ad9e7c4" class="" dir="auto"><strong>릴리 → 에바</strong></p><p id="3bbbdb91-743d-8054-9fdc-e1856a74aa6a" class="" dir="auto">와 같이 모든 이름은 에바로 바뀌지만, 글자의 색깔은 기존 인격의 대표색을 유지함.</p><p id="3bbbdb91-743d-8008-881b-e2d47f48fe5a" class="" dir="auto">이를 통해 플레이어에게</p><p id="3bbbdb91-743d-80a6-a11d-c63287e1dc50" class="" dir="auto"><strong>‘사건은 실제로 일어났다. 다만 그 모든 행동을 한 사람은 에바 한 명이었다.’</strong></p><p id="3bbbdb91-743d-80be-a55b-e54d5dfec730" class="" dir="auto">는 사실을 시각적으로 전달함.</p><p id="3bbbdb91-743d-80fb-bc55-e7374d0b7547" class="" dir="auto">이후 다른 기록들도 같은 방식으로 이름이 에바로 변경된 상태로 확인할 수 있게 함.</p><p id="3bbbdb91-743d-8047-a576-c454cda9901d" class="" dir="auto">현재 노아 방 2부에서 계획되어 있는 ‘모든 이름이 에바로 바뀌고 색깔만 각 인격의 색을 유지하는 연출’과 그대로 연결할 수 있음.</p><hr id="3bbbdb91-743d-809a-b7ff-ecb52e62cc91" dir="auto"/><h3 id="3bbbdb91-743d-80c5-b7be-fe8dbaee787b" class="" dir="auto">각 인격이 알고 있는 진실:</h3><p id="3bbbdb91-743d-802f-a0a8-d12eef78364f" class="" dir="auto"><strong>릴리를 제외한 인격들은 자신들이 에바의 인격이라는 사실을 모름.</strong></p><p id="3bbbdb91-743d-8063-b2d5-cc6849fea69d" class="" dir="auto">알렉스, 오펠리아, 노아는 자신을 에바와 별개의 실제 사람이라고 생각함.</p><p id="3bbbdb91-743d-8075-b392-f64b3c289f08" class="" dir="auto">에바 역시 마찬가지로 자신과 네 명의 친구가 실제로 함께 존재한다고 생각함.</p><p id="3bbbdb91-743d-80a5-b02b-d14a905c5d9f" class="" dir="auto"><strong>릴리만 처음부터 모든 사람이 에바의 인격이라는 사실을 알고 있음.</strong></p><p id="3bbbdb91-743d-80ad-be38-d19a580d1d49" class="" dir="auto">릴리는 에바가 이 사실을 받아들이지 못할 것을 알고 있기 때문에 이를 다른 인격들과 에바에게 직접 밝히지 않음.</p><p id="3bbbdb91-743d-8009-b7f3-fedf85beccc4" class="" dir="auto">현재 릴리의 2부 장면에서 릴리가 다른 인격들과 달리 진실을 알고 있었으며, 에바가 상처받지 않도록 계속 숨겨 왔다는 설정과 연결됨.</p><p id="3bbbdb91-743d-804c-9db5-fa31425d0393" class="" dir="auto">다만 <strong>릴리만 진실을 알고 있었다는 사실에 대한 1부 복선은 현재 부족함.</strong></p><p id="3bbbdb91-743d-80b8-817e-ecf5b9593e2f" class="" dir="auto">이에 대한 구체적인 복선 추가는 별도의 토론이 필요함.</p><hr id="3bbbdb91-743d-8060-be2f-d5dd5bd009de" dir="auto"/><h3 id="3bbbdb91-743d-802c-929c-dbb2a9f52c2d" class="" dir="auto">‘주도권’ 관련 설정:</h3><p id="3bbbdb91-743d-80ae-9a72-cfb6e348366f" class="" dir="auto">별도의 <strong>‘인격이 몸의 주도권을 얻는다’는 규칙은 만들지 않음.</strong></p><p id="3bbbdb91-743d-800d-a30b-f12075f36e51" class="" dir="auto">각 인격이 어떤 조건에서 등장하고 사라지는지, 누가 신체를 조종하고 있는지를 세부적인 시스템으로 설명하면 오히려 설정이 복잡해질 가능성이 있음.</p><hr id="3bbbdb91-743d-80cb-8c98-ef1b4369857f" dir="auto"/><h3 id="3bbbdb91-743d-80a3-a809-fce285f81755" class="" dir="auto">노아와 제온:</h3><p id="3bbbdb91-743d-8006-b8d1-d578b7526b4b" class="" dir="auto">노아에게 발생한 특수한 현상은 <strong>다른 인격들이 했던 행동이나 가지고 있던 기억을 어렴풋이 인식하게 된 것</strong>임.</p><p id="3bbbdb91-743d-8017-a60b-e65ddbcb8e3c" class="" dir="auto">노아는 자신이 직접 경험하지 않은 알렉스와 에바 등의 행동을 부분적으로 알게 되고, 이를 실제 타인의 생각을 읽는 것처럼 받아들임.</p><p id="3bbbdb91-743d-8039-b795-dd41eceadadd" class="" dir="auto">그 결과 알렉스와 에바가 무언가 숨기고 있다고 의심하게 되고, 다른 인격들의 기록과 행동을 조사하기 시작함.</p><p id="3bbbdb91-743d-8035-839b-c7c97160cadb" class="" dir="auto">현재 1부의 노아 기록에 있는</p><p id="3bbbdb91-743d-80a9-84ba-f14b45b2efe8" class="" dir="auto"><strong>“그러다 보니 무슨 생각을 하는지 보이더군.”</strong></p><p id="3bbbdb91-743d-80c6-ba98-c8601353858b" class="" dir="auto">이라는 표현도 실제 독심이라기보다 이 현상을 노아가 그렇게 해석한 것으로 볼 수 있음.</p><p id="3bbbdb91-743d-809b-800f-fd2963441304" class="" dir="auto">이 설정은 복잡하므로 그냥 책자에 넣을 예정이며, 방탈출 내에서는 편집증 정도로 묘사 예정</p><hr id="3bbbdb91-743d-800e-a579-c814bd33a3ca" dir="auto"/><h3 id="3bbbdb91-743d-8085-b732-c13960434a40" class="" dir="auto">인격의 역할:</h3><p id="3bbbdb91-743d-8034-bb29-e2bcf0b6ded0" class="" dir="auto">각 인격을 ‘본능 그 자체’로 정의하지는 않음. 다만 에바가 각 인격을 만들 때 특정한 역할과 성격이 강하게 반영되어 있음.</p><p id="3bbbdb91-743d-8038-8974-e4bc1b2b39c2" class="" dir="auto">알렉스는 책임, 명령, 리더십이 두드러짐.</p><p id="3bbbdb91-743d-80d7-9543-c203934f76a7" class="" dir="auto">릴리는 보호와 기억 관리가 두드러짐.</p><p id="3bbbdb91-743d-8017-ba9f-db8f84a5040b" class="" dir="auto">오펠리아는 탐구와 분석이 두드러짐.</p><p id="3bbbdb91-743d-80a5-9df5-e19b0f7d4e76" class="" dir="auto">노아는 계산, 위험 판단, 장난기와 포기 성향이 두드러짐.</p><p id="3bbbdb91-743d-8027-9618-df6e64fea282" class="" dir="auto">VEA는 생존 의지가 강하게 드러남.</p><p id="3bbbdb91-743d-809b-b55b-c7ecbab48120" class="" dir="auto">이는 각 인격의 성격을 이해하기 위한 보조적인 해석이며, 본편에서 <strong>“이 인격은 ○○본능이다.” </strong>라고 직접 정의하지 않음. 이 역시 책자용 설명</p><hr id="3bbbdb91-743d-80f9-9f15-de51da22453e" dir="auto"/><h3 id="3bbbdb91-743d-8050-9899-e5bfa7ffd64b" class="" dir="auto">시나리오에서 해결된 부분:</h3><p id="3bbbdb91-743d-80db-a7d5-e703384d9c5c" class="" dir="auto"><strong>1. 여러 인격이 실제 사람처럼 상호작용하는 문제</strong></p><p id="3bbbdb91-743d-8000-b740-c50a122176a5" class="" dir="auto">실제로 여러 명이 행동한 것이 아니라, 에바 한 명의 행동을 각 인격이 여러 사람 사이에서 벌어진 사건처럼 인식한 것으로 정리함.</p><p id="3bbbdb91-743d-8096-8476-de28fd39d59c" class="" dir="auto">따라서 사건의 결과 자체는 유지하면서 인물이 여러 명 존재했다는 부분만 2부에서 뒤집을 수 있음.</p><p id="3bbbdb91-743d-803b-a170-db1e1f60afe6" class="" dir="auto"><strong>2. 서로 다른 인격이 서로 다른 기록을 남기는 문제</strong></p><p id="3bbbdb91-743d-806e-b40b-f3857f4345d0" class="" dir="auto">각 기록은 해당 인격이 자신이 경험했다고 믿는 사건을 작성한 것임.</p><p id="3bbbdb91-743d-80c1-9d14-dbc256468da0" class="" dir="auto">에바 한 명이 서로 다른 시점에 서로 다른 인격의 입장에서 기록을 남겼기 때문에 문체, 매체, 관점이 달라도 설정상 문제되지 않음.</p><p id="3bbbdb91-743d-802f-86c8-eb830903bcd5" class="" dir="auto"><strong>3. 왜 아무도 다른 팀원이 보이지 않는 것을 이상하게 생각하지 않는가</strong></p><p id="3bbbdb91-743d-80eb-be93-d9cd9b095f13" class="" dir="auto">각 인격의 인식 안에서는 다른 인격들이 실제 사람처럼 존재함.</p><p id="3bbbdb91-743d-80c1-a15d-d66dd384e938" class="" dir="auto">따라서 ‘왜 아무도 없지?’라는 의문 자체가 발생하지 않음.</p><p id="3bbbdb91-743d-80b5-bea5-e20da197c534" class="" dir="auto">실제 공간에서는 에바 혼자 행동하지만, 에바와 각 인격에게는 여러 사람이 존재하는 상황으로 인식됨.</p><p id="3bbbdb91-743d-8041-9432-ccaf5523007b" class="" dir="auto"><strong>4. 제온이 인격 환각을 만든다는 기존 설명</strong></p><p id="3bbbdb91-743d-80f2-8349-e55227299f34" class="" dir="auto">삭제함.</p><p id="3bbbdb91-743d-8013-be64-cb3b9fed1100" class="" dir="auto">에바는 어릴 때부터 다른 인격을 실제 친구처럼 인식하고 있었으며, 제온은 이 현상을 만들어내거나 심화시키지 않음.</p><hr id="3bbbdb91-743d-806e-bb47-fd81c66cbc16" dir="auto"/><h3 id="3bbbdb91-743d-80ab-aa75-f4f2a0e898b8" class="" dir="auto">추가로 해결해야 하는 부분:</h3><p id="3bbbdb91-743d-8017-b0d6-dde96afcf734" class="" dir="auto"><strong>1. 릴리가 진실을 알고 있었다는 복선</strong></p><p id="3bbbdb91-743d-803d-97e8-d2139e1fa26b" class="" dir="auto">릴리만 자신과 다른 인물들이 모두 에바의 인격이라는 사실을 알고 있었음.</p><p id="3bbbdb91-743d-8060-abb3-cd83c61e9042" class="" dir="auto">하지만 현재 1부에서는 릴리 역시 다른 사람들과 완전히 동일하게 행동하는 것처럼 보이기 때문에, 2부에서 이 사실이 갑자기 추가된 설정처럼 느껴질 가능성이 있음.</p><p id="3bbbdb91-743d-8069-988c-f77a91126168" class="" dir="auto">따라서 릴리의 기록이나 행동 중 일부에</p><p id="3bbbdb91-743d-80b6-b33c-db3d32f37e83" class="" dir="auto"><strong>‘릴리는 다른 인격들과 달리 뭔가를 알고 있었다.’</strong></p><p id="3bbbdb91-743d-80e2-8f81-c77df223721d" class="" dir="auto">고 나중에 재해석할 수 있는 복선이 필요함.</p><p id="3bbbdb91-743d-8001-a0aa-cf6cf7cddbb7" class="" dir="auto">구체적인 복선은 별도 토론에서 결정함.</p><p id="3bbbdb91-743d-8002-8cd8-c9011cc8be20" class="" dir="auto"><strong>2. 노아의 최초 제온 노출 과정</strong></p><p id="3bbbdb91-743d-80e4-8d8c-e4e604143727" class="" dir="auto">오펠리아와 노아가 같은 몸이므로 기존의</p><p id="3bbbdb91-743d-8069-a11d-f9d8fe31c5e4" class="" dir="auto"><strong>‘오펠리아의 실험실에서 제온이 유출되고 지나가던 노아가 마셨다.’</strong></p><p id="3bbbdb91-743d-8057-8cb3-d3bbaa9364e4" class="" dir="auto">는 설명은 그대로 사용할 수 없음.</p><p id="3bbbdb91-743d-80d7-96da-de19fb547f05" class="" dir="auto">이 부분은 제온 설정과 함께 별도로 수정해야 함.</p><hr id="3bbbdb91-743d-8069-935a-fa3e9a03e6a0" dir="auto"/><h3 id="3bbbdb91-743d-80f2-84fa-ea03c9f5ee1f" class="" dir="auto">현재 인격 설정 요약:</h3><p id="3bbbdb91-743d-8052-8fe9-ea7dc65246c8" class="" dir="auto"><strong>확정된 설정</strong></p><p id="3bbbdb91-743d-80cc-89c4-e956ffa23c49" class="" dir="auto">에바는 어릴 때부터 여러 인격을 가지고 있었다.</p><p id="3bbbdb91-743d-80bd-8a07-d8a69ab1650c" class="" dir="auto">에바는 각 인격을 실제 친구처럼 보고 듣고 있었으며, 제온은 이 현상과 관계없다.</p><p id="3bbbdb91-743d-80f7-b45b-c9b9dd2dd400" class="" dir="auto">실제로 존재하는 육체는 에바 한 명뿐이다.</p><p id="3bbbdb91-743d-8049-b566-e32db35544f9" class="" dir="auto">여러 인격이 상호작용하는 것처럼 보이는 사건 역시 실제 행동은 전부 에바 한 명이 하고 있다.</p><p id="3bbbdb91-743d-80b2-99a6-c4c10da2de50" class="" dir="auto">각 인격은 자신이 경험한 사건을 실제 여러 사람 사이에서 벌어진 일처럼 인식하고 기록한다.</p><p id="3bbbdb91-743d-809f-92f4-ea1f8909f865" class="" dir="auto">2부에서 기록 속 모든 인물의 이름이 ‘에바’로 바뀌고, 기존 인격의 대표색만 유지되는 연출을 통해 이를 보여준다.</p><p id="3bbbdb91-743d-8015-bed8-e46d6b513796" class="" dir="auto">릴리만 모든 인격이 에바의 일부라는 사실을 알고 있었다.</p><p id="3bbbdb91-743d-80bd-9b45-f806d78014b2" class="" dir="auto">에바, 알렉스, 오펠리아, 노아는 자신들을 서로 다른 실제 사람이라고 믿는다.</p><p id="3bbbdb91-743d-804e-bc41-de833dc0b2ef" class="" dir="auto">별도의 ‘주도권’ 시스템은 설정하지 않는다.</p><p id="3bbbdb91-743d-80ae-b272-c06836873e6c" class="" dir="auto">제온은 기존 인격을 실제 친구처럼 보는 현상을 만들거나 심화시키지 않는다.</p><p id="3bbbdb91-743d-806f-9b0a-e9f926eb7de4" class="" dir="auto">노아에게만 다른 인격들의 행동과 기억이 어렴풋이 전달되는 특수한 현상이 발생한다.</p><p id="3bbbdb91-743d-803b-995e-ca38ea0e5ff7" class="" dir="auto">각 인격에는 특정 역할과 성향이 두드러지지만, 이를 본편에서 ‘본능’이라고 직접 정의하지 않는다.</p><p id="3bbbdb91-743d-8004-804c-c19aa77c3f2b" class="" dir="auto"><strong>추가 논의가 필요한 설정</strong></p><p id="3bbbdb91-743d-80a5-8583-f2695b66556b" class="" dir="auto">릴리만 진실을 알고 있었다는 사실에 대한 1부 복선.</p><p id="3bbbdb91-743d-804a-963f-d9ed72506129" class="" dir="auto">노아가 최초로 제온의 영향을 받게 된 구체적인 과정.</p><p id="3bbbdb91-743d-8060-b7a5-c4bb2859b3e4" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

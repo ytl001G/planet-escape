@@ -1,0 +1,797 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>오펠리아 1부 보고서+비공개 보고서</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="3d9bdb91-743d-8050-aafe-d92fd4d1a188" class="page sans"><header><h1 class="page-title" dir="auto">오펠리아 1부 보고서+비공개 보고서</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>건의자</th><td>조휘원</td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value select-value-color-pink"><div class="status-dot status-dot-color-pink"></div>최종 확인 단계</span></td></tr></tbody></table></header><div class="page-body"><h3 id="3d9bdb91-743d-8081-b5da-fe2e24222d78" class="" dir="auto">수정 부분:</h3><p id="3d9bdb91-743d-80f2-a1fb-da9eb328645d" class="" dir="auto">여기에 수정 관련 레퍼런스 링크를 놓아 주세요.</p><hr id="3d9bdb91-743d-809f-b6be-c8b3dac2afbd" dir="auto"/><h3 id="3d9bdb91-743d-8069-87b9-cfc2876bd8ca" class="" dir="auto">수정 관련 사유:</h3><p id="3d9bdb91-743d-8074-90e4-f9644b7752d0" class="" dir="auto">여기에 수정이 필요한 이유를 적어 주세요.</p><hr id="3d9bdb91-743d-80a1-8574-c078cf871488" dir="auto"/><h3 id="3d9bdb91-743d-8078-8cba-e476954d5a62" class="" dir="auto">건의 사항:</h3><p id="3d9bdb91-743d-80dd-847c-e4aae9aa387b" class="" dir="auto">여기에 건의 사항을 적어 주세요.</p><h1 id="3d9bdb91-743d-80e2-a287-cfae92dad7c8" class="" dir="auto">XEON 연구 보고서</h1><p id="3d9bdb91-743d-801d-bf82-d6929443bccd" class="" dir="auto"><strong>연구 담당자 | 오펠리아 그린</strong></p><p id="3d9bdb91-743d-8087-bd26-e23baeae16fb" class="" dir="auto"><strong>연구 대상 | 제온의 신경계 영향</strong></p><p id="3d9bdb91-743d-8008-9cec-f48d3242629f" class="" dir="auto"><strong>실험 대상 | 실험용 생쥐</strong></p><hr id="3d9bdb91-743d-80f8-bf66-f6c73ee09cf5" dir="auto"/><h2 id="3d9bdb91-743d-804e-86fa-c385bb33c630" class="" dir="auto">제12행성일 — 기억 소실</h2><p id="3d9bdb91-743d-80b9-abe0-cea197b2f981" class="" dir="auto">미로를 충분히 학습한 생쥐에게 제온을 투여했다.</p><p id="3d9bdb91-743d-801d-a179-c967ba1ca505" class="" dir="auto">투여 후 생쥐는 이전에 학습한 길을 기억하지 못하고 같은 통로를 반복해서 돌아다녔다.</p><p id="3d9bdb91-743d-80bd-b693-c453a39c003f" class="" dir="auto"><strong>일정 농도의 제온은 기억을 소실시키는 것으로 보인다.</strong></p><hr id="3d9bdb91-743d-8050-bd52-fcb4e777f48c" dir="auto"/><h2 id="3d9bdb91-743d-8020-8a03-c96b674735e0" class="" dir="auto">제18행성일 — 기억 강화</h2><p id="3d9bdb91-743d-8005-9c16-cc493dcfea85" class="" dir="auto">이번에는 제온의 농도를 낮춰 실험했다.</p><p id="3d9bdb91-743d-80d7-ae8a-fcb30ed58906" class="" dir="auto">예상과 반대로 생쥐가 빠르게 미로를 학습했고, 며칠 뒤에도 경로를 정확히 기억했다.</p><p id="3d9bdb91-743d-80cc-b8ec-cc1ffa36982b" class="" dir="auto"><strong>저농도의 제온은 기억과 학습 능력을 강화한다.</strong></p><p id="3d9bdb91-743d-805d-a3eb-cb2a978baf7e" class="" dir="auto">사람에게도 같은 효과가 나타난다면 <strong>치매와 같은 기억 질환의 치료제</strong>로 사용할 수 있을지도 모른다.</p><p id="3d9bdb91-743d-803f-adab-d0691126681c" class="" dir="auto">관련 연구 결과를 알렉스에게 전달했다.</p><hr id="3d9bdb91-743d-8037-b25d-c32498d52ee4" dir="auto"/><h2 id="3d9bdb91-743d-8063-93c5-f1f79520fa5c" class="" dir="auto">제27행성일 — 고농도 실험</h2><p id="3d9bdb91-743d-801d-b08e-ed51a6eb4546" class="" dir="auto">제온의 안전 범위를 확인하기 위해 농도를 높였다.</p><p id="3d9bdb91-743d-8091-804e-e5290d1e4cb2" class="" dir="auto">실험체는 점차 움직임과 외부 자극에 대한 반응을 잃었고, 최종적으로 측정 가능한 뇌 활동이 사라졌다.</p><p id="3d9bdb91-743d-803e-bfff-f9b3d428533c" class="" dir="auto">심장 박동은 유지되었지만 의식은 돌아오지 않았다.</p><p id="3d9bdb91-743d-80ab-8c2d-d7391ccdf8c8" class="" dir="auto"><strong>고농도의 제온은 뇌 기능을 완전히 정지시킬 수 있다.</strong></p><hr id="3d9bdb91-743d-8007-9c02-c87e51e173a5" dir="auto"/><h3 id="3d9bdb91-743d-80f0-85b3-caabdb545c9b" class="" dir="auto">현재까지의 결과</h3><table id="3d9bdb91-743d-80bc-bfad-d6ebed048862" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="3d9bdb91-743d-80ea-b5e1-c03e5a7db777" dir="ltr"><th id="ChPt" class="simple-table-header-color simple-table-header">제온 농도</th><th id="lZ=n" class="simple-table-header-color simple-table-header">관찰 결과</th></tr></thead><tbody><tr id="3d9bdb91-743d-80ab-953a-de97685a3a61" dir="ltr"><td id="ChPt" class="">낮음</td><td id="lZ=n" class=""><strong>기억 강화</strong></td></tr><tr id="3d9bdb91-743d-802f-b1e5-e8ec6d48280f" dir="ltr"><td id="ChPt" class="">중간</td><td id="lZ=n" class=""><strong>기억 소실</strong></td></tr><tr id="3d9bdb91-743d-8009-b026-d464e0d195a2" dir="ltr"><td id="ChPt" class="">높음</td><td id="lZ=n" class=""><strong>뇌 기능 정지</strong></td></tr></tbody></table><p id="3d9bdb91-743d-8092-abaa-fdf26101f65f" class="" dir="auto">같은 물질이 농도에 따라 전혀 다른 결과를 만든다.</p><p id="3d9bdb91-743d-80a7-873d-e95170da8e34" class="" dir="auto">추가적인 연구가 필요하다.</p><hr id="3d9bdb91-743d-802a-9fba-cbb8069be991" dir="auto"/><h1 id="3d9bdb91-743d-80e7-bea0-fe020587fda3" class="" dir="auto">PRIVATE RECORD(비공개)</h1><h2 id="3d9bdb91-743d-8010-b713-f6a02e589561" class="" dir="auto">제31행성일</h2><p id="3d9bdb91-743d-801c-8aa0-c1b7a1e1daed" class="" dir="auto">제온은 생각했던 것보다 훨씬 위험하다.</p><p id="3d9bdb91-743d-80e8-a599-ee67bb7e615c" class="" dir="auto">단순히 기억에 영향을 주는 것이 아니라, <strong>뇌의 신경 활동 자체에 직접 영향을 주고 있다.</strong></p><p id="3d9bdb91-743d-8000-846c-f350cccacf21" class="" dir="auto">생쥐와 인간의 신경 구조에는 차이가 있지만, 인간에게도 비슷한 결과가 나타날 가능성은 충분하다.</p><p id="3d9bdb91-743d-8089-9893-e0ba239456d3" class="" dir="auto">기억을 강화할 수도 있고,</p><p id="3d9bdb91-743d-80a5-afa7-d4ffd56c19a3" class="" dir="auto">기억을 없앨 수도 있고,</p><p id="3d9bdb91-743d-80f2-af33-cd8d990f3926" class="" dir="auto">많은 양이라면—</p><p id="3d9bdb91-743d-80b8-92f7-fc223e1be5d8" class="" dir="auto"><strong>사람의 뇌도 멈출 수 있다.</strong></p><hr id="3d9bdb91-743d-80fe-ac06-ed6a9990f68c" dir="auto"/><h2 id="3d9bdb91-743d-80af-8978-d82b388778c9" class="" dir="auto">제39행성일</h2><p id="3d9bdb91-743d-804d-b115-c008597fadfb" class="" dir="auto">누군가 내 연구 기록을 열어봤다.</p><p id="3d9bdb91-743d-8004-b8df-f21030a687ba" class="" dir="auto">외부 침입이라고 생각했지만 릴리가 확인한 결과 외부 접속 흔적은 없었다.</p><p id="3d9bdb91-743d-8094-95a6-dea06cbfba32" class="" dir="auto">그렇다면—</p><p id="3d9bdb91-743d-8041-8dfa-c1bc50186339" class="" dir="auto"><strong>우주선 안의 누군가가 내 연구를 보고 있다.</strong></p><p id="3d9bdb91-743d-80ae-8cc0-ff0dbc79b18b" class="" dir="auto">중요한 기록 몇 개를 비공개로 전환했다.</p><p id="3d9bdb91-743d-808a-909f-d8a036178fd8" class="" dir="auto">괜한 걱정이었으면 좋겠다.</p><hr id="3d9bdb91-743d-801d-aa5f-fc29a286d705" dir="auto"/><h2 id="3d9bdb91-743d-804e-8223-dfa8847d6a50" class="" dir="auto">제48행성일</h2><p id="3dabdb91-743d-806f-8df9-ee35e9b7c7a0" class="" dir="auto"><em>생쥐한테서 나온 결과가 사람한테도 똑같이 나오는지 궁금했어.</em></p><p id="3dabdb91-743d-806d-8a36-ddeee5bf3f7f" class="" dir="auto"><em>그래서 직접 해 봤지.</em></p><p id="3dabdb91-743d-80de-8adf-fdfeae92c204" class="" dir="auto"><em>제온 양을 조금씩 늘리니까 반응이 점점 느려지더라고. 그러다가 결국 뇌 활동도 완전히 멈췄고.</em></p><p id="3dabdb91-743d-8098-ba65-dc31ed40e91f" class="" dir="auto"><em><strong>고농도의 제온은 사람한테도 뇌 기능 정지를 일으킨다.</strong></em></p><p id="3dabdb91-743d-80da-9204-da023ef833b5" class="" dir="auto"><em>뭐, 예상한 그대로네.</em></p><p id="3dabdb91-743d-8000-9795-c01be81e180e" class="" dir="auto"><em><strong>역시 사람한테 직접 시험해 보길 잘했어.</strong></em></p><p id="3dabdb91-743d-80c3-82c4-f556adb75010" class="" dir="auto"><em>이제 확실해졌으니까.</em></p><hr id="3d9bdb91-743d-8027-b014-cbea259e8723" dir="auto"/><h3 id="3d9bdb91-743d-80f2-a2ef-c43cba9dd5d6" class="" dir="auto">댓글</h3><p id="3d9bdb91-743d-80fb-846f-dadf44aead68" class="" dir="auto">48행성일이 노아가 쓴 것이라는 게 드러나야 함 (폰트와 말투만 바꾸면 될 듯)</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

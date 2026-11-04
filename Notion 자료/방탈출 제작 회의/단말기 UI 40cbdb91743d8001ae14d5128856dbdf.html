@@ -1,0 +1,799 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>단말기 UI</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="40cbdb91-743d-8001-ae14-d5128856dbdf" class="page sans"><header><h1 class="page-title" dir="auto">단말기 UI</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>담당</th><td><span class="selected-value select-value-color-brown">이효주</span></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value"><div class="status-dot"></div>시작 전</span></td></tr><tr class="property-row property-row-number"><th><span class="icon property-icon"><img src="https://app.notion.com/icons/hashtag_gray.svg" style="width:14px;height:14px;display:block"/></span>숫자</th><td>3</td></tr></tbody></table></header><div class="page-body"><p id="40cbdb91-743d-8001-9493-f6b6404c526b" class="" dir="auto">
+</p><p id="40dbdb91-743d-8011-a1f6-e1625f5d528a" class="" dir="auto"><strong>총괄) 이걸 한 사람한테 짬을 때렸다고?? 하다가 애매한거 있으면 연락해주세요 </strong></p><p id="40cbdb91-743d-80be-afc2-d23646721966" class="" dir="auto">단말기=컴퓨터, 태블릿을 칭함. </p><p id="40dbdb91-743d-80b2-bbfe-dd4457cca340" class="" dir="auto">릴리는 데스크탑, 나머지 방엔 태블릿 있을 예정입니다.</p><h3 id="40cbdb91-743d-8058-9a32-c89165b3d4c2" class="" dir="auto">ui 디자인</h3><ul id="40cbdb91-743d-800f-9df4-d4a2db9edb46" class="bulleted-list" dir="auto"><li style="list-style-type:disc">전체 디자인</li></ul><ul id="40cbdb91-743d-803e-8418-e0e190b9066f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">글꼴<ul id="40cbdb91-743d-80e7-9882-c79e703902eb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">본문</li></ul><ul id="40cbdb91-743d-809f-9318-f7024be4229c" class="bulleted-list" dir="auto"><li style="list-style-type:circle">시스템/터미널</li></ul><ul id="40cbdb91-743d-805e-a750-fe5acf336366" class="bulleted-list" dir="auto"><li style="list-style-type:circle">손글씨 (굳이 연출이 필요한 게 아니라면 폰트 사용할것임)</li></ul><ul id="40cbdb91-743d-80b1-a302-d88a987b2368" class="bulleted-list" dir="auto"><li style="list-style-type:circle">48행성일 침입자 글꼴(노아의 글씨체, 노아 폴더 메모와 같게)</li></ul><ul id="40cbdb91-743d-80a9-8106-cb072d4f7ea0" class="bulleted-list" dir="auto"><li style="list-style-type:circle">자막(등장인물별로 다르게?) ⇒ 색만 다르게 하면 됨</li></ul></li></ul><ul id="40cbdb91-743d-80b7-b5aa-f3b6d16dbc6e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">아이콘<ul id="40cbdb91-743d-8027-8db6-f44256e2c0f1" class="bulleted-list" dir="auto"><li style="list-style-type:circle">잠금</li></ul><ul id="40cbdb91-743d-8069-9c68-c394f8a682bc" class="bulleted-list" dir="auto"><li style="list-style-type:circle">해제</li></ul><ul id="40cbdb91-743d-8059-9522-f8a039340783" class="bulleted-list" dir="auto"><li style="list-style-type:circle">비공개</li></ul><ul id="40cbdb91-743d-8075-9c79-e5cc387bdf40" class="bulleted-list" dir="auto"><li style="list-style-type:circle">파일 아이콘 (폴더, txt, 『행성·탈출』 프로젝트 실행 장치, mp3 아이콘 등)</li></ul><ul id="40cbdb91-743d-8052-8244-f774b2d41b18" class="bulleted-list" dir="auto"><li style="list-style-type:circle">문서(로그/일지/메모/이메일)</li></ul><ul id="40cbdb91-743d-803b-afb9-f409011a7f6f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">등등…</li></ul></li></ul><ul id="40cbdb91-743d-80f8-a3f9-d4abdf062a52" class="bulleted-list" dir="auto"><li style="list-style-type:disc">공통 컴포넌트<ul id="40cbdb91-743d-80e7-b786-cab9979ad32d" class="bulleted-list" dir="auto"><li style="list-style-type:circle">다이얼로그(팝업 화면, 열려 있는 동안 다른 화면과 상호작용 불가)<ul id="40cbdb91-743d-807f-8712-f9b64731da05" class="bulleted-list" dir="auto"><li style="list-style-type:square">암호 입력<ul id="40cbdb91-743d-80fe-acb6-d1e823f93c59" class="bulleted-list" dir="auto"><li style="list-style-type:disc">계정+안내 문구</li></ul><ul id="40cbdb91-743d-800f-bb1d-ee456c9a89e0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">잠금 해제 애니메이션, 오답 애니메이션 등</li></ul></li></ul><ul id="40cbdb91-743d-80f3-b62a-ecf4903fb8d4" class="bulleted-list" dir="auto"><li style="list-style-type:square">시스템 메시지(일반/오류)</li></ul><ul id="40cbdb91-743d-80ab-bab1-d4b0cf908c65" class="bulleted-list" dir="auto"><li style="list-style-type:square">문서 뷰어</li></ul><ul id="40cbdb91-743d-8087-92d0-c71ad4c4fc15" class="bulleted-list" dir="auto"><li style="list-style-type:square"><ul id="40cbdb91-743d-8028-8b5c-e11748b09a8f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">통신 로그</li></ul><ul id="40cbdb91-743d-80d3-ba27-c02308e7600e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">일지형 기록<ul id="40cbdb91-743d-80c1-a10d-ec0251559b1b" class="bulleted-list" dir="auto"><li style="list-style-type:circle">표지</li></ul><ul id="40cbdb91-743d-80a4-bbd6-d73dd029c1fb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">양방향 페이지 넘김</li></ul><ul id="40cbdb91-743d-801a-ae7b-c50971c547ad" class="bulleted-list" dir="auto"><li style="list-style-type:circle">비공개 구역 잠금 페이지</li></ul><ul id="40cbdb91-743d-80cf-8e80-f386252cdabd" class="bulleted-list" dir="auto"><li style="list-style-type:circle">등등…</li></ul></li></ul><ul id="40cbdb91-743d-80cb-8377-ca98a32ea77d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">메모/편지</li></ul><ul id="40cbdb91-743d-8098-ae5a-f6c3a660b995" class="bulleted-list" dir="auto"><li style="list-style-type:disc">이메일</li></ul></li></ul><figure id="40cbdb91-743d-80b3-a09c-e01176f094aa" class="image" data-notion-image="image%205.png" dir="ltr"><a href="image%205.png"><img style="width:627.9921875px" src="image%205.png"/></a><figcaption>총괄: 전에 내가 디자인했던 거 예시</figcaption></figure></li></ul><ul id="40cbdb91-743d-80f1-b0cd-e0fc6880f393" class="bulleted-list" dir="auto"><li style="list-style-type:circle">폴더/파일 뷰어</li></ul><figure id="40cbdb91-743d-80b9-92a4-e146dcb411d1" class="image" data-notion-image="image%206.png" dir="ltr"><a href="image%206.png"><img style="width:666px" src="image%206.png"/></a><figcaption>(예시) 게임 스타필드의 UI인데 좀 고쳐서 그대로 써도 될듯 합니다 - 총괄 각주: 안됨 매우 단순화된 UI여야 함 바탕화면에 아무것도 없이 배경색만 있고 각 파일 아이콘도 단순하게 있어야 함</figcaption></figure><figure id="40cbdb91-743d-809f-9f97-e4d014bf084e" class="image" data-notion-image="image%207.png" dir="ltr"><a href="image%207.png"><img style="width:2814px" src="image%207.png"/></a></figure><figure id="40cbdb91-743d-80a2-9081-ef3177942278" class="image" data-notion-image="image%208.png" dir="ltr"><a href="image%208.png"><img style="width:2530px" src="image%208.png"/></a></figure><ul id="40cbdb91-743d-8015-8d6f-ee3629808620" class="bulleted-list" dir="auto"><li style="list-style-type:circle">idle 상태 화면(대기중이지만 완전 검은 화면은 아니도록)</li></ul><ul id="40cbdb91-743d-80b2-921b-f06fdc3672e6" class="bulleted-list" dir="auto"><li style="list-style-type:circle">음성 재생 상태 비주얼라이제이션</li></ul></li></ul><ul id="40cbdb91-743d-80c0-ace3-ff25f7587ad7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">릴리(메인 컴퓨터)<ul id="40cbdb91-743d-8002-aa38-e4019967729f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">이름 입력 화면</li></ul><ul id="40cbdb91-743d-8024-9307-c3e4c711d363" class="bulleted-list" dir="auto"><li style="list-style-type:circle">본인 확인 화면</li></ul><ul id="40cbdb91-743d-8022-8574-cecbeca435ad" class="bulleted-list" dir="auto"><li style="list-style-type:circle">본인 확인 실패 → 안전 모드 전환 연출</li></ul><ul id="40cbdb91-743d-807b-9e4e-f22d2ee95c62" class="bulleted-list" dir="auto"><li style="list-style-type:circle">안전 모드 현황판(폴더 5개·사슬로 묶인 메인 컴퓨터 표시)</li></ul><figure id="40cbdb91-743d-806b-a977-de6bed65a540" class="image" data-notion-image="image%209.png" dir="ltr"><a href="image%209.png"><img style="width:2566px" src="image%209.png"/></a><figcaption>(박찬혁 제안) 릴리의 컴퓨터(릴리 폴더와 메인 데이터베이스 폴더가 있으며, 안전 모드 잠금 관련 진행도 사항이 띄워져 있음), 나머지 컴퓨터는 각 계정에 해당하는 폴더만 있음(예: 알렉스 컴퓨터에는 알렉스 폴더만 있음)<br/>총괄 각주: 존재해야 하는 디자인 컴포넌트들에는 동의, 메인 데이터베이스 주위에 잠긴 표시가 점대칭적으로 존재하는 게 예쁜 것 같음</figcaption></figure><figure id="40dbdb91-743d-8061-85cb-d61eaf9af660" class="image" data-notion-image="CleanShot_2026-11-03_at_15.47.332x.png" dir="ltr"><a href="CleanShot_2026-11-03_at_15.47.332x.png"><img style="width:2578px" src="CleanShot_2026-11-03_at_15.47.332x.png"/></a><figcaption>(박찬혁 제안2) 메인 데이터베이스 주변에 잠김 표시들이 있으면 폴더로 혼동할 수 있을 것 같아 분리했습니다(ai 딸깍이라 쓸데없는 요소가 많습니다)</figcaption></figure><ul id="40cbdb91-743d-8021-8ad2-f9acb180c50a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">『탈출』 프로젝트 실행자 신원 확인 화면(EVA 재입력, 문제 8)</li></ul><ul id="21b99b5e-e564-49c2-99fe-a1f84384c53a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">다른 이름 입력 시 연출(ALEX·NOAH: X 자동 입력 / LILY·OPHELIA: 소리·화면이 먹먹해짐)</li></ul><ul id="40cbdb91-743d-8042-a9d2-c1994f21ef2b" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ALONE 입력 화면</li></ul><ul id="40cbdb91-743d-8020-85d0-f27c0f9d4e04" class="bulleted-list" dir="auto"><li style="list-style-type:circle">기록 보안 파일 화면(문제 14)</li></ul><ul id="7bd6e046-22ea-40c7-b31e-38a402b8216f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">‘마지막 기록’ 이름 치환 연출(인물 이름만 ‘에바’로, 글자색 유지)</li></ul><ul id="40cbdb91-743d-8061-be43-fcf184bb54d1" class="bulleted-list" dir="auto"><li style="list-style-type:circle">LOVE 입력 화면</li></ul><ul id="40cbdb91-743d-8052-a8bb-d6f7861176b5" class="bulleted-list" dir="auto"><li style="list-style-type:circle">레버 안내</li></ul><ul id="40cbdb91-743d-80b1-bf78-f4e57bc33acb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">선택 대기 연출(지직거림, 2단계 에바 메모·5단계 링이 끼워진 레버 이미지)</li></ul><ul id="40cbdb91-743d-8066-b207-d5a0037bc230" class="bulleted-list" dir="auto"><li style="list-style-type:circle">탈출 엔딩 연출(셧다운 안내, 암전 뒤에도 화면은 켜 두고 자막 표시)</li></ul><ul id="ece27084-28c3-45d2-a073-684e732965bd" class="bulleted-list" dir="auto"><li style="list-style-type:circle">행성 엔딩 연출(에바의 메모 → 구조 신호 송출)</li></ul></li></ul><ul id="40cbdb91-743d-8054-94b2-e6ed6fa3d3c6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">알렉스<ul id="40cbdb91-743d-80b8-8bf6-f1d9e9996f3b" class="bulleted-list" dir="auto"><li style="list-style-type:circle">항법/통신 콘솔 느낌의 ui</li></ul><ul id="40cbdb91-743d-8074-966d-e1365da2cb63" class="bulleted-list" dir="auto"><li style="list-style-type:circle">로그 말소 표시와 잠금 표시 전환</li></ul><ul id="48b89dc9-561d-4163-ac41-9286dace9975" class="bulleted-list" dir="auto"><li style="list-style-type:circle">현재 소모량(산소·식량·물마다 사람 아이콘 하나, 설명 문구 없음)</li></ul></li></ul><ul id="40cbdb91-743d-809d-8fc0-dc1b2be442a4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">오펠리아<ul id="40cbdb91-743d-80ae-b982-c4d89818e947" class="bulleted-list" dir="auto"><li style="list-style-type:circle">보고서 (위쪽 문서뷰어 참고). REPORT·끝없는탐구·최적해·HEAL을 모두 같은 암호 입력칸에 넣는다</li></ul></li></ul><ul id="365a8d09-8727-4272-959b-ec64f1d3612f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">노아<ul id="987bec6d-2ca5-427c-9033-2e7f6adebddb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">승인 코드 입력판(위 여섯 칸·가운뎃점·아래 여섯 칸, 위쪽 화살표·아래쪽 무지개 표시)</li></ul><ul id="c3810ddd-5bc3-411a-bda4-26e8d59f223e" class="bulleted-list" dir="auto"><li style="list-style-type:circle">노아 폴더 메모(초록 글씨, 48행성일과 같은 글씨체, ‘다른 곳’만 노란색·문제 3 하이라이트 글꼴)</li></ul><ul id="c514f443-37df-4f91-b1b3-9b7accbdf9c2" class="bulleted-list" dir="auto"><li style="list-style-type:circle">추가 잠금 화면(오펠리아 보고서와 같은 모양의 입력창, 키를 누르면 ‘여기서는 입력할 수 없습니다.’). 이때 알렉스·에바 단말기에는 ‘노아 님이 추가 잠금을 설정했습니다. 잠금을 해제해 주십시오.’</li></ul><ul id="de2e962a-157b-43d7-8277-5c196a1e6b34" class="bulleted-list" dir="auto"><li style="list-style-type:circle">2부 노아 기록 열람 화면(문제 12)</li></ul></li></ul><ul id="4a81f5b6-a0c5-499c-bebc-5013a3de706c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">에바<ul id="3e590055-e12d-4352-81d9-280cfc64d2f2" class="bulleted-list" dir="auto"><li style="list-style-type:circle">승인 코드 입력(JOIN)</li></ul><ul id="1af549b4-ce76-464d-8779-d3b65881af72" class="bulleted-list" dir="auto"><li style="list-style-type:circle">에바 폴더: 탈출 계획 메모, 『탈출』 프로젝트 설계(레버 그림), 에바의 메모 (2)(‘흥미로운’ 아래 다섯 색 밑줄)</li></ul><ul id="c4a63fd4-21b2-4bec-8540-bdfe1d4fab70" class="bulleted-list" dir="auto"><li style="list-style-type:circle">1부 개인 금고 표시(‘본인 확인이 필요합니다.’)</li></ul><ul id="5c61c480-5bda-4c75-a0f4-3f4ee1ec142a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">2부 본인 확인 기록 인식 → 비공개 폴더·개인 금고 잠금 해제 문구</li></ul><ul id="6397e6a9-ef0a-41fd-92b2-b4f4ec6ced91" class="bulleted-list" dir="auto"><li style="list-style-type:circle">비공개 폴더(47행성일 메모, 복구 실험 결과)</li></ul><ul id="3e3d6904-7e79-48d0-852b-cfa0ededaebb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">‘뇌파 전송’ 화면(장치 코드 입력 → 버튼 → 파형·진행 막대 연출)</li></ul></li></ul><p id="40dbdb91-743d-8039-82e7-dc3d5d23709b" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

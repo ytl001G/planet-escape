@@ -1,0 +1,272 @@
+"""시나리오 HTML(노션 내보내기) → 인물별 대사집 md.  사용법: python extract.py
+기준은 대화로 합의한 규칙(색=화자, 괄호=지문, 범위=대사/연출/메모/통신 토글 + 토글 밖 기울임 색 문단)."""
+import re, html, glob, pathlib, collections
+
+HERE = pathlib.Path(__file__).parent
+OUT = HERE / "md"
+# notion 자료 아래 시나리오 HTML 중 가장 최근 파일을 쓴다 (새로 내보내 넣으면 자동 반영)
+SRC = max(glob.glob(str(HERE.parent / "notion 자료" / "**" / "시나리오*.html"), recursive=True),
+          key=lambda f: pathlib.Path(f).stat().st_mtime)
+
+SPEAKERS = {  # 파일번호, 색 이름, 원색
+    "알렉스": ("01", "빨강", "#E53935"), "비아": ("02", "주황", "#FB8C00"),
+    "오펠리아": ("03", "노랑", "#FDD835"), "노아": ("04", "초록", "#43A047"),
+    "에바": ("05", "파랑", "#1E88E5"), "릴리": ("06", "보라", "#8E24AA"),
+    "시스템": ("07", "회색", "#757575"), "오메가": ("08", "정부 통신", "#546E7A"),
+}
+FILE_NAME = {"시스템": "07_시스템·화면", "오메가": "08_오메가(정부)"}
+COLOR2SPK = {"red": "알렉스", "orange": "비아", "yellow": "오펠리아", "teal": "노아",
+             "blue": "에바", "purple": "릴리", "gray": "시스템"}
+PARTS = {"1부": "1부", "전환부": "전환부", "2부": "2부", "클라이맥스": "클라이맥스", "엔딩": "엔딩"}
+# 원문에 색이 없지만 시스템 음성으로 넣기로 정한 줄 (2026-11-04 결정)
+UNCOLORED_SYSTEM = {"보안 파일의 잠금을 해제합니다."}
+STAFF_NOTE = "총괄"  # 괄호 안에 이 말이 있으면 연출 지문이 아니라 스태프 메모라 뺀다
+
+
+def is_dialogue(name):  # "대사" 또는 "대사 (컴퓨터 화면에 자막으로 표시)" 같은 변형
+    return name == "대사" or name.startswith("대사 (")
+
+
+def text(s):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s))).strip()
+
+
+def block_end(h, i):
+    """h[i]가 <details 일 때, 짝이 맞는 </details> 끝 위치"""
+    depth, j = 0, i
+    while True:
+        a, b = h.find("<details", j), h.find("</details>", j)
+        if a != -1 and a < b:
+            depth += 1; j = a + 1
+        else:
+            depth -= 1; j = b + len("</details>")
+            if depth == 0:
+                return j
+
+
+def strip_nested(body):
+    out, i = "", 0
+    while (a := body.find("<details", i)) != -1:
+        out += body[i:a]; i = block_end(body, a)
+    return out + body[i:]
+
+
+BR = "⏎"  # 한 대사 안의 줄바꿈 표시 (md에서는 <br>)
+
+
+def lines_of(body, merge=True):
+    """블록 html → [(segments, raw_line)]; segments = [(color|None, text)]
+    merge=True면 같은 색 표시 안에서 <br>로 바뀐 줄은 한 대사로 합친다."""
+    res = []
+    for m in re.finditer(r"<(p|li)\b[^>]*>(.*?)</\1>", body, re.S):
+        raw, color = m.group(2), None
+        for k, piece in enumerate(re.split(r"<br\s*/?>", raw)):
+            cont = k > 0 and color is not None  # 색 표시가 열린 채로 줄이 바뀜
+            segs = []
+            for t in re.split(r"(<mark[^>]*>|</mark>)", piece):
+                if t.startswith("<mark"):
+                    c = re.search(r'highlight-(\w+)"', t); color = c.group(1) if c else None
+                    if color == "default": color = None
+                elif t == "</mark>":
+                    color = None
+                else:
+                    s = html.unescape(re.sub(r"<[^>]+>", "", t))
+                    if s.strip():
+                        if segs and segs[-1][0] == color: segs[-1] = (color, segs[-1][1] + s)
+                        else: segs.append((color, s))
+            if not segs:
+                continue
+            if merge and cont and res and res[-1][0] and res[-1][0][-1][0] == segs[0][0]:
+                ps, praw = res[-1]
+                res[-1] = (ps[:-1] + [(ps[-1][0], ps[-1][1].rstrip() + BR + segs[0][1])] + segs[1:], praw + piece)
+            else:
+                res.append((segs, piece))
+    return res
+
+
+def classify(segs, raw, ctx_tag=None):
+    """한 줄 → [(speaker|'지문', text, tag)]"""
+    out, buf = [], []
+    full = re.sub(r"\s+", " ", "".join(s for _, s in segs)).strip()
+    if full.startswith("(") and full.endswith(")"):  # 글자마다 색칠된 지문도 통째로 지문
+        return [] if STAFF_NOTE in full else [("지문", full, None)]
+    if full in UNCOLORED_SYSTEM:
+        return [("시스템", full, None)]
+
+    def flush():
+        if not buf: return
+        cnt = collections.Counter()
+        for c, s in buf: cnt[c] += len(s)
+        spk = COLOR2SPK[cnt.most_common(1)[0][0]]
+        tag = ctx_tag
+        t = re.sub(r"\s+", " ", "".join(s for _, s in buf)).strip()
+        if spk == "에바" and not tag:
+            tag = "회상 · 메모 재생"
+            t = re.sub(r"^\[(.*)\]$", r"\1", t)  # 화면 메모 표시용 [ ] 는 대사집에서 뺀다
+        out.append((spk, t, tag)); buf.clear()
+
+    for c, s in segs:
+        st = s.strip()
+        if st.startswith("(") or (c is None and st.startswith("[")):
+            flush(); out.append(("지문", re.sub(r"\s*※.*$", "", st), None))
+        elif c is None:
+            continue  # 색 없는 설명·메모·링크는 제외
+        else:
+            buf.append((c, s))
+    flush()
+    return out
+
+
+def comm_log(body, alpha):
+    out = []
+    for segs, raw in lines_of(body, merge=False):
+        t = re.sub(r"\s+", " ", "".join(s for _, s in segs)).strip()
+        m = re.match(r"([αΩ])\s*:\s*(.*)", t)
+        if not m:
+            if t.startswith("[") or t.startswith("("): out.append(("지문", t, None))
+            continue
+        spk = alpha if m.group(1) == "α" else "오메가"
+        rest = m.group(2).strip()
+        if re.fullmatch(r"\(.*\)", rest): out.append(("지문", f"({spk}: {rest[1:-1]})", None)); continue
+        ui = re.search(r"\s*(\[[^\]]*\])$", rest)  # 끝의 [더보기] 같은 채팅 화면 버튼 문구는 지문
+        if ui and rest[:ui.start()].strip(): rest = rest[:ui.start()].strip()
+        else: ui = None
+        out.append((spk, rest, "통신 기록"))
+        if ui: out.append(("지문", ui.group(1), None))
+    return out
+
+
+def extract():
+    h = open(SRC, encoding="utf-8").read()
+    h = h[h.find('<div class="page-body">'):]
+    items, part, scene, i = [], None, None, 0
+    # 노션은 토글을 <p> 안의 <div class="indented">에 넣기도 하므로 문단은 <div 앞에서 끊는다
+    tok = re.compile(r"<details\b|<h([23])[^>]*>(.*?)</h\1>|<p\b[^>]*>(.*?)(?:</p>|(?=<div))", re.S)
+    seen = []
+    while (m := tok.search(h, i)):
+        g = m.group(0)
+        if g.startswith("<details"):
+            end = block_end(h, m.start()); blk = h[m.start():end]; i = end
+            sm = re.search(r"<summary>(.*?)</summary>", blk, re.S)
+            name = text(sm.group(1)) if sm else ""
+            body = strip_nested(blk[sm.end():] if sm else blk)
+            if not part: continue
+            seen.append(name)
+            sc, got = scene, []
+            if is_dialogue(name) or name in ("연출 — 뇌파 전송", "연출 — ALONE에서 LOVE로"):
+                for segs, raw in lines_of(body): got += classify(segs, raw)
+                # "(…기록이 나타난다.)" 뒤로 이어지는 노아 줄 = 숨겨진 기록 낭독
+                rec = False
+                for k, (spk, t, tag) in enumerate(got):
+                    if spk == "지문": rec = rec or "기록이 나타난다" in t
+                    elif spk == "노아" and rec: got[k] = (spk, t, "기록 낭독")
+                    else: rec = False
+                if part == "엔딩":
+                    sc = "탈출 엔딩" if "아래로 내린다" in body else "행성 엔딩" if "위로 올린다" in body else None
+                    assert sc, "엔딩 분기 판별 실패"
+                if "자막" in name: sc = f"{sc} (자막 표시)"
+                if got and got[0][0] == "지문" and (c := re.fullmatch(r"\((.+경우)\)", got[0][1])):
+                    sc = f"{scene} (조건: {c.group(1)})"
+            elif name.startswith("에바의 메모 (음성"):
+                got = [("에바", re.sub(r"\s+", " ", "".join(s for _, s in segs)).strip(), "메모 낭독")
+                       for segs, _ in lines_of(body)]
+            elif name == "알렉스의 통신 기록":
+                got = comm_log(body, "알렉스")
+            elif name == "알렉스의 통신 기록 2부":
+                got = comm_log(body, "에바")
+            items += [(part, sc, *x) for x in got]
+        elif m.group(1):
+            i = m.end(); t = text(m.group(2))
+            if m.group(1) == "2":
+                if t == "책자": break
+                for k, v in PARTS.items():
+                    if t == k or t.startswith(k + ":"): part = v
+            elif part and ("방" in t or part == "엔딩"):
+                scene = t
+        else:
+            i = m.end(); p = m.group(3)
+            whole = "highlight-" in p and not text(re.sub(r"<mark.*?</mark>", "", p, flags=re.S))
+            if part and "highlight-" in p and ("<em>" in p or whole):  # 토글 밖: 기울임 색 문단 또는 통째로 색칠된 문단
+                for segs, raw in lines_of(f"<p>{p}</p>"):
+                    for spk, t, tag in classify(segs, raw, None):
+                        if spk == "지문": continue
+                        if spk == "노아": tag = "메모"
+                        items.append((part, scene, spk, t, tag))
+    # 자체 점검: 대상 토글이 하나도 빠지지 않았는지
+    assert sum(map(is_dialogue, seen)) == 21, sum(map(is_dialogue, seen))
+    for n in ("연출 — 뇌파 전송", "연출 — ALONE에서 LOVE로", "알렉스의 통신 기록", "알렉스의 통신 기록 2부"):
+        assert n in seen, n
+    assert any(s.startswith("에바의 메모 (음성") for s in seen)
+    for u in UNCOLORED_SYSTEM:  # 원문에서 문구가 바뀌면 조용히 빠지지 않게
+        assert any(x[3] == u for x in items), f"색 없는 시스템 줄을 못 찾음: {u}"
+    # 앞에서 나온 적 없는 화면 메모는 '회상'이 아니라 처음 읽는 메모
+    said = set()
+    for k, (p, s, spk, t, tag) in enumerate(items):
+        if tag == "회상 · 메모 재생" and (spk, t) not in said:
+            items[k] = (p, s, spk, t, "메모 낭독")
+        said.add((spk, t))
+    return items
+
+
+def cell(s):
+    return re.sub(r"\s*" + BR + r"\s*", "<br>", s.replace("|", "\\|"))
+
+
+def add_codes(items):
+    """대사마다 숫자 코드 = 장면번호 + 장면 안 순서(두 자리). 예: 11번 장면 3번째 → 1103"""
+    order, counts, out, first = {}, collections.Counter(), [], {}
+    for p, s, spk, t, tag in items:
+        tags = [tag] if tag else []
+        if (p, s) not in order:
+            order[(p, s)] = len(order) + 1
+        else:
+            assert (p, s) == last, f"장면이 끊겼다가 다시 나옴: {s}"  # 번호 역행 방지
+        last = (p, s)
+        code = None
+        if spk != "지문":
+            counts[(p, s)] += 1
+            assert counts[(p, s)] < 100, "장면당 99줄 초과"
+            code = f"{order[(p, s)]}{counts[(p, s)]:02d}"
+            if (spk, t) in first: tags.append(f"= {first[(spk, t)]} 재사용")  # 같은 화자·같은 문장은 첫 녹음 재사용
+            else: first[(spk, t)] = code
+        out.append((p, s, spk, t, tags, code))
+    codes = [c for *_, c in out if c]
+    assert codes == sorted(codes, key=int) and len(set(codes)) == len(codes)  # 오름차순·중복 없음 점검
+    return out
+
+
+def write(items):
+    OUT.mkdir(exist_ok=True)
+    items = add_codes(items)
+    def label(p, s): return f"[{p}] {s}"
+    # 전체본
+    out = ["# 행성탈출 — 전체 대사집", "", "지문은 *기울임*으로 표시. `[태그]`는 녹음 참고용. 코드 = 장면번호 + 장면 안 순서(두 자리). 예: 1103 = 11번 장면 3번째 대사. `[= 코드 재사용]`은 앞의 같은 대사 녹음을 다시 쓴다는 뜻.", ""]
+    n, prev = 0, None
+    for p, s, spk, t, tag, code in items:
+        if (p, s) != prev:
+            out += ["", f"## {label(p, s)}", "| 코드 | 화자 | 대사 |", "|---|------|------|"]; prev = (p, s)
+        tg = "".join(f"`[{x}]` " for x in tag)
+        if spk == "지문": out.append(f"|   |   | *{cell(t)}* |")
+        else:
+            n += 1; out.append(f"| {code} | {spk} | {tg}{cell(t)} |")
+    (OUT / "00_전체.md").write_text("\n".join(out) + "\n", encoding="utf-8")
+    # 인물별
+    for spk, (no, cname, hexc) in SPEAKERS.items():
+        mine = [x for x in items if x[2] == spk]
+        scenes = list(dict.fromkeys((p, s) for p, s, *_ in mine))
+        out = [f"# {spk} — 대사집", f"대표색: {cname} {hexc} · 총 {len(mine)}줄 · 등장 장면 {len(scenes)}곳", ""]
+        prev = None
+        for p, s, _, t, tag, code in mine:
+            if (p, s) != prev:
+                out += ["", f"## {label(p, s)}", "| 코드 | 대사 |", "|---|------|"]; prev = (p, s)
+            out.append(f"| {code} | {''.join(f'`[{x}]` ' for x in tag)}{cell(t)} |")
+        (OUT / f"{FILE_NAME.get(spk, no + '_' + spk)}.md").write_text("\n".join(out) + "\n", encoding="utf-8")
+    return n
+
+
+if __name__ == "__main__":
+    items = extract()
+    total = write(items)
+    cnt = collections.Counter(x[2] for x in items)
+    print("원본:", pathlib.Path(SRC).relative_to(HERE.parent))
+    print("대사", total, "| 지문", cnt.pop("지문", 0), "|", dict(cnt))
