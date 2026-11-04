@@ -216,6 +216,7 @@ CSS = r'''
 #proto .ed-row.on small::after { content: ' · 바꿈'; color: var(--lily); }
 #proto .ed-row input[type=text], #proto .ed input[type=search], #proto .ed textarea { width: 100%; box-sizing: border-box; font: 400 14px var(--body); color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; }
 #proto .ed-row.inl { grid-template-columns: 1fr auto; align-items: center; } #proto .ed-row input[type=color] { width: 48px; height: 30px; border: 0; background: none; padding: 0; }
+#proto .ed-row.sz { grid-template-columns: 1fr auto; } #proto .ed-row.sz input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--lily); } #proto .ed-row.sz output { font: 700 12px var(--body); color: var(--ink); }
 #proto .ed-row input[type=number] { width: 72px; font: 400 14px var(--body); color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
 '''
 
@@ -661,9 +662,10 @@ function edBuild() {
     $('pv-ed-color').append(r);
   });
   SIZES.forEach(([sel, l, d]) => {
-    const r = document.createElement('label'); r.className = 'ed-row inl' + (ED.size[sel] ? ' on' : ''); r.innerHTML = '<small></small><input type="number" min="6" max="120" step="1">';
-    r.querySelector('small').textContent = l + ' (기본 ' + d + ')'; const i = r.querySelector('input'); i.value = ED.size[sel] || d;
-    i.oninput = () => { const v = +i.value; if (!v || v === d) delete ED.size[sel]; else ED.size[sel] = v; r.classList.toggle('on', !!ED.size[sel]); edSave(); edApplyStyle(); };
+    const r = document.createElement('label'); r.className = 'ed-row inl' + (ED.size[sel] ? ' on' : ''); r.className += ' sz'; r.innerHTML = `<small></small><output></output><input type="range" min="${Math.max(6, Math.round(d * .5))}" max="${Math.round(d * 2.5)}" step="1">`;  // 글자 크기: 슬라이더 (기본의 0.5 ~ 2.5배)
+    r.querySelector('small').textContent = l + ' (기본 ' + d + ')'; const i = r.querySelector('input'), o = r.querySelector('output'); i.value = ED.size[sel] || d; o.textContent = i.value + 'px';
+    i.setAttribute('aria-label', l);
+    i.oninput = () => { const v = +i.value; o.textContent = v + 'px'; if (!v || v === d) delete ED.size[sel]; else ED.size[sel] = v; r.classList.toggle('on', !!ED.size[sel]); edSave(); edApplyStyle(); };
     $('pv-ed-size').append(r);
   });
   edList();
