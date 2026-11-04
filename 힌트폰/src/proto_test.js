@@ -12,7 +12,6 @@
     const q = a => scr().querySelector(`[data-act="${a}"]`);
     if (act === 'codes') { if (q('hpx')) q('hpx').click(); const i = document.getElementById('pv-in'); if (i && i.value) { i.value = ''; i.dispatchEvent(new Event('input')); } return; }  // 앱 열기 → 메인 입력 창을 비움
     if (act === 'hint') return tap0('bhint');                                   // 힌트 보기
-    if (act === 'pct') return;                                                  // 진행도는 맞는 코드면 바로 보임
     if (act === 'home' && !q('home')) { if (q('hpx')) q('hpx').click(); return; } // 팝업 닫기 (채팅 · 패턴 화면은 진짜 뒤로)
     tap0(act);
   };
@@ -58,7 +57,7 @@
   at(7400, () => { tap('codes'); type('ABCD'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 1, '힌트 1 열림'); tap('next'); tap('next');
     log(scr().querySelectorAll('.card.h1').length === 3 && !scr().querySelector('[data-act="next"]'), '힌트 3까지'); tap('ans'); log(has('끝없는탐구'), '정답 보기'); });
   at(7600, () => { tap('home'); tap('codes'); type('ABCD'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 3, '본 힌트 다시 보기'); tap('home'); const pg = document.getElementById('pv-prog'); pg.value = 38; pg.dispatchEvent(new Event('input')); log(scr().querySelector('.timer [data-prog]')?.textContent === '진행도 38%', '진행도: 서버 값이 타이머 안에 바로'); pg.value = 0; pg.dispatchEvent(new Event('input')); });
-  at(7800, () => { type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !has('38%'), '없는 코드: 앞 코드 힌트만 걷힘'); tap('home'); tap('codes'); type('QRST'); tap('hint'); tap('pct'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !scr().querySelector('.err'), '없는 코드: 아무 반응 없음'); });
+  at(7800, () => { type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !has('38%'), '없는 코드: 앞 코드 힌트만 걷힘'); tap('home'); tap('codes'); type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !scr().querySelector('.err'), '없는 코드: 아무 반응 없음'); });
   at(9400, () => { type('EFGH'); tap('hint'); log(!scr().querySelector('.card'), '힌트 없는 문제 코드는 없음'); tap('home'); log(!!scr().querySelector('.room span span[style*="--cht-alex"]') && has('알렉스의 방'), '방 이름: 알렉스만 빨강'); tap('codes'); });
   at(9600, () => { type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '1부: 스토리 코드 반응 없음'); type('KLMN'); tap('hint'); log(!scr().querySelector('.card'), '1부: 2부 코드 반응 없음'); tap('home'); });
   at(11000, () => { press('목표 완료'); log(!!scr().querySelector('.bigck'), '목표 완료 체크'); });
@@ -79,7 +78,7 @@
   at(20990, () => log(scr().querySelector('[data-prog]')?.textContent === '진행도 50%' && getComputedStyle(scr().querySelector('.lb-code')).pointerEvents === 'none' && getComputedStyle(scr().querySelector('.lb-chatbox')).pointerEvents === 'none', '전환부(비아 등장): 진행도 50 · 버튼 비활성화'));
   at(21000, () => { log(!!scr().querySelector('.lb-goal .wave') && !has('그냥 비아라고') && scr().querySelector('.av').textContent === 'V', '비아 소개: 동그라미 V · 글 대신 음성 재생 중'); });
   at(24500, () => { log(!has('우선 알렉스의 방에') && document.getElementById('pv').className.includes('p2'), '2부 메인: 비아 글은 폰에 없음'); press('목표 완료'); log(!!scr().querySelector('.lb-goal .wave') && !scr().querySelector('.lb-goal .vplay'), '2부 다음 안내: V와 파형만'); });
-  at(24700, () => { tap('codes'); const u0 = scr().querySelector('.lb-used').textContent; type('WXYZ'); tap('hint'); log(!scr().querySelector('.hpop') && !scr().querySelector('.wave.card, .card .wave'), '문제 16: 폰엔 팝업 없음 (음성은 PC)'); log(scr().querySelector('.lb-used').textContent !== u0, '문제 16: 힌트 사용 1회 셈'); [2, 3, 4, 5, 6, 7, 8].forEach(() => tap('hint')); log(!scr().querySelector('.hpop'), '문제 16: 다시 넣어도 팝업 없음'); tap('codes'); });
+  at(24700, () => { tap('codes'); const u0 = scr().querySelector('.lb-used').textContent; type('WXYZ'); tap('hint'); log(!scr().querySelector('.hpop') && scr().querySelector('.lb-used').textContent === u0, '문제 16 힌트 없음: 예전 코드는 없는 코드'); tap('codes'); });
   at(24740, () => { tap('codes'); type('ABCD'); tap('hint'); log(!scr().querySelector('.card'), '2부: 1부 코드 반응 없음'); type('KLMN'); tap('hint'); log(!!scr().querySelector('.card'), '2부: 2부 코드 힌트'); tap('home'); });
   at(24745, () => { tap('kb'); for (let k = 0; k < 8; k++) tap('kdel'); 'KLMN'.split('').forEach(k => tap('k:' + k)); tap('bhint');
     log(!!scr().querySelector('.hpov.new'), '시안 B: 팝업 처음 뜰 때만 나타나는 효과'); tap('next'); log(!!scr().querySelector('.hpov') && !scr().querySelector('.hpov.new') && scr().querySelectorAll('.hpop .card').length === 2, '다음 눌러도 팝업이 새로 뜨지 않음');

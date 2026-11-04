@@ -72,37 +72,30 @@ TH = {
     # 칸 · 카드
     '타이머 칸': '<circle cx="52" cy="45" r="31" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="4"/><circle cx="52" cy="45" r="31" fill="none" stroke="#cf86e6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="45 100" transform="rotate(-90 52 45)"/>' + T(52, 50, '0:47:12', 12, 700, 'middle') + R(110, 30, 42, 22, 'soft', 6) + T(131, 45, '47:12', 10, 700),
     '목표 창': R(10, 10, 66, 70, 'n dashbox', 10) + R(84, 10, 66, 70, 'lily', 10) + T(117, 38, '현재 목표', 8, cls='t-lily') + T(117, 54, '알렉스의 승인', 9, 700),
-    '장소 · 할 일 줄': pin(26, 30) + T(38, 35, '알렉스의 방', 13, 700, 'start', 't-lily') + ph(18, 52, 124) + ph(18, 66, 86),
-    '완료 목표 줄': R(10, 12, 140, 30, 'n') + '<circle cx="28" cy="27" r="8" class="bar"/>' + ck(28, 27, 0.75, 2) + T(42, 31, '알렉스의 승인 확보', 10, 700, 'start')
-                 + R(10, 50, 140, 30, 'lily') + T(22, 69, '에바의 승인 확보', 10, 700, 'start'),
-    '비아 말 칸': '<circle cx="24" cy="30" r="13" class="via"/>' + T(24, 34, '비아', 9, 700, cls='t-via') + R(42, 14, 108, 32, 'n', 8) + ph(52, 27, 86)
-               + '<circle cx="24" cy="68" r="13" class="via"/>' + T(24, 73, '?', 13, 700, cls='t-via') + R(42, 54, 108, 28, 'n', 8, ' opacity=".55"') + ph(52, 65, 70),
+    '비아 말 칸': '<circle cx="28" cy="27" r="11" class="via"/>' + T(28, 31, '?', 11, 700, cls='t-via') + wave(92, 27, 0.4)
+               + '<circle cx="28" cy="64" r="11" class="via"/>' + T(28, 68, 'V', 11, 700, cls='t-via') + wave(92, 64, 0.4),
     '코드 입력 칸': R(8, 8, 144, 22, 'n', 6) + R(8, 34, 144, 22, 'n', 6) + T(18, 50, 'ABCD', 12, 700, 'start')
                  + R(8, 60, 144, 22, 'n', 6, f' style="fill:none;stroke:{RED};stroke-width:2"') + T(18, 76, 'QRST', 12, 700, 'start'),
     '힌트 카드': R(8, 10, 144, 34, 'lily') + T(18, 24, '힌트 1', 9, 700, 'start', 't-lily') + ph(18, 32, 100)
               + R(8, 50, 144, 34, 'via') + T(18, 64, '힌트 1', 9, 700, 'start', 't-via') + ph(18, 72, 90),
     '정답 칸': R(10, 20, 140, 50, 'inv', 10) + T(22, 38, '정답', 9, 700, 'start', 't-inv') + T(22, 60, '끝없는탐구', 15, 700, 'start', 't-inv'),
-    '단계 점': ''.join(f'<circle cx="{30+i*20}" cy="45" r="7" class="{"vfill" if i < 2 else "soft"}"/>' for i in range(6)),
-    '화자 이름표': '<circle cx="52" cy="41" r="6" style="fill:#1E88E5"/>' + T(64, 46, '에바', 14, 700, 'start') + '<circle cx="52" cy="65" r="6" style="fill:#FB8C00"/>' + T(64, 70, '비아', 14, 700, 'start'),
-    '심장': '<path transform="translate(53 21) scale(1)" d="M27 45 C10 32 2 23 2 13 C2 6 8 1 15 1 C20 1 24 4 27 8 C30 4 34 1 39 1 C46 1 52 6 52 13 C52 23 44 32 27 45 Z" class="vfill"/>',
     '스토리카드 틀': R(10, 12, 42, 66, 'lily', 6) + R(59, 12, 42, 66, 'eva', 6) + R(108, 12, 42, 66, 'n', 6)
                  + ''.join(ph(x + 7, 26 + k * 10, 28) for x in (10, 59, 108) for k in range(3)),
     '패턴 점 · 선': hexdots(44, 45, 28, (0, 6, 5)) + hexdots(116, 45, 28, (0, 1, 2), True),
     # 버튼
-    '힌트 보기 · 진행도': R(6, 10, 72, 30, 'n') + T(42, 30, '힌트 보기', 10, 700) + R(82, 10, 72, 30, 'n') + T(118, 30, '진행도', 10, 700)
-                     + R(6, 50, 72, 30, 'lily') + T(42, 70, '힌트 보기', 10, 700) + R(82, 50, 72, 30, 'via') + T(118, 70, '힌트 보기', 10, 700),
-    '진행도 % 버튼': R(6, 22, 72, 44, 'lily') + T(42, 42, '38%', 13, 700) + R(16, 52, 52, 4, 'soft', 2) + R(16, 52, 20, 4, 'bar', 2)
-                  + R(82, 22, 72, 44, 'via') + T(118, 42, '38%', 13, 700) + R(92, 52, 52, 4, 'soft', 2) + R(92, 52, 20, 4, 'vfill', 2),
-    '다음': R(6, 26, 72, 36, 'n') + T(42, 49, '다음', 11, 700, cls='t-lily') + R(82, 26, 72, 36, 'n') + T(118, 49, '다음 힌트', 11, 700, cls='t-via'),
+    '다음': R(6, 26, 72, 36, 'n') + T(42, 49, '다음', 11, 700, cls='t-lily') + R(82, 26, 72, 36, 'n') + T(118, 49, '다음', 11, 700, cls='t-via'),
     '정답': R(20, 26, 120, 38, 'inv', 10) + T(80, 50, '정답', 13, 700, cls='t-inv'),
     '한글 키보드': ''.join(R(14 + k * 13.4, 14 + j * 13, 11, 10, 'n' if j else 'soft', 2.5) for j in range(4) for k in range(10 if j < 2 else 9 if j == 2 else 9)) + R(40, 66, 80, 10, 'n', 2.5),
     '코드 키보드': ''.join(R(14 + k * 13.4, 18 + j * 15, 11, 12, 'n' if j else 'soft', 2.5) for j in range(4) for k in range(10 if j < 2 else 9 if j == 2 else 8)),
     '상태 표시줄': T(40, 50, '9:41', 12, 700) + '<path d="M104 44 a8 8 0 0 1 12 0 M107 47.5 a4 4 0 0 1 6 0" fill="none" class="ln" stroke-width="1.8"/><circle cx="110" cy="50" r="1.6" fill="currentColor"/>' + R(122, 41, 20, 10, 'n', 3) + R(124, 43, 13, 6, 'soft', 1.5),
-    '아래 독': R(20, 22, 120, 50, 'soft', 14) + R(32, 33, 28, 28, 'lily', 8) + R(66, 33, 28, 28, 'lily', 8) + R(100, 33, 28, 28, 'lily', 8) + badge(126, 34),
-    '알림 배너': R(16, 28, 128, 36, 'soft', 12) + R(24, 36, 20, 20, 'lily', 6) + T(52, 44, '채팅', 9, 700, 'start') + R(52, 50, 70, 5, 'ph', 2.5),
     '채팅 판': phone(60, 7, 'n') + R(61, 22, 38, 46, 'soft', 0) + '<path d="M61 22 H99 M61 68 H99" class="ln" opacity=".5"/>' + R(76, 28, 18, 7, 'lily', 3) + R(66, 40, 20, 7, 'n', 3) + R(64, 72, 24, 6, 'n', 3),
     # 아이콘
     '방패': shield(80, 45, 1.3),
+    '채팅 칸': R(52, 12, 56, 66, 'soft', 12) + chaticon(80, 36, 1.3) + T(80, 66, '채팅', 10, 700),
+    '장소 줄': pin(26, 45) + T(38, 50, '알렉스의 방', 13, 700, 'start', 't-lily') + '<path d="M124 40 L130 45 L124 50" class="ln" stroke-width="2" stroke-linecap="round"/>',
+    '힌트 사용 횟수': T(80, 50, '힌트 사용 2회', 13, 500),
+    '힌트 팝업 틀': R(14, 8, 132, 74, 'soft', 12) + T(26, 28, '문제 3', 11, 700, 'start') + '<path d="M128 18 L136 26 M136 18 L128 26" class="ln" stroke-width="2" stroke-linecap="round"/>' + R(24, 38, 112, 18, 'lily', 6) + R(24, 62, 112, 14, 'n', 6),
+    '힌트 보기': R(44, 26, 72, 38, 'n') + T(80, 50, '힌트 보기', 11, 700),
     '체크': '<circle cx="80" cy="45" r="22" class="bar"/>' + ck(80, 45, 2.2, 3.5),
     '채팅 아이콘': chaticon(80, 38, 2.2),
     '뒤로': '<path d="M88 27 L70 45 L88 63" class="ln" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -115,9 +108,7 @@ TH = {
     '꺾쇠': '<path d="M74 31 L88 45 L74 59" class="ln" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
     '닫기': '<path d="M66 31 L94 59 M94 31 L66 59" class="ln" stroke-width="3" stroke-linecap="round"/>',
     '우주선 지도': svg_map(14.5, 4.5, 0.46, '알렉스', fs=9),
-    '목록': ''.join(f'<path d="M62 {33+i*12} H98" class="ln" stroke-width="3" stroke-linecap="round"/>' for i in range(3)),
     '앱 아이콘': nest('th-appicon', 47, 12, 66),
-    '음성 재생 중': EMPTY,
 }
 
 # 움직임 미리보기: 처음 → 끝 두 컷
@@ -128,8 +119,8 @@ MOTION_TH = {
     '지도 팝업 열림': two(R(12, 22, 48, 46, 'lily', 8) + pin(30, 45, 1.2) + ph(38, 43, 16), phone(16, 7, 'soft') + svg_map(18, 30, 0.127, '알렉스', label=False)),
     '목표 완료': two('<circle cx="36" cy="45" r="16" class="bar"/>' + ck(36, 45, 1.6, 3), R(12, 22, 48, 46, 'lily', 8) + ph(20, 40, 32) + ph(20, 52, 22)),
     '비아 끼어들기': two(phone(16, 7, 'lily') + R(20, 30, 28, 4, 'vfill', 2) + R(26, 50, 22, 4, 'vfill', 2), phone(16, 7, 'via')),
-    '심장 박동': two('<path transform="translate(22 26) scale(.7)" d="M27 45 C10 32 2 23 2 13 C2 6 8 1 15 1 C20 1 24 4 27 8 C30 4 34 1 39 1 C46 1 52 6 52 13 C52 23 44 32 27 45 Z" class="vfill"/>', '<path transform="translate(18 22) scale(.85)" d="M27 45 C10 32 2 23 2 13 C2 6 8 1 15 1 C20 1 24 4 27 8 C30 4 34 1 39 1 C46 1 52 6 52 13 C52 23 44 32 27 45 Z" class="vfill"/>'),
     '음성 파형': wave(80, 45, 0.9),
+    '키보드 올라옴': two(R(14, 60, 52, 22, 'soft', 4), R(14, 38, 52, 44, 'soft', 4)),
     '이름 바뀜': two('<circle cx="36" cy="45" r="16" class="via"/>' + T(36, 51, '?', 16, 700, cls='t-via'), '<circle cx="36" cy="45" r="16" class="via"/>' + T(36, 49, '비아', 10, 700, cls='t-via')),
     '진행도 차오름': R(30, 40, 100, 8, 'soft', 4) + R(30, 40, 38, 8, 'bar', 4) + '<path d="M72 60 H100" class="ln" marker-end="url(#ahT)"/>',
     '다음 힌트 펼침': two(R(6, 34, 64, 22, 'n') + ph(16, 42, 44), R(6, 14, 64, 26, 'lily') + ph(14, 24, 46) + R(6, 48, 64, 22, 'n') + ph(16, 56, 44)),

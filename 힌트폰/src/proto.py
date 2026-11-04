@@ -26,16 +26,10 @@ DATA = {
                           '실험 조건과 실패 기록을 함께 남긴다.', '당장 돌아갈 방법은 아니지만, 연구를 이어 갈 가치는 있다.']},
     # 시험용 코드 (코드 형식은 아직 미정)
     'codes': {
-        '0000': {'kind': 'hint', 'part': 1, 'demo': True, 'pct': 50, 'hints': ['예시 문구', '예시 문구', '예시 문구'], 'answer': '예시 문구'},  # 설명용 가짜 코드: Start 누르기 전에만
-        'ABCD': {'kind': 'hint', 'q': 3, 'part': 1, 'pct': 38, 'hints': ['특정 동작을 통해 숨겨진 것을 알아내자.', '드래그했을 때 뭔가 보이는 것 같다.',
+        '0000': {'kind': 'hint', 'part': 1, 'demo': True, 'hints': ['예시 문구', '예시 문구', '예시 문구'], 'answer': '예시 문구'},  # 설명용 가짜 코드: Start 누르기 전에만
+        'ABCD': {'kind': 'hint', 'q': 3, 'part': 1, 'hints': ['특정 동작을 통해 숨겨진 것을 알아내자.', '드래그했을 때 뭔가 보이는 것 같다.',
                                                               '각 행성일마다 한 글자씩 하이라이트되며, 이를 합쳐 답을 알 수 있다.'], 'answer': '끝없는탐구'},
-        'KLMN': {'kind': 'hint', 'q': 10, 'part': 2, 'pct': 72, 'hints': ['별자리 필름이 다시 필요해 보이네.', None, None], 'answer': None},
-        'WXYZ': {'kind': 'voice', 'q': 16, 'part': 2, 'pct': 95, 'steps': [[['노아', '뭘 기다려. 내리기만 하면 돼.']],
-                                                           [['에바', '근데 만약 이게 실패하면? 그때를 대비해서 계획을 하나 더 만들어 둬야겠어.'], ['비아', '…방금 그거 뭐였지?']],
-                                                           [['노아', '계속 서 있을 거야? 누가 답이라도 알려 줄 것 같아?']],
-                                                           [['오펠리아', '다들 너한테 선택하라고만 했잖아. 혹시 다른 선택은 없을까?'], ['노아', '다른 거? 위로 올려 보기라도 하게? 관둬. 나도 해 봤는데 안 올라가더라.']],
-                                                           [['릴리', '넌 어릴 때부터 그랬어. 계획을 하나씩 더 세웠지.']],
-                                                           [['비아', '있잖아. 나 살고 싶어. 이제 막 생겼거든.']]]},  # 대사집 1707~1714
+        'KLMN': {'kind': 'hint', 'q': 10, 'part': 2, 'hints': ['별자리 필름이 다시 필요해 보이네.', None, None], 'answer': None},
         'PQRS': {'kind': 'story'},
     },
     'pattern': [0, 6, 5],  # 시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래 (실제 정답은 보너스 문제 담당에게 받기)
@@ -80,16 +74,6 @@ CSS = r'''
 #proto .sbar { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font: 700 12px var(--body); color: #f2eef6; z-index: 5; pointer-events: none; font-variant-numeric: tabular-nums; }
 #proto .sbar .ic { display: flex; gap: 6px; align-items: center; }
 #proto .sbar .off { color: var(--err); }
-#proto .app.pop i { animation: apop .9s cubic-bezier(.2,1.6,.4,1); }
-@keyframes apop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-#proto .dock { display: flex; justify-content: space-around; padding: 12px 6px 10px; border-radius: 26px; }
-#proto .app { display: grid; justify-items: center; gap: 6px; cursor: pointer; font: 500 11px var(--body); color: #f2eef6; background: none; border: 0; }
-#proto .app i { position: relative; width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; color: #fff; background: linear-gradient(160deg, color-mix(in srgb, var(--c1), black 25%), color-mix(in srgb, var(--c1), black 60%)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
-#proto .p2 .app i { background: linear-gradient(160deg, var(--c2), color-mix(in srgb, var(--c2), black 40%)); }
-#proto .pre .app i { background: linear-gradient(160deg, #5b5763, #2c2a31); }
-#proto .dock.off .app { cursor: default; opacity: .45; }
-#proto .app .badge { right: -5px; top: -5px; }
-@keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
 #proto .idle { flex: 1; display: grid; place-items: center; }
 #proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
 #proto .idle .timer circle { stroke-width: 4.5; }
@@ -104,14 +88,13 @@ CSS = r'''
 #proto .lb-goal { height: 76px; box-sizing: border-box; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; gap: 2px; position: relative; overflow: hidden; }
 #proto .lb-goal .lbl { font-size: 10px; line-height: 1.2; } #proto .lb-goal .goal { font-size: 15px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #proto .lb-goal .center { flex-direction: row; gap: 10px; justify-content: flex-start; } #proto .lb-goal .bigck { width: 34px; height: 34px; } #proto .lb-goal .bigck svg { width: 18px; height: 18px; }
-#proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; } #proto .lb-goal .bia .say { padding: 6px 10px; }
+#proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
-#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
 #proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
 #proto .lb-code .srow { grid-template-columns: 1fr 84px; }
 #proto .lb.off .lb-chatbox, #proto .lb.off .lb-code, #proto .lb.off .lb-used { opacity: .45; pointer-events: none; }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; }
-#proto .lb-pct { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 84px; pointer-events: none; } #proto .lb-pct small { font: 500 11px var(--body); color: rgba(255,255,255,.65); }
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
 #proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
@@ -133,12 +116,7 @@ CSS = r'''
 #proto .p2 .key:active, #proto .p2 .key:focus-visible { background: color-mix(in srgb, var(--c2) 55%, transparent); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
 #proto .srow .btn { height: auto; }
-#proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
 #proto .badge { position: absolute; right: -4px; top: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--err); color: #fff; font: 700 11px/18px var(--body); text-align: center; }
-#proto .guide { flex: 1; padding: 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
-#proto .p1 .guide { border-color: var(--c1); }
-#proto .p2 .guide { border-color: var(--c2); }
-#proto .pre .guide { border-style: dashed; }
 #proto .lbl { font-size: 12px; font-weight: 700; }
 #proto .p1 .lbl, #proto .t-lily { color: color-mix(in srgb, var(--c1), white 15%); }
 #proto .p2 .lbl, #proto .t-via { color: color-mix(in srgb, var(--c2), white 8%); }
@@ -151,16 +129,8 @@ CSS = r'''
 #proto .mapbox svg { display: block; width: 100%; height: auto; }
 #proto .mapx { position: absolute; right: 10px; top: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 1.5px solid rgba(255,255,255,.18); }
 #proto .mapx:focus-visible { outline: 2px solid var(--c1); }
-#proto .vline { display: grid; gap: 4px; font-size: 14px; line-height: 1.55; }
-#proto .vdots { display: flex; gap: 8px; justify-content: center; }
-#proto .vdots span { width: 10px; height: 10px; border-radius: 5px; }
-#proto .heart { color: var(--c2); display: block; animation: pbeat 1.1s infinite; }
-@keyframes pbeat { 0%, 40%, 100% { transform: scale(1); } 12% { transform: scale(1.18); } 26% { transform: scale(1.08); } }
 #proto .ex { color: rgba(242,238,246,.45); font: 400 13px/1.5 var(--body); }
-#proto .sep { height: 1px; background: rgba(255,255,255,.12); margin: 4px 0; }
 #proto .btn { height: 52px; border-radius: 10px; display: grid; place-items: center; font: 700 15px var(--body); cursor: pointer; border: 1.5px solid rgba(255,255,255,.2); background: rgba(24,21,30,.72); color: #f2eef6; position: relative; }
-#proto .btn.on1 { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 35%) 42%, transparent); border-color: var(--c1); }
-#proto .btn.on2 { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 38%, transparent); border-color: var(--c2); }
 #proto .btn.next1 { color: color-mix(in srgb, var(--c1), white 15%); } #proto .btn.next2 { color: color-mix(in srgb, var(--c2), white 8%); }
 #proto .btn.ans { background: #a7a3ad; border-color: #a7a3ad; color: #17151b; }
 #proto .btn:active { transform: translateY(1px); }
@@ -180,15 +150,8 @@ CSS = r'''
 #proto .card .k { font-size: 12px; font-weight: 700; }
 #proto .card.ansc { background: #a7a3ad; color: #17151b; }
 #proto .card.ansc .v { font: 700 22px var(--display); }
-#proto .pct { display: grid; gap: 6px; justify-items: center; }
-#proto .pct i { display: block; width: 70%; height: 5px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
-#proto .pct i b { display: block; height: 100%; border-radius: 3px; transition: width .8s; }
-#proto .on1 .pct i b, #proto .lb-pct.t1 i b { background: var(--c1); } #proto .on2 .pct i b, #proto .lb-pct.t2 i b { background: var(--c2); }
-#proto .lb-pct { font: 700 14px var(--body); } #proto .lb-pct i { width: 100%; }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
 #proto .bia .av { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 12px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
-#proto .vplay { display: inline-grid; place-items: center; color: var(--c2); } #proto .bia .say.vplay { padding: 8px 12px; }
-#proto .bia .say { background: rgba(24,21,30,.75); border: 1.5px solid rgba(255,255,255,.14); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
 #proto .wave { display: flex; gap: 4px; align-items: center; height: 46px; justify-content: center; }
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
 @keyframes pwave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
@@ -206,7 +169,6 @@ CSS = r'''
 #proto .bigck { width: 76px; height: 76px; border-radius: 50%; background: var(--c1); display: grid; place-items: center; animation: ppop .4s; }
 @keyframes ppop { from { transform: scale(.4); opacity: 0; } }
 #proto .story { border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 1.6; }
-#proto .story.lily { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 35%) 32%, transparent); border: 1.5px solid var(--c1); }
 #proto .story.eva { background: rgba(30,136,229,.25); border: 1.5px solid #64b5f6; }
 #proto .story .by { text-align: right; color: rgba(242,238,246,.7); font-size: 13px; margin-top: 6px; }
 #proto .pat { position: relative; width: 280px; height: 280px; margin: 0 auto; touch-action: none; }
@@ -262,7 +224,6 @@ HTML = '''<section id="proto">
       <span><code>0000</code> 설명용 가짜 코드 · Start 누르기 전에만 · 힌트 3단계 + 정답 + 진행도</span>
       <span><code>ABCD</code> 1부 힌트 (문제 3) · 비아 등장 전에만 · 힌트 3단계 + 정답</span>
       <span><code>KLMN</code> 2부 힌트 (문제 10) · 비아 등장 뒤에만</span>
-      <span><code>WXYZ</code> 문제 16 · 폰엔 팝업 없음 · 음성은 PC에서 (같은 코드를 다시 넣으면 다음 단계 → 6단계 뒤 심장 소리)</span>
       <span><code>PQRS</code> 스토리 코드 → 보너스 패턴 (시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래)</span>
       <span>그 밖의 코드는 오류로 처리돼요. 코드와 패턴 정답은 시험용이에요.</span>
     </div>
@@ -288,24 +249,18 @@ const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
   chatL: '<svg width="38" height="34" viewBox="0 0 38 34" aria-hidden="true"><path d="M7 3 H31 A5 5 0 0 1 36 8 V20 A5 5 0 0 1 31 25 H17 L9 31 V25 H7 A5 5 0 0 1 2 20 V8 A5 5 0 0 1 7 3 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="14" r="2.2" fill="currentColor"/><circle cx="19" cy="14" r="2.2" fill="currentColor"/><circle cx="26" cy="14" r="2.2" fill="currentColor"/></svg>',
-  spk: '<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 8 H7 L12 4 V18 L7 14 H3 Z" fill="currentColor"/><path d="M15 8 Q17 11 15 14 M17.5 5.5 Q21 11 17.5 16.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
   shift: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 2 9.5h4V16h6V9.5h4z"/></svg>',
   del: '<svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 1.5h13a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H8L1.5 9z"/><path d="M12 6l6 6M18 6l-6 6"/></svg>',
-  bulb: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
-  book: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 5.8 14.5 4 17.5 4 20 5.5V19c-2.5-1.5-5.5-1.5-8 .3-2.5-1.8-5.5-1.8-8-.3z"/><path d="M12 5.8v13.5"/></svg>',
   sw: '<svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true"><path d="M8 11.5 10.4 8.6a3.5 3.5 0 0 0-4.8 0zM8 3.2a8.6 8.6 0 0 1 5.9 2.3l1.3-1.5A10.6 10.6 0 0 0 8 1.2 10.6 10.6 0 0 0 .8 4l1.3 1.5A8.6 8.6 0 0 1 8 3.2zm0 2.9a5.7 5.7 0 0 1 3.9 1.5L13.1 6A7.6 7.6 0 0 0 8 4.1 7.6 7.6 0 0 0 2.9 6l1.2 1.6A5.7 5.7 0 0 1 8 6.1z"/></svg>',
   swoff: '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M1.5 4.5a9.5 9.5 0 0 1 13 0M4 7a6 6 0 0 1 8 0" opacity=".45"/><path d="M2 1l12 10"/></svg>',
   bat: '<svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true"><rect x=".75" y=".75" width="19.5" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/><rect x="2.5" y="2.5" width="13" height="7" rx="1.6" fill="currentColor"/><rect x="21.5" y="4" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".6"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  head: '<svg width="22" height="22" viewBox="-12 -12 24 24"><path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></svg>',
   back: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M13 3 L6 10 L13 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   pin: '<svg width="14" height="18" viewBox="-8 -9 16 18"><path d="M0 8 C-7 0 -6 -7 0 -7 C6 -7 7 0 0 8 Z" style="fill:var(--c1)"/><circle cx="0" cy="-1.5" r="2.4" fill="#211e26"/></svg>',
   x: '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 3 L13 13 M13 3 L3 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
   chev: '<svg width="8" height="12" viewBox="0 0 8 12"><path d="M2 2 L6 6 L2 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  heart: '<svg width="54" height="48" viewBox="0 0 54 48"><path d="M27 45 C10 32 2 23 2 13 C2 6 8 1 15 1 C20 1 24 4 27 8 C30 4 34 1 39 1 C46 1 52 6 52 13 C52 23 44 32 27 45 Z" fill="currentColor"/></svg>',
   send: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 10 H17 M11 4 L17 10 L11 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   ck: '<svg width="40" height="40" viewBox="0 0 40 40"><path d="M10 21 L17 28 L30 13" fill="none" stroke="#211e26" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  ckS: '<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" style="fill:var(--c1)"/><path d="M5.5 10.5 L8.5 13.5 L14.5 7" fill="none" stroke="#211e26" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   wifi: '<svg width="70" height="60" viewBox="-35 -30 70 60"><path d="M-22 -4 A31 31 0 0 1 22 -4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/><path d="M-13 5 A18 18 0 0 1 13 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/><circle cx="0" cy="14" r="3.5" fill="currentColor"/><path d="M-20 -18 L20 22" style="stroke:var(--c2)" stroke-width="3" stroke-linecap="round"/></svg>',
   sig: '<svg width="90" height="70" viewBox="-45 -50 90 70"><circle r="6" style="fill:var(--c2)"/>' + [16, 28, 40].map((r, i) => `<path d="M${-r} ${-r*.6} A${r} ${r} 0 0 1 ${r} ${-r*.6}" fill="none" stroke="currentColor" stroke-width="2.5" opacity="${1-i*.25}"/>`).join('') + '</svg>',
   note: '<svg width="40" height="44" viewBox="0 0 40 44"><path d="M14 36 V8 L34 2 V30" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="9" cy="37" r="6" style="fill:var(--c2)"/><circle cx="29" cy="31" r="6" style="fill:var(--c2)"/></svg>',
@@ -315,7 +270,7 @@ const NMT = { 알렉스: 'var(--cht-alex)', 오펠리아: 'var(--cht-ophelia)', 
 const tint = t => esc(t).replace(/(알렉스|오펠리아|노아|에바|릴리)(?=의 방)/g, n => `<span style="color:${NMT[n]}">${n}</span>`);
 const bars = () => '<span class="ex">예시 문구</span>';  // 정해지지 않은 문구 자리
 const esc = t => String(t).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
-const wave = (cols = []) => '<div class="wave">' + [10,22,36,18,44,28,40,24,34,16,26,12].map((h, i) => `<span style="height:${h}px;animation-delay:${i*0.07}s${cols.length ? `;background:${cols[Math.floor(i * cols.length / 12)]}` : ''}"></span>`).join('') + '</div>';  // cols: 말하는 인물 색 (여럿이면 막대를 나눠 칠함)
+const wave = () => '<div class="wave">' + [10,22,36,18,44,28,40,24,34,16,26,12].map((h, i) => `<span style="height:${h}px;animation-delay:${i*0.07}s"></span>`).join('') + '</div>';
 
 let S, timers = [];
 let PAUSED = false;
@@ -330,7 +285,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false); const pg = document.getElementById('pv-prog'); if (pg) pg.value = 0;
-  S = { prog: 0, phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, pct: null, showHints: false,
+  S = { prog: 0, phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
@@ -427,13 +382,13 @@ function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 
 }
 function setCode(v) {  // 키보드로 바꾼 코드: 칸만 고치고 화면은 그대로 (앞 코드 힌트는 다음에 누를 때 걷힘)
   v = v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
-  S.stale = S.stale || S.showHints || S.pct != null; S.code = v; S.pct = null; S.showHints = false; S.ans = false;
+  S.stale = S.stale || S.showHints; S.code = v; S.showHints = false; S.ans = false;
   const i = $('pv-in'); if (i) i.value = v;
   if (S.view === 'main') render();  // 넣는 대로 진행도 보임
 }
 function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안 B 팝업이 같이 씀)
   const c = D.codes[S.code], p = c && c.part ? c.part : part();
-  const opened = S.showHints && c && (c.kind === 'hint' || c.kind === 'voice');
+  const opened = S.showHints && c && c.kind === 'hint';
   let body = '';
   if (opened) {
     const st = S.open[S.code] || 0;
@@ -442,13 +397,6 @@ function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안
       if (st < c.hints.length) body += `<div class="btn next${p}" data-act="next" role="button" tabindex="0">${st ? '다음' : '힌트 보기'}</div>`;
       else if (!S.ans) body += '<div class="btn ans" data-act="ans" role="button" tabindex="0">정답</div>';
       else body += `<div class="card ansc"><span class="k">정답</span><span class="v">${c.answer ? esc(c.answer) : bars(1)}</span></div>`;
-    } else if (c.kind === 'voice') {
-      const n = c.steps.length, i = Math.min(st, n + 1) - 1;  // i === n: 6단계 뒤, 심장 소리만 반복
-      const SPK = Object.assign({ 비아: 'var(--ch-bia)' }, NM);
-      const inner = i < n  // 대사 글은 PC에 · 폰엔 말하는 사람 색 점과 재생 아이콘만
-        ? `<div class="vline" role="img" aria-label="음성 재생 중">${wave([...new Set(c.steps[i].map(([who]) => who))].map(who => SPK[who]))}</div>`
-        : `<div class="center" style="padding:22px 0"><span class="heart" aria-label="심장 소리">${ICON.heart}</span></div>`;
-      body += `<div class="card h2" style="gap:12px">${inner}<div class="vdots">${c.steps.map((_, k) => `<span style="background:${k <= i ? 'var(--c2)' : 'rgba(255,255,255,.2)'}"></span>`).join('')}</div></div>`;
     }
   }
   return { body, opened, p };
@@ -597,7 +545,7 @@ function act(a) {
   if (a === 'start') { S.run = true; render(); return; }
   if (a === 'bhint') {  // 시안 B: 힌트 보기 → 힌트 팝업
     const c = check(S.code); if (!c) return;
-    act('hint'); if (c.kind === 'story' || c.kind === 'voice') return;  // 문제 16: 음성은 PC에서 · 폰엔 팝업 없음 (단계만 넘김)  // 힌트 보기 → 팝업에 힌트 1부터, 안에서 다음 → 정답
+    act('hint'); if (c.kind === 'story') return;  // 힌트 보기 → 팝업에 힌트 1부터, 안에서 다음 → 정답
     S.hpop = S.hpopNew = true; render(); return;
   }
   if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }
@@ -608,15 +556,13 @@ function act(a) {
     const c = check(S.code); if (!c) return;
     S.kb = false;  // 맞는 코드면 키보드 내림
     if (c.kind === 'story') { S.view = 'pattern'; S.patPath = []; S.patBad = false; render(); return; }
-    if (c.kind === 'voice') S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.steps.length + 1);  // 넣을 때마다 다음 단계, 끝나면 심장 소리
-    else if (c.kind === 'hint') S.open[S.code] = Math.max(1, S.open[S.code] || 0);
+    if (c.kind === 'hint') S.open[S.code] = Math.max(1, S.open[S.code] || 0);
     if (!c.demo) S.used[S.code] = true;  // 힌트 사용 횟수: 코드 하나당 1회 (가짜 코드는 안 셈)
     S.showHints = true; S.ans = (S.answered || {})[S.code] || false; render(); return;
   }
   if (a === 'next') { const c = D.codes[S.code]; if (!c.demo) S.used[S.code] = true;  // 힌트 보기(첫 힌트)도 사용으로 셈
     S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
   if (a === 'ans') { S.ans = true; (S.answered = S.answered || {})[S.code] = true; render(); return; }
-  if (a === 'pct') { const c = check(S.code); if (!c) return; S.kb = false; if (c.pct == null) { check('-'); return; } S.pct = c.pct; render(); return; }
 }
 
 function bindPattern() {
@@ -681,7 +627,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
-  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .lb-used', '힌트 사용 횟수', 12], ['#proto .timer .prog', '진행도', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
+  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .lb-used', '힌트 사용 횟수', 12], ['#proto .timer .prog', '진행도', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .msg', '채팅 말풍선', 14],
   ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {
