@@ -291,7 +291,7 @@ function setBg() {
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
 function dock(on = true) {  // 아래 독: 폰 앱 아이콘처럼
-  const apps = [['codes', '힌트코드', ICON.bulb], ['chat', '운영자 호출', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
+  const apps = [['codes', '힌트코드', ICON.bulb], ['chat', '채팅', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
   if (S.phase === 'p2') apps.splice(1, 0, ['story', '스토리코드', ICON.book]);  // 비아가 들어온 뒤에만 생김
   const pop = S.storyNew && S.view === 'main'; if (pop) S.storyNew = false;
   return `<div class="dock glass${on ? '' : ' off'}">` + apps.map(([a, l, ic]) => `<div class="app${pop && a === 'story' ? ' pop' : ''}"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
@@ -483,7 +483,7 @@ function render() {
   if (S.phase.startsWith('end')) h = vEnd();
   else if (S.offline) h = vOffline();
   else h = ({ main: vMain, codes: vCodes, done: vDone, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
-  if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>운영자 호출</b>${bars()}</div></div>`;
+  if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar();
   const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
   const ci = $('pv-chatin'); if (ci) ci.oninput = () => { S.ct = [...ci.value]; };

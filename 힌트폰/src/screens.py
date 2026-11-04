@@ -44,10 +44,10 @@ def ring(cx, cy, r, time, cls):  # 둥근 링 타이머: 남은 시간(1:45:00 �
 def sbar(o):  # 상태 표시줄: 시각 · 와이파이 · 배터리
     return (T(34+o, 29, '9:41', 9, 700) + f'<path d="M{o+228} 24 a6 6 0 0 1 9 0 M{o+230} 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="{o+232.5}" cy="28.5" r="1.2" fill="currentColor"/>'
             + R(o+242, 22.5, 14, 7.5, 'n', 2) + R(o+243.5, 24, 9, 4.5, 'soft', 1))
-def dock(o, cls, badge=False):  # 아래 독: 힌트코드 · 스토리코드 · 운영자 호출 앱 아이콘
+def dock(o, cls, badge=False):  # 아래 독: 힌트코드 · 스토리코드 · 채팅 앱 아이콘
     k = 'via' if cls == 'via' else 'n' if cls.startswith('n') else 'lily'
     out = R(36+o, 352, 218, 80, 'soft', 20)
-    apps = [(80, '힌트코드', 0), (145, '스토리코드', 1), (210, '운영자 호출', 2)] if k == 'via' else [(100, '힌트코드', 0), (190, '운영자 호출', 2)]  # 스토리코드는 비아 등장 뒤에만
+    apps = [(80, '힌트코드', 0), (145, '스토리코드', 1), (210, '채팅', 2)] if k == 'via' else [(100, '힌트코드', 0), (190, '채팅', 2)]  # 스토리코드는 비아 등장 뒤에만
     for x, l, i in apps:
         out += R(x-19+o, 361, 38, 38, k, 10) + T(x+o, 420, l, 9, 500, 'middle')
         if i == 0: out += f'<circle cx="{x+o}" cy="377" r="6" fill="none" class="ln" stroke-width="1.6"/><path d="M{x-3+o} 387 H{x+3+o}" class="ln" stroke-width="1.6"/>'
@@ -209,11 +209,11 @@ body = (C(0, '17:40') + f'<path d="{pl}" class="vline"/>' + dotsvg
         + lines(366, 148, card, 11, 18))
 S.append(section('13. 보너스 패턴 입력 → 스토리카드 13.5', svg(610, 520,
     '보너스 패턴 입력 화면: 기존 도안과 같은 육각 배치의 점 일곱 개에 가운데에서 시작한 선이 그려지는 중. 정답이면 에바의 파란 카드로 스토리카드 13.5 원문이 뜬다.', body, 620)))
-# 13. 운영자 호출 (문구 자리는 회색 막대)
+# 13. 채팅 (문구 자리는 회색 막대)
 def chaticon(x, y, k=1):
     return (f'<g transform="translate({x} {y + 1}) scale({k})">' + '<path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></g>')
 body = (M(0, '38:15', badge=True) + T(56, 236, '현재 목표', 11, cls='t-lily') + T(56, 256, '에바의 승인 확보', 14, 700) + place(56, 282, '에바의 방', 170)
-        + R(30, 16, 230, 34, 'soft', 12) + R(40, 24, 18, 18, 'lily', 5) + T(66, 31, '운영자 호출', 9, 700) + R(66, 37, 90, 5, 'ph', 2.5)  # 위에서 내려온 알림 배너
+        + R(30, 16, 230, 34, 'soft', 12) + R(40, 24, 18, 18, 'lily', 5) + T(66, 31, '채팅', 9, 700) + R(66, 37, 90, 5, 'ph', 2.5)  # 위에서 내려온 알림 배너
         + arrow(276, 230))
 # 채팅 창 (270x500 화면, 말풍선 안 회색 막대는 실제 대화가 들어갈 자리)
 def bubble(x, y, w, n, cls, tail_right):
@@ -252,8 +252,8 @@ chat_kb = g(620, 0, R(10, 10, 270, 500, 'n', 30) + '<path d="M50 37 L43 44 L50 5
             + '<circle cx="238" cy="273" r="19" class="lily"/><path d="M231 273 H245 M239 266 L246 273 L239 280" class="ln" stroke-width="2.2"/>'
             + kokbd(0))
 body = body + chat + arrow(604, 230) + chat_kb
-S.append(section('14. 운영자 호출 (채팅)', svg(910, 520,
-    '운영자 호출: 메인 화면 아래 독의 운영자 호출 앱 아이콘에 안 읽은 답장 수가 빨간 숫자로 뜨고, 답장이 오면 위에서 알림 배너가 내려온다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 말풍선 안 회색 막대는 대화 내용 자리. 맨 오른쪽은 입력 칸을 누른 뒤: 아래에서 한글 키보드(숫자 줄 · 두벌식 · 시프트 · 지우기 · 한/영 · 띄어쓰기)가 올라오고, 대화 쪽을 누르면 내려간다.', body, 920)))
+S.append(section('14. 운영자 채팅', svg(910, 520,
+    '채팅: 메인 화면 아래 독의 채팅 앱 아이콘에 안 읽은 답장 수가 빨간 숫자로 뜨고, 답장이 오면 위에서 알림 배너가 내려온다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 말풍선 안 회색 막대는 대화 내용 자리. 맨 오른쪽은 입력 칸을 누른 뒤: 아래에서 한글 키보드(숫자 줄 · 두벌식 · 시프트 · 지우기 · 한/영 · 띄어쓰기)가 올라오고, 대화 쪽을 누르면 내려간다.', body, 920)))
 # 14. 연결이 끊겼을 때
 wifi = ('<g transform="translate(145 214)"><path d="M-22 -4 A31 31 0 0 1 22 -4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
         '<path d="M-13 5 A18 18 0 0 1 13 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
