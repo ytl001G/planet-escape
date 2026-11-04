@@ -29,6 +29,7 @@
   const steps = [];
   const at = (ms, fn) => steps.push([ms, fn]);
   at(300, () => log(!!document.querySelector('#pv-sbar span') && !!scr().querySelector('.lb-chat') && !!scr().querySelector('.lb-code #pv-in') && !scr().querySelector('.dock') && !document.querySelector('.hbar'), '홈 화면: 상태 표시줄 · 채팅 칸 · 아래 힌트코드 입력 창 · 홈 바 없음'));
+  at(305, () => log(!!scr().querySelector('.idle .timer [data-prog]'), '안전 모드 전에도 타이머 안 진행도'));
   at(300, () => log(window.__demo === true, 'Start 전: 0000 힌트 나옴'));
   at(301, () => { const s = document.getElementById('pv-screen'); log(!s.querySelector('[data-act="start"]') && !!s.querySelector('.idle [data-time]'), 'Start 누른 뒤: 시간 감'); });
   at(310, () => { tap('codes'); type('0000'); tap('hint'); log(!scr().querySelector('.card'), 'Start 뒤엔 0000 반응 없음'); tap('home');
