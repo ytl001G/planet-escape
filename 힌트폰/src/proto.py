@@ -319,11 +319,9 @@ function setBg() {
   bg.style.backgroundImage = k ? `url(${BG[k]})` : 'none';
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
-function dock(on = true, story = S.phase === 'p2', dim = !on) {  // 아래 독: 폰 앱 아이콘처럼 (on=false면 못 누름, dim이면 흐리게)
+function dock(on = true, dim = !on) {  // 아래 독: 폰 앱 아이콘처럼 (on=false면 못 누름, dim이면 흐리게)
   const apps = [['codes', '힌트코드', ICON.bulb], ['chat', '채팅', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
-  if (story) apps.splice(1, 0, ['story', '스토리코드', ICON.book]);  // 비아가 들어온 뒤에만 생김
-  const pop = S.storyNew && S.view === 'main'; if (pop) S.storyNew = false;
-  return `<div class="dock glass${dim ? ' off' : ''}">` + apps.map(([a, l, ic]) => `<div class="app${pop && a === 'story' ? ' pop' : ''}"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
+  return `<div class="dock glass${dim ? ' off' : ''}">` + apps.map(([a, l, ic]) => `<div class="app"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
 }
 function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
   const d = new Date(), t = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
@@ -405,8 +403,6 @@ function vCodes() {
       body += `<div class="card h2" style="gap:12px">${inner}<div class="vdots">${c.steps.map((_, k) => `<span style="background:${k <= i ? 'var(--c2)' : 'rgba(255,255,255,.2)'}"></span>`).join('')}</div></div>`;
     }
   }
-  if (S.mode === 'story') return head('스토리코드')
-    + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>` + (S.kb ? kbd() : '');
   return head('힌트코드', `힌트 사용 ${Object.keys(S.used).length}회`)
     + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
@@ -490,7 +486,7 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:var(--c1)">') + '<div class="stripes"></div>';
   const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false, false);  // 비아 소개 중: 독은 보이되 못 누름 · 스토리코드는 소개가 끝나야 톡 생김
+  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
@@ -524,7 +520,7 @@ function render() {
 function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread++; S.toast = true; later(() => { S.toast = false; render(); }, 3500); } render(); }
 
 function check(code) {
-  const c0 = D.codes[code], app = c0 && (S.mode === 'story') === (c0.kind === 'story');  // 힌트코드 앱은 힌트 코드만, 스토리코드 앱은 스토리 코드만
+  const c0 = D.codes[code], app = !!c0;  // 힌트코드 앱 하나에서 힌트 코드 · 스토리 코드 모두 받음
   const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.part === 1 && c0.kind !== 'story' && S.phase === 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 1부 코드는 비아 등장 전에만, 2부 코드는 뒤에만  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
@@ -555,8 +551,7 @@ function act(a) {
   if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
-  if (a === 'story') { S.kb = false; S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
-  if (a === 'codes') { S.kb = false; S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
+  if (a === 'codes') { S.kb = false; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
   if (a === 'done' && S.phase === 'p1') { S.view = 'done'; render(); return; }
   if (a === 'hint') {
     const c = check(S.code); if (!c) return;
@@ -600,7 +595,7 @@ const CTL = [
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
     () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.storyNew = true; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
