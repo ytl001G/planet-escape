@@ -83,7 +83,7 @@ CSS = r'''
 
 #proto .lb-top { display: grid; grid-template-columns: 76px 1fr; gap: 10px; height: 76px; }
 #proto .lb-chatbox { height: 76px; border-radius: 16px; display: grid; } #proto .lb-chat { height: 100%; display: grid; justify-items: center; align-content: center; gap: 4px; cursor: pointer; font: 500 11px var(--body); color: #f2eef6; }
-#proto .lb-chat b { position: relative; display: grid; color: var(--c1); } #proto .p2 .lb-chat b { color: var(--c2); } #proto .pre .lb-chat b { color: var(--c0); } #proto .lb-chat .badge { right: -8px; top: -6px; }
+#proto .lb-chat b { position: relative; display: grid; color: var(--c1); } #proto .lb-chat b svg { width: 42px; height: 38px; } #proto .p2 .lb-chat b { color: var(--c2); } #proto .pre .lb-chat b { color: var(--c0); } #proto .lb-chat .badge { right: -8px; top: -6px; }
 
 #proto .lb-goal { height: 76px; box-sizing: border-box; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; gap: 2px; position: relative; overflow: hidden; }
 #proto .lb-goal .lbl { font-size: 10px; line-height: 1.2; } #proto .lb-goal .goal { font-size: 15px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -217,6 +217,8 @@ HTML = '''<section id="proto">
   <div class="panel">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
+    <div class="grp" id="pv-skin" role="group" aria-label="에셋"><span class="state">에셋</span><button type="button" data-skin="0" aria-pressed="true">미적용</button><button type="button" data-skin="1" aria-pressed="false">적용</button></div>
+    <div class="grp" id="pv-chatic" role="group" aria-label="채팅 아이콘 시안" hidden><span class="state">채팅 아이콘 시안</span><button type="button" data-chatic="A" aria-pressed="true">A</button><button type="button" data-chatic="B" aria-pressed="false">B</button><button type="button" data-chatic="C" aria-pressed="false">C</button><button type="button" data-chatic="D" aria-pressed="false">D</button><button type="button" data-chatic="E" aria-pressed="false">E</button><button type="button" data-chatic="F" aria-pressed="false">F</button></div>
     <label class="state" style="display:grid;gap:4px">진행도 (서버에서 받는 값) <input type="range" id="pv-prog" min="0" max="100" value="0" aria-label="진행도"></label>
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
@@ -318,7 +320,7 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 
 function layB(timer, g, off = false) {  // 폰 기본 배치: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트코드 입력 아래 (off: 못 누름)
   g = g.replace(bars(), '');  // 시안 B 목표 칸은 작게: 정해지지 않은 설명 줄은 뺌
-  const chat = `<div class="glass lb-chatbox"><div class="lb-chat" data-act="chat" role="button" tabindex="0" aria-label="채팅"><b>${ICON.chatL}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</b>채팅</div></div>`;
+  const chat = `<div class="glass lb-chatbox"><div class="lb-chat" data-act="chat" role="button" tabindex="0" aria-label="채팅"><b>${ICON.chatL}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</b></div></div>`;  // 글자 없이 아이콘만 (이름은 aria-label)
   return `<div class="lb${off ? ' off' : ''}"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate && !S.trans ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
@@ -603,6 +605,17 @@ const CTL = [
   ['탈출 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_escape'; S.endStep = 0; render(); later(() => { S.endStep = 1; render(); }, 1800); }],
   ['행성 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_planet'; S.endStep = 0; render(); [2600, 5600, 6600, 7600, 8600].forEach((ms, i) => later(() => { S.endStep = i + 1; render(); }, ms)); }],
 ];
+__SKINDECL__const ICON0 = Object.assign({}, ICON);
+let CHATIC = 'A';
+function setSkin(on) {  // 에셋 적용: #proto에 skin 클래스 + 아이콘을 새 에셋으로 바꿔 끼움
+  document.getElementById('proto').classList.toggle('skin', on);
+  Object.assign(ICON, on ? Object.assign({}, SKINICON, { chatL: SKINCHAT[CHATIC] }) : ICON0);
+  $('pv-skin').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.skin === '1') === on)));
+  $('pv-chatic').hidden = !on; render();
+}
+$('pv-skin').addEventListener('click', e => { const b = e.target.closest('[data-skin]'); if (b) setSkin(b.dataset.skin === '1'); });
+$('pv-chatic').addEventListener('click', e => { const b = e.target.closest('[data-chatic]'); if (!b) return; CHATIC = b.dataset.chatic;
+  $('pv-chatic').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); setSkin(true); });
 const ctl = $('pv-ctl');
 CTL.forEach(([label, ok, fn], i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = () => { if (ok()) fn(); }; ctl.append(b); });
 $('pv-pause').onclick = () => setPause(!PAUSED);
@@ -699,6 +712,8 @@ reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 �
 </script>
 '''
 sys.path.insert(0, str(pathlib.Path(__file__).parent)); from icon import inline
+sys.path.insert(0, str(pathlib.Path(__file__).parent)); import skin
+CSS += skin.CSS; JS = JS.replace('__SKINDECL__', skin.JSDECL)
 JS = JS.replace('__APPICON__', json.dumps(inline('pv-appicon', '100%'))).replace('__DATA__', json.dumps(DATA, ensure_ascii=False)).replace('__BG__', json.dumps(BG)).replace('__SHIELDS__', json.dumps(SHIELD, ensure_ascii=False))
 OUT.write_text(json.dumps({'css': CSS, 'html': HTML, 'js': JS}, ensure_ascii=False), encoding='utf-8')
 print('proto', len(JS) // 1024, 'KB js')
