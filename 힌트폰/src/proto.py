@@ -148,6 +148,7 @@ CSS = r'''
 #proto .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 #proto .head { display: grid; grid-template-columns: 96px 1fr 96px; align-items: center; margin: -34px -18px 0; padding: 34px 18px 12px; box-sizing: content-box; min-height: 40px; border-bottom: 1px solid rgba(255,255,255,.16); background: rgba(12,10,16,.5); }
 #proto .head .ttl { text-align: center; font: 700 16px var(--display); }
+#proto .head .ttl .sub { display: block; margin-top: 2px; font: 500 11px var(--body); color: rgba(255,255,255,.6); }
 #proto .head .tm { justify-self: end; display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px 4px 8px; border-radius: 99px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); font: 700 13px var(--body); font-variant-numeric: tabular-nums; }
 #proto .head .tm svg { width: 13px; height: 13px; opacity: .75; }
 #proto .back { width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer; border-radius: 50%; }
@@ -235,8 +236,8 @@ HTML = '''<section id="proto">
     <div><h3>시험용 코드</h3></div>
     <div class="codes">
       <span><code>0000</code> 설명용 가짜 코드 · Start 누르기 전에만 · 힌트 3단계 + 정답 + 진행도</span>
-      <span><code>ABCD</code> 1부 힌트 (문제 3) · 힌트 3단계 + 정답</span>
-      <span><code>KLMN</code> 2부 힌트 (문제 10)</span>
+      <span><code>ABCD</code> 1부 힌트 (문제 3) · 비아 등장 전에만 · 힌트 3단계 + 정답</span>
+      <span><code>KLMN</code> 2부 힌트 (문제 10) · 비아 등장 뒤에만</span>
       <span><code>WXYZ</code> 문제 16 · 대기 연출 6단계 → 그 뒤 심장 소리 (같은 코드를 다시 넣으면 다음 단계)</span>
       <span><code>PQRS</code> 스토리 코드 → 보너스 패턴 (시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래)</span>
       <span>그 밖의 코드는 오류로 처리돼요. 코드와 패턴 정답은 시험용이에요.</span>
@@ -304,7 +305,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false);
-  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
+  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, pct: null, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
@@ -333,8 +334,8 @@ function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은
 function timerBox() {
   return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span></div>`;
 }
-function head(title) {
-  return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
+function head(title, sub = '') {  // sub: 제목 아래 작은 줄
+  return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
 }
 
 function vMain() {
@@ -406,7 +407,7 @@ function vCodes() {
   }
   if (S.mode === 'story') return head('스토리코드')
     + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>` + (S.kb ? kbd() : '');
-  return head('힌트코드')
+  return head('힌트코드', `힌트 사용 ${Object.keys(S.used).length}회`)
     + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
     + `<div class="scroll">${body}</div>` + (S.kb ? kbd() : '');
@@ -524,7 +525,7 @@ function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread
 
 function check(code) {
   const c0 = D.codes[code], app = c0 && (S.mode === 'story') === (c0.kind === 'story');  // 힌트코드 앱은 힌트 코드만, 스토리코드 앱은 스토리 코드만
-  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
+  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.part === 1 && c0.kind !== 'story' && S.phase === 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 1부 코드는 비아 등장 전에만, 2부 코드는 뒤에만  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
     return null;
@@ -563,6 +564,7 @@ function act(a) {
     if (c.kind === 'story') { S.view = 'pattern'; S.patPath = []; S.patBad = false; render(); return; }
     if (c.kind === 'voice') S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.steps.length + 1);  // 넣을 때마다 다음 단계, 끝나면 심장 소리
     else if (c.kind === 'hint') S.open[S.code] = Math.max(1, S.open[S.code] || 0);
+    if (!c.demo) S.used[S.code] = true;  // 힌트 사용 횟수: 코드 하나당 1회 (가짜 코드는 안 셈)
     S.showHints = true; S.ans = (S.answered || {})[S.code] || false; render(); return;
   }
   if (a === 'next') { const c = D.codes[S.code]; S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
@@ -631,7 +633,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
-  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
+  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .head .ttl .sub', '힌트 사용 횟수', 11], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
   ['#proto .app', '독 앱 이름', 11], ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .recov', '복구 안내 글', 14], ['#proto .toast b', '알림 배너 제목', 13]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {

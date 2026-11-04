@@ -33,6 +33,7 @@
   at(7300, () => { tap('codes'); log(!scr().querySelector('.kbd'), '코드 앱에 들어가면 키보드 안 뜸'); tap('kb'); log(!!scr().querySelector('.kbd') && scr().querySelectorAll('.kbd .key').length === 37, '입력 칸 누르면 키보드 (36키 + 지우기)');
     ['A', 'B', 'C', 'X'].forEach(k => tap('k:' + k)); tap('kdel'); tap('k:D'); log(document.getElementById('pv-in').value === 'ABCD', '키보드로 입력 · 지우기');
     tap('hint'); log(!scr().querySelector('.kbd') && scr().querySelectorAll('.card.h1').length === 1, '힌트 보기 → 키보드 내려감'); tap('kb'); log(!!scr().querySelector('.kbd'), '입력 칸 누르면 다시 올라옴'); tap('home'); });
+  at(7330, () => { tap('codes'); const n = () => +(scr().querySelector('.head .sub')?.textContent.match(/\d+/) || [-1])[0]; const a = n(); type('ABCD'); tap('hint'); const b = n(); type('0000'); tap('hint'); log(a === 1 && b === 1 && n() === 1, '힌트 사용 횟수: ABCD 본 뒤 1회, 다시 봐도·가짜 코드도 그대로 (' + a + ',' + b + ',' + n() + ')'); tap('home'); });
   at(7340, () => { tap('codes'); type('0000'); tap('hint'); log(!scr().querySelector('.card'), '1부: 0000 반응 없음'); tap('home'); });
   at(7350, () => { tap('codes'); tap('kb'); scr().querySelector('.head .ttl').click(); log(!scr().querySelector('.kbd'), '코드 키보드: 바깥 누르면 내려감');
     tap('kb'); tap('k:Z'); log(!!scr().querySelector('.kbd'), '키보드 누르는 동안은 그대로'); tap('kdel'); tap('home');
@@ -59,6 +60,7 @@
   at(21000, () => { log(has('그냥 비아라고 불러도 돼.') && scr().querySelector('.av').textContent === '비아', '이름 비아'); });
   at(24500, () => { log(has('우선 알렉스의 방에') && document.getElementById('pv').className.includes('p2'), '2부 메인 비아 안내'); press('목표 완료'); log(has('오펠리아의 보고서에'), '2부 다음 안내'); });
   at(24700, () => { tap('codes'); type('WXYZ'); tap('hint'); log(has('뭘 기다려. 내리기만 하면 돼.'), '문제 16 1단계'); tap('hint'); log(has('근데 만약 이게 실패하면?') && has('…방금 그거 뭐였지?'), '문제 16 2단계 (에바 + 비아)'); [3, 4, 5, 6].forEach(() => tap('hint')); log(has('나 살고 싶어. 이제 막 생겼거든.'), '문제 16 6단계'); log(scr().querySelectorAll('.vdots span').length === 6, '문제 16 점 6칸'); tap('hint'); log(!!scr().querySelector('.heart') && !has('나 살고 싶어'), '6단계 뒤 심장 소리'); tap('hint'); log(!!scr().querySelector('.heart'), '그 뒤에도 심장 소리 반복'); tap('home'); });
+  at(24740, () => { tap('codes'); type('ABCD'); tap('hint'); log(!scr().querySelector('.card'), '2부: 1부 코드 반응 없음'); type('KLMN'); tap('hint'); log(!!scr().querySelector('.card'), '2부: 2부 코드 힌트'); tap('home'); });
   at(24750, () => { log(scr().querySelectorAll('.dock .app').length === 3, '2부: 스토리코드 앱 생김'); tap('codes'); type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '힌트코드 앱: 스토리 코드 반응 없음'); tap('home'); tap('story'); type('PQRS'); tap('hint'); log(!!document.getElementById('pv-pat'), '스토리코드 앱 → 패턴 화면'); drag([0, 1, 2]); log(scr().textContent !== '' && !!scr().querySelector('circle[style*="--err"]'), '패턴 오답 빨강'); });
   at(25800, () => { log(!scr().querySelector('circle[style*="--err"]'), '패턴 초기화'); drag([0, 6, 5]); log(has('제온 추진 연료 전환 실험'), '패턴 정답 → 카드 13.5'); tap('home'); });
   at(26000, () => { press('행성 엔딩'); log(has('행성 프로젝트를 실행합니다.'), '행성 엔딩 1'); });

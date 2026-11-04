@@ -258,6 +258,7 @@ html { scroll-behavior: smooth; }
 #proto .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 #proto .head { display: grid; grid-template-columns: 96px 1fr 96px; align-items: center; margin: -34px -18px 0; padding: 34px 18px 12px; box-sizing: content-box; min-height: 40px; border-bottom: 1px solid rgba(255,255,255,.16); background: rgba(12,10,16,.5); }
 #proto .head .ttl { text-align: center; font: 700 16px var(--display); }
+#proto .head .ttl .sub { display: block; margin-top: 2px; font: 500 11px var(--body); color: rgba(255,255,255,.6); }
 #proto .head .tm { justify-self: end; display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px 4px 8px; border-radius: 99px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); font: 700 13px var(--body); font-variant-numeric: tabular-nums; }
 #proto .head .tm svg { width: 13px; height: 13px; opacity: .75; }
 #proto .back { width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer; border-radius: 50%; }
@@ -372,8 +373,8 @@ html { scroll-behavior: smooth; }
     <div><h3>시험용 코드</h3></div>
     <div class="codes">
       <span><code>0000</code> 설명용 가짜 코드 · Start 누르기 전에만 · 힌트 3단계 + 정답 + 진행도</span>
-      <span><code>ABCD</code> 1부 힌트 (문제 3) · 힌트 3단계 + 정답</span>
-      <span><code>KLMN</code> 2부 힌트 (문제 10)</span>
+      <span><code>ABCD</code> 1부 힌트 (문제 3) · 비아 등장 전에만 · 힌트 3단계 + 정답</span>
+      <span><code>KLMN</code> 2부 힌트 (문제 10) · 비아 등장 뒤에만</span>
       <span><code>WXYZ</code> 문제 16 · 대기 연출 6단계 → 그 뒤 심장 소리 (같은 코드를 다시 넣으면 다음 단계)</span>
       <span><code>PQRS</code> 스토리 코드 → 보너스 패턴 (시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래)</span>
       <span>그 밖의 코드는 오류로 처리돼요. 코드와 패턴 정답은 시험용이에요.</span>
@@ -938,9 +939,9 @@ html { scroll-behavior: smooth; }
 
 </svg></div><h3 style="font:700 16px var(--display);margin:28px 0 10px">2. 폰 화면 이동</h3><div style="overflow-x:auto"><svg role="img" aria-label="순서도 2 폰 화면 이동. 홈과 메인 화면에서 힌트코드 앱이나 스토리코드 앱, 코드 키보드, 코드 판별을 거쳐 힌트와 정답으로 간다. 채팅과 한글 키보드, 알림 배너, 지도 팝업, 연결 끊김, 시간 종료도 있다." style="width:3125px;max-width:none;height:auto;display:block"
 
- viewBox="0.00 0.00 2500.00 450.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 2500.00 508.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 446)">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 504)">
 
 
 
@@ -950,11 +951,11 @@ html { scroll-behavior: smooth; }
 
 <title>홈</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M483.38,-275C483.38,-275 288.44,-275 288.44,-275 282.44,-275 276.44,-269 276.44,-263 276.44,-263 276.44,-251 276.44,-251 276.44,-245 282.44,-239 288.44,-239 288.44,-239 483.38,-239 483.38,-239 489.38,-239 495.38,-245 495.38,-251 495.38,-251 495.38,-263 495.38,-263 495.38,-269 489.38,-275 483.38,-275"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M483.38,-305C483.38,-305 288.44,-305 288.44,-305 282.44,-305 276.44,-299 276.44,-293 276.44,-293 276.44,-281 276.44,-281 276.44,-275 282.44,-269 288.44,-269 288.44,-269 483.38,-269 483.38,-269 489.38,-269 495.38,-275 495.38,-281 495.38,-281 495.38,-293 495.38,-293 495.38,-299 489.38,-305 483.38,-305"/>
 
-<text xml:space="preserve" text-anchor="start" x="347.66" y="-257.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">홈 · 메인 화면</text>
+<text xml:space="preserve" text-anchor="start" x="347.66" y="-287.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">홈 · 메인 화면</text>
 
-<text xml:space="preserve" text-anchor="start" x="295.16" y="-247.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독: 힌트코드 · 채팅 (+ 2부엔 스토리코드)</text>
+<text xml:space="preserve" text-anchor="start" x="295.16" y="-277.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독: 힌트코드 · 채팅 (+ 2부엔 스토리코드)</text>
 
 </g>
 
@@ -964,11 +965,11 @@ html { scroll-behavior: smooth; }
 
 <title>힌트앱</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M855.44,-272C855.44,-272 701.75,-272 701.75,-272 695.75,-272 689.75,-266 689.75,-260 689.75,-260 689.75,-248 689.75,-248 689.75,-242 695.75,-236 701.75,-236 701.75,-236 855.44,-236 855.44,-236 861.44,-236 867.44,-242 867.44,-248 867.44,-248 867.44,-260 867.44,-260 867.44,-266 861.44,-272 855.44,-272"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M855.44,-302C855.44,-302 701.75,-302 701.75,-302 695.75,-302 689.75,-296 689.75,-290 689.75,-290 689.75,-278 689.75,-278 689.75,-272 695.75,-266 701.75,-266 701.75,-266 855.44,-266 855.44,-266 861.44,-266 867.44,-272 867.44,-278 867.44,-278 867.44,-290 867.44,-290 867.44,-296 861.44,-302 855.44,-302"/>
 
-<text xml:space="preserve" text-anchor="start" x="746.35" y="-254.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트코드 앱</text>
+<text xml:space="preserve" text-anchor="start" x="746.35" y="-284.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트코드 앱</text>
 
-<text xml:space="preserve" text-anchor="start" x="708.47" y="-244.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">위 줄: 뒤로 · 제목 · 알약 타이머</text>
+<text xml:space="preserve" text-anchor="start" x="708.47" y="-274.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">위 줄: 뒤로 · 제목 · 알약 타이머</text>
 
 </g>
 
@@ -978,11 +979,11 @@ html { scroll-behavior: smooth; }
 
 <title>홈&#45;&gt;힌트앱</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-256.16C553.98,-255.72 624.64,-255.17 680.68,-254.74"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-286.16C553.98,-285.72 624.64,-285.17 680.68,-284.74"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="680.39,-257.2 687.38,-254.69 680.36,-252.3 680.39,-257.2"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="680.39,-287.2 687.38,-284.69 680.36,-282.3 680.39,-287.2"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-260.34" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-290.34" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독</text>
 
 </g>
 
@@ -992,11 +993,11 @@ html { scroll-behavior: smooth; }
 
 <title>스토리앱</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M846.44,-214C846.44,-214 710.75,-214 710.75,-214 704.75,-214 698.75,-208 698.75,-202 698.75,-202 698.75,-190 698.75,-190 698.75,-184 704.75,-178 710.75,-178 710.75,-178 846.44,-178 846.44,-178 852.44,-178 858.44,-184 858.44,-190 858.44,-190 858.44,-202 858.44,-202 858.44,-208 852.44,-214 846.44,-214"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M846.44,-244C846.44,-244 710.75,-244 710.75,-244 704.75,-244 698.75,-238 698.75,-232 698.75,-232 698.75,-220 698.75,-220 698.75,-214 704.75,-208 710.75,-208 710.75,-208 846.44,-208 846.44,-208 852.44,-208 858.44,-214 858.44,-220 858.44,-220 858.44,-232 858.44,-232 858.44,-238 852.44,-244 846.44,-244"/>
 
-<text xml:space="preserve" text-anchor="start" x="740.35" y="-196.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">스토리코드 앱</text>
+<text xml:space="preserve" text-anchor="start" x="740.35" y="-226.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">스토리코드 앱</text>
 
-<text xml:space="preserve" text-anchor="start" x="717.47" y="-186.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">비아 등장 뒤에만 독에 있음</text>
+<text xml:space="preserve" text-anchor="start" x="717.47" y="-216.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">비아 등장 뒤에만 독에 있음</text>
 
 </g>
 
@@ -1006,95 +1007,95 @@ html { scroll-behavior: smooth; }
 
 <title>홈&#45;&gt;스토리앱</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-239.97C557.09,-230.43 632.27,-218.69 689.58,-209.74"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-269.97C557.09,-260.43 632.27,-248.69 689.58,-239.74"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="689.93,-212.17 696.46,-208.67 689.17,-207.33 689.93,-212.17"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="689.93,-242.17 696.46,-238.67 689.17,-237.33 689.93,-242.17"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-233.08" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독 (2부)</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-263.08" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독 (2부)</text>
 
 </g>
 
 
 
-<g id="node33" class="node">
+<g id="node35" class="node">
 
 <title>채팅</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M825.07,-156C825.07,-156 732.13,-156 732.13,-156 726.13,-156 720.13,-150 720.13,-144 720.13,-144 720.13,-132 720.13,-132 720.13,-126 726.13,-120 732.13,-120 732.13,-120 825.07,-120 825.07,-120 831.07,-120 837.07,-126 837.07,-132 837.07,-132 837.07,-144 837.07,-144 837.07,-150 831.07,-156 825.07,-156"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M825.07,-186C825.07,-186 732.13,-186 732.13,-186 726.13,-186 720.13,-180 720.13,-174 720.13,-174 720.13,-162 720.13,-162 720.13,-156 726.13,-150 732.13,-150 732.13,-150 825.07,-150 825.07,-150 831.07,-150 837.07,-156 837.07,-162 837.07,-162 837.07,-174 837.07,-174 837.07,-180 831.07,-186 825.07,-186"/>
 
-<text xml:space="preserve" text-anchor="start" x="746.35" y="-138.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">운영자 채팅</text>
+<text xml:space="preserve" text-anchor="start" x="746.35" y="-168.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">운영자 채팅</text>
 
-<text xml:space="preserve" text-anchor="start" x="738.85" y="-128.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">위 줄 아래 구분선</text>
+<text xml:space="preserve" text-anchor="start" x="738.85" y="-158.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">위 줄 아래 구분선</text>
 
 </g>
 
 
 
-<g id="edge33" class="edge">
+<g id="edge35" class="edge">
 
 <title>홈&#45;&gt;채팅</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M439.72,-238.36C494.76,-219.26 583.69,-189.27 661.63,-167 677.6,-162.44 694.93,-157.89 711.19,-153.8"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M439.72,-268.36C494.76,-249.26 583.69,-219.27 661.63,-197 677.6,-192.44 694.93,-187.89 711.19,-183.8"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="711.63,-156.22 717.83,-152.14 710.44,-151.46 711.63,-156.22"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="711.63,-186.22 717.83,-182.14 710.44,-181.46 711.63,-186.22"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-199.49" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-229.49" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">독</text>
 
 </g>
 
 
 
-<g id="node36" class="node">
+<g id="node38" class="node">
 
 <title>지도</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M883.57,-388C883.57,-388 673.63,-388 673.63,-388 667.63,-388 661.63,-382 661.63,-376 661.63,-376 661.63,-364 661.63,-364 661.63,-358 667.63,-352 673.63,-352 673.63,-352 883.57,-352 883.57,-352 889.57,-352 895.57,-358 895.57,-364 895.57,-364 895.57,-376 895.57,-376 895.57,-382 889.57,-388 883.57,-388"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M883.57,-418C883.57,-418 673.63,-418 673.63,-418 667.63,-418 661.63,-412 661.63,-406 661.63,-406 661.63,-394 661.63,-394 661.63,-388 667.63,-382 673.63,-382 673.63,-382 883.57,-382 883.57,-382 889.57,-382 895.57,-388 895.57,-394 895.57,-394 895.57,-406 895.57,-406 895.57,-412 889.57,-418 883.57,-418"/>
 
-<text xml:space="preserve" text-anchor="start" x="752.35" y="-370.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">지도 팝업</text>
+<text xml:space="preserve" text-anchor="start" x="752.35" y="-400.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">지도 팝업</text>
 
-<text xml:space="preserve" text-anchor="start" x="680.35" y="-360.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부 · 갈 방만 인물 색 · X · 바깥 · Esc로 닫힘</text>
+<text xml:space="preserve" text-anchor="start" x="680.35" y="-390.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부 · 갈 방만 인물 색 · X · 바깥 · Esc로 닫힘</text>
 
 </g>
 
 
 
-<g id="edge36" class="edge">
+<g id="edge38" class="edge">
 
 <title>홈&#45;&gt;지도</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M444.79,-275.69C500.21,-293.34 586.28,-320.15 661.63,-341 671.57,-343.75 682.03,-346.53 692.42,-349.22"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M444.79,-305.69C500.21,-323.34 586.28,-350.15 661.63,-371 671.57,-373.75 682.03,-376.53 692.42,-379.22"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="691.58,-351.53 698.97,-350.9 692.8,-346.78 691.58,-351.53"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="691.58,-381.53 698.97,-380.9 692.8,-376.78 691.58,-381.53"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-339.46" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">목표 창 방 이름</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-369.46" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">목표 창 방 이름</text>
 
 </g>
 
 
 
-<g id="node37" class="node">
+<g id="node39" class="node">
 
 <title>다시보기</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M840.07,-330C840.07,-330 717.13,-330 717.13,-330 711.13,-330 705.13,-324 705.13,-318 705.13,-318 705.13,-306 705.13,-306 705.13,-300 711.13,-294 717.13,-294 717.13,-294 840.07,-294 840.07,-294 846.07,-294 852.07,-300 852.07,-306 852.07,-306 852.07,-318 852.07,-318 852.07,-324 846.07,-330 840.07,-330"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M840.07,-360C840.07,-360 717.13,-360 717.13,-360 711.13,-360 705.13,-354 705.13,-348 705.13,-348 705.13,-336 705.13,-336 705.13,-330 711.13,-324 717.13,-324 717.13,-324 840.07,-324 840.07,-324 846.07,-324 852.07,-330 852.07,-336 852.07,-336 852.07,-348 852.07,-348 852.07,-354 846.07,-360 840.07,-360"/>
 
-<text xml:space="preserve" text-anchor="start" x="723.85" y="-312.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">완료 목표 다시 보기</text>
+<text xml:space="preserve" text-anchor="start" x="723.85" y="-342.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">완료 목표 다시 보기</text>
 
-<text xml:space="preserve" text-anchor="start" x="733.22" y="-302.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부 · 끝낸 목표 체크</text>
+<text xml:space="preserve" text-anchor="start" x="733.22" y="-332.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부 · 끝낸 목표 체크</text>
 
 </g>
 
 
 
-<g id="edge37" class="edge">
+<g id="edge39" class="edge">
 
 <title>홈&#45;&gt;다시보기</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-272.36C559.48,-281.29 638.16,-292.37 696.21,-300.54"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M496,-302.36C559.48,-311.29 638.16,-322.37 696.21,-330.54"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="695.54,-302.92 702.82,-301.47 696.23,-298.07 695.54,-302.92"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="695.54,-332.92 702.82,-331.47 696.23,-328.07 695.54,-332.92"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-297.39" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">목표 창 목록 버튼</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-327.39" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">목표 창 목록 버튼</text>
 
 </g>
 
@@ -1104,11 +1105,11 @@ html { scroll-behavior: smooth; }
 
 <title>코드kb</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1142.01,-238C1142.01,-238 972.57,-238 972.57,-238 966.57,-238 960.57,-232 960.57,-226 960.57,-226 960.57,-214 960.57,-214 960.57,-208 966.57,-202 972.57,-202 972.57,-202 1142.01,-202 1142.01,-202 1148.01,-202 1154.01,-208 1154.01,-214 1154.01,-214 1154.01,-226 1154.01,-226 1154.01,-232 1148.01,-238 1142.01,-238"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1142.01,-268C1142.01,-268 972.57,-268 972.57,-268 966.57,-268 960.57,-262 960.57,-256 960.57,-256 960.57,-244 960.57,-244 960.57,-238 966.57,-232 972.57,-232 972.57,-232 1142.01,-232 1142.01,-232 1148.01,-232 1154.01,-238 1154.01,-244 1154.01,-244 1154.01,-256 1154.01,-256 1154.01,-262 1148.01,-268 1142.01,-268"/>
 
-<text xml:space="preserve" text-anchor="start" x="1025.04" y="-220.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">코드 키보드</text>
+<text xml:space="preserve" text-anchor="start" x="1025.04" y="-250.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">코드 키보드</text>
 
-<text xml:space="preserve" text-anchor="start" x="979.29" y="-210.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸 누르면 · 숫자 + 영문 + ⌫</text>
+<text xml:space="preserve" text-anchor="start" x="979.29" y="-240.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸 누르면 · 숫자 + 영문 + ⌫</text>
 
 </g>
 
@@ -1118,11 +1119,11 @@ html { scroll-behavior: smooth; }
 
 <title>힌트앱&#45;&gt;코드kb</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M867.91,-243.15C894.57,-239.87 924.09,-236.24 951.7,-232.85"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M867.91,-273.15C894.57,-269.87 924.09,-266.24 951.7,-262.85"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="951.75,-235.31 958.4,-232.03 951.16,-230.45 951.75,-235.31"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="951.75,-265.31 958.4,-262.03 951.16,-260.45 951.75,-265.31"/>
 
-<text xml:space="preserve" text-anchor="middle" x="928.07" y="-241.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
+<text xml:space="preserve" text-anchor="middle" x="928.07" y="-271.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
 
 </g>
 
@@ -1132,11 +1133,11 @@ html { scroll-behavior: smooth; }
 
 <title>스토리앱&#45;&gt;코드kb</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M859.01,-198.16C886.18,-199.32 916.74,-201.08 944.57,-203.75 946.95,-203.98 949.35,-204.22 951.78,-204.48"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M859.01,-228.16C886.18,-229.32 916.74,-231.08 944.57,-233.75 946.95,-233.98 949.35,-234.22 951.78,-234.48"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="951.04,-206.86 958.27,-205.2 951.58,-201.99 951.04,-206.86"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="951.04,-236.86 958.27,-235.2 951.58,-231.99 951.04,-236.86"/>
 
-<text xml:space="preserve" text-anchor="middle" x="928.07" y="-208.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
+<text xml:space="preserve" text-anchor="middle" x="928.07" y="-238.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
 
 </g>
 
@@ -1146,11 +1147,11 @@ html { scroll-behavior: smooth; }
 
 <title>판별</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1444.96,-251.05C1444.96,-251.05 1308.75,-222.47 1308.75,-222.47 1302.88,-221.23 1302.88,-218.77 1308.75,-217.53 1308.75,-217.53 1444.96,-188.95 1444.96,-188.95 1450.83,-187.71 1462.57,-187.71 1468.44,-188.95 1468.44,-188.95 1604.65,-217.53 1604.65,-217.53 1610.52,-218.77 1610.52,-221.23 1604.65,-222.47 1604.65,-222.47 1468.44,-251.05 1468.44,-251.05 1462.57,-252.29 1450.83,-252.29 1444.96,-251.05"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1444.96,-281.05C1444.96,-281.05 1308.75,-252.47 1308.75,-252.47 1302.88,-251.23 1302.88,-248.77 1308.75,-247.53 1308.75,-247.53 1444.96,-218.95 1444.96,-218.95 1450.83,-217.71 1462.57,-217.71 1468.44,-218.95 1468.44,-218.95 1604.65,-247.53 1604.65,-247.53 1610.52,-248.77 1610.52,-251.23 1604.65,-252.47 1604.65,-252.47 1468.44,-281.05 1468.44,-281.05 1462.57,-282.29 1450.83,-282.29 1444.96,-281.05"/>
 
-<text xml:space="preserve" text-anchor="start" x="1430.45" y="-220.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">코드 판별</text>
+<text xml:space="preserve" text-anchor="start" x="1430.45" y="-250.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">코드 판별</text>
 
-<text xml:space="preserve" text-anchor="start" x="1395.57" y="-210.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">지금 부와 앱에 맞는 코드만</text>
+<text xml:space="preserve" text-anchor="start" x="1395.57" y="-240.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">지금 부와 앱에 맞는 코드만</text>
 
 </g>
 
@@ -1160,11 +1161,11 @@ html { scroll-behavior: smooth; }
 
 <title>코드kb&#45;&gt;판별</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1154.49,-220C1193.77,-220 1240.4,-220 1285.1,-220"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1154.49,-250C1193.77,-250 1240.4,-250 1285.1,-250"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1284.9,-222.45 1291.9,-220 1284.9,-217.55 1284.9,-222.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1284.9,-252.45 1291.9,-250 1284.9,-247.55 1284.9,-252.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="1225.51" y="-224.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">힌트 보기 · 진행도 · 확인</text>
+<text xml:space="preserve" text-anchor="middle" x="1225.51" y="-254.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">힌트 보기 · 진행도 · 확인</text>
 
 </g>
 
@@ -1174,9 +1175,9 @@ html { scroll-behavior: smooth; }
 
 <title>r없는</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1765.95,-442C1765.95,-442 1700.01,-442 1700.01,-442 1694.01,-442 1688.01,-436 1688.01,-430 1688.01,-430 1688.01,-418 1688.01,-418 1688.01,-412 1694.01,-406 1700.01,-406 1700.01,-406 1765.95,-406 1765.95,-406 1771.95,-406 1777.95,-412 1777.95,-418 1777.95,-418 1777.95,-430 1777.95,-430 1777.95,-436 1771.95,-442 1765.95,-442"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1765.95,-500C1765.95,-500 1700.01,-500 1700.01,-500 1694.01,-500 1688.01,-494 1688.01,-488 1688.01,-488 1688.01,-476 1688.01,-476 1688.01,-470 1694.01,-464 1700.01,-464 1700.01,-464 1765.95,-464 1765.95,-464 1771.95,-464 1777.95,-470 1777.95,-476 1777.95,-476 1777.95,-488 1777.95,-488 1777.95,-494 1771.95,-500 1765.95,-500"/>
 
-<text xml:space="preserve" text-anchor="start" x="1706.73" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">없는 코드</text>
+<text xml:space="preserve" text-anchor="start" x="1706.73" y="-479.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">없는 코드</text>
 
 </g>
 
@@ -1186,9 +1187,9 @@ html { scroll-behavior: smooth; }
 
 <title>판별&#45;&gt;r없는</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1482.22,-248.67C1516.24,-286.85 1581.32,-354.31 1649.39,-395 1658.65,-400.54 1669.13,-405.23 1679.44,-409.13"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1478.21,-279.4C1510.09,-323.08 1575.6,-405.09 1649.39,-453 1658.54,-458.94 1669.06,-463.83 1679.45,-467.79"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1678.52,-411.4 1685.94,-411.47 1680.18,-406.79 1678.52,-411.4"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1678.61,-470.09 1686.03,-470.16 1680.27,-465.48 1678.61,-470.09"/>
 
 </g>
 
@@ -1198,11 +1199,11 @@ html { scroll-behavior: smooth; }
 
 <title>r설명</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1802.7,-384C1802.7,-384 1663.26,-384 1663.26,-384 1657.26,-384 1651.26,-378 1651.26,-372 1651.26,-372 1651.26,-360 1651.26,-360 1651.26,-354 1657.26,-348 1663.26,-348 1663.26,-348 1802.7,-348 1802.7,-348 1808.7,-348 1814.7,-354 1814.7,-360 1814.7,-360 1814.7,-372 1814.7,-372 1814.7,-378 1808.7,-384 1802.7,-384"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1802.7,-442C1802.7,-442 1663.26,-442 1663.26,-442 1657.26,-442 1651.26,-436 1651.26,-430 1651.26,-430 1651.26,-418 1651.26,-418 1651.26,-412 1657.26,-406 1663.26,-406 1663.26,-406 1802.7,-406 1802.7,-406 1808.7,-406 1814.7,-412 1814.7,-418 1814.7,-418 1814.7,-430 1814.7,-430 1814.7,-436 1808.7,-442 1802.7,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="1690.98" y="-366.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">가짜 코드 0000</text>
+<text xml:space="preserve" text-anchor="start" x="1690.98" y="-424.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">가짜 코드 0000</text>
 
-<text xml:space="preserve" text-anchor="start" x="1669.98" y="-356.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">설명용 · Start 누르기 전에만</text>
+<text xml:space="preserve" text-anchor="start" x="1669.98" y="-414.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">설명용 · Start 누르기 전에만</text>
 
 </g>
 
@@ -1212,9 +1213,9 @@ html { scroll-behavior: smooth; }
 
 <title>판별&#45;&gt;r설명</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1494.93,-245.98C1532.62,-271.49 1593.2,-310.35 1649.39,-337 1654.77,-339.55 1660.44,-342 1666.18,-344.32"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1487.86,-277.58C1523.99,-309.45 1587.44,-361.75 1649.39,-395 1654.05,-397.5 1658.96,-399.86 1663.98,-402.06"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1664.94,-346.47 1672.35,-346.74 1666.73,-341.9 1664.94,-346.47"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1662.86,-404.24 1670.26,-404.7 1664.75,-399.73 1662.86,-404.24"/>
 
 </g>
 
@@ -1224,11 +1225,11 @@ html { scroll-behavior: smooth; }
 
 <title>r1부</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1779.45,-326C1779.45,-326 1686.51,-326 1686.51,-326 1680.51,-326 1674.51,-320 1674.51,-314 1674.51,-314 1674.51,-302 1674.51,-302 1674.51,-296 1680.51,-290 1686.51,-290 1686.51,-290 1779.45,-290 1779.45,-290 1785.45,-290 1791.45,-296 1791.45,-302 1791.45,-302 1791.45,-314 1791.45,-314 1791.45,-320 1785.45,-326 1779.45,-326"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1779.45,-384C1779.45,-384 1686.51,-384 1686.51,-384 1680.51,-384 1674.51,-378 1674.51,-372 1674.51,-372 1674.51,-360 1674.51,-360 1674.51,-354 1680.51,-348 1686.51,-348 1686.51,-348 1779.45,-348 1779.45,-348 1785.45,-348 1791.45,-354 1791.45,-360 1791.45,-360 1791.45,-372 1791.45,-372 1791.45,-378 1785.45,-384 1779.45,-384"/>
 
-<text xml:space="preserve" text-anchor="start" x="1709.36" y="-308.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">1부 코드</text>
+<text xml:space="preserve" text-anchor="start" x="1709.36" y="-366.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">1부 코드</text>
 
-<text xml:space="preserve" text-anchor="start" x="1693.23" y="-298.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">비아 등장 전 문제</text>
+<text xml:space="preserve" text-anchor="start" x="1693.23" y="-356.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">비아 등장 전 문제</text>
 
 </g>
 
@@ -1238,9 +1239,9 @@ html { scroll-behavior: smooth; }
 
 <title>판별&#45;&gt;r1부</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1521.66,-240.52C1564.94,-254.41 1621.96,-272.7 1665.72,-286.74"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1506.43,-273.56C1544.87,-291.79 1600.04,-317.18 1649.39,-337 1655.54,-339.47 1661.99,-341.94 1668.46,-344.34"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1664.86,-289.04 1672.27,-288.84 1666.36,-284.37 1664.86,-289.04"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1667.52,-346.6 1674.94,-346.7 1669.2,-342 1667.52,-346.6"/>
 
 </g>
 
@@ -1250,9 +1251,9 @@ html { scroll-behavior: smooth; }
 
 <title>r2부전</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1804.58,-268C1804.58,-268 1661.39,-268 1661.39,-268 1655.39,-268 1649.39,-262 1649.39,-256 1649.39,-256 1649.39,-244 1649.39,-244 1649.39,-238 1655.39,-232 1661.39,-232 1661.39,-232 1804.58,-232 1804.58,-232 1810.58,-232 1816.58,-238 1816.58,-244 1816.58,-244 1816.58,-256 1816.58,-256 1816.58,-262 1810.58,-268 1804.58,-268"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1804.58,-326C1804.58,-326 1661.39,-326 1661.39,-326 1655.39,-326 1649.39,-320 1649.39,-314 1649.39,-314 1649.39,-302 1649.39,-302 1649.39,-296 1655.39,-290 1661.39,-290 1661.39,-290 1804.58,-290 1804.58,-290 1810.58,-290 1816.58,-296 1816.58,-302 1816.58,-302 1816.58,-314 1816.58,-314 1816.58,-320 1810.58,-326 1804.58,-326"/>
 
-<text xml:space="preserve" text-anchor="start" x="1668.11" y="-247.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">2부 코드 (비아 등장 전)</text>
+<text xml:space="preserve" text-anchor="start" x="1668.11" y="-305.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">2부 코드 (비아 등장 전)</text>
 
 </g>
 
@@ -1262,15 +1263,39 @@ html { scroll-behavior: smooth; }
 
 <title>판별&#45;&gt;r2부전</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1564.14,-231.64C1589.33,-234.4 1615.97,-237.31 1640.44,-239.99"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1538.14,-267.01C1570.35,-273.82 1607.61,-281.7 1640.82,-288.72"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1639.96,-242.4 1647.19,-240.73 1640.49,-237.53 1639.96,-242.4"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1640.03,-291.06 1647.39,-290.11 1641.05,-286.27 1640.03,-291.06"/>
 
 </g>
 
 
 
 <g id="node20" class="node">
+
+<title>r1부후</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1804.58,-268C1804.58,-268 1661.39,-268 1661.39,-268 1655.39,-268 1649.39,-262 1649.39,-256 1649.39,-256 1649.39,-244 1649.39,-244 1649.39,-238 1655.39,-232 1661.39,-232 1661.39,-232 1804.58,-232 1804.58,-232 1810.58,-232 1816.58,-238 1816.58,-244 1816.58,-244 1816.58,-256 1816.58,-256 1816.58,-262 1810.58,-268 1804.58,-268"/>
+
+<text xml:space="preserve" text-anchor="start" x="1668.11" y="-247.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">1부 코드 (비아 등장 뒤)</text>
+
+</g>
+
+
+
+<g id="edge20" class="edge">
+
+<title>판별&#45;&gt;r1부후</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1619.63,-250C1626.64,-250 1633.57,-250 1640.33,-250"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1639.98,-252.45 1646.98,-250 1639.98,-247.55 1639.98,-252.45"/>
+
+</g>
+
+
+
+<g id="node22" class="node">
 
 <title>r2부</title>
 
@@ -1284,19 +1309,19 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge20" class="edge">
+<g id="edge22" class="edge">
 
 <title>판별&#45;&gt;r2부</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1566.5,-208.89C1591.92,-206.3 1618.7,-203.56 1643.13,-201.07"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1538.14,-232.99C1571.07,-226.03 1609.3,-217.94 1643.06,-210.8"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1643.15,-203.53 1649.87,-200.38 1642.65,-198.66 1643.15,-203.53"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1643.43,-213.23 1649.77,-209.39 1642.41,-208.44 1643.43,-213.23"/>
 
 </g>
 
 
 
-<g id="node25" class="node">
+<g id="node27" class="node">
 
 <title>r16</title>
 
@@ -1310,19 +1335,19 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge25" class="edge">
+<g id="edge27" class="edge">
 
 <title>판별&#45;&gt;r16</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1522.7,-199.62C1567.35,-185.62 1626.26,-167.15 1670.2,-153.37"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1506.43,-226.44C1544.87,-208.21 1600.04,-182.82 1649.39,-163 1656.08,-160.31 1663.13,-157.63 1670.17,-155.03"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1670.82,-155.75 1676.77,-151.31 1669.35,-151.07 1670.82,-155.75"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1670.96,-157.35 1676.7,-152.66 1669.29,-152.75 1670.96,-157.35"/>
 
 </g>
 
 
 
-<g id="node28" class="node">
+<g id="node30" class="node">
 
 <title>r스토리</title>
 
@@ -1336,19 +1361,19 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge28" class="edge">
+<g id="edge30" class="edge">
 
 <title>판별&#45;&gt;r스토리</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1495.71,-194.04C1533.5,-169 1593.71,-131.15 1649.39,-105 1654.78,-102.47 1660.46,-100.03 1666.2,-97.72"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1487.86,-222.42C1523.99,-190.55 1587.44,-138.25 1649.39,-105 1654.05,-102.5 1658.96,-100.14 1663.98,-97.94"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1666.74,-100.14 1672.37,-95.31 1664.96,-95.58 1666.74,-100.14"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1664.75,-100.27 1670.26,-95.3 1662.86,-95.76 1664.75,-100.27"/>
 
 </g>
 
 
 
-<g id="node31" class="node">
+<g id="node33" class="node">
 
 <title>r진행도</title>
 
@@ -1362,13 +1387,13 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge31" class="edge">
+<g id="edge33" class="edge">
 
 <title>판별&#45;&gt;r진행도</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1482.58,-191.36C1516.76,-153.57 1581.75,-87.17 1649.39,-47 1656.64,-42.69 1664.63,-38.89 1672.7,-35.58"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1478.21,-220.6C1510.09,-176.92 1575.6,-94.91 1649.39,-47 1656.56,-42.34 1664.57,-38.34 1672.7,-34.91"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1673.45,-37.91 1679.07,-33.08 1671.66,-33.35 1673.45,-37.91"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1673.55,-37.21 1679.15,-32.35 1671.74,-32.66 1673.55,-37.21"/>
 
 </g>
 
@@ -1378,11 +1403,11 @@ html { scroll-behavior: smooth; }
 
 <title>r없는_0</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2011.89,-442C2011.89,-442 1872.45,-442 1872.45,-442 1866.45,-442 1860.45,-436 1860.45,-430 1860.45,-430 1860.45,-418 1860.45,-418 1860.45,-412 1866.45,-406 1872.45,-406 1872.45,-406 2011.89,-406 2011.89,-406 2017.89,-406 2023.89,-412 2023.89,-418 2023.89,-418 2023.89,-430 2023.89,-430 2023.89,-436 2017.89,-442 2011.89,-442"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2011.89,-500C2011.89,-500 1872.45,-500 1872.45,-500 1866.45,-500 1860.45,-494 1860.45,-488 1860.45,-488 1860.45,-476 1860.45,-476 1860.45,-470 1866.45,-464 1872.45,-464 1872.45,-464 2011.89,-464 2011.89,-464 2017.89,-464 2023.89,-470 2023.89,-476 2023.89,-476 2023.89,-488 2023.89,-488 2023.89,-494 2017.89,-500 2011.89,-500"/>
 
-<text xml:space="preserve" text-anchor="start" x="1915.92" y="-424.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">반응 없음</text>
+<text xml:space="preserve" text-anchor="start" x="1915.92" y="-482.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">반응 없음</text>
 
-<text xml:space="preserve" text-anchor="start" x="1879.17" y="-414.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">펼쳐 둔 앞 코드 힌트만 걷힘</text>
+<text xml:space="preserve" text-anchor="start" x="1879.17" y="-472.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">펼쳐 둔 앞 코드 힌트만 걷힘</text>
 
 </g>
 
@@ -1392,9 +1417,9 @@ html { scroll-behavior: smooth; }
 
 <title>r없는&#45;&gt;r없는_0</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1778.43,-424C1799.8,-424 1826.21,-424 1851.5,-424"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1778.43,-482C1799.8,-482 1826.21,-482 1851.5,-482"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1851.21,-426.45 1858.21,-424 1851.21,-421.55 1851.21,-426.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1851.21,-484.45 1858.21,-482 1851.21,-479.55 1851.21,-484.45"/>
 
 </g>
 
@@ -1404,11 +1429,11 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_0</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1993.52,-384C1993.52,-384 1890.83,-384 1890.83,-384 1884.83,-384 1878.83,-378 1878.83,-372 1878.83,-372 1878.83,-360 1878.83,-360 1878.83,-354 1884.83,-348 1890.83,-348 1890.83,-348 1993.52,-348 1993.52,-348 1999.52,-348 2005.52,-354 2005.52,-360 2005.52,-360 2005.52,-372 2005.52,-372 2005.52,-378 1999.52,-384 1993.52,-384"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1993.52,-442C1993.52,-442 1890.83,-442 1890.83,-442 1884.83,-442 1878.83,-436 1878.83,-430 1878.83,-430 1878.83,-418 1878.83,-418 1878.83,-412 1884.83,-406 1890.83,-406 1890.83,-406 1993.52,-406 1993.52,-406 1999.52,-406 2005.52,-412 2005.52,-418 2005.52,-418 2005.52,-430 2005.52,-430 2005.52,-436 1999.52,-442 1993.52,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="1924.55" y="-366.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 1</text>
+<text xml:space="preserve" text-anchor="start" x="1924.55" y="-424.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 1</text>
 
-<text xml:space="preserve" text-anchor="start" x="1897.55" y="-356.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">버튼 줄 아래로 펼침</text>
+<text xml:space="preserve" text-anchor="start" x="1897.55" y="-414.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">버튼 줄 아래로 펼침</text>
 
 </g>
 
@@ -1418,9 +1443,9 @@ html { scroll-behavior: smooth; }
 
 <title>r설명&#45;&gt;r설명_0</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1815.28,-366C1833.3,-366 1852.27,-366 1869.86,-366"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1815.28,-424C1833.3,-424 1852.27,-424 1869.86,-424"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1869.56,-368.45 1876.56,-366 1869.56,-363.55 1869.56,-368.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1869.56,-426.45 1876.56,-424 1869.56,-421.55 1869.56,-426.45"/>
 
 </g>
 
@@ -1430,9 +1455,9 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_1</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2183.33,-384C2183.33,-384 2134.64,-384 2134.64,-384 2128.64,-384 2122.64,-378 2122.64,-372 2122.64,-372 2122.64,-360 2122.64,-360 2122.64,-354 2128.64,-348 2134.64,-348 2134.64,-348 2183.33,-348 2183.33,-348 2189.33,-348 2195.33,-354 2195.33,-360 2195.33,-360 2195.33,-372 2195.33,-372 2195.33,-378 2189.33,-384 2183.33,-384"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2183.33,-442C2183.33,-442 2134.64,-442 2134.64,-442 2128.64,-442 2122.64,-436 2122.64,-430 2122.64,-430 2122.64,-418 2122.64,-418 2122.64,-412 2128.64,-406 2134.64,-406 2134.64,-406 2183.33,-406 2183.33,-406 2189.33,-406 2195.33,-412 2195.33,-418 2195.33,-418 2195.33,-430 2195.33,-430 2195.33,-436 2189.33,-442 2183.33,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="2141.36" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
+<text xml:space="preserve" text-anchor="start" x="2141.36" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
 
 </g>
 
@@ -1441,6 +1466,110 @@ html { scroll-behavior: smooth; }
 <g id="edge10" class="edge">
 
 <title>r설명_0&#45;&gt;r설명_1</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2006.18,-424C2040.69,-424 2082.63,-424 2113.67,-424"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2113.31,-426.45 2120.31,-424 2113.31,-421.55 2113.31,-426.45"/>
+
+<text xml:space="preserve" text-anchor="middle" x="2072.14" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+
+</g>
+
+
+
+<g id="node11" class="node">
+
+<title>r설명_2</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2343.9,-442C2343.9,-442 2295.21,-442 2295.21,-442 2289.21,-442 2283.21,-436 2283.21,-430 2283.21,-430 2283.21,-418 2283.21,-418 2283.21,-412 2289.21,-406 2295.21,-406 2295.21,-406 2343.9,-406 2343.9,-406 2349.9,-406 2355.9,-412 2355.9,-418 2355.9,-418 2355.9,-430 2355.9,-430 2355.9,-436 2349.9,-442 2343.9,-442"/>
+
+<text xml:space="preserve" text-anchor="start" x="2301.93" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
+
+</g>
+
+
+
+<g id="edge11" class="edge">
+
+<title>r설명_1&#45;&gt;r설명_2</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2195.97,-424C2219.08,-424 2249.28,-424 2273.91,-424"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2273.9,-426.45 2280.9,-424 2273.9,-421.55 2273.9,-426.45"/>
+
+<text xml:space="preserve" text-anchor="middle" x="2245.83" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+
+</g>
+
+
+
+<g id="node12" class="node">
+
+<title>r설명_3</title>
+
+<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2480.09,-442C2480.09,-442 2442.65,-442 2442.65,-442 2436.65,-442 2430.65,-436 2430.65,-430 2430.65,-430 2430.65,-418 2430.65,-418 2430.65,-412 2436.65,-406 2442.65,-406 2442.65,-406 2480.09,-406 2480.09,-406 2486.09,-406 2492.09,-412 2492.09,-418 2492.09,-418 2492.09,-430 2492.09,-430 2492.09,-436 2486.09,-442 2480.09,-442"/>
+
+<text xml:space="preserve" text-anchor="start" x="2449.37" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
+
+</g>
+
+
+
+<g id="edge12" class="edge">
+
+<title>r설명_2&#45;&gt;r설명_3</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2356.56,-424C2376.44,-424 2401.14,-424 2421.46,-424"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2421.34,-426.45 2428.34,-424 2421.34,-421.55 2421.34,-426.45"/>
+
+<text xml:space="preserve" text-anchor="middle" x="2393.27" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답 보기</text>
+
+</g>
+
+
+
+<g id="node14" class="node">
+
+<title>r1부_0</title>
+
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M1993.52,-384C1993.52,-384 1890.83,-384 1890.83,-384 1884.83,-384 1878.83,-378 1878.83,-372 1878.83,-372 1878.83,-360 1878.83,-360 1878.83,-354 1884.83,-348 1890.83,-348 1890.83,-348 1993.52,-348 1993.52,-348 1999.52,-348 2005.52,-354 2005.52,-360 2005.52,-360 2005.52,-372 2005.52,-372 2005.52,-378 1999.52,-384 1993.52,-384"/>
+
+<text xml:space="preserve" text-anchor="start" x="1924.55" y="-366.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 1</text>
+
+<text xml:space="preserve" text-anchor="start" x="1897.55" y="-356.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">버튼 줄 아래로 펼침</text>
+
+</g>
+
+
+
+<g id="edge14" class="edge">
+
+<title>r1부&#45;&gt;r1부_0</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1791.97,-366C1816.17,-366 1844.52,-366 1869.97,-366"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1869.67,-368.45 1876.67,-366 1869.67,-363.55 1869.67,-368.45"/>
+
+</g>
+
+
+
+<g id="node15" class="node">
+
+<title>r1부_1</title>
+
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2183.33,-384C2183.33,-384 2134.64,-384 2134.64,-384 2128.64,-384 2122.64,-378 2122.64,-372 2122.64,-372 2122.64,-360 2122.64,-360 2122.64,-354 2128.64,-348 2134.64,-348 2134.64,-348 2183.33,-348 2183.33,-348 2189.33,-348 2195.33,-354 2195.33,-360 2195.33,-360 2195.33,-372 2195.33,-372 2195.33,-378 2189.33,-384 2183.33,-384"/>
+
+<text xml:space="preserve" text-anchor="start" x="2141.36" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
+
+</g>
+
+
+
+<g id="edge15" class="edge">
+
+<title>r1부_0&#45;&gt;r1부_1</title>
 
 <path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2006.18,-366C2040.69,-366 2082.63,-366 2113.67,-366"/>
 
@@ -1452,11 +1581,11 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node11" class="node">
+<g id="node16" class="node">
 
-<title>r설명_2</title>
+<title>r1부_2</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2343.9,-384C2343.9,-384 2295.21,-384 2295.21,-384 2289.21,-384 2283.21,-378 2283.21,-372 2283.21,-372 2283.21,-360 2283.21,-360 2283.21,-354 2289.21,-348 2295.21,-348 2295.21,-348 2343.9,-348 2343.9,-348 2349.9,-348 2355.9,-354 2355.9,-360 2355.9,-360 2355.9,-372 2355.9,-372 2355.9,-378 2349.9,-384 2343.9,-384"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2343.9,-384C2343.9,-384 2295.21,-384 2295.21,-384 2289.21,-384 2283.21,-378 2283.21,-372 2283.21,-372 2283.21,-360 2283.21,-360 2283.21,-354 2289.21,-348 2295.21,-348 2295.21,-348 2343.9,-348 2343.9,-348 2349.9,-348 2355.9,-354 2355.9,-360 2355.9,-360 2355.9,-372 2355.9,-372 2355.9,-378 2349.9,-384 2343.9,-384"/>
 
 <text xml:space="preserve" text-anchor="start" x="2301.93" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
 
@@ -1464,9 +1593,9 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge11" class="edge">
+<g id="edge16" class="edge">
 
-<title>r설명_1&#45;&gt;r설명_2</title>
+<title>r1부_1&#45;&gt;r1부_2</title>
 
 <path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2195.97,-366C2219.08,-366 2249.28,-366 2273.91,-366"/>
 
@@ -1478,9 +1607,9 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node12" class="node">
+<g id="node17" class="node">
 
-<title>r설명_3</title>
+<title>r1부_3</title>
 
 <path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2480.09,-384C2480.09,-384 2442.65,-384 2442.65,-384 2436.65,-384 2430.65,-378 2430.65,-372 2430.65,-372 2430.65,-360 2430.65,-360 2430.65,-354 2436.65,-348 2442.65,-348 2442.65,-348 2480.09,-348 2480.09,-348 2486.09,-348 2492.09,-354 2492.09,-360 2492.09,-360 2492.09,-372 2492.09,-372 2492.09,-378 2486.09,-384 2480.09,-384"/>
 
@@ -1490,9 +1619,9 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge12" class="edge">
+<g id="edge17" class="edge">
 
-<title>r설명_2&#45;&gt;r설명_3</title>
+<title>r1부_2&#45;&gt;r1부_3</title>
 
 <path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2356.56,-366C2376.44,-366 2401.14,-366 2421.46,-366"/>
 
@@ -1504,119 +1633,15 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node14" class="node">
-
-<title>r1부_0</title>
-
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M1993.52,-326C1993.52,-326 1890.83,-326 1890.83,-326 1884.83,-326 1878.83,-320 1878.83,-314 1878.83,-314 1878.83,-302 1878.83,-302 1878.83,-296 1884.83,-290 1890.83,-290 1890.83,-290 1993.52,-290 1993.52,-290 1999.52,-290 2005.52,-296 2005.52,-302 2005.52,-302 2005.52,-314 2005.52,-314 2005.52,-320 1999.52,-326 1993.52,-326"/>
-
-<text xml:space="preserve" text-anchor="start" x="1924.55" y="-308.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 1</text>
-
-<text xml:space="preserve" text-anchor="start" x="1897.55" y="-298.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">버튼 줄 아래로 펼침</text>
-
-</g>
-
-
-
-<g id="edge14" class="edge">
-
-<title>r1부&#45;&gt;r1부_0</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1791.97,-308C1816.17,-308 1844.52,-308 1869.97,-308"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1869.67,-310.45 1876.67,-308 1869.67,-305.55 1869.67,-310.45"/>
-
-</g>
-
-
-
-<g id="node15" class="node">
-
-<title>r1부_1</title>
-
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2183.33,-326C2183.33,-326 2134.64,-326 2134.64,-326 2128.64,-326 2122.64,-320 2122.64,-314 2122.64,-314 2122.64,-302 2122.64,-302 2122.64,-296 2128.64,-290 2134.64,-290 2134.64,-290 2183.33,-290 2183.33,-290 2189.33,-290 2195.33,-296 2195.33,-302 2195.33,-302 2195.33,-314 2195.33,-314 2195.33,-320 2189.33,-326 2183.33,-326"/>
-
-<text xml:space="preserve" text-anchor="start" x="2141.36" y="-305.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
-
-</g>
-
-
-
-<g id="edge15" class="edge">
-
-<title>r1부_0&#45;&gt;r1부_1</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2006.18,-308C2040.69,-308 2082.63,-308 2113.67,-308"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2113.31,-310.45 2120.31,-308 2113.31,-305.55 2113.31,-310.45"/>
-
-<text xml:space="preserve" text-anchor="middle" x="2072.14" y="-312.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
-
-</g>
-
-
-
-<g id="node16" class="node">
-
-<title>r1부_2</title>
-
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2343.9,-326C2343.9,-326 2295.21,-326 2295.21,-326 2289.21,-326 2283.21,-320 2283.21,-314 2283.21,-314 2283.21,-302 2283.21,-302 2283.21,-296 2289.21,-290 2295.21,-290 2295.21,-290 2343.9,-290 2343.9,-290 2349.9,-290 2355.9,-296 2355.9,-302 2355.9,-302 2355.9,-314 2355.9,-314 2355.9,-320 2349.9,-326 2343.9,-326"/>
-
-<text xml:space="preserve" text-anchor="start" x="2301.93" y="-305.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
-
-</g>
-
-
-
-<g id="edge16" class="edge">
-
-<title>r1부_1&#45;&gt;r1부_2</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2195.97,-308C2219.08,-308 2249.28,-308 2273.91,-308"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2273.9,-310.45 2280.9,-308 2273.9,-305.55 2273.9,-310.45"/>
-
-<text xml:space="preserve" text-anchor="middle" x="2245.83" y="-312.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
-
-</g>
-
-
-
-<g id="node17" class="node">
-
-<title>r1부_3</title>
-
-<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2480.09,-326C2480.09,-326 2442.65,-326 2442.65,-326 2436.65,-326 2430.65,-320 2430.65,-314 2430.65,-314 2430.65,-302 2430.65,-302 2430.65,-296 2436.65,-290 2442.65,-290 2442.65,-290 2480.09,-290 2480.09,-290 2486.09,-290 2492.09,-296 2492.09,-302 2492.09,-302 2492.09,-314 2492.09,-314 2492.09,-320 2486.09,-326 2480.09,-326"/>
-
-<text xml:space="preserve" text-anchor="start" x="2449.37" y="-305.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
-
-</g>
-
-
-
-<g id="edge17" class="edge">
-
-<title>r1부_2&#45;&gt;r1부_3</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2356.56,-308C2376.44,-308 2401.14,-308 2421.46,-308"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2421.34,-310.45 2428.34,-308 2421.34,-305.55 2421.34,-310.45"/>
-
-<text xml:space="preserve" text-anchor="middle" x="2393.27" y="-312.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답 보기</text>
-
-</g>
-
-
-
 <g id="node19" class="node">
 
 <title>r2부전_0</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1996.14,-268C1996.14,-268 1888.2,-268 1888.2,-268 1882.2,-268 1876.2,-262 1876.2,-256 1876.2,-256 1876.2,-244 1876.2,-244 1876.2,-238 1882.2,-232 1888.2,-232 1888.2,-232 1996.14,-232 1996.14,-232 2002.14,-232 2008.14,-238 2008.14,-244 2008.14,-244 2008.14,-256 2008.14,-256 2008.14,-262 2002.14,-268 1996.14,-268"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1996.14,-326C1996.14,-326 1888.2,-326 1888.2,-326 1882.2,-326 1876.2,-320 1876.2,-314 1876.2,-314 1876.2,-302 1876.2,-302 1876.2,-296 1882.2,-290 1888.2,-290 1888.2,-290 1996.14,-290 1996.14,-290 2002.14,-290 2008.14,-296 2008.14,-302 2008.14,-302 2008.14,-314 2008.14,-314 2008.14,-320 2002.14,-326 1996.14,-326"/>
 
-<text xml:space="preserve" text-anchor="start" x="1915.92" y="-250.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">반응 없음</text>
+<text xml:space="preserve" text-anchor="start" x="1915.92" y="-308.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">반응 없음</text>
 
-<text xml:space="preserve" text-anchor="start" x="1894.92" y="-240.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부엔 비아 힌트 없음</text>
+<text xml:space="preserve" text-anchor="start" x="1894.92" y="-298.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1부엔 비아 힌트 없음</text>
 
 </g>
 
@@ -1626,15 +1651,41 @@ html { scroll-behavior: smooth; }
 
 <title>r2부전&#45;&gt;r2부전_0</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1817.06,-250C1833.65,-250 1850.97,-250 1867.22,-250"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1817.06,-308C1833.65,-308 1850.97,-308 1867.22,-308"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1866.8,-252.45 1873.8,-250 1866.8,-247.55 1866.8,-252.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1866.8,-310.45 1873.8,-308 1866.8,-305.55 1866.8,-310.45"/>
 
 </g>
 
 
 
 <g id="node21" class="node">
+
+<title>r1부후_0</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1987.14,-268C1987.14,-268 1897.2,-268 1897.2,-268 1891.2,-268 1885.2,-262 1885.2,-256 1885.2,-256 1885.2,-244 1885.2,-244 1885.2,-238 1891.2,-232 1897.2,-232 1897.2,-232 1987.14,-232 1987.14,-232 1993.14,-232 1999.14,-238 1999.14,-244 1999.14,-244 1999.14,-256 1999.14,-256 1999.14,-262 1993.14,-268 1987.14,-268"/>
+
+<text xml:space="preserve" text-anchor="start" x="1915.92" y="-250.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">반응 없음</text>
+
+<text xml:space="preserve" text-anchor="start" x="1903.92" y="-240.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">2부엔 2부 힌트만</text>
+
+</g>
+
+
+
+<g id="edge21" class="edge">
+
+<title>r1부후&#45;&gt;r1부후_0</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M1817.06,-250C1836.7,-250 1857.35,-250 1876.06,-250"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="1875.97,-252.45 1882.97,-250 1875.97,-247.55 1875.97,-252.45"/>
+
+</g>
+
+
+
+<g id="node23" class="node">
 
 <title>r2부_0</title>
 
@@ -1648,7 +1699,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge21" class="edge">
+<g id="edge23" class="edge">
 
 <title>r2부&#45;&gt;r2부_0</title>
 
@@ -1660,7 +1711,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node22" class="node">
+<g id="node24" class="node">
 
 <title>r2부_1</title>
 
@@ -1672,7 +1723,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge22" class="edge">
+<g id="edge24" class="edge">
 
 <title>r2부_0&#45;&gt;r2부_1</title>
 
@@ -1686,7 +1737,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node23" class="node">
+<g id="node25" class="node">
 
 <title>r2부_2</title>
 
@@ -1698,7 +1749,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge23" class="edge">
+<g id="edge25" class="edge">
 
 <title>r2부_1&#45;&gt;r2부_2</title>
 
@@ -1712,7 +1763,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node24" class="node">
+<g id="node26" class="node">
 
 <title>r2부_3</title>
 
@@ -1724,7 +1775,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge24" class="edge">
+<g id="edge26" class="edge">
 
 <title>r2부_2&#45;&gt;r2부_3</title>
 
@@ -1738,7 +1789,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node26" class="node">
+<g id="node28" class="node">
 
 <title>r16_0</title>
 
@@ -1752,7 +1803,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge26" class="edge">
+<g id="edge28" class="edge">
 
 <title>r16&#45;&gt;r16_0</title>
 
@@ -1764,7 +1815,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node27" class="node">
+<g id="node29" class="node">
 
 <title>r16_1</title>
 
@@ -1778,7 +1829,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge27" class="edge">
+<g id="edge29" class="edge">
 
 <title>r16_0&#45;&gt;r16_1</title>
 
@@ -1790,7 +1841,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node29" class="node">
+<g id="node31" class="node">
 
 <title>r스토리_0</title>
 
@@ -1804,7 +1855,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge29" class="edge">
+<g id="edge31" class="edge">
 
 <title>r스토리&#45;&gt;r스토리_0</title>
 
@@ -1816,7 +1867,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node30" class="node">
+<g id="node32" class="node">
 
 <title>r스토리_1</title>
 
@@ -1830,7 +1881,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge30" class="edge">
+<g id="edge32" class="edge">
 
 <title>r스토리_0&#45;&gt;r스토리_1</title>
 
@@ -1842,7 +1893,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node32" class="node">
+<g id="node34" class="node">
 
 <title>r진행도_0</title>
 
@@ -1856,7 +1907,7 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="edge32" class="edge">
+<g id="edge34" class="edge">
 
 <title>r진행도&#45;&gt;r진행도_0</title>
 
@@ -1868,139 +1919,57 @@ html { scroll-behavior: smooth; }
 
 
 
-<g id="node34" class="node">
+<g id="node36" class="node">
 
 <title>한글kb</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1139.01,-156C1139.01,-156 975.57,-156 975.57,-156 969.57,-156 963.57,-150 963.57,-144 963.57,-144 963.57,-132 963.57,-132 963.57,-126 969.57,-120 975.57,-120 975.57,-120 1139.01,-120 1139.01,-120 1145.01,-120 1151.01,-126 1151.01,-132 1151.01,-132 1151.01,-144 1151.01,-144 1151.01,-150 1145.01,-156 1139.01,-156"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M1139.01,-186C1139.01,-186 975.57,-186 975.57,-186 969.57,-186 963.57,-180 963.57,-174 963.57,-174 963.57,-162 963.57,-162 963.57,-156 969.57,-150 975.57,-150 975.57,-150 1139.01,-150 1139.01,-150 1145.01,-150 1151.01,-156 1151.01,-162 1151.01,-162 1151.01,-174 1151.01,-174 1151.01,-180 1145.01,-186 1139.01,-186"/>
 
-<text xml:space="preserve" text-anchor="start" x="1025.04" y="-138.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">한글 키보드</text>
+<text xml:space="preserve" text-anchor="start" x="1025.04" y="-168.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">한글 키보드</text>
 
-<text xml:space="preserve" text-anchor="start" x="982.29" y="-128.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">두벌식 · 시프트 · 한/영 · 띄어쓰기</text>
+<text xml:space="preserve" text-anchor="start" x="982.29" y="-158.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">두벌식 · 시프트 · 한/영 · 띄어쓰기</text>
 
 </g>
 
 
 
-<g id="edge34" class="edge">
+<g id="edge36" class="edge">
 
 <title>채팅&#45;&gt;한글kb</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M837.6,-138C871.48,-138 915.2,-138 954.63,-138"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M837.6,-168C871.48,-168 915.2,-168 954.63,-168"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="954.16,-140.45 961.16,-138 954.16,-135.55 954.16,-140.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="954.16,-170.45 961.16,-168 954.16,-165.55 954.16,-170.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="928.07" y="-142.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
+<text xml:space="preserve" text-anchor="middle" x="928.07" y="-172.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">입력 칸</text>
 
 </g>
 
 
 
-<g id="node35" class="node">
+<g id="node37" class="node">
 
 <title>배너</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M466.88,-152C466.88,-152 304.94,-152 304.94,-152 298.94,-152 292.94,-146 292.94,-140 292.94,-140 292.94,-128 292.94,-128 292.94,-122 298.94,-116 304.94,-116 304.94,-116 466.88,-116 466.88,-116 472.88,-116 478.88,-122 478.88,-128 478.88,-128 478.88,-140 478.88,-140 478.88,-146 472.88,-152 466.88,-152"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M466.88,-182C466.88,-182 304.94,-182 304.94,-182 298.94,-182 292.94,-176 292.94,-170 292.94,-170 292.94,-158 292.94,-158 292.94,-152 298.94,-146 304.94,-146 304.94,-146 466.88,-146 466.88,-146 472.88,-146 478.88,-152 478.88,-158 478.88,-158 478.88,-170 478.88,-170 478.88,-176 472.88,-182 466.88,-182"/>
 
-<text xml:space="preserve" text-anchor="start" x="359.66" y="-134.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">알림 배너</text>
+<text xml:space="preserve" text-anchor="start" x="359.66" y="-164.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">알림 배너</text>
 
-<text xml:space="preserve" text-anchor="start" x="311.66" y="-124.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">채팅 밖에서 답장 오면 위에 3.5초</text>
+<text xml:space="preserve" text-anchor="start" x="311.66" y="-154.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">채팅 밖에서 답장 오면 위에 3.5초</text>
 
 </g>
 
 
 
-<g id="edge35" class="edge">
+<g id="edge37" class="edge">
 
 <title>배너&#45;&gt;채팅</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M479.42,-133.15C528.76,-132.88 590.5,-132.86 645.63,-133.75 666.79,-134.09 689.85,-134.74 710.69,-135.43"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M479.42,-163.15C528.76,-162.88 590.5,-162.86 645.63,-163.75 666.79,-164.09 689.85,-164.74 710.69,-165.43"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="710.57,-137.87 717.65,-135.66 710.74,-132.98 710.57,-137.87"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="710.57,-167.87 717.65,-165.66 710.74,-162.98 710.57,-167.87"/>
 
-<text xml:space="preserve" text-anchor="middle" x="605.88" y="-138.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">누르면</text>
-
-</g>
-
-
-
-<g id="node38" class="node">
-
-<title>어디서든</title>
-
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M113.94,-94C113.94,-94 12,-94 12,-94 6,-94 0,-88 0,-82 0,-82 0,-70 0,-70 0,-64 6,-58 12,-58 12,-58 113.94,-58 113.94,-58 119.94,-58 125.94,-64 125.94,-70 125.94,-70 125.94,-82 125.94,-82 125.94,-88 119.94,-94 113.94,-94"/>
-
-<text xml:space="preserve" text-anchor="start" x="18.72" y="-73.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">어느 화면에서든</text>
-
-</g>
-
-
-
-<g id="edge41" class="edge">
-
-<title>어디서든&#45;&gt;배너</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.43,-91.69C131.67,-92.86 136.89,-93.98 141.94,-95 188.27,-104.35 239.93,-112.9 283.66,-119.6"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="283.21,-122.01 290.5,-120.64 283.95,-117.16 283.21,-122.01"/>
-
-<text xml:space="preserve" text-anchor="middle" x="173.81" y="-110.94" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">답장 옴</text>
-
-</g>
-
-
-
-<g id="node39" class="node">
-
-<title>끊김</title>
-
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M538.13,-94C538.13,-94 233.69,-94 233.69,-94 227.69,-94 221.69,-88 221.69,-82 221.69,-82 221.69,-70 221.69,-70 221.69,-64 227.69,-58 233.69,-58 233.69,-58 538.13,-58 538.13,-58 544.13,-58 550.13,-64 550.13,-70 550.13,-70 550.13,-82 550.13,-82 550.13,-88 544.13,-94 538.13,-94"/>
-
-<text xml:space="preserve" text-anchor="start" x="359.66" y="-76.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">연결 끊김</text>
-
-<text xml:space="preserve" text-anchor="start" x="240.41" y="-66.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">와이파이 아이콘 + 연결이 끊겼습니다 + 복구 안내 창 (문구 미정)</text>
-
-</g>
-
-
-
-<g id="edge38" class="edge">
-
-<title>어디서든&#45;&gt;끊김</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.61,-76C151.62,-76 181.76,-76 212.49,-76"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="212.35,-78.45 219.35,-76 212.35,-73.55 212.35,-78.45"/>
-
-<text xml:space="preserve" text-anchor="middle" x="173.81" y="-80.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">와이파이 끊김</text>
-
-</g>
-
-
-
-<g id="node41" class="node">
-
-<title>종료</title>
-
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M464.25,-36C464.25,-36 307.56,-36 307.56,-36 301.56,-36 295.56,-30 295.56,-24 295.56,-24 295.56,-12 295.56,-12 295.56,-6 301.56,0 307.56,0 307.56,0 464.25,0 464.25,0 470.25,0 476.25,-6 476.25,-12 476.25,-12 476.25,-24 476.25,-24 476.25,-30 470.25,-36 464.25,-36"/>
-
-<text xml:space="preserve" text-anchor="start" x="359.66" y="-18.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">시간 종료</text>
-
-<text xml:space="preserve" text-anchor="start" x="314.28" y="-8.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">0:00:00 → 전체 화면 · 이후 미정</text>
-
-</g>
-
-
-
-<g id="edge40" class="edge">
-
-<title>어디서든&#45;&gt;종료</title>
-
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.42,-60.09C131.66,-58.91 136.88,-57.78 141.94,-56.75 189.23,-47.16 242.1,-38.49 286.41,-31.79"/>
-
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="286.52,-34.25 293.07,-30.79 285.79,-29.41 286.52,-34.25"/>
-
-<text xml:space="preserve" text-anchor="middle" x="173.81" y="-61.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">타이머 0:00:00</text>
+<text xml:space="preserve" text-anchor="middle" x="605.88" y="-168.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">누르면</text>
 
 </g>
 
@@ -2008,25 +1977,107 @@ html { scroll-behavior: smooth; }
 
 <g id="node40" class="node">
 
-<title>재연결</title>
+<title>어디서든</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M816.44,-94C816.44,-94 740.75,-94 740.75,-94 734.75,-94 728.75,-88 728.75,-82 728.75,-82 728.75,-70 728.75,-70 728.75,-64 734.75,-58 740.75,-58 740.75,-58 816.44,-58 816.44,-58 822.44,-58 828.44,-64 828.44,-70 828.44,-70 828.44,-82 828.44,-82 828.44,-88 822.44,-94 816.44,-94"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M113.94,-124C113.94,-124 12,-124 12,-124 6,-124 0,-118 0,-112 0,-112 0,-100 0,-100 0,-94 6,-88 12,-88 12,-88 113.94,-88 113.94,-88 119.94,-88 125.94,-94 125.94,-100 125.94,-100 125.94,-112 125.94,-112 125.94,-118 119.94,-124 113.94,-124"/>
 
-<text xml:space="preserve" text-anchor="start" x="752.35" y="-76.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">다시 연결</text>
-
-<text xml:space="preserve" text-anchor="start" x="747.47" y="-66.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">원래 화면으로</text>
+<text xml:space="preserve" text-anchor="start" x="18.72" y="-103.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">어느 화면에서든</text>
 
 </g>
 
 
 
-<g id="edge39" class="edge">
+<g id="edge43" class="edge">
+
+<title>어디서든&#45;&gt;배너</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.43,-121.69C131.67,-122.86 136.89,-123.98 141.94,-125 188.27,-134.35 239.93,-142.9 283.66,-149.6"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="283.21,-152.01 290.5,-150.64 283.95,-147.16 283.21,-152.01"/>
+
+<text xml:space="preserve" text-anchor="middle" x="173.81" y="-140.94" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">답장 옴</text>
+
+</g>
+
+
+
+<g id="node41" class="node">
+
+<title>끊김</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M538.13,-124C538.13,-124 233.69,-124 233.69,-124 227.69,-124 221.69,-118 221.69,-112 221.69,-112 221.69,-100 221.69,-100 221.69,-94 227.69,-88 233.69,-88 233.69,-88 538.13,-88 538.13,-88 544.13,-88 550.13,-94 550.13,-100 550.13,-100 550.13,-112 550.13,-112 550.13,-118 544.13,-124 538.13,-124"/>
+
+<text xml:space="preserve" text-anchor="start" x="359.66" y="-106.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">연결 끊김</text>
+
+<text xml:space="preserve" text-anchor="start" x="240.41" y="-96.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">와이파이 아이콘 + 연결이 끊겼습니다 + 복구 안내 창 (문구 미정)</text>
+
+</g>
+
+
+
+<g id="edge40" class="edge">
+
+<title>어디서든&#45;&gt;끊김</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.61,-106C151.62,-106 181.76,-106 212.49,-106"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="212.35,-108.45 219.35,-106 212.35,-103.55 212.35,-108.45"/>
+
+<text xml:space="preserve" text-anchor="middle" x="173.81" y="-110.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">와이파이 끊김</text>
+
+</g>
+
+
+
+<g id="node43" class="node">
+
+<title>종료</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M464.25,-66C464.25,-66 307.56,-66 307.56,-66 301.56,-66 295.56,-60 295.56,-54 295.56,-54 295.56,-42 295.56,-42 295.56,-36 301.56,-30 307.56,-30 307.56,-30 464.25,-30 464.25,-30 470.25,-30 476.25,-36 476.25,-42 476.25,-42 476.25,-54 476.25,-54 476.25,-60 470.25,-66 464.25,-66"/>
+
+<text xml:space="preserve" text-anchor="start" x="359.66" y="-48.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">시간 종료</text>
+
+<text xml:space="preserve" text-anchor="start" x="314.28" y="-38.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">0:00:00 → 전체 화면 · 이후 미정</text>
+
+</g>
+
+
+
+<g id="edge42" class="edge">
+
+<title>어디서든&#45;&gt;종료</title>
+
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M126.42,-90.09C131.66,-88.91 136.88,-87.78 141.94,-86.75 189.23,-77.16 242.1,-68.49 286.41,-61.79"/>
+
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="286.52,-64.25 293.07,-60.79 285.79,-59.41 286.52,-64.25"/>
+
+<text xml:space="preserve" text-anchor="middle" x="173.81" y="-91.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">타이머 0:00:00</text>
+
+</g>
+
+
+
+<g id="node42" class="node">
+
+<title>재연결</title>
+
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M816.44,-124C816.44,-124 740.75,-124 740.75,-124 734.75,-124 728.75,-118 728.75,-112 728.75,-112 728.75,-100 728.75,-100 728.75,-94 734.75,-88 740.75,-88 740.75,-88 816.44,-88 816.44,-88 822.44,-88 828.44,-94 828.44,-100 828.44,-100 828.44,-112 828.44,-112 828.44,-118 822.44,-124 816.44,-124"/>
+
+<text xml:space="preserve" text-anchor="start" x="752.35" y="-106.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">다시 연결</text>
+
+<text xml:space="preserve" text-anchor="start" x="747.47" y="-96.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">원래 화면으로</text>
+
+</g>
+
+
+
+<g id="edge41" class="edge">
 
 <title>끊김&#45;&gt;재연결</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M550.62,-76C610.76,-76 675.01,-76 719.75,-76"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M550.62,-106C610.76,-106 675.01,-106 719.75,-106"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="719.61,-78.45 726.61,-76 719.61,-73.55 719.61,-78.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="719.61,-108.45 726.61,-106 719.61,-103.55 719.61,-108.45"/>
 
 </g>
 
@@ -2319,7 +2370,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false);
-  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
+  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, pct: null, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
@@ -2348,8 +2399,8 @@ function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은
 function timerBox() {
   return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span></div>`;
 }
-function head(title) {
-  return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
+function head(title, sub = '') {  // sub: 제목 아래 작은 줄
+  return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
 }
 
 function vMain() {
@@ -2421,7 +2472,7 @@ function vCodes() {
   }
   if (S.mode === 'story') return head('스토리코드')
     + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>` + (S.kb ? kbd() : '');
-  return head('힌트코드')
+  return head('힌트코드', `힌트 사용 ${Object.keys(S.used).length}회`)
     + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
     + `<div class="scroll">${body}</div>` + (S.kb ? kbd() : '');
@@ -2539,7 +2590,7 @@ function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread
 
 function check(code) {
   const c0 = D.codes[code], app = c0 && (S.mode === 'story') === (c0.kind === 'story');  // 힌트코드 앱은 힌트 코드만, 스토리코드 앱은 스토리 코드만
-  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
+  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.part === 1 && c0.kind !== 'story' && S.phase === 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 1부 코드는 비아 등장 전에만, 2부 코드는 뒤에만  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
     return null;
@@ -2578,6 +2629,7 @@ function act(a) {
     if (c.kind === 'story') { S.view = 'pattern'; S.patPath = []; S.patBad = false; render(); return; }
     if (c.kind === 'voice') S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.steps.length + 1);  // 넣을 때마다 다음 단계, 끝나면 심장 소리
     else if (c.kind === 'hint') S.open[S.code] = Math.max(1, S.open[S.code] || 0);
+    if (!c.demo) S.used[S.code] = true;  // 힌트 사용 횟수: 코드 하나당 1회 (가짜 코드는 안 셈)
     S.showHints = true; S.ans = (S.answered || {})[S.code] || false; render(); return;
   }
   if (a === 'next') { const c = D.codes[S.code]; S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
@@ -2646,7 +2698,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
-  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
+  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .head .ttl .sub', '힌트 사용 횟수', 11], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
   ['#proto .app', '독 앱 이름', 11], ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .recov', '복구 안내 글', 14], ['#proto .toast b', '알림 배너 제목', 13]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {
