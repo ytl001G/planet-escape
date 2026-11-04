@@ -34,8 +34,13 @@ def ck(x, y, k=1, wdt=2):
 
 # 메인 화면형 (250x440)
 def M(o, time, guide_cls='lily', badge=False):
-    return (R(20+o, 10, 250, 440, 'n', 30) + sbar(o + 10) + R(40+o, 52, 210, 58, 'soft', 10) + T(145+o, 99, time, 24, 700, 'middle')
+    return (R(20+o, 10, 250, 440, 'n', 30) + sbar(o + 10) + ring(145+o, 86, 34, time, guide_cls) + T(145+o, 90.5, time, 12.5, 700, 'middle')
             + R(40+o, 124, 210, 220, guide_cls, 12) + dock(o, guide_cls, badge))
+def ring(cx, cy, r, time, cls):  # 둥근 링 타이머: 남은 시간(1:45:00 기준)만큼 링
+    import re as _r; m = _r.fullmatch(r'(\d+):(\d\d):(\d\d)', hms(time)); f = max(0, min(1, (int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3])) / 6300)) if m else 1
+    col = '#ffae4d' if cls == 'via' else '#cf86e6'
+    return (f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="rgba(12,10,16,.35)" stroke="currentColor" stroke-opacity=".15" stroke-width="4"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{col}" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="{100*f:.1f} 100" transform="rotate(-90 {cx} {cy})"/>')
 def sbar(o):  # 상태 표시줄: 시각 · 와이파이 · 배터리
     return (T(34+o, 29, '9:41', 9, 700) + f'<path d="M{o+228} 24 a6 6 0 0 1 9 0 M{o+230} 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="{o+232.5}" cy="28.5" r="1.2" fill="currentColor"/>'
             + R(o+242, 22.5, 14, 7.5, 'n', 2) + R(o+243.5, 24, 9, 4.5, 'soft', 1))

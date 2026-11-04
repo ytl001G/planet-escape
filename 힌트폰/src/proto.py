@@ -63,7 +63,12 @@ CSS = r'''
 #proto .pz { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgba(0,0,0,.55); cursor: pointer; }
 #proto .pz span { width: 84px; height: 84px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); display: grid; place-items: center; }
 #proto .glass { background: rgba(24, 21, 30, .62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,.12); border-radius: 14px; }
-#proto .timer { height: 76px; display: flex; align-items: center; justify-content: center; position: relative; font: 700 36px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+#proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 14px rgba(0,0,0,.6); }
+#proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+#proto .timer span { position: relative; }  /* 링 위에 숫자 */
+#proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
+#proto .timer .tp { fill: none; stroke: #cf86e6; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 1s linear; filter: drop-shadow(0 0 6px rgba(207,134,230,.55)); }
+#proto .p2 .timer .tp { stroke: #ffae4d; filter: drop-shadow(0 0 6px rgba(255,174,77,.5)); }
 #proto .sbar { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font: 700 12px var(--body); color: #f2eef6; z-index: 5; pointer-events: none; font-variant-numeric: tabular-nums; }
 #proto .sbar .ic { display: flex; gap: 6px; align-items: center; }
 #proto .sbar .off { color: #E5484D; }
@@ -272,7 +277,7 @@ function reset() {
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
-setInterval(() => { if (!PAUSED && S.run && S.time > 0 && !S.phase.startsWith('end')) { S.time--; if (!S.time) return timeUp(); const el = scr.querySelector('[data-time]'); if (el) el.textContent = fmt(); scr.querySelectorAll('[data-tm]').forEach(e => e.textContent = fmt()); } }, 1000);
+setInterval(() => { if (!PAUSED && S.run && S.time > 0 && !S.phase.startsWith('end')) { S.time--; if (!S.time) return timeUp(); const el = scr.querySelector('[data-time]'); if (el) el.textContent = fmt(); const rg = scr.querySelector('[data-ring]'); if (rg) rg.setAttribute('stroke-dashoffset', ringOff()); scr.querySelectorAll('[data-tm]').forEach(e => e.textContent = fmt()); } }, 1000);
 const fmt = () => Math.floor(S.time / 3600) + ':' + String(Math.floor(S.time / 60) % 60).padStart(2, '0') + ':' + String(S.time % 60).padStart(2, '0');  // 105분 → 1:45:00
 function timeUp() { clearLater(); S.phase = 'end_time'; S.offline = false; render(); }
 const part = () => S.phase === 'p2' ? 2 : 1;
@@ -293,8 +298,9 @@ function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
   $('pv-sbar').innerHTML = S.phase === 'end_escape' ? '' : `<span>${t}</span><span class="ic">${S.offline ? `<span class="off" aria-label="연결 끊김">${ICON.swoff}</span>` : ICON.sw}${ICON.bat}</span>`;
 }
 setInterval(() => S && sbar(), 20000);
+function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은 시간 비율만큼 링이 남음
 function timerBox() {
-  return `<div class="timer glass"><span data-time>${fmt()}</span></div>`;
+  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span></div>`;
 }
 function head(title) {
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;

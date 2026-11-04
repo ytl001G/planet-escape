@@ -40,6 +40,6 @@ OPTS = [('A', '틀 없음', '타이머는 상자 없이 숫자만 크게, 은은
         ('C', '빛 테두리', '어두운 판 + 보라빛 그라데이션 테두리. 우주선 계기판 느낌. 주 버튼은 테두리가 빛남.'),
         ('D', '톤 채움', '테두리 없이 보라를 옅게 깐 판. 모서리 크게(20). 주 버튼만 진한 보라 — 요즘 폰 앱(머티리얼) 느낌.'),
         ('E', '둥근 링', '노션 와이어프레임의 큰 동그라미 타이머. 링이 남은 시간만큼 줄어듦. 버튼은 알약.')]
-html = ('<section>' + CSS + '\n  <h2>타이머 · 버튼 틀 시안 <small>고르는 중 · 1부 보라 기준</small></h2>\n  <div id="bo">'
+html = ('<section>' + CSS + '\n  <h2>타이머 · 버튼 틀 시안 <small>타이머는 E로 정함 · 버튼은 고르는 중 · 1부 보라 기준</small></h2>\n  <div id="bo">'
         + ''.join(f'<div class="op"><h4>{k}. {t}</h4>{phone(k)}<p>{d}</p></div>' for k, t, d in OPTS) + '</div>\n</section>\n')
 pathlib.Path(__file__).with_name('rules_opts.html').write_text(html, encoding='utf-8'); print('opts', len(OPTS))

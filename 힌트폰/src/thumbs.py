@@ -70,7 +70,7 @@ TH = {
     '안 읽음 숫자': '<circle cx="54" cy="47" r="16" class="n"/>' + chaticon(54, 43, 0.85) + badge(67, 33)
                   + '<circle cx="108" cy="47" r="16" class="n"/>' + chaticon(108, 43, 0.85) + badge(123, 33, '12'),
     # 칸 · 카드
-    '타이머 칸': R(10, 18, 92, 54, 'soft', 10) + T(56, 53, '47:12', 22, 700) + R(110, 30, 42, 22, 'soft', 6) + T(131, 45, '47:12', 10, 700),
+    '타이머 칸': '<circle cx="52" cy="45" r="31" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="4"/><circle cx="52" cy="45" r="31" fill="none" stroke="#cf86e6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="45 100" transform="rotate(-90 52 45)"/>' + T(52, 50, '0:47:12', 12, 700, 'middle') + R(110, 30, 42, 22, 'soft', 6) + T(131, 45, '47:12', 10, 700),
     '목표 창': R(10, 10, 66, 70, 'n dashbox', 10) + R(84, 10, 66, 70, 'lily', 10) + T(117, 38, '현재 목표', 8, cls='t-lily') + T(117, 54, '알렉스의 승인', 9, 700),
     '장소 · 할 일 줄': pin(26, 30) + T(38, 35, '알렉스의 방', 13, 700, 'start', 't-lily') + ph(18, 52, 124) + ph(18, 66, 86),
     '완료 목표 줄': R(10, 12, 140, 30, 'n') + '<circle cx="28" cy="27" r="8" class="bar"/>' + ck(28, 27, 0.75, 2) + T(42, 31, '알렉스의 승인 확보', 10, 700, 'start')

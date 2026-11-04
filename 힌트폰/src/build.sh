@@ -7,6 +7,7 @@ cp "$SP/backup_before_screens.html" 힌트폰_논리도.html
 python -X utf8 "$SP/screens.py" 힌트폰_논리도.html
 python -X utf8 "$SP/flow.py" 힌트폰_논리도.html
 python -X utf8 "$SP/post.py" 힌트폰_논리도.html
+python -X utf8 "$SP/post_ring.py" 힌트폰_논리도.html
 python -X utf8 "$SP/post_assets.py" 힌트폰_논리도.html "$SP/assets_part.html"
 python -X utf8 "$SP/post_read.py" 힌트폰_논리도.html
 python -X utf8 "$SP/post_ph.py" 힌트폰_논리도.html

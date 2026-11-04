@@ -25,6 +25,7 @@
   at(2000, () => { log(!!scr().querySelector('[data-time]'), '메인(이전) 타이머'); press('스토리카드 1 띄우기'); log(has('보안이 아니잖아?'), '스토리카드 1 문구'); });
   at(2600, () => { press('안전 모드 가동'); log(has('안전 모드 감지') && !!scr().querySelector('svg linearGradient'), '안전 모드 방패'); });
   at(7200, () => { log(has('알렉스의 승인 확보') && has('알렉스의 방'), '1부 첫 목표 · 장소'); log(document.getElementById('pv').className.includes('p1'), '1부 색'); });
+  at(7290, () => { const r = scr().querySelector('.timer [data-ring]'); log(!!r && +r.getAttribute('stroke-dashoffset') > 0 && +r.getAttribute('stroke-dashoffset') < 100, '타이머 링: 남은 시간만큼'); });
   at(7300, () => { tap('codes'); log(!scr().querySelector('.kbd'), '코드 앱에 들어가면 키보드 안 뜸'); tap('kb'); log(!!scr().querySelector('.kbd') && scr().querySelectorAll('.kbd .key').length === 37, '입력 칸 누르면 키보드 (36키 + 지우기)');
     ['A', 'B', 'C', 'X'].forEach(k => tap('k:' + k)); tap('kdel'); tap('k:D'); log(document.getElementById('pv-in').value === 'ABCD', '키보드로 입력 · 지우기');
     tap('hint'); log(!scr().querySelector('.kbd') && scr().querySelectorAll('.card.h1').length === 1, '힌트 보기 → 키보드 내려감'); tap('kb'); log(!!scr().querySelector('.kbd'), '입력 칸 누르면 다시 올라옴'); tap('home'); });

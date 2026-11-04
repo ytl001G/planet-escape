@@ -38,7 +38,7 @@ def panel(y0,h,title):
     E.append(f'<rect x="{R-10}" y="{y0}" width="{PW}" height="{h}" rx="12" class="n dashbox"/>')
     E.append(f'<text x="{R+6}" y="{y0+24}" font-size="12" font-weight="700" class="t-mute">{title}</text>')
 # 1) 힌트 버튼: 코드 판별을 부마다 나눠서
-box(R+10,50,200,H,'메인 화면','타이머 · 진행 가이드','lily')
+box(R+10,50,200,H,'메인 화면','링 타이머 · 진행 가이드','lily')
 box(R+10,130,200,H,'코드 입력 화면','입력 칸 · 힌트 보기 · 진행도')
 arrow(f'M{R+110} {50+H} V128'); label(R+118,118,'힌트코드 · 스토리코드 앱')
 E.append(f'<polygon points="{R+110},206 {R+175},236 {R+110},266 {R+45},236" class="n"/>')
