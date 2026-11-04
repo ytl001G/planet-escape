@@ -97,6 +97,7 @@ TH = {
     '다음 힌트': R(6, 26, 72, 36, 'n') + T(42, 49, '다음 힌트', 11, 700, cls='t-lily') + R(82, 26, 72, 36, 'n') + T(118, 49, '다음 힌트', 11, 700, cls='t-via'),
     '정답 보기': R(20, 26, 120, 38, 'inv', 10) + T(80, 50, '정답 보기', 13, 700, cls='t-inv'),
     '채팅 판': phone(60, 7, 'n') + R(61, 22, 38, 46, 'soft', 0) + '<path d="M61 22 H99 M61 68 H99" class="ln" opacity=".5"/>' + R(76, 28, 18, 7, 'lily', 3) + R(66, 40, 20, 7, 'n', 3) + R(64, 72, 24, 6, 'n', 3),
+    '릴리 프로필 원': '<rect x="24" y="30" width="112" height="34" rx="8" class="soft"/><circle cx="44" cy="47" r="11" class="lily"/><circle cx="44" cy="43" r="3.4" style="fill:var(--lily)"/><path d="M38 53 Q44 46 50 53" style="fill:var(--lily)"/><circle cx="118" cy="47" r="11" class="n"/>',
     '운영자 버튼': '<circle cx="80" cy="47" r="20" class="n"/>' + chaticon(80, 42, 1.1) + badge(96, 30),
     # 아이콘
     '방패': shield(80, 45, 1.3),

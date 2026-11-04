@@ -64,6 +64,9 @@ CSS = r'''
 #proto .pz span { width: 84px; height: 84px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); display: grid; place-items: center; }
 #proto .glass { background: rgba(24, 21, 30, .62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,.12); border-radius: 14px; }
 #proto .timer { height: 76px; display: flex; align-items: center; justify-content: center; position: relative; font: 700 36px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+#proto .me { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; color: rgba(255,255,255,.85); background: linear-gradient(160deg, #8e24aa, #4a1c63); border: 2px solid #cf86e6; }
+#proto .p2 .me { border-color: #ffae4d; }
+#proto .me svg { width: 30px; height: 30px; margin-top: 8px; }
 #proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
 #proto .badge { position: absolute; right: -4px; top: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #E5484D; color: #fff; font: 700 11px/18px var(--body); text-align: center; }
 #proto .guide { flex: 1; padding: 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
@@ -191,6 +194,7 @@ const D = __DATA__, BG = __BG__, SH = __SHIELDS__, APPICON = __APPICON__;
 const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
+  me: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="9" r="4.2"/><path d="M3.8 21c.7-4.6 4-6.6 8.2-6.6s7.5 2 8.2 6.6z"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   head: '<svg width="22" height="22" viewBox="-12 -12 24 24"><path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></svg>',
   back: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M13 3 L6 10 L13 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -241,7 +245,7 @@ function setBg() {
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
 function timerBox() {
-  return `<div class="timer glass"><span data-time>${fmt()}</span><div class="op glass" data-act="chat" role="button" aria-label="운영자 채팅" tabindex="0">${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</div></div>`;
+  return `<div class="timer glass"><div class="me" role="img" aria-label="릴리 프로필">${ICON.me}</div><span data-time>${fmt()}</span><div class="op glass" data-act="chat" role="button" aria-label="운영자 채팅" tabindex="0">${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</div></div>`;
 }
 function head(title) {
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;

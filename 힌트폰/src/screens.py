@@ -33,8 +33,12 @@ def ck(x, y, k=1, wdt=2):
     return f'<path d="M{x-4.5*k} {y} L{x-1.5*k} {y+3*k} L{x+4.5*k} {y-3.5*k}" class="ck" stroke-width="{wdt}"/>'
 
 # 메인 화면형 (250x440)
+def me(o, cls):  # 릴리 프로필 원 (타이머 칸 왼쪽 · 채팅 버튼과 대칭)
+    ring = 'var(--via)' if cls == 'via' else 'var(--lily)'
+    return (f'<circle cx="{62+o}" cy="81" r="13" style="fill:var(--lily-soft);stroke:{ring};stroke-width:2"/>'
+            f'<circle cx="{62+o}" cy="77" r="4.2" style="fill:{ring}"/><path d="M{54.5+o} 91 Q{62+o} 82 {69.5+o} 91" style="fill:{ring}"/>')
 def M(o, time, guide_cls='lily'):
-    return (R(20+o, 10, 250, 440, 'n', 30) + R(40+o, 52, 210, 58, 'soft', 10) + T(145+o, 99, time, 24, 700, 'middle')
+    return (R(20+o, 10, 250, 440, 'n', 30) + R(40+o, 52, 210, 58, 'soft', 10) + me(o, guide_cls) + T(145+o, 99, time, 24, 700, 'middle')
             + R(40+o, 124, 210, 232, guide_cls, 12) + R(40+o, 372, 210, 50, 'n', 10) + T(145+o, 402, '힌트코드', 13, 700, 'middle'))
 ROOMS = [('알렉스', 56, 272), ('오펠리아', 117, 272), ('노아', 178, 272), ('에바', 86, 308), ('릴리', 148, 308)]
 def mapx(o, hi, done=()):
