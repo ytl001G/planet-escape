@@ -390,7 +390,7 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av" style="font-size:18px">V</div>${S.biaTalk ? `<div class="say vplay" role="img" aria-label="음성 재생 중">${ICON.spk}</div>` : ''}</div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
+    g = `<div class="bia"><div class="av" style="font-size:18px">V</div></div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   return layB(t0, S.phase === 'pre' ? '' : g);
@@ -527,7 +527,7 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="lb-goal glass"', '<div class="lb-goal glass glitch" style="border-color:var(--c1)"') + '<div class="stripes"></div>';
   const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return layB(timerBox(), `<div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say vplay" role="img" aria-label="음성 재생 중">${ICON.spk}</div></div>${wave()}`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
+  return layB(timerBox(), `<div class="bia"><div class="av" style="font-size:18px">${name}</div></div>${wave()}`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
