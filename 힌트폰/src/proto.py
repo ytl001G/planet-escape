@@ -63,12 +63,12 @@ CSS = r'''
 #proto .pz { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgba(0,0,0,.55); cursor: pointer; }
 #proto .pz span { width: 84px; height: 84px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); display: grid; place-items: center; }
 #proto .glass { background: rgba(24, 21, 30, .62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,.12); border-radius: 14px; }
-#proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 14px rgba(0,0,0,.6); }
+#proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 #proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 #proto .timer span { position: relative; }  /* 링 위에 숫자 */
 #proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
-#proto .timer .tp { fill: none; stroke: #cf86e6; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 1s linear; filter: drop-shadow(0 0 6px rgba(207,134,230,.55)); }
-#proto .p2 .timer .tp { stroke: #ffae4d; filter: drop-shadow(0 0 6px rgba(255,174,77,.5)); }
+#proto .timer .tp { fill: none; stroke: #cf86e6; stroke-width: 7; stroke-linecap: round; }
+#proto .p2 .timer .tp { stroke: #ffae4d; }
 #proto .sbar { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font: 700 12px var(--body); color: #f2eef6; z-index: 5; pointer-events: none; font-variant-numeric: tabular-nums; }
 #proto .sbar .ic { display: flex; gap: 6px; align-items: center; }
 #proto .sbar .off { color: #E5484D; }
@@ -86,7 +86,9 @@ CSS = r'''
 #proto .p2 .toast i { background: linear-gradient(160deg, #ffa53d, #a85a00); }
 #proto .toast b { display: block; font: 700 13px var(--body); }
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
-#proto .idle { flex: 1; display: grid; place-items: center; font: 700 64px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+#proto .idle { flex: 1; display: grid; place-items: center; }
+#proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
+#proto .idle .timer circle { stroke-width: 4.5; }
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
 #proto .chatin + .kbd { margin-top: 8px; }
 #proto .ck .key { font: 500 16px var(--body); }
@@ -322,7 +324,7 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
-  if (S.phase === 'pre') return `<div class="idle"><span data-time>${fmt()}</span></div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
+  if (S.phase === 'pre') return `<div class="idle">${timerBox()}</div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘

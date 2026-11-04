@@ -20,7 +20,7 @@
   const steps = [];
   const at = (ms, fn) => steps.push([ms, fn]);
   at(300, () => log(!!document.querySelector('#pv-sbar span') && scr().querySelectorAll('.dock .app').length === 2 && !scr().querySelector('[data-act="story"]') && !document.querySelector('.hbar'), '홈 화면: 상태 표시줄 · 독 앱 2개 (스토리코드 아직 없음) · 홈 바 없음'));
-  at(302, () => log(!!scr().querySelector('.idle [data-time]') && !scr().querySelector('.guide'), '안전 모드 전: 큰 타이머 · 안내 창 없음'));
+  at(302, () => log(!!scr().querySelector('.idle [data-time]') && !!scr().querySelector('.idle [data-ring]') && !scr().querySelector('.guide'), '안전 모드 전: 큰 링 타이머 · 안내 창 없음'));
   at(301, () => log(!scr().querySelector('.load') && !!scr().querySelector('[data-time]'), '켜지자마자 메인(이전) · 시작 화면 없음'));
   at(2000, () => { log(!!scr().querySelector('[data-time]'), '메인(이전) 타이머'); press('스토리카드 1 띄우기'); log(has('보안이 아니잖아?'), '스토리카드 1 문구'); });
   at(2600, () => { press('안전 모드 가동'); log(has('안전 모드 감지') && !!scr().querySelector('svg linearGradient'), '안전 모드 방패'); });

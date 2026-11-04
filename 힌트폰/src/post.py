@@ -17,7 +17,9 @@ o1 = '''      <rect x="40" y="52" width="210" height="58" rx="10" class="soft"/>
       <text x="145" y="99" text-anchor="middle" font-size="24" font-weight="700">58:30</text>
       <rect x="40" y="124" width="210" height="232" rx="12" class="n dashbox"/>'''
 assert s.count(o1) == 1  # 안전 모드 이전: 가운데 큰 타이머만 (빈 안내 창 없음)
-s = s.replace(o1, '      <text x="145" y="215" text-anchor="middle" font-size="44" font-weight="700">1:40:30</text>')
+s = s.replace(o1, '      <circle cx="145" cy="205" r="80" fill="rgba(12,10,16,.35)" stroke="currentColor" stroke-opacity=".15" stroke-width="4"/>'
+              '<circle cx="145" cy="205" r="80" fill="none" stroke="#cf86e6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="95.7 100" transform="rotate(-90 145 205)"/>'
+              '<text x="145" y="216" text-anchor="middle" font-size="32" font-weight="700">1:40:30</text>')  # 안전 모드 전에도 링 (1:40:30 = 95.7%)
 s = s.replace('안전 모드 이전 메인 화면: 위에 타이머, 가운데 진행 가이드 자리는 비어 있고, 아래에 힌트코드 버튼.', '안전 모드 이전 메인 화면: 잠금 화면처럼 가운데 큰 타이머만 있고 안내 창은 없다. 아래에 앱 아이콘 세 개.', 1)
 big = iter(['n', 'lily', 'lily'])  # 안전 모드 이전 · (지운 스토리카드 화면) · 이후 1부
 def rep_big(m):
