@@ -89,6 +89,7 @@ CSS = r'''
 #proto .idle { flex: 1; display: grid; place-items: center; }
 #proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
 #proto .idle .timer circle { stroke-width: 4.5; }
+#proto .idle .timer .tp { stroke: #e9e6ee; }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
 #proto .chatin + .kbd { margin-top: 8px; }
 #proto .ck .key { font: 500 16px var(--body); }
