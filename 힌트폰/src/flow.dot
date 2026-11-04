@@ -84,7 +84,6 @@ digraph G {
  "한글kb" [label=<<b>한글 키보드</b><br/><font point-size="10" color="#a39eab">두벌식 · 시프트 · 한/영 · 띄어쓰기</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "배너" [label=<<b>알림 배너</b><br/><font point-size="10" color="#a39eab">채팅 밖에서 답장 오면 위에 3.5초</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "지도" [label=<<b>지도 팝업</b><br/><font point-size="10" color="#a39eab">1부 · 갈 방만 인물 색 · X · 바깥 · Esc로 닫힘</font>> shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
- "다시보기" [label=<<b>완료 목표 다시 보기</b><br/><font point-size="10" color="#a39eab">1부 · 끝낸 목표 체크</font>> shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
  "어디서든" [label=<<b>어느 화면에서든</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "끊김" [label=<<b>연결 끊김</b><br/><font point-size="10" color="#a39eab">와이파이 아이콘 + 연결이 끊겼습니다 + 복구 안내 창 (문구 미정)</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "재연결" [label=<<b>다시 연결</b><br/><font point-size="10" color="#a39eab">원래 화면으로</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
@@ -125,7 +124,6 @@ digraph G {
  "채팅" -> "한글kb" [label="입력 칸"];
  "배너" -> "채팅" [label="누르면"];
  "홈" -> "지도" [label="목표 창 방 이름"];
- "홈" -> "다시보기" [label="목표 창 목록 버튼"];
  "어디서든" -> "끊김" [label="와이파이 끊김"];
  "끊김" -> "재연결" [label=""];
  "어디서든" -> "종료" [label="타이머 0:00:00"];

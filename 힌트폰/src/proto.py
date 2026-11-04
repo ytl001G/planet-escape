@@ -138,7 +138,6 @@ CSS = r'''
 @keyframes pbeat { 0%, 40%, 100% { transform: scale(1); } 12% { transform: scale(1.18); } 26% { transform: scale(1.08); } }
 #proto .ex { color: rgba(242,238,246,.45); font: 400 13px/1.5 var(--body); }
 #proto .sep { height: 1px; background: rgba(255,255,255,.12); margin: 4px 0; }
-#proto .iconbtn { position: absolute; right: 12px; top: 12px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 1.5px solid rgba(255,255,255,.18); background: rgba(24,21,30,.7); }
 #proto .btn { height: 52px; border-radius: 10px; display: grid; place-items: center; font: 700 15px var(--body); cursor: pointer; border: 1.5px solid rgba(255,255,255,.2); background: rgba(24,21,30,.72); color: #f2eef6; position: relative; }
 #proto .btn.on1 { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 35%) 42%, transparent); border-color: var(--c1); }
 #proto .btn.on2 { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 38%, transparent); border-color: var(--c2); }
@@ -273,7 +272,6 @@ const ICON = {
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   head: '<svg width="22" height="22" viewBox="-12 -12 24 24"><path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></svg>',
   back: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M13 3 L6 10 L13 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  list: '<svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 4 H15 M3 9 H15 M3 14 H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   pin: '<svg width="14" height="18" viewBox="-8 -9 16 18"><path d="M0 8 C-7 0 -6 -7 0 -7 C6 -7 7 0 0 8 Z" style="fill:var(--c1)"/><circle cx="0" cy="-1.5" r="2.4" fill="#211e26"/></svg>',
   x: '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 3 L13 13 M13 3 L3 13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
   chev: '<svg width="8" height="12" viewBox="0 0 8 12"><path d="M2 2 L6 6 L2 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -346,8 +344,7 @@ function vMain() {
       g = `<div class="center"><div class="bigck">${ICON.ck}</div><div class="goal">${esc(name)}</div></div>`;
     } else {
       const [name, room] = D.goals[S.goal];
-      g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`
-        + `<div class="iconbtn" data-act="done" role="button" aria-label="완료 목표" tabindex="0">${ICON.list}</div>`;
+      g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av" style="font-size:18px">V</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
@@ -409,10 +406,6 @@ function vCodes() {
     + `<div class="scroll">${body}</div>` + (S.kb ? kbd() : '');
 }
 
-function vDone() {
-  const rows = D.goals.slice(0, S.goal).map(([n]) => `<div class="glass" style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:10px">${ICON.ckS}<b style="font-size:14px">${esc(n)}</b></div>`).join('');
-  return head('완료 목표') + `<div class="scroll">${rows}<div class="card h1"><span class="k t-lily">현재 목표</span><b style="font-size:15px">${esc(D.goals[S.goal][0])}</b></div></div>`;
-}
 
 const PTS = [[140, 140]].concat([-90, -30, 30, 90, 150, 210].map(a => [140 + 100 * Math.cos(a * Math.PI / 180), 140 + 100 * Math.sin(a * Math.PI / 180)]));
 function patSvg() {
@@ -508,7 +501,7 @@ function render() {
   let h;
   if (S.phase.startsWith('end')) h = vEnd();
   else if (S.offline) h = vOffline();
-  else h = ({ main: vMain, codes: vCodes, done: vDone, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
+  else h = ({ main: vMain, codes: vCodes, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar(); edText();
   const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
@@ -552,7 +545,6 @@ function act(a) {
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
   if (a === 'codes') { S.kb = false; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
-  if (a === 'done' && S.phase === 'p1') { S.view = 'done'; render(); return; }
   if (a === 'hint') {
     const c = check(S.code); if (!c) return;
     S.kb = false;  // 맞는 코드면 키보드 내림

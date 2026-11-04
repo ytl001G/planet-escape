@@ -45,7 +45,7 @@
   at(9400, () => { type('EFGH'); tap('hint'); log(!scr().querySelector('.card'), '힌트 없는 문제 코드는 없음'); tap('home'); log(!!scr().querySelector('.room span span[style*="--cht-alex"]') && has('알렉스의 방'), '방 이름: 알렉스만 빨강'); tap('codes'); });
   at(9600, () => { type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '1부: 스토리 코드 반응 없음'); type('KLMN'); tap('hint'); log(!scr().querySelector('.card'), '1부: 2부 코드 반응 없음'); tap('home'); });
   at(11000, () => { press('목표 완료'); log(!!scr().querySelector('.bigck'), '목표 완료 체크'); });
-  at(12800, () => { log(has('오펠리아의 승인 확보'), '다음 목표'); tap('done'); log(has('완료 목표') && has('알렉스의 승인 확보'), '완료 목표 목록'); tap('home'); });
+  at(12800, () => { log(has('오펠리아의 승인 확보'), '다음 목표'); });
   at(12900, () => { tap('chat'); log(!scr().querySelector('.kbd'), '채팅: 들어가면 키보드 없음'); tap('ckb'); log(!!scr().querySelector('.kbd.ck'), '입력 칸 누르면 한글 키보드');
     [...'ㄷㅗㅇㅗㅏㅈㅜㅅㅔㅇㅛ'].forEach(k => tap('ck:' + k)); log(document.getElementById('pv-chatin').value === '도와주세요', '한글 조합: 도와주세요');
     tap('ckdel'); tap('ck:ㅛ'); tap('ckshift'); log(!!scr().querySelector('[data-act="ck:ㅃ"]'), '시프트: 쌍자음'); tap('ckshift');
