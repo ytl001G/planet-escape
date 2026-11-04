@@ -121,8 +121,9 @@ CSS = r'''
 #proto .key { width: 30px; height: 42px; border-radius: 7px; display: grid; place-items: center; font: 700 16px 'IBM Plex Mono', monospace; color: #f2eef6; background: rgba(255,255,255,.13); cursor: pointer; user-select: none; -webkit-user-select: none; }
 #proto .key.num { background: rgba(255,255,255,.07); }
 #proto .key.wide { width: 44px; }
-#proto .kbd.kc { container-type: inline-size; padding-inline: 6px; padding-bottom: 22px; } #proto .kbd.kc .key { flex: none; width: calc((100cqw - 45px) / 10); }  /* 키 폭 = 판 폭에서 고르게 (넘치지 않게) */
-#proto .kbd.kc .kr4 { justify-content: flex-end; } #proto .kbd.kc .key.wide { width: calc((100cqw - 45px) * .15 + 2.5px); }  /* 지우기 = 키 1.5칸, 오른쪽 끝은 P와 같은 줄 · 사이 간격도 다른 키와 같음 */
+#proto .kbd { container-type: inline-size; padding-inline: 6px; padding-bottom: 22px; } #proto .kbd .key { flex: none; width: calc((100cqw - 45px) / 10); }  /* 키 폭 = 판 폭에서 고르게 (넘치지 않아 좌우 여백이 같음) · 두 키보드 같이 */
+#proto .kbd.kc .kr4 { justify-content: flex-end; } #proto .kbd .key.wide, #proto .kbd .key.mid { width: calc((100cqw - 45px) * .15 + 2.5px); }  /* 지우기 · 시프트 = 키 1.5칸 → 줄 끝이 P와 같음 · 간격도 같음 */
+#proto .kbd .key.wide2 { width: calc((100cqw - 45px) * .2 + 5px); } #proto .kbd .key.space { flex: 1; width: auto; }  /* 한/영 = 키 2칸 · 띄어쓰기가 남는 폭을 채움 */
 #proto .key:active, #proto .key:focus-visible { background: color-mix(in srgb, var(--c1) 55%, transparent); outline: none; }
 #proto .p2 .key:active, #proto .p2 .key:focus-visible { background: color-mix(in srgb, var(--c2) 55%, transparent); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }

@@ -145,7 +145,7 @@ for title, small, rows in GROUPS:
     missing = [n for n, *_ in rows if n not in TH]; assert not missing, missing
     pre = ''
     if title == '배경' and preview_b64():
-        pre = f'  <img class="bgprev" src="data:image/jpeg;base64,{preview_b64()}" alt="배경 5장 위에 메인 화면 UI를 얹은 미리보기: 안전 모드 이전, 1부, 2부, 행성 엔딩, 탈출 엔딩">\n'
+        pre = f'  <img class="bgprev" src="data:image/jpeg;base64,{preview_b64()}" alt="배경 5장에 에셋 적용한 화면 미리보기: 안전 모드 이전, 1부, 2부, 행성 엔딩, 탈출 엔딩">\n'
     out.append(sec(title, small, pre + '  <div class="agrid">\n' + ''.join(card(n, w, u, chip(st, m), TH[n]) for n, w, u, st, m in rows) + '  </div>\n'))
 missing = [m[0] for m in MOTIONS if m[0] not in MOTION_TH]; assert not missing, missing
 out.append(sec('움직임', '개발팀에 길이 · 순서와 함께 넘길 것', '  <div class="agrid">\n'
