@@ -9,7 +9,7 @@
     const r = rows.find(r => r.querySelector('small').textContent === '현재 목표'); const i = r.querySelector('input'); i.value = '지금 할 일'; i.dispatchEvent(new Event('input'));
     log(scr().textContent.includes('지금 할 일') && !scr().textContent.includes('현재 목표'), '문구 바꾸면 폰에 바로');
     document.querySelector('#pv-ed [data-ed="color"]').click(); const c = document.querySelector('#pv-ed-color input'); c.value = '#00ff00'; c.dispatchEvent(new Event('input'));
-    log(getComputedStyle(document.querySelector('#pv-screen .guide')).borderTopColor.includes('0, 255, 0'), '1부 색 바꾸면 목표 창 테두리도');
+    log(getComputedStyle(document.querySelector('#pv-screen .lb-goal')).borderTopColor.includes('0, 255, 0'), '1부 색 바꾸면 목표 칸 테두리도');
     const s = [...document.querySelectorAll('#pv-ed-size .ed-row')].find(r => r.textContent.includes('목표 제목')).querySelector('input'); s.value = 30; s.dispatchEvent(new Event('input'));
     log(getComputedStyle(document.querySelector('#pv-screen .goal')).fontSize === '30px', '목표 제목 크기 30px');
     press('목표 완료');
