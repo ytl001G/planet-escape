@@ -210,6 +210,8 @@ html { scroll-behavior: smooth; }
 #proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
 #proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
+#proto .lb-code .srow { grid-template-columns: 1fr 84px; }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; padding-right: 104px; }
 #proto .lb-pct { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 84px; pointer-events: none; } #proto .lb-pct small { font: 500 11px var(--body); color: rgba(255,255,255,.65); }
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
@@ -2363,7 +2365,7 @@ function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
   const c = S.code && codeOK(S.code), p = c && c.part ? c.part : part();
   const pct = c && c.pct != null ? `<div class="pct lb-pct t${p}"><span><small>진행도</small> ${c.pct}%</span><i><b style="width:${c.pct}%"></b></i></div>` : '';  // 입력 칸 안 오른쪽에 겹쳐 띄움: 창 크기 그대로
-  return `<div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div></div>`;
+  return `<div class="lb-used">힌트 사용 ${Object.keys(S.used).length}회</div><div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">힌트 보기</div></div></div>`;
 }
 function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트 보기 → 다음 → 정답)
   const { body } = hintBody();
@@ -2556,6 +2558,8 @@ function render() {
   else h = ({ main: vMain, codes: vCodes, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar(); edText();
+  const fi = (S.kb && $('pv-in')) || (S.ckb && $('pv-chatin'));  // 키보드가 떠 있으면 칸에 초점 · 글자 끝에 커서 (맨 앞으로 가던 버그)
+  if (fi) { fi.focus({ preventScroll: true }); const L = fi.value.length; try { fi.setSelectionRange(L, L); } catch (e) {} }
   const inp = $('pv-in'); if (inp && S.view === 'main') inp.oninput = () => setCode(inp.value);
   if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
   const ci = $('pv-chatin'); if (ci) ci.oninput = () => { S.ct = [...ci.value]; };
@@ -2598,13 +2602,13 @@ function act(a) {
   if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
   if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
   if (a === 'start') { S.run = true; render(); return; }
-  if (a === 'bhint') {  // 시안 B: 입력 → 힌트 팝업
+  if (a === 'bhint') {  // 시안 B: 힌트 보기 → 힌트 팝업
     const c = check(S.code); if (!c) return;
-    if (c.kind !== 'hint') { act('hint'); if (c.kind === 'story') return; } else { S.kb = false; S.showHints = true; S.ans = (S.answered || {})[S.code] || false; }
+    act('hint'); if (c.kind === 'story') return;  // 힌트 보기 → 팝업에 힌트 1부터, 안에서 다음 → 정답
     S.hpop = S.hpopNew = true; render(); return;
   }
   if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }
-  if (a === 'kb') { if (!S.kb) { S.kb = S.kbNew = true; render(); $('pv-in')?.focus(); } return; }
+  if (a === 'kb') { if (!S.kb) { S.kb = S.kbNew = true; render(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
   if (a === 'codes') { S.kb = false; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
@@ -2684,7 +2688,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
-  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .head .ttl .sub', '힌트 사용 횟수', 11], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
+  ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .head .ttl .sub', '힌트 사용 횟수', 11], ['#proto .lb-used', '힌트 사용 횟수 (시안 B)', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
   ['#proto .app', '독 앱 이름', 11], ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .recov', '복구 안내 글', 14], ['#proto .toast b', '알림 배너 제목', 13]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {
