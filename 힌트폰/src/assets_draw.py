@@ -47,10 +47,11 @@ CHAT = {
  'B': ln('M4.5 14v-2a7.5 7.5 0 0 1 15 0v2') + ln('M4.5 13h2.5v6H6a1.5 1.5 0 0 1-1.5-1.5Z M19.5 13H17v6h1a1.5 1.5 0 0 0 1.5-1.5Z') + ln('M18.5 19v.5a2.5 2.5 0 0 1-2.5 2.5h-3'),  # 관제 헤드셋
  'C': ln('M8 8h8a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 16 22H8a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 8 8Z M9.5 8V2.5') + ln('M9.5 12.5h5M9.5 15.5h5', 1.8) + dot(12, 19, 1.2),  # 무전기
  'D': ln('M4 9.5a9 9 0 0 0 10.5 10.5Z') + ln('M9.3 14.7 14 10') + dot(14.8, 9.2, 1.5) + ln('M16.5 5.5a3 3 0 0 1 2 2M17.5 2.5a6 6 0 0 1 4 4', 1.8) + ln('M7 19.5l-2 2.5h5'),  # 위성 접시 + 신호
- 'E': ln('M9.5 3.5h9a2 2 0 0 1 2 2V11a2 2 0 0 1-2 2h-.5v2.5L15.5 13') + ln('M3.5 9.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5.5a2 2 0 0 1-2 2H9l-3.5 3v-3a2 2 0 0 1-2-2Z'),  # 주고받는 말풍선 2개
+ 'E': ln('M8 8V5.5L10.5 3h8.5l2.5 2.5V10L19 12.5h-.5v3L16 13', 1.8, ' opacity=".6"')  # 뒤 말풍선 (앞에 가려진 데는 안 그림)
+      + ln('M5 8h8.5l2.5 2.5V15l-2.5 2.5H9l-3.5 3v-3H5L2.5 15v-4.5Z'),  # 주고받는 말풍선 2개 (각진 판 모양 · 점 없음) — 기본
  'F': ln('M5 4.5h14a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5h-8.5L6 21v-3.5H5A2.5 2.5 0 0 1 2.5 15V7A2.5 2.5 0 0 1 5 4.5Z') + '<path d="M12 6.8l1.1 2.9 2.9 1.1-2.9 1.1L12 14.8l-1.1-2.9-2.9-1.1 2.9-1.1Z" fill="currentColor"/>',  # 말풍선 + 별빛
 }
-IC['채팅'] = CHAT['A']
+IC['채팅'] = CHAT['E']
 def ic(body, col, x, y, s): return f'<svg x="{x}" y="{y}" width="{s}" height="{s}" viewBox="0 0 24 24" color="{col}">{body}</svg>'
 def icon(body, col): return svg(48, 48, body.replace('currentColor', col), '0 0 24 24')
 
@@ -73,30 +74,28 @@ def key(w, fill, p): return svg(w, 42, f'<path d="{cham(.75, .75, w-1.5, 40.5, 5
 for p, (c, l, d, card, press) in PART.items():
     A[f'타이머_링_틀_{p}'] = ring_frame(c, p)
     A[f'타이머_진행호_{p}'] = svg(260, 260, f'<circle cx="130" cy="130" r="110" fill="none" stroke="{c}" stroke-width="6"/>')
-    A[f'진행도_칸_{p}'] = svg(8, 5, f'<rect width="8" height="5" rx="1.5" fill="{c}"/>')
     A[f'채팅_칸_틀_{p}'] = svg(76, 76, panel(76, 76, 12, c), p=p)
     for k, b in CHAT.items(): A[f'아이콘_채팅_시안{k}_{p}'] = icon(b, c)
     A[f'아이콘_핀_{p}'] = icon(IC['핀'], c)
     if p == '이전': continue  # 안전 모드 전엔 위 것만 씀
     A[f'목표_칸_틀_{p}'] = svg(246, 76, panel(246, 76, 12, c) + '<rect x="12" y="16" width="3" height="44" rx="1.5" fill="url(#acc)"/>', p=p)
     A[f'판_틀_{p}'] = svg(246, 76, panel(246, 76, 12, c), p=p)  # 늘려 쓰는 빈 판 (팝업 · 지도 · 비아 칸)
-    A[f'완료_체크_큰_{p}'] = svg(76, 76, '<circle cx="38" cy="38" r="36" fill="url(#acc)"/><circle cx="38" cy="38" r="30" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>' + ic(IC['체크'], '#1a1220', 18, 18, 40), p=p)
+    A[f'완료_체크_큰_{p}'] = svg(76, 76, '<circle cx="38" cy="38" r="36" fill="url(#acc)"/>' + ic(IC['체크'], '#1a1220', 18, 18, 40), p=p)
     A[f'완료_체크_작은_{p}'] = svg(32, 32, '<circle cx="16" cy="16" r="16" fill="url(#acc)"/>' + ic(IC['체크'], '#1a1220', 6, 6, 20), p=p)
     A[f'버튼_눌림_{p}'] = bt(84, 54, press, c, p)
     A[f'힌트_카드_틀_{p}'] = svg(308, 70, f'<path d="{cham(1, 1, 306, 68, 10)}" fill="{card}" stroke="{c}" stroke-width="1.5"/><rect x="12" y="16" width="3" height="38" rx="1.5" fill="url(#acc)"/>', p=p)
     A[f'키_눌림_{p}'] = key(30, 'url(#acc)', p)
 # 2부만 쓰는 것: 비아 동그라미 틀 · V 마크 · 파형 막대 · 지직 줄무늬
 c2, l2, d2 = PART['2부'][:3]
-A['비아_동그라미_틀'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/><circle cx="20" cy="20" r="14.5" fill="none" stroke="{c2}" stroke-opacity=".35" stroke-width="1" stroke-dasharray="2 3"/>', p='2부')
+A['비아_동그라미_틀'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/>', p='2부')
 A['비아_V_마크'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/><path d="M12.5 13 20 28 27.5 13" fill="none" stroke="url(#acc)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>', p='2부')
 A['파형_막대'] = svg(5, 44, f'<rect width="5" height="44" rx="2.5" fill="url(#acc)"/>', p='2부')
 A['지직_줄무늬'] = svg(32, 90, f'<rect y="28" width="32" height="6" fill="{c2}" fill-opacity=".55"/>', p='2부')
 # 부와 무관한 것
-A['진행도_칸_빈'] = svg(8, 5, '<rect width="8" height="5" rx="1.5" fill="rgba(255,255,255,.14)"/>')
 A['안읽음_배지'] = svg(22, 22, f'<circle cx="11" cy="11" r="10" fill="{ERR}" stroke="#1a1220" stroke-width="2"/>')
 A['입력_판'] = svg(332, 78, panel(332, 78, 14, brackets=False))
 def field(err=False):
-    return svg(212, 54, f'<path d="{cham(1, 1, 210, 52, 8)}" fill="#120e16" stroke="{ERR if err else "rgba(255,255,255,.22)"}" stroke-width="1.5"/><path d="M12 45H200" stroke="{ERR if err else "rgba(255,255,255,.14)"}" stroke-width="1" stroke-dasharray="6 5"/>')
+    return svg(212, 54, f'<path d="{cham(1, 1, 210, 52, 8)}" fill="#120e16" stroke="{ERR if err else "rgba(255,255,255,.22)"}" stroke-width="1.5"/>')
 A['입력_칸'] = field(); A['입력_칸_오류'] = field(True)
 A['버튼'] = bt(84, 54, 'url(#btn)', 'rgba(255,255,255,.22)', '1부')
 A['버튼_정답'] = bt(308, 52, 'url(#accw)', 'rgba(255,255,255,.5)', '1부')

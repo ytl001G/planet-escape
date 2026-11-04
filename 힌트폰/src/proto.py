@@ -65,7 +65,6 @@ CSS = r'''
 #proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 #proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 #proto .timer span { position: relative; }
-#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar b { background: var(--c1); } #proto .p2 .timer .pbar b { background: var(--c2); } #proto .pre .timer .pbar b { background: var(--c0); }  /* 막대 색은 지금 부 색 하나로 */
 #proto .tup .timer [data-time] { color: var(--err); }
 #proto .timer .prog { position: absolute; left: 0; right: 0; top: 66%; text-align: center; font: 600 12px var(--body); letter-spacing: 0; color: rgba(242,238,246,.75); } #proto .idle .timer .prog { font-size: 15px; }  /* 링 위에 숫자 */
 #proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
@@ -90,6 +89,12 @@ CSS = r'''
 #proto .lb-goal .center { flex-direction: row; gap: 10px; justify-content: flex-start; } #proto .lb-goal .bigck { width: 34px; height: 34px; } #proto .lb-goal .bigck svg { width: 18px; height: 18px; }
 #proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
+#proto .biarow { position: relative; flex: 1; align-self: stretch; display: flex; align-items: center; min-height: 30px; }
+#proto .biarow .bia { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 15px); } #proto .biarow.talk .bia { left: 0; } #proto .biarow .wave { margin-left: 40px; }
+#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.3,.7,.3,1); } @keyframes bial { from { left: calc(50% - 15px); } }  /* 말할 때 V가 가운데 → 왼쪽 */
+#proto .biarow.mv:not(.talk) .bia { animation: biar .6s cubic-bezier(.3,.7,.3,1); } @keyframes biar { from { left: 0; } }  /* 다 말하면 다시 가운데로 */
+#proto .biarow.talk.mv .wave { animation: biaw .35s .3s both; } @keyframes biaw { from { opacity: 0; } } #proto .biarow.mv:not(.talk) .wave { animation: biaw2 .25s forwards; } @keyframes biaw2 { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #proto .biarow .bia, #proto .biarow .wave { animation: none !important; } #proto .biarow.mv:not(.talk) .wave { opacity: 0; } }
 #proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
 #proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
 #proto .lb-code .srow { grid-template-columns: 1fr 84px; }
@@ -111,7 +116,8 @@ CSS = r'''
 #proto .kr { display: flex; justify-content: center; gap: 5px; }
 #proto .key { width: 30px; height: 42px; border-radius: 7px; display: grid; place-items: center; font: 700 16px 'IBM Plex Mono', monospace; color: #f2eef6; background: rgba(255,255,255,.13); cursor: pointer; user-select: none; -webkit-user-select: none; }
 #proto .key.num { background: rgba(255,255,255,.07); }
-#proto .key.wide { width: 52px; }
+#proto .key.wide { width: 44px; }
+#proto .kr4 { width: 345px; margin: 0 auto; justify-content: space-between; } #proto .kr4 .ksp { width: 44px; }  /* 지우기는 P 줄 오른쪽 끝에 맞추고 M과 띄움, Z~M은 가운데 */
 #proto .key:active, #proto .key:focus-visible { background: color-mix(in srgb, var(--c1) 55%, transparent); outline: none; }
 #proto .p2 .key:active, #proto .p2 .key:focus-visible { background: color-mix(in srgb, var(--c2) 55%, transparent); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
@@ -218,7 +224,7 @@ HTML = '''<section id="proto">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
     <div class="grp" id="pv-skin" role="group" aria-label="에셋"><span class="state">에셋</span><button type="button" data-skin="0" aria-pressed="true">미적용</button><button type="button" data-skin="1" aria-pressed="false">적용</button></div>
-    <div class="grp" id="pv-chatic" role="group" aria-label="채팅 아이콘 시안" hidden><span class="state">채팅 아이콘 시안</span><button type="button" data-chatic="A" aria-pressed="true">A</button><button type="button" data-chatic="B" aria-pressed="false">B</button><button type="button" data-chatic="C" aria-pressed="false">C</button><button type="button" data-chatic="D" aria-pressed="false">D</button><button type="button" data-chatic="E" aria-pressed="false">E</button><button type="button" data-chatic="F" aria-pressed="false">F</button></div>
+    <div class="grp" id="pv-chatic" role="group" aria-label="채팅 아이콘 시안" hidden><span class="state">채팅 아이콘 시안</span><button type="button" data-chatic="A" aria-pressed="false">A</button><button type="button" data-chatic="B" aria-pressed="false">B</button><button type="button" data-chatic="C" aria-pressed="false">C</button><button type="button" data-chatic="D" aria-pressed="false">D</button><button type="button" data-chatic="E" aria-pressed="true">E</button><button type="button" data-chatic="F" aria-pressed="false">F</button></div>
     <label class="state" style="display:grid;gap:4px">진행도 (서버에서 받는 값) <input type="range" id="pv-prog" min="0" max="100" value="0" aria-label="진행도"></label>
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
@@ -312,7 +318,7 @@ function timerBox() {
 }
 function progBox() {  // 전환부(진짜 이름 입력 ~ 비아 등장)는 50 고정
   const v = S.trans || S.view === 'intro' ? 50 : S.prog;
-  return `<small class="prog" data-prog>진행도 ${v}%</small><i class="pbar" aria-hidden="true"><span><b style="width:${v}%"></b></span></i>`;
+  return `<small class="prog" data-prog>진행도 ${v}%</small>`;
 }
 function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
@@ -348,7 +354,8 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av" style="font-size:18px">V</div></div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
+    const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임
+    g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   return layB(t0, S.phase === 'pre' ? '' : g, !!S.trans);
@@ -378,9 +385,9 @@ function mapOv() {
 function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 끝에 지우기
   const rows = ['1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
   const up = S.kbNew ? ' up' : ''; S.kbNew = false;
-  return `<div class="kbd glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => '<div class="kr">'
+  return `<div class="kbd glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => (i === 3 ? '<div class="kr kr4"><i class="ksp"></i><div class="kr">' : '<div class="kr">')
     + [...r].map(ch => `<div class="key${i ? '' : ' num'}" data-act="k:${ch}" role="button" tabindex="0">${ch}</div>`).join('')
-    + (i === 3 ? `<div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
+    + (i === 3 ? `</div><div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
 }
 function setCode(v) {  // 키보드로 바꾼 코드: 칸만 고치고 화면은 그대로 (앞 코드 힌트는 다음에 누를 때 걷힘)
   v = v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
@@ -594,9 +601,9 @@ const CTL = [
   ['안전 모드 가동', () => S.phase === 'pre' && S.run && S.view === 'main', () => { S.view = 'safe'; render();
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
-    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
+    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; S.biaMv = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); } }],
   ['ALONE 입력 (전환부)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
@@ -606,7 +613,7 @@ const CTL = [
   ['행성 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_planet'; S.endStep = 0; render(); [2600, 5600, 6600, 7600, 8600].forEach((ms, i) => later(() => { S.endStep = i + 1; render(); }, ms)); }],
 ];
 __SKINDECL__const ICON0 = Object.assign({}, ICON);
-let CHATIC = 'A';
+let CHATIC = 'E';  // 기본 채팅 아이콘: 시안 E
 function setSkin(on) {  // 에셋 적용: #proto에 skin 클래스 + 아이콘을 새 에셋으로 바꿔 끼움
   document.getElementById('proto').classList.toggle('skin', on);
   Object.assign(ICON, on ? Object.assign({}, SKINICON, { chatL: SKINCHAT[CHATIC] }) : ICON0);

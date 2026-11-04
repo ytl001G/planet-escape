@@ -33,6 +33,11 @@ css = '''
 #assets .acard .use { font-size: 12px; color: var(--muted); }
 #assets .acard .st { margin-top: 4px; font-size: 12px; color: var(--muted); }
 #assets .acard .ask { font-size: 12px; color: var(--muted); }
+#assets .afile{margin:0;display:grid;gap:4px}
+#assets .afile div{aspect-ratio:1;background:#15111b;border-radius:8px;display:grid;place-items:center;padding:10px}
+#assets .afile img{max-width:100%;max-height:100%}
+#assets .afile figcaption{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+#assets h3.fk{font-size:14px;margin:12px 0 8px}\n
 #assets .bgprev { display: block; width: 100%; max-width: 980px; height: auto; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 12px; }
 #assets .who.me { border-color: var(--lily); color: var(--lily); }
 '''
