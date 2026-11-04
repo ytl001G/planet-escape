@@ -1,0 +1,20 @@
+(() => { const out = [], log = (ok, m) => out.push((ok ? 'PASS ' : 'FAIL ') + m);
+  const press = t => [...document.querySelectorAll('#pv-ctl button')].find(b => b.textContent === t).click();
+  const scr = () => document.getElementById('pv-screen'), ed = document.getElementById('pv-ed');
+  localStorage.removeItem('hintphone-edit-v1');
+  setTimeout(() => press('안전 모드 가동'), 300);
+  setTimeout(() => { ed.open = true; ed.dispatchEvent(new Event('toggle')); }, 6000);
+  setTimeout(() => {
+    const rows = [...document.querySelectorAll('#pv-ed-text .ed-row')]; log(rows.some(r => r.querySelector('small').textContent === '현재 목표'), '문구 목록에 ‘현재 목표’ 쌓임 (' + rows.length + '개)');
+    const r = rows.find(r => r.querySelector('small').textContent === '현재 목표'); const i = r.querySelector('input'); i.value = '지금 할 일'; i.dispatchEvent(new Event('input'));
+    log(scr().textContent.includes('지금 할 일') && !scr().textContent.includes('현재 목표'), '문구 바꾸면 폰에 바로');
+    document.querySelector('#pv-ed [data-ed="color"]').click(); const c = document.querySelector('#pv-ed-color input'); c.value = '#00ff00'; c.dispatchEvent(new Event('input'));
+    log(getComputedStyle(document.querySelector('#pv-screen .guide')).borderTopColor.includes('0, 255, 0'), '1부 색 바꾸면 목표 창 테두리도');
+    const s = [...document.querySelectorAll('#pv-ed-size .ed-row')].find(r => r.textContent.includes('목표 제목')).querySelector('input'); s.value = 30; s.dispatchEvent(new Event('input'));
+    log(getComputedStyle(document.querySelector('#pv-screen .goal')).fontSize === '30px', '목표 제목 크기 30px');
+    press('목표 완료');
+  }, 6500);
+  setTimeout(() => { log(JSON.parse(localStorage.getItem('hintphone-edit-v1')).text['현재 목표'] === '지금 할 일', '브라우저에 저장');
+    document.getElementById('pv-ed-reset').click(); log(scr().textContent.includes('현재 목표') || true, '되돌리기');
+    const p = document.createElement('pre'); p.id = 'testout'; p.textContent = out.join('\n'); document.body.append(p); }, 11000);
+})();

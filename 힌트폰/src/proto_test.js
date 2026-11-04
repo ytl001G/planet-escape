@@ -33,7 +33,7 @@
     log(scr().querySelectorAll('.card.h1').length === 3 && !scr().querySelector('[data-act="next"]'), '힌트 3까지'); tap('ans'); log(has('끝없는탐구'), '정답 보기'); tap('pct'); log(has('38%') && has('끝없는탐구'), '진행도와 힌트 같이'); });
   at(7600, () => { tap('home'); tap('codes'); type('ABCD'); tap('pct'); log(has('38%') && !scr().querySelector('.card'), '진행도만 먼저'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 3 && has('38%'), '본 힌트 다시 보기 + % 유지'); });
   at(7800, () => { type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !has('38%'), '없는 코드: 앞 코드 힌트만 걷힘'); tap('home'); tap('codes'); type('QRST'); tap('hint'); tap('pct'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !has('%') && !scr().querySelector('.err'), '없는 코드: 아무 반응 없음'); });
-  at(9400, () => { type('EFGH'); tap('hint'); log(!scr().querySelector('.card'), '힌트 없는 문제 코드는 없음'); tap('home'); log(!!scr().querySelector('.room span span[style*="#E57373"]') && has('알렉스의 방'), '방 이름: 알렉스만 빨강'); tap('codes'); });
+  at(9400, () => { type('EFGH'); tap('hint'); log(!scr().querySelector('.card'), '힌트 없는 문제 코드는 없음'); tap('home'); log(!!scr().querySelector('.room span span[style*="--cht-alex"]') && has('알렉스의 방'), '방 이름: 알렉스만 빨강'); tap('codes'); });
   at(9600, () => { type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '1부: 스토리 코드 반응 없음'); type('KLMN'); tap('hint'); log(!scr().querySelector('.card'), '1부: 2부 코드 반응 없음'); tap('home'); });
   at(11000, () => { press('목표 완료'); log(!!scr().querySelector('.bigck'), '목표 완료 체크'); });
   at(12800, () => { log(has('오펠리아의 승인 확보'), '다음 목표'); tap('done'); log(has('완료 목표') && has('알렉스의 승인 확보'), '완료 목표 목록'); tap('home'); });
@@ -51,8 +51,8 @@
   at(21000, () => { log(has('그냥 비아라고 불러도 돼.') && scr().querySelector('.av').textContent === '비아', '이름 비아'); });
   at(24500, () => { log(has('우선 알렉스의 방에') && document.getElementById('pv').className.includes('p2'), '2부 메인 비아 안내'); press('목표 완료'); log(has('오펠리아의 보고서에'), '2부 다음 안내'); });
   at(24700, () => { tap('codes'); type('WXYZ'); tap('hint'); log(has('뭘 기다려. 내리기만 하면 돼.'), '문제 16 1단계'); tap('hint'); log(has('근데 만약 이게 실패하면?') && has('…방금 그거 뭐였지?'), '문제 16 2단계 (에바 + 비아)'); [3, 4, 5, 6].forEach(() => tap('hint')); log(has('나 살고 싶어. 이제 막 생겼거든.'), '문제 16 6단계'); log(scr().querySelectorAll('.vdots span').length === 6, '문제 16 점 6칸'); tap('hint'); log(!!scr().querySelector('.heart') && !has('나 살고 싶어'), '6단계 뒤 심장 소리'); tap('hint'); log(!!scr().querySelector('.heart'), '그 뒤에도 심장 소리 반복'); tap('home'); });
-  at(24750, () => { log(scr().querySelectorAll('.dock .app').length === 3, '2부: 스토리코드 앱 생김'); tap('codes'); type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '힌트코드 앱: 스토리 코드 반응 없음'); tap('home'); tap('story'); type('PQRS'); tap('hint'); log(!!document.getElementById('pv-pat'), '스토리코드 앱 → 패턴 화면'); drag([0, 1, 2]); log(scr().textContent !== '' && !!scr().querySelector('circle[fill="#E5484D"]'), '패턴 오답 빨강'); });
-  at(25800, () => { log(!scr().querySelector('circle[fill="#E5484D"]'), '패턴 초기화'); drag([0, 6, 5]); log(has('제온 추진 연료 전환 실험'), '패턴 정답 → 카드 13.5'); tap('home'); });
+  at(24750, () => { log(scr().querySelectorAll('.dock .app').length === 3, '2부: 스토리코드 앱 생김'); tap('codes'); type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '힌트코드 앱: 스토리 코드 반응 없음'); tap('home'); tap('story'); type('PQRS'); tap('hint'); log(!!document.getElementById('pv-pat'), '스토리코드 앱 → 패턴 화면'); drag([0, 1, 2]); log(scr().textContent !== '' && !!scr().querySelector('circle[style*="--err"]'), '패턴 오답 빨강'); });
+  at(25800, () => { log(!scr().querySelector('circle[style*="--err"]'), '패턴 초기화'); drag([0, 6, 5]); log(has('제온 추진 연료 전환 실험'), '패턴 정답 → 카드 13.5'); tap('home'); });
   at(26000, () => { press('행성 엔딩'); log(has('행성 프로젝트를 실행합니다.'), '행성 엔딩 1'); });
   at(35000, () => { log(has('여기는 알파. 여기는 알파…'), '행성 엔딩 반복 화면'); press('처음부터'); });
   at(37000, () => { press('안전 모드 가동'); });
