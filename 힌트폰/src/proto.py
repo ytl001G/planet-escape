@@ -87,10 +87,6 @@ CSS = r'''
 #proto .pre .app i { background: linear-gradient(160deg, #5b5763, #2c2a31); }
 #proto .dock.off .app { cursor: default; opacity: .45; }
 #proto .app .badge { right: -5px; top: -5px; }
-#proto .toast { position: absolute; top: 34px; left: 12px; right: 12px; z-index: 6; display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 18px; cursor: pointer; animation: tdrop .35s ease-out; }
-#proto .toast i { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: linear-gradient(160deg, color-mix(in srgb, var(--c1), black 25%), color-mix(in srgb, var(--c1), black 60%)); flex: none; }
-#proto .p2 .toast i { background: linear-gradient(160deg, var(--c2), color-mix(in srgb, var(--c2), black 40%)); }
-#proto .toast b { display: block; font: 700 13px var(--body); }
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
 #proto .idle { flex: 1; display: grid; place-items: center; }
 #proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
@@ -197,7 +193,6 @@ CSS = r'''
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
 @keyframes pwave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
 #proto .center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
-#proto .recov { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-size: 14px; line-height: 1.5; color: #d8d3df; text-align: left; }
 #proto .timer.start { cursor: pointer; }
 #proto .offov { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; justify-content: center; padding: 200px 22px 40px; background: rgba(8,6,12,.96); }
 #proto .offov.lb-off { justify-content: flex-end; padding: 0 22px 44px; } #proto .offov .center { flex: none; }
@@ -540,7 +535,7 @@ function vEnd() {
 }
 function vOffline() {  // 연결 끊김: 메인 화면 위를 통째로 덮고, 타이머만 그 자리 그 모양으로 위에 보임
   S.kb = S.ckb = S.hpop = false;
-  return vMain() + `<div class="offov lb-off" role="alert"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p><div class="recov">예시 문구</div></div></div>`;
+  return vMain() + `<div class="offov lb-off" role="alert"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p></div></div>`;
 }
 
 function render() {
@@ -551,7 +546,6 @@ function render() {
   if (S.phase.startsWith('end')) h = vEnd();
   else if (S.offline) h = vOffline();
   else h = ({ main: vMain, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
-  if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar(); edText(); scr.classList.toggle('offon', !!S.offline && !S.phase.startsWith('end'));
   const fi = (S.kb && $('pv-in')) || (S.ckb && $('pv-chatin'));  // 키보드가 떠 있으면 칸에 초점 · 글자 끝에 커서 (맨 앞으로 가던 버그)
   if (fi) { fi.focus({ preventScroll: true }); const L = fi.value.length; try { fi.setSelectionRange(L, L); } catch (e) {} }
@@ -561,7 +555,7 @@ function render() {
   if (S.view === 'pattern' && !S.phase.startsWith('end') && !S.offline) bindPattern();
   panel();
 }
-function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread++; S.toast = true; later(() => { S.toast = false; render(); }, 3500); } render(); }
+function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') S.unread++; render(); }  // 위 알림 배너 없이 채팅 칸 숫자만
 
 function codeOK(code) {  // 지금 받는 코드면 그 코드, 아니면 null (화면은 안 건드림)
   const c0 = D.codes[code], app = !!c0;  // 힌트코드 앱 하나에서 힌트 코드 · 스토리 코드 모두 받음
@@ -587,7 +581,7 @@ function act(a) {
   if (a === 'noop') return;
   if (a === 'map') { if (S.phase === 'p1' && S.view === 'main' && !S.celebrate) { S.map = true; render(); scr.querySelector('.mapx').focus(); } return; }
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
-  if (a === 'chat') { S.ckb = false; S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
+  if (a === 'chat') { S.ckb = false; S.view = 'chat'; S.unread = 0; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
   if (a === 'ckb') { if (!S.ckb) { S.ckb = S.kbNew = true; render(); } return; }
   if (a === 'ckbx') { if (S.ckb) { S.ckb = false; render(); } return; }  // 대화 쪽을 누르면 키보드 내림
@@ -682,7 +676,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
   ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .lb-used', '힌트 사용 횟수', 12], ['#proto .timer .prog', '진행도', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
-  ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .recov', '복구 안내 글', 14], ['#proto .toast b', '알림 배너 제목', 13]];
+  ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {
   const root = document.getElementById('proto');

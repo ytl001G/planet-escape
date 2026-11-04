@@ -70,8 +70,8 @@
     tap('cklang'); document.getElementById('pv-chat').requestSubmit(); log(has('도와주세요?') && document.getElementById('pv-chatin').value === '' && !!scr().querySelector('.kbd.ck'), '보낸 뒤 칸 비움 · 키보드 유지');
     tap('ckbx'); log(!scr().querySelector('.kbd'), '대화 쪽 누르면 키보드 내림'); tap('home'); });
   at(13000, () => { tap('chat'); const i = document.getElementById('pv-chatin'); i.value = '도와주세요'; document.getElementById('pv-chat').requestSubmit(); log(has('도와주세요'), '채팅 보내기'); tap('home'); });
-  at(15600, () => { log(!!scr().querySelector('.badge'), '안 읽음 숫자'); tap('chat'); log(!!scr().querySelector('.msg.them') && !scr().querySelector('.badge'), '답장 읽음'); tap('home'); });
-  at(15800, () => { press('연결 끊김'); log(!!scr().querySelector('.offov svg') && has('연결이 끊겼습니다') && !scr().querySelector('.load') && getComputedStyle(scr().querySelector('.timer')).zIndex === '5', '연결 끊김: 화면 전체를 덮고 타이머는 위에'); press('다시 연결'); log(has('오펠리아의 승인 확보'), '다시 연결'); });
+  at(15600, () => { log(!!scr().querySelector('.badge') && !scr().querySelector('.toast'), '안 읽음 숫자 · 위 알림 배너 없음'); tap('chat'); log(!!scr().querySelector('.msg.them') && !scr().querySelector('.badge'), '답장 읽음'); tap('home'); });
+  at(15800, () => { press('연결 끊김'); log(!!scr().querySelector('.offov svg') && has('연결이 끊겼습니다') && !has('예시 문구') && !scr().querySelector('.load') && getComputedStyle(scr().querySelector('.timer')).zIndex === '5', '연결 끊김: 화면 전체를 덮고 타이머는 위에'); press('다시 연결'); log(has('오펠리아의 승인 확보'), '다시 연결'); });
   at(16000, () => { press('2부로 · 비아 등장'); log(!!scr().querySelector('.stripes'), '비아 끼어들기'); });
   at(18300, () => { log(!!scr().querySelector('.lb-goal .wave') && !scr().querySelector('.lb-goal .vplay') && scr().querySelector('.av').textContent === '?', '이름 ? · 음성 재생 중'); });
   at(21000, () => { log(!!scr().querySelector('.lb-goal .wave') && !has('그냥 비아라고') && scr().querySelector('.av').textContent === 'V', '비아 소개: 동그라미 V · 글 대신 음성 재생 중'); });
