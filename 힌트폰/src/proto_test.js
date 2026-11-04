@@ -57,7 +57,7 @@
   at(15800, () => { press('연결 끊김'); log(!!scr().querySelector('.guide .center svg') && has('연결이 끊겼습니다') && !scr().querySelector('.load'), '연결 끊김: 문구만, 로딩 없음'); press('다시 연결'); log(has('오펠리아의 승인 확보'), '다시 연결'); });
   at(16000, () => { press('2부로 · 비아 등장'); log(!!scr().querySelector('.stripes'), '비아 끼어들기'); });
   at(18300, () => { log(has('보호 시스템 로딩 중…') && scr().querySelector('.av').textContent === '?', '이름 ?'); });
-  at(21000, () => { log(has('그냥 비아라고 불러도 돼.') && scr().querySelector('.av').textContent === '비아', '이름 비아'); });
+  at(21000, () => { log(has('그냥 비아라고 불러도 돼.') && scr().querySelector('.av').textContent === 'V', '동그라미 안 V'); });
   at(24500, () => { log(has('우선 알렉스의 방에') && document.getElementById('pv').className.includes('p2'), '2부 메인 비아 안내'); press('목표 완료'); log(has('오펠리아의 보고서에'), '2부 다음 안내'); });
   at(24700, () => { tap('codes'); type('WXYZ'); tap('hint'); log(has('뭘 기다려. 내리기만 하면 돼.'), '문제 16 1단계'); tap('hint'); log(has('근데 만약 이게 실패하면?') && has('…방금 그거 뭐였지?'), '문제 16 2단계 (에바 + 비아)'); [3, 4, 5, 6].forEach(() => tap('hint')); log(has('나 살고 싶어. 이제 막 생겼거든.'), '문제 16 6단계'); log(scr().querySelectorAll('.vdots span').length === 6, '문제 16 점 6칸'); tap('hint'); log(!!scr().querySelector('.heart') && !has('나 살고 싶어'), '6단계 뒤 심장 소리'); tap('hint'); log(!!scr().querySelector('.heart'), '그 뒤에도 심장 소리 반복'); tap('home'); });
   at(24740, () => { tap('codes'); type('ABCD'); tap('hint'); log(!scr().querySelector('.card'), '2부: 1부 코드 반응 없음'); type('KLMN'); tap('hint'); log(!!scr().querySelector('.card'), '2부: 2부 코드 힌트'); tap('home'); });

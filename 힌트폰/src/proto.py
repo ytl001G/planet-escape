@@ -352,7 +352,7 @@ function vMain() {
         + `<div class="iconbtn" data-act="done" role="button" aria-label="완료 목표" tabindex="0">${ICON.list}</div>`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
+    g = `<div class="bia"><div class="av" style="font-size:18px">V</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
   if (S.phase === 'pre' && !S.run) return `<div class="idle">${timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>')}</div>` + dock();  // 시작 전: 앱만 열어 두고 설명 · 힌트코드 · 채팅은 열어 볼 수 있음
   if (S.phase === 'pre') return `<div class="idle">${timerBox()}</div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
@@ -489,8 +489,8 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 }
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:var(--c1)">') + '<div class="stripes"></div>';
-  const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : '비아';
-  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:${name === '?' ? 18 : 12}px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false, false);  // 비아 소개 중: 독은 보이되 못 누름 · 스토리코드는 소개가 끝나야 톡 생김
+  const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
+  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false, false);  // 비아 소개 중: 독은 보이되 못 누름 · 스토리코드는 소개가 끝나야 톡 생김
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;

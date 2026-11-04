@@ -14,6 +14,7 @@ python -X utf8 "$SP/post_ph.py" 힌트폰_논리도.html
 python -X utf8 "$SP/proto.py" . "$SP/proto_part.json"
 python -X utf8 "$SP/post_proto.py" 힌트폰_논리도.html "$SP/proto_part.json"
 python -X utf8 "$SP/opts_btn.py"
+python -X utf8 "$SP/kbd_opts.py"
 python -X utf8 "$SP/post_rules.py" 힌트폰_논리도.html
 python -X utf8 "$SP/post_tabs.py" 힌트폰_논리도.html
 python -X utf8 "$SP/post_theme.py" 힌트폰_논리도.html

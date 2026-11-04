@@ -51,6 +51,7 @@ css = '''
 #rules .note { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
 '''
 opts = pathlib.Path(__file__).with_name('rules_opts.html').read_text(encoding='utf-8')  # 시안: 고르면 지움
+opts += pathlib.Path(__file__).with_name('kbd_opts.html').read_text(encoding='utf-8')  # 키보드 칸 시안: 고르면 지움
 html = '<section id="rules">\n<h1 class="big" style="font-size:26px;margin:0">공통 규정</h1>\n' + opts + colors + screen + font + size + btn + rules + '</section>\n'
 o = '<section id="assets">'; assert s.count(o) == 1
 s = s.replace(o, html + o).replace('</style>', css + '</style>', 1)
