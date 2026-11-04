@@ -83,6 +83,14 @@ CSS = r'''
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
 #proto .idle { flex: 1; display: grid; place-items: center; font: 700 64px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
+#proto .chatin + .kbd { margin-top: 8px; }
+#proto .ck .key { font: 500 16px var(--body); }
+#proto .ck .key.num { font: 700 15px 'IBM Plex Mono', monospace; }
+#proto .key.mid { width: 40px; background: rgba(255,255,255,.07); }
+#proto .key.mid.on { background: rgba(207,134,230,.55); }
+#proto .p2 .key.mid.on { background: rgba(255,174,77,.55); }
+#proto .key.wide2 { width: 58px; font: 700 12px var(--body) !important; background: rgba(255,255,255,.07); }
+#proto .key.space { width: 170px; }
 #proto .kr { display: flex; justify-content: center; gap: 5px; }
 #proto .key { width: 30px; height: 42px; border-radius: 7px; display: grid; place-items: center; font: 700 16px 'IBM Plex Mono', monospace; color: #f2eef6; background: rgba(255,255,255,.13); cursor: pointer; user-select: none; -webkit-user-select: none; }
 #proto .key.num { background: rgba(255,255,255,.07); }
@@ -218,6 +226,7 @@ const D = __DATA__, BG = __BG__, SH = __SHIELDS__, APPICON = __APPICON__;
 const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
+  shift: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 2 9.5h4V16h6V9.5h4z"/></svg>',
   del: '<svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 1.5h13a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H8L1.5 9z"/><path d="M12 6l6 6M18 6l-6 6"/></svg>',
   bulb: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
   book: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 5.8 14.5 4 17.5 4 20 5.5V19c-2.5-1.5-5.5-1.5-8 .3-2.5-1.8-5.5-1.8-8-.3z"/><path d="M12 5.8v13.5"/></svg>',
@@ -259,7 +268,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false);
-  S = { phase: 'pre', view: 'main', time: 6300, run: true, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
+  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: true, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
@@ -382,10 +391,58 @@ function vCard135() {
   const c = D.card135;
   return head('') + `<div class="scroll"><div class="story eva"><b style="font-size:16px">${esc(c.title)}</b><div class="by" style="text-align:left;margin:0 0 8px">${esc(c.by)}</div>${c.lines.map(esc).join('<br>')}</div></div>`;
 }
+// 두벌식 한글 조합: 누른 낱자 배열 → 글자. 지우기는 마지막 낱자 하나를 빼고 다시 조합하면 된다
+const HG = (() => {
+  const CHO = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ', JUNG = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ';
+  const JONG = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+  const V2 = { 'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ', 'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ', 'ㅡㅣ': 'ㅢ' };
+  const J2 = { 'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ', 'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ', 'ㅂㅅ': 'ㅄ' };
+  const SPLIT = Object.fromEntries(Object.entries(J2).map(([k, v]) => [v, [k[0], k[1]]]));
+  const isC = j => CHO.includes(j), isV = j => JUNG.includes(j);
+  const out = s => s.cho && s.jung ? String.fromCharCode(0xAC00 + (CHO.indexOf(s.cho) * 21 + JUNG.indexOf(s.jung)) * 28 + JONG.indexOf(s.jong || '')) : (s.cho || s.jung || '');
+  function run(seq) {  // 낱자만 이어진 한 덩어리
+    let r = '', s = {};
+    for (const j of seq) {
+      if (isC(j)) {
+        if (s.cho && s.jung && !s.jong && JONG.includes(j)) s.jong = j;
+        else if (s.jong && J2[s.jong + j]) s.jong = J2[s.jong + j];
+        else { r += out(s); s = { cho: j }; }
+      } else {
+        if (s.cho && !s.jung) s.jung = j;
+        else if (s.jung && !s.jong && V2[s.jung + j] && (s.cho || true)) s.jung = V2[s.jung + j];
+        else if (s.jong) { const [a, b] = SPLIT[s.jong] || [null, s.jong]; s.jong = a || ''; r += out(s); s = { cho: b, jung: j }; }
+        else { r += out(s); s = { jung: j }; }
+      }
+    }
+    return r + out(s);
+  }
+  // 낱자가 아닌 것(띄어쓰기 · 숫자 · 영문 · 문장부호)이 끼면 거기서 끊고 따로 조합
+  function compose(tokens) {
+    let r = '', seq = [];
+    for (const t of tokens) { if (isC(t) || isV(t)) seq.push(t); else { r += run(seq) + t; seq = []; } }
+    return r + run(seq);
+  }
+  return { compose };
+})();
+const CK = {  // 채팅 키보드 배열 (시프트는 한 번만 먹음)
+  ko: [['1234567890'], ['ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ', 'ㅃㅉㄸㄲㅆㅛㅕㅑㅒㅖ'], ['ㅁㄴㅇㄹㅎㅗㅓㅏㅣ'], ['ㅋㅌㅊㅍㅠㅜㅡ']],
+  en: [['1234567890'], ['qwertyuiop', 'QWERTYUIOP'], ['asdfghjkl', 'ASDFGHJKL'], ['zxcvbnm', 'ZXCVBNM']],
+};
+const ctext = () => HG.compose(S.ct);
+function ckbd() {
+  const L = CK[S.klang];
+  const key = (ch, cls = '') => `<div class="key${cls}" data-act="ck:${esc(ch)}" role="button" tabindex="0">${esc(ch)}</div>`;
+  const row = (r, i) => { const s = (S.kshift && r[1]) || r[0]; return [...s].map(ch => key(ch, i ? '' : ' num')).join(''); };
+  return '<div class="kbd glass ck" role="group" aria-label="채팅 키보드">'
+    + `<div class="kr">${row(L[0], 0)}</div><div class="kr">${row(L[1], 1)}</div><div class="kr">${row(L[2], 2)}</div>`
+    + `<div class="kr"><div class="key mid${S.kshift ? ' on' : ''}" data-act="ckshift" role="button" tabindex="0" aria-label="시프트" aria-pressed="${S.kshift}">${ICON.shift}</div>${row(L[3], 3)}<div class="key mid" data-act="ckdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div></div>`
+    + `<div class="kr"><div class="key wide2" data-act="cklang" role="button" tabindex="0" aria-label="한영 전환">${S.klang === 'ko' ? '한/영' : '영/한'}</div>${key('?')}<div class="key space" data-act="ck: " role="button" tabindex="0" aria-label="띄어쓰기"></div>${key('.')}</div></div>`;
+}
+function setChat() { const i = $('pv-chatin'); if (i) i.value = ctext(); }
 function vChat() {
   const ms = S.chat.map(m => m.me ? `<div class="msg me">${esc(m.t)}</div>` : `<div class="msg them">${bars(2)}</div>`).join('');
   return `<div class="head chathead"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl" style="display:grid;place-items:center">${ICON.head}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`
-    + `<div class="msgs" id="pv-msgs" role="log" aria-label="운영자 채팅">${ms}</div><form class="chatin" id="pv-chat"><input id="pv-chatin" aria-label="운영자에게 보낼 말" autocomplete="off"><button class="send" type="submit" aria-label="보내기" style="color:#fff">${ICON.send}</button></form>`;
+    + `<div class="msgs" id="pv-msgs" role="log" aria-label="운영자 채팅" data-act="ckbx">${ms}</div><form class="chatin" id="pv-chat"><input id="pv-chatin" aria-label="운영자에게 보낼 말" autocomplete="off" inputmode="none" data-act="ckb" value="${esc(ctext())}"><button class="send" type="submit" aria-label="보내기" style="color:#fff">${ICON.send}</button></form>` + (S.ckb ? ckbd() : '');
 }
 function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
   return `<div class="center full1" style="margin:-34px -18px -22px;padding:0 18px"><div class="sv zoom"><div class="sv-in">${SH}</div></div>`
@@ -420,7 +477,8 @@ function render() {
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>운영자 호출</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar();
   const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
-  const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); render(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
+  const ci = $('pv-chatin'); if (ci) ci.oninput = () => { S.ct = [...ci.value]; };
+  const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); S.ct = []; S.kshift = false; render(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
   if (S.view === 'pattern' && !S.phase.startsWith('end') && !S.offline) bindPattern();
   panel();
 }
@@ -444,8 +502,14 @@ function act(a) {
   if (a === 'noop') return;
   if (a === 'map') { if (S.phase === 'p1' && S.view === 'main' && !S.celebrate) { S.map = true; render(); scr.querySelector('.mapx').focus(); } return; }
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
-  if (a === 'chat') { S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
+  if (a === 'chat') { S.ckb = false; S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
+  if (a === 'ckb') { if (!S.ckb) { S.ckb = true; render(); } return; }
+  if (a === 'ckbx') { if (S.ckb) { S.ckb = false; render(); } return; }  // 대화 쪽을 누르면 키보드 내림
+  if (a.startsWith('ck:')) { S.ct.push(a.slice(3)); if (S.kshift) { S.kshift = false; render(); } else setChat(); return; }
+  if (a === 'ckdel') { S.ct.pop(); setChat(); return; }
+  if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
+  if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
   if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }

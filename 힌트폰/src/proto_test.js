@@ -36,6 +36,12 @@
   at(9600, () => { type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '1부: 스토리 코드 반응 없음'); type('KLMN'); tap('hint'); log(!scr().querySelector('.card'), '1부: 2부 코드 반응 없음'); tap('home'); });
   at(11000, () => { press('목표 완료'); log(!!scr().querySelector('.bigck'), '목표 완료 체크'); });
   at(12800, () => { log(has('오펠리아의 승인 확보'), '다음 목표'); tap('done'); log(has('완료 목표') && has('알렉스의 승인 확보'), '완료 목표 목록'); tap('home'); });
+  at(12900, () => { tap('chat'); log(!scr().querySelector('.kbd'), '채팅: 들어가면 키보드 없음'); tap('ckb'); log(!!scr().querySelector('.kbd.ck'), '입력 칸 누르면 한글 키보드');
+    [...'ㄷㅗㅇㅗㅏㅈㅜㅅㅔㅇㅛ'].forEach(k => tap('ck:' + k)); log(document.getElementById('pv-chatin').value === '도와주세요', '한글 조합: 도와주세요');
+    tap('ckdel'); tap('ck:ㅛ'); tap('ckshift'); log(!!scr().querySelector('[data-act="ck:ㅃ"]'), '시프트: 쌍자음'); tap('ckshift');
+    tap('cklang'); log(!!scr().querySelector('[data-act="ck:q"]'), '한/영 전환'); tap('ck:?'); log(document.getElementById('pv-chatin').value === '도와주세요?', '영문 상태 문장부호');
+    tap('cklang'); document.getElementById('pv-chat').requestSubmit(); log(has('도와주세요?') && document.getElementById('pv-chatin').value === '' && !!scr().querySelector('.kbd.ck'), '보낸 뒤 칸 비움 · 키보드 유지');
+    tap('ckbx'); log(!scr().querySelector('.kbd'), '대화 쪽 누르면 키보드 내림'); tap('home'); });
   at(13000, () => { tap('chat'); const i = document.getElementById('pv-chatin'); i.value = '도와주세요'; document.getElementById('pv-chat').requestSubmit(); log(has('도와주세요'), '채팅 보내기'); tap('home'); });
   at(15600, () => { log(!!scr().querySelector('.badge'), '안 읽음 숫자'); tap('chat'); log(!!scr().querySelector('.msg.them') && !scr().querySelector('.badge'), '답장 읽음'); tap('home'); });
   at(15800, () => { press('연결 끊김'); log(!!scr().querySelector('.guide .center svg') && has('연결이 끊겼습니다') && !scr().querySelector('.load'), '연결 끊김: 문구만, 로딩 없음'); press('다시 연결'); log(has('오펠리아의 승인 확보'), '다시 연결'); });

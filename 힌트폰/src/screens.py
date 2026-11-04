@@ -228,9 +228,27 @@ chat = (g(320, 0, R(10, 10, 270, 500, 'n', 30)
           + bubble(30, 258, 150, 2, 'n', False)
           + R(30, 444, 182, 44, 'n', 22)
           + '<circle cx="238" cy="466" r="22" class="lily"/><path d="M231 466 H245 M239 459 L246 466 L239 473" class="ln" stroke-width="2.2"/>'))
-body = body + chat
-S.append(section('14. 운영자 호출 (채팅)', svg(600, 520,
-    '운영자 호출: 메인 화면 아래 독의 운영자 호출 앱 아이콘에 안 읽은 답장 수가 빨간 숫자로 뜨고, 답장이 오면 위에서 알림 배너가 내려온다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 말풍선 안 회색 막대는 대화 내용 자리.', body, 620)))
+def kokbd(o):  # 한글 키보드: 숫자 줄 + 두벌식 3줄 + 한/영 · ? · 띄어쓰기 · .
+    out = R(10+o, 300, 270, 210, 'soft', 18)
+    rows = [('1234567890', []), ('ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ', []), ('ㅁㄴㅇㄹㅎㅗㅓㅏㅣ', []), ('ㅋㅌㅊㅍㅠㅜㅡ', ['⇧', '⌫']), ('', ['한/영', '?', ' ', '.'])]
+    for j, (keys, extra) in enumerate(rows):
+        cells = [(k, 22) for k in keys]
+        if j == 3: cells = [('⇧', 28)] + cells + [('⌫', 28)]
+        if j == 4: cells = [('한/영', 38), ('?', 22), (' ', 120), ('.', 22)]
+        tot = sum(w for _, w in cells) + 3 * (len(cells) - 1); x = 145 + o - tot / 2; y = 310 + j * 39
+        for k, w in cells:
+            out += R(x, y, w, 32, 'n', 5) + (T(x + w / 2, y + 21, k, 9 if len(k) > 1 else 10, 600, 'middle') if k.strip() else '')
+            x += w + 3
+    return out
+chat_kb = g(620, 0, R(10, 10, 270, 500, 'n', 30) + '<path d="M50 37 L43 44 L50 51" class="ln" stroke-width="2"/>' + chaticon(145, 40, 1)
+            + R(10, 66, 270, 180, 'soft', 0) + '<path d="M10 66 H280" class="ln" opacity=".45"/>' + '<path d="M10 246 H280" class="ln" opacity=".45"/>'
+            + bubble(110, 84, 150, 2, 'lily', True) + bubble(30, 142, 170, 2, 'n', False)
+            + R(30, 254, 182, 38, 'lily', 19) + T(46, 278, '예시 문구', 12) + '<path d="M106 266 V282" class="ln" stroke-width="1.4"/>'
+            + '<circle cx="238" cy="273" r="19" class="lily"/><path d="M231 273 H245 M239 266 L246 273 L239 280" class="ln" stroke-width="2.2"/>'
+            + kokbd(0))
+body = body + chat + arrow(604, 230) + chat_kb
+S.append(section('14. 운영자 호출 (채팅)', svg(910, 520,
+    '운영자 호출: 메인 화면 아래 독의 운영자 호출 앱 아이콘에 안 읽은 답장 수가 빨간 숫자로 뜨고, 답장이 오면 위에서 알림 배너가 내려온다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 말풍선 안 회색 막대는 대화 내용 자리. 맨 오른쪽은 입력 칸을 누른 뒤: 아래에서 한글 키보드(숫자 줄 · 두벌식 · 시프트 · 지우기 · 한/영 · 띄어쓰기)가 올라오고, 대화 쪽을 누르면 내려간다.', body, 920)))
 # 14. 연결이 끊겼을 때
 wifi = ('<g transform="translate(145 214)"><path d="M-22 -4 A31 31 0 0 1 22 -4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
         '<path d="M-13 5 A18 18 0 0 1 13 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
