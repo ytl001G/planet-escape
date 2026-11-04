@@ -71,6 +71,7 @@ CSS = r'''
 #proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 #proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 #proto .timer span { position: relative; }
+#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; gap: 3px; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar span:first-child b { background: var(--c1); } #proto .timer .pbar span:last-child b { background: var(--c2); }
 #proto .timer .prog { position: absolute; left: 0; right: 0; top: 66%; text-align: center; font: 600 12px var(--body); letter-spacing: 0; color: rgba(242,238,246,.75); } #proto .idle .timer .prog { font-size: 15px; }  /* 링 위에 숫자 */
 #proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
 #proto .timer .tp { fill: none; stroke: var(--c1); stroke-width: 7; stroke-linecap: round; }
@@ -351,7 +352,11 @@ function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
 setInterval(() => S && sbar(), 20000);
 function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은 시간 비율만큼 링이 남음
 function timerBox() {
-  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? `<small class="prog" data-prog>진행도 ${S.view === 'intro' ? 50 : S.prog}%</small>` : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
+  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? progBox() : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
+}
+function progBox() {  // 전환부(진짜 이름 입력 ~ 비아 등장)는 50 고정
+  const v = S.trans || S.view === 'intro' ? 50 : S.prog;
+  return `<small class="prog" data-prog>진행도 ${v}%</small><i class="pbar" aria-hidden="true"><span><b style="width:${Math.min(v, 50) * 2}%"></b></span><span><b style="width:${Math.max(v - 50, 0) * 2}%"></b></span></i>`;
 }
 function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
@@ -360,7 +365,7 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 function layB(timer, g, off = false) {  // 폰 기본 배치: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트코드 입력 아래 (off: 못 누름)
   g = g.replace(bars(), '');  // 시안 B 목표 칸은 작게: 정해지지 않은 설명 줄은 뺌
   const chat = `<div class="glass lb-chatbox"><div class="lb-chat" data-act="chat" role="button" tabindex="0" aria-label="채팅"><b>${ICON.chatL}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</b>채팅</div></div>`;
-  return `<div class="lb${off ? ' off' : ''}"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
+  return `<div class="lb${off ? ' off' : ''}"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate && !S.trans ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
@@ -376,6 +381,8 @@ function vMain() {
   let g = '';
   if (S.phase === 'pre') {
     g = '';  // 스토리카드 1은 폰이 아니라 실물 카드
+  } else if (S.phase === 'p1' && S.trans) {
+    g = `<div class="lbl">현재 목표</div><div class="goal">예시 문구</div>`;
   } else if (S.phase === 'p1') {
     if (S.celebrate) {
       const [name] = D.goals[S.goal];
@@ -388,7 +395,7 @@ function vMain() {
     g = `<div class="bia"><div class="av" style="font-size:18px">V</div></div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
-  return layB(t0, S.phase === 'pre' ? '' : g);
+  return layB(t0, S.phase === 'pre' ? '' : g, !!S.trans);
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘
 function mapSvg(hi) {  // 지금 갈 방은 인물 색 · 지나온 길은 점선 · 아직 갈 차례가 아닌 방은 회색
@@ -642,7 +649,8 @@ const CTL = [
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
     () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['전환부 (진짜 이름 입력)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.trans = false; S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
@@ -741,7 +749,7 @@ $('pv-ed-in').onclick = () => {
 $('pv-ed-reset').onclick = () => { ED = { text: {}, color: {}, size: {} }; edSave(); edApplyStyle(); edBuild(); render(); edMsg('모두 되돌렸어요'); };
 edApplyStyle();
 
-$('pv-prog').oninput = e => { S.prog = +e.target.value; const el = scr.querySelector('[data-prog]'); if (el && S.view !== 'intro') el.textContent = `진행도 ${S.prog}%`; };
+$('pv-prog').oninput = e => { S.prog = +e.target.value; render(); };
 reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 감
 })();
 </script>
