@@ -71,7 +71,7 @@ CSS = r'''
 #proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 #proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 #proto .timer span { position: relative; }
-#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; gap: 3px; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar b { background: var(--c1); } #proto .p2 .timer .pbar b { background: var(--c2); } #proto .pre .timer .pbar b { background: var(--c0); }  /* 막대 색은 지금 부 색 하나로 */
+#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar b { background: var(--c1); } #proto .p2 .timer .pbar b { background: var(--c2); } #proto .pre .timer .pbar b { background: var(--c0); }  /* 막대 색은 지금 부 색 하나로 */
 #proto .timer .prog { position: absolute; left: 0; right: 0; top: 66%; text-align: center; font: 600 12px var(--body); letter-spacing: 0; color: rgba(242,238,246,.75); } #proto .idle .timer .prog { font-size: 15px; }  /* 링 위에 숫자 */
 #proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
 #proto .timer .tp { fill: none; stroke: var(--c1); stroke-width: 7; stroke-linecap: round; }
@@ -356,7 +356,7 @@ function timerBox() {
 }
 function progBox() {  // 전환부(진짜 이름 입력 ~ 비아 등장)는 50 고정
   const v = S.trans || S.view === 'intro' ? 50 : S.prog;
-  return `<small class="prog" data-prog>진행도 ${v}%</small><i class="pbar" aria-hidden="true"><span><b style="width:${Math.min(v, 50) * 2}%"></b></span><span><b style="width:${Math.max(v - 50, 0) * 2}%"></b></span></i>`;
+  return `<small class="prog" data-prog>진행도 ${v}%</small><i class="pbar" aria-hidden="true"><span><b style="width:${v}%"></b></span></i>`;
 }
 function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
@@ -649,8 +649,8 @@ const CTL = [
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
     () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
-  ['전환부 (진짜 이름 입력)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.trans = false; S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['ALONE 입력 (전환부)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
