@@ -26,6 +26,7 @@ DATA = {
                           '실험 조건과 실패 기록을 함께 남긴다.', '당장 돌아갈 방법은 아니지만, 연구를 이어 갈 가치는 있다.']},
     # 시험용 코드 (코드 형식은 아직 미정)
     'codes': {
+        '0000': {'kind': 'hint', 'part': 1, 'pct': 50, 'hints': ['예시 문구', '예시 문구', '예시 문구'], 'answer': '예시 문구'},  # 설명용 가짜 코드: 시작 전부터 언제나
         'ABCD': {'kind': 'hint', 'part': 1, 'pct': 38, 'hints': ['특정 동작을 통해 숨겨진 것을 알아내자.', '드래그했을 때 뭔가 보이는 것 같다.',
                                                               '각 행성일마다 한 글자씩 하이라이트되며, 이를 합쳐 답을 알 수 있다.'], 'answer': '끝없는탐구'},
         'KLMN': {'kind': 'hint', 'part': 2, 'pct': 72, 'hints': ['별자리 필름이 다시 필요해 보이네.', None, None], 'answer': None},
@@ -91,6 +92,7 @@ CSS = r'''
 #proto .idle { flex: 1; display: grid; place-items: center; }
 #proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
 #proto .idle .timer circle { stroke-width: 4.5; }
+#proto .pre .timer .tp { stroke: var(--c0); }  /* 안전 모드 전엔 어느 화면이든 흰 링 (연결 끊김 포함) */
 #proto .idle .timer .tp { stroke: var(--c0); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
 #proto .chatin + .kbd { margin-top: 8px; }
@@ -232,6 +234,7 @@ HTML = '''<section id="proto">
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
     <div class="codes">
+      <span><code>0000</code> 설명용 가짜 코드 · 언제나 (시작 전에도) · 힌트 3단계 + 정답 + 진행도</span>
       <span><code>ABCD</code> 1부 힌트 (문제 3) · 힌트 3단계 + 정답</span>
       <span><code>KLMN</code> 2부 힌트 (문제 10)</span>
       <span><code>WXYZ</code> 문제 16 · 대기 연출 6단계 → 그 뒤 심장 소리 (같은 코드를 다시 넣으면 다음 단계)</span>
@@ -529,8 +532,10 @@ function check(code) {
   return c;
 }
 scr.addEventListener('click', e => {
-  const t = e.target.closest('[data-act]'); if (!t) return;
-  act(t.dataset.act);
+  const t = e.target.closest('[data-act]');
+  // 입력 칸 · 키보드 밖을 누르면 키보드가 내려감 (포커스가 풀린 것). 채팅 보내기 버튼은 입력 줄이라 그대로
+  if ((S.kb || S.ckb) && !e.target.closest('.kbd, .chatin, #pv-in')) { S.kb = S.ckb = false; render(); }
+  if (t) act(t.dataset.act);
 });
 scr.addEventListener('keydown', e => { if (e.key === 'Escape' && S.map) { act('mapx'); return; } if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.act) { e.preventDefault(); act(e.target.dataset.act); } else if (e.key === 'Enter' && e.target.id === 'pv-in') act('hint'); });
 function act(a) {

@@ -21,6 +21,8 @@
   const at = (ms, fn) => steps.push([ms, fn]);
   at(300, () => log(!!document.querySelector('#pv-sbar span') && scr().querySelectorAll('.dock .app').length === 2 && !scr().querySelector('[data-act="story"]') && !document.querySelector('.hbar'), '홈 화면: 상태 표시줄 · 독 앱 2개 (스토리코드 아직 없음) · 홈 바 없음'));
   at(301, () => { const s = document.getElementById('pv-screen'); log(!s.querySelector('[data-act="start"]') && !!s.querySelector('.idle [data-time]'), 'Start 누른 뒤: 시간 감'); });
+  at(310, () => { tap('codes'); type('0000'); tap('hint'); log(!!scr().querySelector('.card'), '안전 모드 전에도 0000 힌트'); tap('home');
+    press('연결 끊김'); log(getComputedStyle(scr().querySelector('.timer .tp')).stroke === 'rgb(233, 230, 238)', '안전 모드 전 끊김: 흰 링'); press('다시 연결'); });
   at(302, () => log(!!scr().querySelector('.idle [data-time]') && !!scr().querySelector('.idle [data-ring]') && !scr().querySelector('.guide'), '안전 모드 전: 큰 링 타이머 · 안내 창 없음'));
   at(301, () => log(!scr().querySelector('.load') && !!scr().querySelector('[data-time]'), '켜지자마자 메인(이전) · 시작 화면 없음'));
   at(2000, () => { log(!!scr().querySelector('[data-time]'), '메인(이전) 타이머'); press('스토리카드 1 띄우기'); log(has('보안이 아니잖아?'), '스토리카드 1 문구'); });
@@ -30,6 +32,10 @@
   at(7300, () => { tap('codes'); log(!scr().querySelector('.kbd'), '코드 앱에 들어가면 키보드 안 뜸'); tap('kb'); log(!!scr().querySelector('.kbd') && scr().querySelectorAll('.kbd .key').length === 37, '입력 칸 누르면 키보드 (36키 + 지우기)');
     ['A', 'B', 'C', 'X'].forEach(k => tap('k:' + k)); tap('kdel'); tap('k:D'); log(document.getElementById('pv-in').value === 'ABCD', '키보드로 입력 · 지우기');
     tap('hint'); log(!scr().querySelector('.kbd') && scr().querySelectorAll('.card.h1').length === 1, '힌트 보기 → 키보드 내려감'); tap('kb'); log(!!scr().querySelector('.kbd'), '입력 칸 누르면 다시 올라옴'); tap('home'); });
+  at(7340, () => { tap('codes'); type('0000'); tap('hint'); log(!!scr().querySelector('.card'), '가짜 코드 0000: 힌트 나옴'); tap('home'); });
+  at(7350, () => { tap('codes'); tap('kb'); scr().querySelector('.head .ttl').click(); log(!scr().querySelector('.kbd'), '코드 키보드: 바깥 누르면 내려감');
+    tap('kb'); tap('k:Z'); log(!!scr().querySelector('.kbd'), '키보드 누르는 동안은 그대로'); tap('kdel'); tap('home');
+    tap('chat'); tap('ckb'); scr().querySelector('.head .ttl').click(); log(!scr().querySelector('.kbd'), '한글 키보드: 바깥 누르면 내려감'); tap('home'); });
   at(7400, () => { tap('codes'); type('ABCD'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 1, '힌트 1 열림'); tap('next'); tap('next');
     log(scr().querySelectorAll('.card.h1').length === 3 && !scr().querySelector('[data-act="next"]'), '힌트 3까지'); tap('ans'); log(has('끝없는탐구'), '정답 보기'); tap('pct'); log(has('38%') && has('끝없는탐구'), '진행도와 힌트 같이'); });
   at(7600, () => { tap('home'); tap('codes'); type('ABCD'); tap('pct'); log(has('38%') && !scr().querySelector('.card'), '진행도만 먼저'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 3 && has('38%'), '본 힌트 다시 보기 + % 유지'); });
