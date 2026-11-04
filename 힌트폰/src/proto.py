@@ -82,6 +82,13 @@ CSS = r'''
 #proto .toast b { display: block; font: 700 13px var(--body); }
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
 #proto .idle { flex: 1; display: grid; place-items: center; font: 700 64px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+#proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
+#proto .kr { display: flex; justify-content: center; gap: 5px; }
+#proto .key { width: 30px; height: 42px; border-radius: 7px; display: grid; place-items: center; font: 700 16px 'IBM Plex Mono', monospace; color: #f2eef6; background: rgba(255,255,255,.13); cursor: pointer; user-select: none; -webkit-user-select: none; }
+#proto .key.num { background: rgba(255,255,255,.07); }
+#proto .key.wide { width: 52px; }
+#proto .key:active, #proto .key:focus-visible { background: rgba(207,134,230,.55); outline: none; }
+#proto .p2 .key:active, #proto .p2 .key:focus-visible { background: rgba(255,174,77,.55); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
 #proto .srow .btn { height: auto; }
 #proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
@@ -211,6 +218,7 @@ const D = __DATA__, BG = __BG__, SH = __SHIELDS__, APPICON = __APPICON__;
 const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
+  del: '<svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 1.5h13a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H8L1.5 9z"/><path d="M12 6l6 6M18 6l-6 6"/></svg>',
   bulb: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
   book: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 5.8 14.5 4 17.5 4 20 5.5V19c-2.5-1.5-5.5-1.5-8 .3-2.5-1.8-5.5-1.8-8-.3z"/><path d="M12 5.8v13.5"/></svg>',
   sw: '<svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true"><path d="M8 11.5 10.4 8.6a3.5 3.5 0 0 0-4.8 0zM8 3.2a8.6 8.6 0 0 1 5.9 2.3l1.3-1.5A10.6 10.6 0 0 0 8 1.2 10.6 10.6 0 0 0 .8 4l1.3 1.5A8.6 8.6 0 0 1 8 3.2zm0 2.9a5.7 5.7 0 0 1 3.9 1.5L13.1 6A7.6 7.6 0 0 0 8 4.1 7.6 7.6 0 0 0 2.9 6l1.2 1.6A5.7 5.7 0 0 1 8 6.1z"/></svg>',
@@ -315,6 +323,17 @@ function mapOv() {
   return `<div class="mapov" data-act="mapx"><div class="mapbox glass" data-act="noop" role="dialog" aria-label="우주선 지도"><div class="mapx" data-act="mapx" role="button" tabindex="0" aria-label="지도 닫기">${ICON.x}</div>${mapSvg(n)}</div></div>`;
 }
 
+function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 끝에 지우기
+  const rows = ['1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  return '<div class="kbd glass" role="group" aria-label="코드 키보드">' + rows.map((r, i) => '<div class="kr">'
+    + [...r].map(ch => `<div class="key${i ? '' : ' num'}" data-act="k:${ch}" role="button" tabindex="0">${ch}</div>`).join('')
+    + (i === 3 ? `<div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
+}
+function setCode(v) {  // 키보드로 바꾼 코드: 칸만 고치고 화면은 그대로 (앞 코드 힌트는 다음에 누를 때 걷힘)
+  v = v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+  S.stale = S.stale || S.showHints || S.pct != null; S.code = v; S.pct = null; S.showHints = false; S.ans = false;
+  const i = $('pv-in'); if (i) i.value = v;
+}
 function vCodes() {
   const c = D.codes[S.code], p = c && c.part ? c.part : part();
   const opened = S.showHints && c && (c.kind === 'hint' || c.kind === 'voice');
@@ -339,11 +358,11 @@ function vCodes() {
     }
   }
   if (S.mode === 'story') return head('스토리코드')
-    + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>`;
+    + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>` + (S.kb ? kbd() : '');
   return head('힌트코드')
-    + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" aria-label="힌트코드">`
+    + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
-    + `<div class="scroll">${body}</div>`;
+    + `<div class="scroll">${body}</div>` + (S.kb ? kbd() : '');
 }
 
 function vDone() {
@@ -427,11 +446,15 @@ function act(a) {
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
   if (a === 'chat') { S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
-  if (a === 'story') { S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
-  if (a === 'codes') { S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
+  if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
+  if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
+  if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
+  if (a === 'story') { S.kb = true; S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
+  if (a === 'codes') { S.kb = true; S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
   if (a === 'done' && S.phase === 'p1') { S.view = 'done'; render(); return; }
   if (a === 'hint') {
     const c = check(S.code); if (!c) return;
+    S.kb = false;  // 맞는 코드면 키보드 내림
     if (c.kind === 'story') { S.view = 'pattern'; S.patPath = []; S.patBad = false; render(); return; }
     if (c.kind === 'voice') S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.steps.length + 1);  // 넣을 때마다 다음 단계, 끝나면 심장 소리
     else if (c.kind === 'hint') S.open[S.code] = Math.max(1, S.open[S.code] || 0);
@@ -439,7 +462,7 @@ function act(a) {
   }
   if (a === 'next') { const c = D.codes[S.code]; S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
   if (a === 'ans') { S.ans = true; (S.answered = S.answered || {})[S.code] = true; render(); return; }
-  if (a === 'pct') { const c = check(S.code); if (!c) return; if (c.pct == null) { check('-'); return; } S.pct = c.pct; render(); return; }
+  if (a === 'pct') { const c = check(S.code); if (!c) return; S.kb = false; if (c.pct == null) { check('-'); return; } S.pct = c.pct; render(); return; }
 }
 
 function bindPattern() {

@@ -67,9 +67,20 @@ def C(o, time, title=''):
     return (R(10+o, 10, 270, 500, 'n', 30) + sbar(o) + (T(145+o, 48, title, 14, 700, 'middle') if title else '')
             + R(188+o, 33, 82, 24, 'soft', 12) + f'<circle cx="{201+o}" cy="45" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".75"/><path d="M{201+o} 42 V45 L{203+o} 46.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".75"/>' + T(262+o, 49, time, 12, 700, 'end')
             + f'<path d="M{10+o} 66 H{280+o}" class="ln" opacity=".45"/>')  # 위 줄 아래 구분선
+def kbd(o):  # 자체 키보드: 숫자 1줄 + 영문 3줄 + 지우기
+    out = R(10+o, 322, 270, 188, 'soft', 18)
+    for j, row in enumerate(('1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM')):
+        n = len(row) + (1 if j == 3 else 0); w = [22] * len(row) + ([34] if j == 3 else []); tot = sum(w) + 3 * (n - 1); x = 145 + o - tot / 2
+        for k, ww in enumerate(w):
+            out += R(x, 334 + j * 42, ww, 34, 'n', 5)
+            out += (T(x + ww / 2, 356 + j * 42, row[k], 10, 700, 'middle') if k < len(row)
+                    else f'<path d="M{x+9:g} {351+j*42} l5 -6 h13 v12 h-13 z M{x+18:g} {348+j*42} l5 6 M{x+23:g} {348+j*42} l-5 6" fill="none" class="ln" stroke-width="1.3"/>')
+            x += ww + 3
+    return out
 def entry(o, typed=False, pct=None, code='ABCD', open_=False, acc='lily'):
     bar = 'bar' if acc == 'lily' else 'vfill'
     out = R(30+o, 90, 230, 44, 'n')
+    if not typed and pct is None and not open_: out += kbd(o)  # 처음 들어오면 키보드가 올라와 있음
     if typed:
         out += f'<text x="{46+o}" y="118" font-size="16" font-weight="700" font-family="IBM Plex Mono, monospace" letter-spacing="2">{code}</text>'  # 코드는 가리지 않고 글자 그대로
     # 버튼은 평소 회색, 눌러서 내용이 펼쳐진 쪽만 보라
