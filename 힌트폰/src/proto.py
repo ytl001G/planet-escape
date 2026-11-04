@@ -64,9 +64,24 @@ CSS = r'''
 #proto .pz span { width: 84px; height: 84px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); display: grid; place-items: center; }
 #proto .glass { background: rgba(24, 21, 30, .62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,.12); border-radius: 14px; }
 #proto .timer { height: 76px; display: flex; align-items: center; justify-content: center; position: relative; font: 700 36px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
-#proto .me { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; color: rgba(255,255,255,.85); background: linear-gradient(160deg, #8e24aa, #4a1c63); border: 2px solid #cf86e6; }
-#proto .p2 .me { border-color: #ffae4d; }
-#proto .me svg { width: 30px; height: 30px; margin-top: 8px; }
+#proto .sbar { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font: 700 12px var(--body); color: #f2eef6; z-index: 5; pointer-events: none; font-variant-numeric: tabular-nums; }
+#proto .sbar .ic { display: flex; gap: 6px; align-items: center; }
+#proto .sbar .off { color: #E5484D; }
+#proto .hbar { position: absolute; bottom: 7px; left: 50%; width: 120px; height: 4px; margin-left: -60px; border-radius: 2px; background: rgba(255,255,255,.55); z-index: 5; pointer-events: none; }
+#proto .dock { display: flex; justify-content: space-around; padding: 12px 6px 10px; border-radius: 26px; }
+#proto .app { display: grid; justify-items: center; gap: 6px; cursor: pointer; font: 500 11px var(--body); color: #f2eef6; background: none; border: 0; }
+#proto .app i { position: relative; width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; color: #fff; background: linear-gradient(160deg, #a24bc4, #5a1f78); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+#proto .p2 .app i { background: linear-gradient(160deg, #ffa53d, #a85a00); }
+#proto .pre .app i { background: linear-gradient(160deg, #5b5763, #2c2a31); }
+#proto .dock.off .app { cursor: default; opacity: .45; }
+#proto .app .badge { right: -5px; top: -5px; }
+#proto .toast { position: absolute; top: 34px; left: 12px; right: 12px; z-index: 6; display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 18px; cursor: pointer; animation: tdrop .35s ease-out; }
+#proto .toast i { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: linear-gradient(160deg, #a24bc4, #5a1f78); flex: none; }
+#proto .p2 .toast i { background: linear-gradient(160deg, #ffa53d, #a85a00); }
+#proto .toast b { display: block; font: 700 13px var(--body); }
+@keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
+#proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
+#proto .srow .btn { height: auto; }
 #proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
 #proto .badge { position: absolute; right: -4px; top: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #E5484D; color: #fff; font: 700 11px/18px var(--body); text-align: center; }
 #proto .guide { flex: 1; padding: 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
@@ -170,7 +185,7 @@ CSS = r'''
 HTML = '''<section id="proto">
 <h2 class="grp-title">시험해 보기</h2>
 <div class="proto-wrap">
-  <div class="stage" id="pv-stage"><div class="ph pre" id="pv"><div class="bg" id="pv-bg"></div><div class="layer" id="pv-screen"></div><div class="pz hidden" id="pv-pz" role="button" tabindex="0" aria-label="계속"><span><svg width="30" height="34" viewBox="0 0 30 34"><path d="M4 2 L28 17 L4 32 Z" fill="#fff"/></svg></span></div></div></div>
+  <div class="stage" id="pv-stage"><div class="ph pre" id="pv"><div class="bg" id="pv-bg"></div><div class="sbar" id="pv-sbar" aria-hidden="true"></div><div class="hbar"></div><div class="layer" id="pv-screen"></div><div class="pz hidden" id="pv-pz" role="button" tabindex="0" aria-label="계속"><span><svg width="30" height="34" viewBox="0 0 30 34"><path d="M4 2 L28 17 L4 32 Z" fill="#fff"/></svg></span></div></div></div>
   <div class="panel">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
@@ -194,7 +209,11 @@ const D = __DATA__, BG = __BG__, SH = __SHIELDS__, APPICON = __APPICON__;
 const $ = s => document.getElementById(s);
 const ph = $('pv'), scr = $('pv-screen'), bg = $('pv-bg');
 const ICON = {
-  me: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="9" r="4.2"/><path d="M3.8 21c.7-4.6 4-6.6 8.2-6.6s7.5 2 8.2 6.6z"/></svg>',
+  bulb: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
+  book: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 5.8 14.5 4 17.5 4 20 5.5V19c-2.5-1.5-5.5-1.5-8 .3-2.5-1.8-5.5-1.8-8-.3z"/><path d="M12 5.8v13.5"/></svg>',
+  sw: '<svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true"><path d="M8 11.5 10.4 8.6a3.5 3.5 0 0 0-4.8 0zM8 3.2a8.6 8.6 0 0 1 5.9 2.3l1.3-1.5A10.6 10.6 0 0 0 8 1.2 10.6 10.6 0 0 0 .8 4l1.3 1.5A8.6 8.6 0 0 1 8 3.2zm0 2.9a5.7 5.7 0 0 1 3.9 1.5L13.1 6A7.6 7.6 0 0 0 8 4.1 7.6 7.6 0 0 0 2.9 6l1.2 1.6A5.7 5.7 0 0 1 8 6.1z"/></svg>',
+  swoff: '<svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M1.5 4.5a9.5 9.5 0 0 1 13 0M4 7a6 6 0 0 1 8 0" opacity=".45"/><path d="M2 1l12 10"/></svg>',
+  bat: '<svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true"><rect x=".75" y=".75" width="19.5" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/><rect x="2.5" y="2.5" width="13" height="7" rx="1.6" fill="currentColor"/><rect x="21.5" y="4" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".6"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   head: '<svg width="22" height="22" viewBox="-12 -12 24 24"><path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></svg>',
   back: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M13 3 L6 10 L13 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -244,8 +263,17 @@ function setBg() {
   bg.style.backgroundImage = k ? `url(${BG[k]})` : 'none';
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
+function dock(on = true) {  // 아래 독: 폰 앱 아이콘처럼
+  const apps = [['codes', '힌트코드', ICON.bulb], ['story', '스토리코드', ICON.book], ['chat', '운영자 호출', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
+  return `<div class="dock glass${on ? '' : ' off'}">` + apps.map(([a, l, ic]) => `<div class="app"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
+}
+function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
+  const d = new Date(), t = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+  $('pv-sbar').innerHTML = S.phase === 'end_escape' ? '' : `<span>${t}</span><span class="ic">${S.offline ? `<span class="off" aria-label="연결 끊김">${ICON.swoff}</span>` : ICON.sw}${ICON.bat}</span>`;
+}
+setInterval(() => S && sbar(), 20000);
 function timerBox() {
-  return `<div class="timer glass"><div class="me" role="img" aria-label="릴리 프로필">${ICON.me}</div><span data-time>${fmt()}</span><div class="op glass" data-act="chat" role="button" aria-label="운영자 채팅" tabindex="0">${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</div></div>`;
+  return `<div class="timer glass"><span data-time>${fmt()}</span></div>`;
 }
 function head(title) {
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
@@ -267,7 +295,7 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
-  return timerBox() + `<div class="guide glass">${g}</div><div class="btn glass" data-act="codes" role="button" tabindex="0">힌트</div>` + (S.map ? mapOv() : '');
+  return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘
 function mapSvg(hi) {
@@ -305,6 +333,8 @@ function vCodes() {
       body += `<div class="card h2" style="gap:12px">${inner}<div class="vdots">${c.steps.map((_, k) => `<span style="background:${k <= i ? '#ffae4d' : 'rgba(255,255,255,.2)'}"></span>`).join('')}</div></div>`;
     }
   }
+  if (S.mode === 'story') return head('스토리코드')
+    + `<div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" aria-label="스토리코드"><div class="btn" data-act="hint" role="button" tabindex="0" aria-label="확인">${ICON.send}</div></div>`;
   return head('힌트코드')
     + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
@@ -352,7 +382,7 @@ function vEnd() {
   return `<div class="center" style="gap:14px">${ICON.sig}${L.slice(0, Math.min(st - 1, 4)).map((t, i) => `<b style="font-size:16px${i === 3 ? ';color:#ffb460' : ''}" class="${i === 3 ? 'blink' : ''}">${t}</b>`).join('')}</div>`;
 }
 function vOffline() {
-  return timerBox() + `<div class="guide glass"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p></div></div><div class="btn glass">힌트</div>`;
+  return timerBox() + `<div class="guide glass"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p></div></div>` + dock(false);
 }
 
 function render() {
@@ -363,16 +393,18 @@ function render() {
   if (S.phase.startsWith('end')) h = vEnd();
   else if (S.offline) h = vOffline();
   else h = ({ main: vMain, codes: vCodes, done: vDone, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
-  scr.innerHTML = h;
+  if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>운영자 호출</b>${bars()}</div></div>`;
+  scr.innerHTML = h; sbar();
   const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
   const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); render(); $('pv-chatin').focus(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
   if (S.view === 'pattern' && !S.phase.startsWith('end') && !S.offline) bindPattern();
   panel();
 }
-function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') S.unread++; render(); }
+function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread++; S.toast = true; later(() => { S.toast = false; render(); }, 3500); } render(); }
 
 function check(code) {
-  const c0 = D.codes[code], c = c0 && (c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2' ? null : c0;  // 2부·스토리 코드는 비아 등장 후에만
+  const c0 = D.codes[code], app = c0 && (S.mode === 'story') === (c0.kind === 'story');  // 힌트코드 앱은 힌트 코드만, 스토리코드 앱은 스토리 코드만
+  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') ? null : c0;  // 2부·스토리 코드는 비아 등장 후에만
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
     return null;
@@ -388,9 +420,10 @@ function act(a) {
   if (a === 'noop') return;
   if (a === 'map') { if (S.phase === 'p1' && S.view === 'main' && !S.celebrate) { S.map = true; render(); scr.querySelector('.mapx').focus(); } return; }
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
-  if (a === 'chat') { S.view = 'chat'; S.unread = 0; render(); return; }
+  if (a === 'chat') { S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
-  if (a === 'codes') { S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
+  if (a === 'story') { S.mode = 'story'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
+  if (a === 'codes') { S.mode = 'hint'; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); $('pv-in')?.focus(); return; }
   if (a === 'done' && S.phase === 'p1') { S.view = 'done'; render(); return; }
   if (a === 'hint') {
     const c = check(S.code); if (!c) return;

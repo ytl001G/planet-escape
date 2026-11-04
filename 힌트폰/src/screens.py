@@ -33,13 +33,23 @@ def ck(x, y, k=1, wdt=2):
     return f'<path d="M{x-4.5*k} {y} L{x-1.5*k} {y+3*k} L{x+4.5*k} {y-3.5*k}" class="ck" stroke-width="{wdt}"/>'
 
 # 메인 화면형 (250x440)
-def me(o, cls):  # 릴리 프로필 원 (타이머 칸 왼쪽 · 채팅 버튼과 대칭)
-    ring = 'var(--via)' if cls == 'via' else 'var(--lily)'
-    return (f'<circle cx="{62+o}" cy="81" r="13" style="fill:var(--lily-soft);stroke:{ring};stroke-width:2"/>'
-            f'<circle cx="{62+o}" cy="77" r="4.2" style="fill:{ring}"/><path d="M{54.5+o} 91 Q{62+o} 82 {69.5+o} 91" style="fill:{ring}"/>')
-def M(o, time, guide_cls='lily'):
-    return (R(20+o, 10, 250, 440, 'n', 30) + R(40+o, 52, 210, 58, 'soft', 10) + me(o, guide_cls) + T(145+o, 99, time, 24, 700, 'middle')
-            + R(40+o, 124, 210, 232, guide_cls, 12) + R(40+o, 372, 210, 50, 'n', 10) + T(145+o, 402, '힌트코드', 13, 700, 'middle'))
+def M(o, time, guide_cls='lily', badge=False):
+    return (R(20+o, 10, 250, 440, 'n', 30) + sbar(o + 10) + R(40+o, 52, 210, 58, 'soft', 10) + T(145+o, 99, time, 24, 700, 'middle')
+            + R(40+o, 124, 210, 220, guide_cls, 12) + dock(o, guide_cls, badge) + R(115+o, 440, 60, 3, 'soft', 1.5))
+def sbar(o):  # 상태 표시줄: 시각 · 와이파이 · 배터리
+    return (T(34+o, 29, '9:41', 9, 700) + f'<path d="M{o+228} 24 a6 6 0 0 1 9 0 M{o+230} 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="{o+232.5}" cy="28.5" r="1.2" fill="currentColor"/>'
+            + R(o+242, 22.5, 14, 7.5, 'n', 2) + R(o+243.5, 24, 9, 4.5, 'soft', 1))
+def dock(o, cls, badge=False):  # 아래 독: 힌트코드 · 스토리코드 · 운영자 호출 앱 아이콘
+    k = 'via' if cls == 'via' else 'n' if cls.startswith('n') else 'lily'
+    out = R(36+o, 352, 218, 80, 'soft', 20)
+    for i, (x, l) in enumerate(((80, '힌트코드'), (145, '스토리코드'), (210, '운영자 호출'))):
+        out += R(x-19+o, 361, 38, 38, k, 10) + T(x+o, 420, l, 9, 500, 'middle')
+        if i == 0: out += f'<circle cx="{x+o}" cy="377" r="6" fill="none" class="ln" stroke-width="1.6"/><path d="M{x-3+o} 387 H{x+3+o}" class="ln" stroke-width="1.6"/>'
+        if i == 1: out += f'<path d="M{x-8+o} 372 Q{x+o} 368 {x+o} 373 Q{x+o} 368 {x+8+o} 372 V388 Q{x+o} 384 {x+o} 389 Q{x+o} 384 {x-8+o} 388 Z" fill="none" class="ln" stroke-width="1.5"/>'
+        if i == 2:
+            out += f'<path d="M{x-8+o} 372 H{x+8+o} Q{x+10+o} 372 {x+10+o} 374 V382 Q{x+10+o} 384 {x+8+o} 384 H{x-2+o} L{x-6+o} 388 V384 H{x-8+o} Q{x-10+o} 384 {x-10+o} 382 V374 Q{x-10+o} 372 {x-8+o} 372 Z" fill="none" class="ln" stroke-width="1.5"/>'
+            if badge: out += f'<circle cx="{x+17+o}" cy="362" r="7" fill="#E5484D"/><text x="{x+17+o}" y="365.5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">1</text>'
+    return out
 ROOMS = [('알렉스', 56, 272), ('오펠리아', 117, 272), ('노아', 178, 272), ('에바', 86, 308), ('릴리', 148, 308)]
 def mapx(o, hi, done=()):
     return ''  # 목표 창에는 현재 목표만 (인물 방 목록 뺌)
@@ -53,7 +63,7 @@ def mapx(o, hi, done=()):
 
 # 코드 화면형 (270x500). 버튼은 입력 칸 아래 [힌트 보기] [진행도]
 def C(o, time, title=''):
-    return (R(10+o, 10, 270, 500, 'n', 30) + (T(145+o, 48, title, 14, 700, 'middle') if title else '')
+    return (R(10+o, 10, 270, 500, 'n', 30) + sbar(o) + (T(145+o, 48, title, 14, 700, 'middle') if title else '')
             + R(188+o, 33, 82, 24, 'soft', 12) + f'<circle cx="{201+o}" cy="45" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".75"/><path d="M{201+o} 42 V45 L{203+o} 46.5" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".75"/>' + T(262+o, 49, time, 12, 700, 'end')
             + f'<path d="M{10+o} 66 H{280+o}" class="ln" opacity=".45"/>')  # 위 줄 아래 구분선
 def entry(o, typed=False, pct=None, code='ABCD', open_=False, acc='lily'):
@@ -185,9 +195,8 @@ S.append(section('13. 보너스 패턴 입력 → 스토리카드 13.5', svg(610
 # 13. 운영자 호출 (문구 자리는 회색 막대)
 def chaticon(x, y, k=1):
     return (f'<g transform="translate({x} {y + 1}) scale({k})">' + '<path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></g>')
-body = (M(0, '38:15') + T(56, 236, '현재 목표', 11, cls='t-lily') + T(56, 256, '에바의 승인 확보', 14, 700) + place(56, 282, '에바의 방', 170)
-        + '<circle cx="228" cy="81" r="15" class="n"/>' + chaticon(228, 77, 0.8)
-        + '<circle cx="241" cy="68" r="8" fill="#E5484D"/><text x="241" y="72" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text>'  # 안 읽은 운영자 답장 수
+body = (M(0, '38:15', badge=True) + T(56, 236, '현재 목표', 11, cls='t-lily') + T(56, 256, '에바의 승인 확보', 14, 700) + place(56, 282, '에바의 방', 170)
+        + R(30, 16, 230, 34, 'soft', 12) + R(40, 24, 18, 18, 'lily', 5) + T(66, 31, '운영자 호출', 9, 700) + R(66, 37, 90, 5, 'ph', 2.5)  # 위에서 내려온 알림 배너
         + arrow(276, 230))
 # 채팅 창 (270x500 화면, 말풍선 안 회색 막대는 실제 대화가 들어갈 자리)
 def bubble(x, y, w, n, cls, tail_right):
@@ -209,14 +218,14 @@ chat = (g(320, 0, R(10, 10, 270, 500, 'n', 30)
           + '<circle cx="238" cy="466" r="22" class="lily"/><path d="M231 466 H245 M239 459 L246 466 L239 473" class="ln" stroke-width="2.2"/>'))
 body = body + chat
 S.append(section('14. 운영자 호출 (채팅)', svg(600, 520,
-    '운영자 호출: 메인 화면 타이머 옆 말풍선 아이콘에 안 읽은 운영자 답장 수가 빨간 숫자로 뜬다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 아래에 입력 칸과 보내기 버튼. 말풍선 안 회색 막대는 대화 내용 자리.', body, 620)))
+    '운영자 호출: 메인 화면 아래 독의 운영자 호출 앱 아이콘에 안 읽은 답장 수가 빨간 숫자로 뜨고, 답장이 오면 위에서 알림 배너가 내려온다. 누르면 채팅 창이 열린다. 위 줄(뒤로 · 채팅 아이콘 · 타이머) 아래와 입력 줄 위에 구분선이 있고, 그 사이 어두운 판에서 대화가 오간다. 참가자 말풍선은 오른쪽 보라, 운영자 말풍선은 왼쪽 회색. 말풍선 안 회색 막대는 대화 내용 자리.', body, 620)))
 # 14. 연결이 끊겼을 때
 wifi = ('<g transform="translate(145 214)"><path d="M-22 -4 A31 31 0 0 1 22 -4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
         '<path d="M-13 5 A18 18 0 0 1 13 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/>'
         '<circle cx="0" cy="14" r="3.5" fill="currentColor"/><path d="M-20 -18 L20 22" stroke="var(--via)" stroke-width="3" stroke-linecap="round"/></g>')
 body = M(0, '33:40', 'soft') + wifi + T(145, 268, '연결이 끊겼습니다', 15, 700, 'middle')
 S.append(section('15. 연결이 끊겼을 때', svg(290, 460,
-    '연결이 끊겼을 때: 가운데 영역에 끊긴 와이파이 아이콘과 "연결이 끊겼습니다" 문구만 뜬다. 로딩 표시는 없다. 타이머와 힌트 버튼은 그대로.', body, 300)))
+    '연결이 끊겼을 때: 가운데 영역에 끊긴 와이파이 아이콘과 "연결이 끊겼습니다" 문구만 뜬다. 로딩 표시는 없다. 타이머는 그대로, 아래 독 아이콘은 흐려져 눌리지 않는다. 상태 표시줄 와이파이도 끊김 표시.', body, 300)))
 
 
 # ---- 새 화면 6개 ----
