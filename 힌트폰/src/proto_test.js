@@ -35,8 +35,10 @@
     tap('hint'); log(!scr().querySelector('.kbd') && scr().querySelectorAll('.card.h1').length === 1, '힌트 보기 → 키보드 내려감'); tap('kb'); log(!!scr().querySelector('.kbd'), '입력 칸 누르면 다시 올라옴'); tap('home'); });
   at(7330, () => { tap('codes'); const n = () => +(scr().querySelector('.head .sub')?.textContent.match(/\d+/) || [-1])[0]; const a = n(); type('ABCD'); tap('hint'); const b = n(); type('0000'); tap('hint'); log(a === 1 && b === 1 && n() === 1, '힌트 사용 횟수: ABCD 본 뒤 1회, 다시 봐도·가짜 코드도 그대로 (' + a + ',' + b + ',' + n() + ')'); tap('home'); });
   at(7335, () => { document.querySelector('#proto [data-lay="b"]').click(); const g = scr().querySelector('.lb-goal');
-    log(!!g && g.textContent.includes('알렉스의 승인 확보') && !!scr().querySelector('.lb-chat') && !!scr().querySelector('.lb .idle [data-time]') && scr().querySelectorAll('.lb-dock .app').length === 1, '배치 시안 B: 목표 오른쪽 위 · 채팅 왼쪽 위 · 타이머 가운데 · 힌트 아래');
-    tap('codes'); log(!!document.getElementById('pv-in'), '시안 B: 힌트코드 열림'); tap('home'); document.querySelector('#proto [data-lay="a"]').click(); log(!scr().querySelector('.lb'), '기본 배치로 돌아옴'); });
+    log(!!g && g.textContent.includes('알렉스의 승인 확보') && !!scr().querySelector('.lb-chat') && !!scr().querySelector('.lb .idle [data-time]') && !!scr().querySelector('.lb-code #pv-in'), '배치 시안 B: 목표 오른쪽 위 · 채팅 왼쪽 위 · 타이머 가운데 · 아래 힌트코드 입력 창');
+    tap('kb'); log(!!scr().querySelector('.kbd'), '시안 B: 입력 창 누르면 키보드'); for (let k = 0; k < 8; k++) tap('kdel'); 'ABC'.split('').forEach(k => tap('k:' + k)); log(!scr().querySelector('.lb-code .pct'), '시안 B: 덜 넣으면 진행도 없음');
+    tap('k:D'); log(has('38%') && !!scr().querySelector('.lb-code .pct'), '시안 B: 코드 넣자마자 진행도');
+    tap('bhint'); log(!!scr().querySelector('.hpop .card') && !!scr().querySelector('.lb-goal'), '시안 B: 입력 → 힌트 팝업 (메인 위)'); tap('hpx'); log(!scr().querySelector('.hpop'), '시안 B: 팝업 닫힘'); tap('kb'); for (let k = 0; k < 4; k++) tap('kdel'); scr().querySelector('.timer').click(); document.querySelector('#proto [data-lay="a"]').click(); log(!scr().querySelector('.lb'), '기본 배치로 돌아옴'); });
   at(7340, () => { tap('codes'); type('0000'); tap('hint'); log(!scr().querySelector('.card'), '1부: 0000 반응 없음'); tap('home'); });
   at(7350, () => { tap('codes'); tap('kb'); scr().querySelector('.head .ttl').click(); log(!scr().querySelector('.kbd'), '코드 키보드: 바깥 누르면 내려감');
     tap('kb'); tap('k:Z'); log(!!scr().querySelector('.kbd'), '키보드 누르는 동안은 그대로'); tap('kdel'); tap('home');

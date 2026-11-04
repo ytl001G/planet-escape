@@ -98,7 +98,8 @@ CSS = r'''
 #proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
 #proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
-#proto .lb-dock { justify-content: center; }
+#proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-code .row { grid-template-columns: 1fr; }
+#proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px 'IBM Plex Mono', monospace; padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
 #proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
@@ -345,7 +346,17 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트 아래
   const chat = `<div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div>`;
   return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass">${g}</div>` : ''}</div><div class="idle">${timer}</div>`
-    + `<div class="dock glass lb-dock"><div class="app" data-act="codes" role="button" tabindex="0"><i>${ICON.bulb}</i>힌트코드</div></div></div>` + (S.map ? mapOv() : '');
+    + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
+}
+function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
+  const c = S.code && codeOK(S.code), p = c && c.part ? c.part : part();
+  const row = !c ? '' : `<div class="row">${c.pct != null ? `<div class="btn on${p}"><div class="pct">${c.pct}%<i><b style="width:${c.pct}%"></b></i></div></div>` : ''}`
++ '</div>';
+  return `<div class="glass lb-code"><div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드"><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div>${row}</div>`;
+}
+function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트코드 화면과 같은 힌트 · 다음 힌트 · 정답)
+  const { body } = hintBody();
+  return `<div class="mapov" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${esc(S.code)}</div><div class="scroll">${body}</div></div></div>`;
 }
 function vMain() {
   let g = '';
@@ -391,13 +402,11 @@ function setCode(v) {  // 키보드로 바꾼 코드: 칸만 고치고 화면은
   v = v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
   S.stale = S.stale || S.showHints || S.pct != null; S.code = v; S.pct = null; S.showHints = false; S.ans = false;
   const i = $('pv-in'); if (i) i.value = v;
+  if (LAYOUT === 'b' && S.view === 'main') render();  // 시안 B: 넣는 대로 진행도 보임
 }
-function vCodes() {
+function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안 B 팝업이 같이 씀)
   const c = D.codes[S.code], p = c && c.part ? c.part : part();
   const opened = S.showHints && c && (c.kind === 'hint' || c.kind === 'voice');
-  const pctBtn = S.pct != null
-    ? `<div class="btn on${p}" data-act="pct" role="button" tabindex="0"><div class="pct">${S.pct}%<i><b style="width:${S.pct}%"></b></i></div></div>`
-    : '<div class="btn" data-act="pct" role="button" tabindex="0">진행도</div>';
   let body = '';
   if (opened) {
     const st = S.open[S.code] || 0;
@@ -415,6 +424,13 @@ function vCodes() {
       body += `<div class="card h2" style="gap:12px">${inner}<div class="vdots">${c.steps.map((_, k) => `<span style="background:${k <= i ? 'var(--c2)' : 'rgba(255,255,255,.2)'}"></span>`).join('')}</div></div>`;
     }
   }
+  return { body, opened, p };
+}
+function vCodes() {
+  const { body, opened, p } = hintBody();
+  const pctBtn = S.pct != null
+    ? `<div class="btn on${p}" data-act="pct" role="button" tabindex="0"><div class="pct">${S.pct}%<i><b style="width:${S.pct}%"></b></i></div></div>`
+    : '<div class="btn" data-act="pct" role="button" tabindex="0">진행도</div>';
   return head('힌트코드', `힌트 사용 ${Object.keys(S.used).length}회`)
     + `<input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드">`
     + `<div class="row"><div class="btn${opened ? ' on' + p : ''}" data-act="hint" role="button" tabindex="0">힌트 보기</div>${pctBtn}</div>`
@@ -519,7 +535,8 @@ function render() {
   else h = ({ main: vMain, codes: vCodes, pattern: vPattern, card135: vCard135, chat: vChat, safe: vSafe, intro: vIntro })[S.view]();
   if (S.toast && S.view !== 'chat' && !S.phase.startsWith('end')) h += `<div class="toast glass" data-act="chat" role="button" tabindex="0"><i>${ICON.head}</i><div><b>채팅</b>${bars()}</div></div>`;
   scr.innerHTML = h; sbar(); edText();
-  const inp = $('pv-in'); if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
+  const inp = $('pv-in'); if (inp && S.view === 'main') inp.oninput = () => setCode(inp.value);
+  if (inp && S.view === 'codes') { inp.oninput = () => { S.code = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); inp.value = S.code; S.stale = S.stale || S.showHints || S.pct != null; S.pct = null; S.showHints = false; S.ans = false; }; }
   const ci = $('pv-chatin'); if (ci) ci.oninput = () => { S.ct = [...ci.value]; };
   const f = $('pv-chat'); if (f) { f.onsubmit = e => { e.preventDefault(); const t = $('pv-chatin').value.trim(); if (!t) return; S.chat.push({ me: true, t }); S.ct = []; S.kshift = false; render(); later(() => reply(), 2200); }; const m = $('pv-msgs'); m.scrollTop = m.scrollHeight; }
   if (S.view === 'pattern' && !S.phase.startsWith('end') && !S.offline) bindPattern();
@@ -527,9 +544,13 @@ function render() {
 }
 function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread++; S.toast = true; later(() => { S.toast = false; render(); }, 3500); } render(); }
 
-function check(code) {
+function codeOK(code) {  // 지금 받는 코드면 그 코드, 아니면 null (화면은 안 건드림)
   const c0 = D.codes[code], app = !!c0;  // 힌트코드 앱 하나에서 힌트 코드 · 스토리 코드 모두 받음
   const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.part === 1 && c0.kind !== 'story' && S.phase === 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 1부 코드는 비아 등장 전에만, 2부 코드는 뒤에만  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
+  return c;
+}
+function check(code) {
+  const c = codeOK(code);
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
     return null;
@@ -556,6 +577,8 @@ function act(a) {
   if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
   if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
   if (a === 'start') { S.run = true; render(); return; }
+  if (a === 'bhint') { const c = check(S.code); if (!c) return; act('hint'); if (c.kind !== 'story') { S.hpop = true; render(); } return; }  // 시안 B: 입력 → 힌트 팝업
+  if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }
   if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
