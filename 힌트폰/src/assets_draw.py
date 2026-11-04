@@ -69,7 +69,7 @@ def ring_frame(dotc, p):  # 타이머 링 틀: 60칸 눈금 · 바탕 · 안쪽 
     for a in (0, 90, 180, 270): r = math.radians(a - 90); b += f'<circle cx="{cx+99*math.cos(r):.1f}" cy="{cx+99*math.sin(r):.1f}" r="2.2" fill="{dotc}"/>'
     return svg(260, 260, b, p=p)
 def bt(w, h, fill, stroke, p): return svg(w, h, f'<path d="{cham(1, 1, w-2, h-2, 8)}" fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>', p=p)
-def key(w, fill, p): return svg(w, 42, f'<path d="{cham(.75, .75, w-1.5, 40.5, 5)}" fill="{fill}" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>', p=p)
+def key(w, fill, p): return svg(w, 42, f'<path d="{cham(1.25, 1.25, w-2.5, 39.5, 5)}" fill="{fill}" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>', p=p)
 
 for p, (c, l, d, card, press) in PART.items():
     A[f'타이머_링_틀_{p}'] = ring_frame(c, p)

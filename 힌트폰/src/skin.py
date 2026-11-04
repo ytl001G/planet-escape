@@ -26,7 +26,7 @@ for p, cls in (('1부', 'p1'), ('2부', 'p2'), ('이전', 'pre')):
 def SI(body, w, h, vb='0 0 24 24', style=''): return f'<svg width="{w}" height="{h}" viewBox="{vb}" aria-hidden="true"{style}>{body}</svg>'
 ICON = {'pin': SI(AD.IC['핀'], 14, 18, '4 2 16 20.5', ' style="color:var(--c1)"'), 'ck': SI(AD.IC['체크'], 40, 40, style=' style="color:#211e26"'),
         'chev': SI(AD.IC['꺾쇠'], 8, 12, '7 3 11 18'), 'x': SI(AD.IC['닫기'], 16, 16), 'back': SI(AD.IC['뒤로'], 20, 20), 'send': SI(AD.IC['보내기'], 20, 20),
-        'del': SI(AD.IC['지우기'], 24, 18, '1 2 22 16.5'), 'shift': SI(AD.IC['시프트'], 18, 18), 'sw': SI(AD.IC['와이파이'], 16, 12, '2.5 5.5 19 14.25'),
+        'del': SI(AD.IC['지우기'], 24, 18, '0.5 2.5 23 18'), 'shift': SI(AD.IC['시프트'], 18, 18), 'sw': SI(AD.IC['와이파이'], 16, 12, '2.5 5.5 19 14.25'),
         'swoff': SI(AD.IC['와이파이_끊김'], 16, 12, '1 2.5 22 16.5'), 'bat': SI(AD.IC['배터리'], 24, 12, '1.5 6 22 11')}
 CHAT = {k: SI(b, 38, 34) for k, b in AD.CHAT.items()}
 JSDECL = 'const SKINICON = ' + json.dumps(ICON, ensure_ascii=False) + ', SKINCHAT = ' + json.dumps(CHAT, ensure_ascii=False) + ';\n'

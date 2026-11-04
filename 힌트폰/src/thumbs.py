@@ -16,9 +16,8 @@ def ck(x, y, k=1, wdt=2):
     return f'<path d="M{x-4.5*k} {y} L{x-1.5*k} {y+3*k} L{x+4.5*k} {y-3.5*k}" class="ck" stroke-width="{wdt}"/>'
 def chaticon(x, y, k=1):
     return (f'<g transform="translate({x} {y + 1}) scale({k})">' + '<path d="M-7 -8 H7 A3 3 0 0 1 10 -5 V2 A3 3 0 0 1 7 5 H-2 L-7 9 V5 A3 3 0 0 1 -10 2 V-5 A3 3 0 0 1 -7 -8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="-4.5" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="0" cy="-1.5" r="1.4" fill="currentColor"/><circle cx="4.5" cy="-1.5" r="1.4" fill="currentColor"/></g>')
-def badge(x, y, n='1'):
-    w = 16 if len(n) == 1 else 22
-    return f'<rect x="{x-w/2}" y="{y-8}" width="{w}" height="16" rx="8" fill="{RED}"/><text x="{x}" y="{y+4}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">{n}</text>'
+def badge(x, y):  # 안 읽음: 숫자 없이 빨간 점
+    return f'<circle cx="{x}" cy="{y}" r="5" fill="{RED}"/>'
 def pin(x, y, k=1):
     return (f'<g transform="translate({x} {y}) scale({k})"><path d="M0 8 C-7 0 -6 -7 0 -7 C6 -7 7 0 0 8 Z" class="bar"/>'
             '<circle cx="0" cy="-1.5" r="2.4" fill="var(--card)"/></g>')
@@ -67,8 +66,7 @@ TH = {
     '입력 칸': R(14, 26, 132, 38, 'n', 19) + '<path d="M30 36 V54" stroke="currentColor" stroke-width="2"/>',
     '보내기 버튼': '<circle cx="56" cy="45" r="20" class="n"/><path d="M49 45 H63 M57 38 L64 45 L57 52" class="ln" stroke-width="2.2"/>'
                  + '<circle cx="106" cy="45" r="20" class="lily"/><path d="M99 45 H113 M107 38 L114 45 L107 52" class="ln" stroke-width="2.2"/>',
-    '안 읽음 숫자': '<circle cx="54" cy="47" r="16" class="n"/>' + chaticon(54, 43, 0.85) + badge(67, 33)
-                  + '<circle cx="108" cy="47" r="16" class="n"/>' + chaticon(108, 43, 0.85) + badge(123, 33, '12'),
+    '안 읽음 점': '<circle cx="80" cy="47" r="16" class="n"/>' + chaticon(80, 43, 0.85) + badge(93, 33),
     # 칸 · 카드
     '타이머 칸': '<circle cx="52" cy="45" r="31" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="4"/><circle cx="52" cy="45" r="31" fill="none" stroke="#cf86e6" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="45 100" transform="rotate(-90 52 45)"/>' + T(52, 50, '0:47:12', 12, 700, 'middle') + R(110, 30, 42, 22, 'soft', 6) + T(131, 45, '47:12', 10, 700),
     '목표 창': R(10, 10, 66, 70, 'n dashbox', 10) + R(84, 10, 66, 70, 'lily', 10) + T(117, 38, '현재 목표', 8, cls='t-lily') + T(117, 54, '알렉스의 승인', 9, 700),
@@ -126,7 +124,8 @@ MOTION_TH = {
     '다음 힌트 펼침': two(R(6, 34, 64, 22, 'n') + ph(16, 42, 44), R(6, 14, 64, 26, 'lily') + ph(14, 24, 46) + R(6, 48, 64, 22, 'n') + ph(16, 56, 44)),
     '패턴 선 그리기': hexdots(80, 45, 30, (0, 6, 5)),
     '패턴 오답': two(hexdots(36, 45, 24, (0, 1, 2), True), hexdots(36, 45, 24)),
-    '안 읽음 숫자 등장': two('<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8), '<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8) + badge(49, 34)),
+    '버튼 막힘 · 풀림': two(R(6, 30, 60, 30, 'soft', 8) + '<rect x="6" y="30" width="60" height="30" rx="8" fill="#000" opacity=".45"/>', R(6, 30, 60, 30, 'soft', 8)),
+    '안 읽음 점 등장': two('<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8), '<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8) + badge(49, 34)),
     '탈출 엔딩 끊김': two(phone(16, 7, 'n') + R(22, 34, 26, 4, 'soft', 2) + R(26, 46, 20, 4, 'soft', 2), phone(16, 7, 'n', ' style="fill:#000;stroke:#000"')),
 }
 

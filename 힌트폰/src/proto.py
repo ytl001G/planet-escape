@@ -91,14 +91,18 @@ CSS = r'''
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
 #proto .biarow { position: relative; flex: 1; align-self: stretch; display: flex; align-items: center; min-height: 30px; }
 #proto .biarow .bia { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 15px); } #proto .biarow.talk .bia { left: 0; } #proto .biarow .wave { margin-left: 40px; }
-#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.3,.7,.3,1); } @keyframes bial { from { left: calc(50% - 15px); } }  /* 말할 때 V가 가운데 → 왼쪽 */
-#proto .biarow.mv:not(.talk) .bia { animation: biar .6s cubic-bezier(.3,.7,.3,1); } @keyframes biar { from { left: 0; } }  /* 다 말하면 다시 가운데로 */
-#proto .biarow.talk.mv .wave { animation: biaw .35s .3s both; } @keyframes biaw { from { opacity: 0; } } #proto .biarow.mv:not(.talk) .wave { animation: biaw2 .25s forwards; } @keyframes biaw2 { to { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { #proto .biarow .bia, #proto .biarow .wave { animation: none !important; } #proto .biarow.mv:not(.talk) .wave { opacity: 0; } }
+#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.65,0,.35,1) both; } @keyframes bial { from { left: calc(50% - 15px); } }  /* 1) V가 가운데 → 왼쪽 */
+#proto .biarow.talk.mv .wave { animation: biaw .3s .65s both; } @keyframes biaw { from { opacity: 0; } }  /* 2) 다 옮겨 간 뒤에 음성 */
+#proto .biarow.talk.mv.enter .bia { animation: biae 1.2s cubic-bezier(.65,0,.35,1) both; } #proto .biarow.talk.mv.enter .wave { animation-delay: 1.25s; }  /* 처음 등장: 가운데에서 나타난 뒤 왼쪽으로 */
+@keyframes biae { 0% { left: calc(50% - 15px); opacity: 0; scale: .5; } 35% { left: calc(50% - 15px); opacity: 1; scale: 1; } 100% { left: 0; } }
+#proto .biarow.mv:not(.talk) .wave { animation: biaw2 .25s forwards; } @keyframes biaw2 { to { opacity: 0; } }  /* 3) 음성이 먼저 꺼지고 */
+#proto .biarow.mv:not(.talk) .bia { animation: biar .6s .3s cubic-bezier(.65,0,.35,1) both; } @keyframes biar { from { left: 0; } }  /* 4) 그다음 가운데로 */
 #proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
 #proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
 #proto .lb-code .srow { grid-template-columns: 1fr 84px; }
 #proto .lb.off .lb-chatbox, #proto .lb.off .lb-code, #proto .lb.off .lb-used { opacity: .45; pointer-events: none; }
+#proto .lb.unoff :is(.lb-chatbox, .lb-code, .lb-used) { animation: unoff .7s ease both; } @keyframes unoff { from { opacity: .45; } }
+#proto .lb.tooff :is(.lb-chatbox, .lb-code, .lb-used) { animation: tooff .5s ease both; } @keyframes tooff { from { opacity: 1; } }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; }
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
 #proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
@@ -117,12 +121,13 @@ CSS = r'''
 #proto .key { width: 30px; height: 42px; border-radius: 7px; display: grid; place-items: center; font: 700 16px 'IBM Plex Mono', monospace; color: #f2eef6; background: rgba(255,255,255,.13); cursor: pointer; user-select: none; -webkit-user-select: none; }
 #proto .key.num { background: rgba(255,255,255,.07); }
 #proto .key.wide { width: 44px; }
-#proto .kr4 { width: 345px; margin: 0 auto; justify-content: space-between; } #proto .kr4 .ksp { width: 44px; }  /* 지우기는 P 줄 오른쪽 끝에 맞추고 M과 띄움, Z~M은 가운데 */
+#proto .kbd.kc { container-type: inline-size; padding-inline: 6px; padding-bottom: 22px; } #proto .kbd.kc .key { flex: none; width: calc((100cqw - 45px) / 10); }  /* 키 폭 = 판 폭에서 고르게 (넘치지 않게) */
+#proto .kbd.kc .kr4 { justify-content: flex-end; } #proto .kbd.kc .key.wide { width: calc((100cqw - 45px) * .15 + 2.5px); }  /* 지우기 = 키 1.5칸, 오른쪽 끝은 P와 같은 줄 · 사이 간격도 다른 키와 같음 */
 #proto .key:active, #proto .key:focus-visible { background: color-mix(in srgb, var(--c1) 55%, transparent); outline: none; }
 #proto .p2 .key:active, #proto .p2 .key:focus-visible { background: color-mix(in srgb, var(--c2) 55%, transparent); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
 #proto .srow .btn { height: auto; }
-#proto .badge { position: absolute; right: -4px; top: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--err); color: #fff; font: 700 11px/18px var(--body); text-align: center; }
+#proto .badge { position: absolute; right: -2px; top: -3px; width: 11px; height: 11px; border-radius: 50%; background: var(--err); }
 #proto .lbl { font-size: 12px; font-weight: 700; }
 #proto .p1 .lbl, #proto .t-lily { color: color-mix(in srgb, var(--c1), white 15%); }
 #proto .p2 .lbl, #proto .t-via { color: color-mix(in srgb, var(--c2), white 8%); }
@@ -132,6 +137,7 @@ CSS = r'''
 #proto .room[data-act]:focus-visible { outline: 2px solid var(--c1); outline-offset: 3px; }
 #proto .mapov { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; padding: 18px; background: rgba(0,0,0,.55); animation: pfadein .25s; }
 #proto .mapbox { position: relative; width: 100%; padding: 50px 12px 16px; background: rgba(24,21,30,.94); }
+#proto .sfpop { display: grid; justify-items: center; gap: 14px; padding: 26px 16px 24px; } #proto .sfpop .sv { width: 108px; height: 108px; }
 #proto .mapbox svg { display: block; width: 100%; height: auto; }
 #proto .mapx { position: absolute; right: 10px; top: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 1.5px solid rgba(255,255,255,.18); }
 #proto .mapx:focus-visible { outline: 2px solid var(--c1); }
@@ -171,7 +177,6 @@ CSS = r'''
 #proto .load b { display: block; height: 100%; width: 0; background: var(--c1); border-radius: 3px; }
 #proto .load.go b { animation: pload var(--d, 2s) linear forwards; }
 @keyframes pload { to { width: 100%; } }
-#proto .full1 { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 72%) 55%, transparent); }
 #proto .bigck { width: 76px; height: 76px; border-radius: 50%; background: var(--c1); display: grid; place-items: center; animation: ppop .4s; }
 @keyframes ppop { from { transform: scale(.4); opacity: 0; } }
 #proto .story { border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 1.6; }
@@ -324,10 +329,12 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
 }
 
+let LASTOFF = false;
 function layB(timer, g, off = false) {  // 폰 기본 배치: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트코드 입력 아래 (off: 못 누름)
   g = g.replace(bars(), '');  // 시안 B 목표 칸은 작게: 정해지지 않은 설명 줄은 뺌
-  const chat = `<div class="glass lb-chatbox"><div class="lb-chat" data-act="chat" role="button" tabindex="0" aria-label="채팅"><b>${ICON.chatL}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</b></div></div>`;  // 글자 없이 아이콘만 (이름은 aria-label)
-  return `<div class="lb${off ? ' off' : ''}"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate && !S.trans ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
+  const chat = `<div class="glass lb-chatbox"><div class="lb-chat" data-act="chat" role="button" tabindex="0" aria-label="채팅"><b>${ICON.chatL}${S.unread ? '<span class="badge" role="img" aria-label="새 답장"></span>' : ''}</b></div></div>`;  // 글자 없이 아이콘만 (이름은 aria-label)
+  const fx = off === LASTOFF ? '' : off ? ' tooff' : ' unoff'; LASTOFF = off;  // 막힐 때 · 풀릴 때만 한 번 서서히
+  return `<div class="lb${off ? ' off' : ''}${fx}"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate && !S.trans ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
@@ -354,7 +361,7 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임
+    const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임 (위 CSS 순서)
     g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
@@ -385,9 +392,9 @@ function mapOv() {
 function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 끝에 지우기
   const rows = ['1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
   const up = S.kbNew ? ' up' : ''; S.kbNew = false;
-  return `<div class="kbd glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => (i === 3 ? '<div class="kr kr4"><i class="ksp"></i><div class="kr">' : '<div class="kr">')
+  return `<div class="kbd kc glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => (i === 3 ? '<div class="kr kr4">' : '<div class="kr">')
     + [...r].map(ch => `<div class="key${i ? '' : ' num'}" data-act="k:${ch}" role="button" tabindex="0">${ch}</div>`).join('')
-    + (i === 3 ? `</div><div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
+    + (i === 3 ? `<div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
 }
 function setCode(v) {  // 키보드로 바꾼 코드: 칸만 고치고 화면은 그대로 (앞 코드 힌트는 다음에 누를 때 걷힘)
   v = v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
@@ -478,14 +485,15 @@ function vChat() {
   return `<div class="head chathead"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">채팅</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`
     + `<div class="msgs" id="pv-msgs" role="log" aria-label="운영자 채팅" data-act="ckbx">${ms}</div><form class="chatin" id="pv-chat"><input id="pv-chatin" aria-label="운영자에게 보낼 말" autocomplete="off" inputmode="none" data-act="ckb" value="${esc(ctext())}"><button class="send" type="submit" aria-label="보내기" style="color:#fff">${ICON.send}</button></form>` + (S.ckb ? ckbd() : '');
 }
-function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
-  return `<div class="center full1" style="margin:-34px -18px -22px;padding:0 18px"><div class="sv zoom"><div class="sv-in">${SH}</div></div>`
-    + '<b class="sf-t" style="font-size:18px">안전 모드 감지</b><div class="load go sf-t" style="--d:3s"><b></b></div></div>';
+function vSafe() {  // 메인 화면 위 팝업: 방패가 커지며 나타나고 아래 로딩 막대 (뒤 화면은 어둡게 보임)
+  return vMain() + `<div class="mapov"><div class="mapbox glass sfpop" role="dialog" aria-label="안전 모드 감지"><div class="sv zoom"><div class="sv-in">${SH}</div></div>`
+    + '<b class="sf-t" style="font-size:18px">안전 모드 감지</b><div class="load go sf-t" style="--d:3s"><b></b></div></div></div>';
 }
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="lb-goal glass"', '<div class="lb-goal glass glitch" style="border-color:var(--c1)"') + '<div class="stripes"></div>';
   const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return layB(timerBox(), `<div class="bia"><div class="av" style="font-size:18px">${name}</div></div>${wave()}`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
+  const mv = S.biaMv ? ' mv enter' : ''; S.biaMv = false;  // 처음 나올 때만: 가운데에서 나타나 왼쪽으로 → 음성
+  return layB(timerBox(), `<div class="biarow talk${mv}"><div class="bia"><div class="av" style="font-size:18px">${name}</div></div>${wave()}</div>`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_escape') return S.endStep === 0 ? '<div class="center glitch"><b style="font-size:20px">탈출 절차를 시—</b></div><div class="stripes" style="opacity:.4"></div>' : '<div class="black"></div>';
@@ -601,9 +609,9 @@ const CTL = [
   ['안전 모드 가동', () => S.phase === 'pre' && S.run && S.view === 'main', () => { S.view = 'safe'; render();
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
-    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; S.biaMv = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); } }],
+    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; S.biaMv = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 600 + 2600); } }],
   ['ALONE 입력 (전환부)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; S.biaMv = true; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
