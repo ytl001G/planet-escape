@@ -262,7 +262,7 @@ HTML = '''<section id="proto">
       <span><code>0000</code> 설명용 가짜 코드 · Start 누르기 전에만 · 힌트 3단계 + 정답 + 진행도</span>
       <span><code>ABCD</code> 1부 힌트 (문제 3) · 비아 등장 전에만 · 힌트 3단계 + 정답</span>
       <span><code>KLMN</code> 2부 힌트 (문제 10) · 비아 등장 뒤에만</span>
-      <span><code>WXYZ</code> 문제 16 · 대기 연출 6단계 → 그 뒤 심장 소리 (같은 코드를 다시 넣으면 다음 단계)</span>
+      <span><code>WXYZ</code> 문제 16 · 폰엔 팝업 없음 · 음성은 PC에서 (같은 코드를 다시 넣으면 다음 단계 → 6단계 뒤 심장 소리)</span>
       <span><code>PQRS</code> 스토리 코드 → 보너스 패턴 (시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래)</span>
       <span>그 밖의 코드는 오류로 처리돼요. 코드와 패턴 정답은 시험용이에요.</span>
     </div>
@@ -597,7 +597,7 @@ function act(a) {
   if (a === 'start') { S.run = true; render(); return; }
   if (a === 'bhint') {  // 시안 B: 힌트 보기 → 힌트 팝업
     const c = check(S.code); if (!c) return;
-    act('hint'); if (c.kind === 'story') return;  // 힌트 보기 → 팝업에 힌트 1부터, 안에서 다음 → 정답
+    act('hint'); if (c.kind === 'story' || c.kind === 'voice') return;  // 문제 16: 음성은 PC에서 · 폰엔 팝업 없음 (단계만 넘김)  // 힌트 보기 → 팝업에 힌트 1부터, 안에서 다음 → 정답
     S.hpop = S.hpopNew = true; render(); return;
   }
   if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }

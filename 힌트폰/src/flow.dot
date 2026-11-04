@@ -20,7 +20,7 @@ digraph G {
  "b4" [label=<<b>비아 안내: 에바의 방</b><br/><font point-size="10" color="#a39eab">문제 13 · 대사 1322</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "b5" [label=<<b>비아 안내: 릴리의 방</b><br/><font point-size="10" color="#a39eab">문제 14 · 대사 1432</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "b6" [label=<<b>비아 정체 공개</b><br/><font point-size="10" color="#a39eab">문제 15 LOVE 입력 뒤</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
- "레버" [label=<<b>레버 선택</b><br/><font point-size="10" color="#a39eab">문제 16 · 폰은 힌트 코드로 레버 대기 연출</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
+ "레버" [label=<<b>레버 선택</b><br/><font point-size="10" color="#a39eab">문제 16 · 대기 음성은 PC에서 · 폰엔 팝업 없음</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "탈출" [label=<<b>탈출 엔딩</b><br/><font point-size="10" color="#a39eab">레버 아래 · 폰 꺼짐</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "행성" [label=<<b>행성 엔딩</b><br/><font point-size="10" color="#a39eab">레버 위 · 송출 화면 반복</font>> shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "시작전" -> "시작" [label="Start 누름" weight="50"];
@@ -74,8 +74,7 @@ digraph G {
  "r2부_2" [label=<<b>힌트 3</b>> shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "r2부_3" [label=<<b>정답</b>> shape=box style="rounded,filled" fillcolor="#d9d4e0" color="#d9d4e0" fontcolor="#17151b"];
  "r16" [label=<<b>문제 16 코드</b><br/><font point-size="10" color="#a39eab">비아 등장 후</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
- "r16_0" [label=<<b>대기 1 ~ 6</b><br/><font point-size="10" color="#a39eab">같은 코드 넣을 때마다 다음 단계</font>> shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
- "r16_1" [label=<<b>심장 소리</b><br/><font point-size="10" color="#a39eab">6단계 뒤 반복</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "r16_0" [label=<<b>팝업 없음</b><br/><font point-size="10" color="#a39eab">음성은 PC에서 · 넣을 때마다 다음 단계</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r스토리" [label=<<b>스토리 코드</b><br/><font point-size="10" color="#a39eab">2부 · 보너스</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r스토리_0" [label=<<b>패턴 입력</b><br/><font point-size="10" color="#a39eab">오답: 빨간 선 → 초기화</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r스토리_1" [label=<<b>카드 13.5</b><br/><font point-size="10" color="#a39eab">패턴 정답</font>> shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
@@ -111,7 +110,6 @@ digraph G {
  "r2부_2" -> "r2부_3" [label="정답"];
  "판별" -> "r16" [label=""];
  "r16" -> "r16_0" [label=""];
- "r16_0" -> "r16_1" [label=""];
  "판별" -> "r스토리" [label=""];
  "r스토리" -> "r스토리_0" [label=""];
  "r스토리_0" -> "r스토리_1" [label=""];
