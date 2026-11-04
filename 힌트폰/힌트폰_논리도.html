@@ -181,7 +181,7 @@ html { scroll-behavior: smooth; }
 #proto .timer { width: 156px; height: 156px; margin: 2px auto 0; flex: none; display: grid; place-items: center; position: relative; font: 700 30px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
 #proto .timer svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 #proto .timer span { position: relative; }
-#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; gap: 3px; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar span:first-child b { background: var(--c1); } #proto .timer .pbar span:last-child b { background: var(--c2); }
+#proto .timer .pbar { position: absolute; left: 26%; right: 26%; top: 79%; height: 5px; display: flex; gap: 3px; } #proto .timer .pbar span { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; } #proto .timer .pbar b { display: block; height: 100%; } #proto .timer .pbar b { background: var(--c1); } #proto .p2 .timer .pbar b { background: var(--c2); } #proto .pre .timer .pbar b { background: var(--c0); }  /* 막대 색은 지금 부 색 하나로 */
 #proto .timer .prog { position: absolute; left: 0; right: 0; top: 66%; text-align: center; font: 600 12px var(--body); letter-spacing: 0; color: rgba(242,238,246,.75); } #proto .idle .timer .prog { font-size: 15px; }  /* 링 위에 숫자 */
 #proto .timer .tr { fill: rgba(12,10,16,.45); stroke: rgba(255,255,255,.12); stroke-width: 7; }
 #proto .timer .tp { fill: none; stroke: var(--c1); stroke-width: 7; stroke-linecap: round; }
@@ -422,9 +422,9 @@ html { scroll-behavior: smooth; }
 <p class="coltitle">순서도</p>
 <section>
   <figure>
-    <h3 style="font:700 16px var(--display);margin:6px 0 10px">1. 게임 진행에 따른 폰 화면</h3><div style="overflow-x:auto"><svg role="img" aria-label="순서도 1 게임 진행에 따른 폰 화면. 홈 화면, 문제 1 실패 뒤 안전 모드 알림, 1부 메인 화면과 목표 6개, 비아 등장, 비아 안내 6단계, 레버 선택, 엔딩 두 가지." style="width:524px;max-width:none;height:auto;display:block"
+    <h3 style="font:700 16px var(--display);margin:6px 0 10px">1. 게임 진행에 따른 폰 화면</h3><div style="overflow-x:auto"><svg role="img" aria-label="순서도 1 게임 진행에 따른 폰 화면. 홈 화면, 문제 1 실패 뒤 안전 모드 알림, 1부 메인 화면과 목표 6개, 비아 등장, 비아 안내 6단계, 레버 선택, 엔딩 두 가지." style="width:570px;max-width:none;height:auto;display:block"
 
- viewBox="0.00 0.00 419.00 1501.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 456.00 1501.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1496.75)">
 
@@ -436,11 +436,11 @@ html { scroll-behavior: smooth; }
 
 <title>시작전</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M379.06,-1492.75C379.06,-1492.75 31.88,-1492.75 31.88,-1492.75 25.88,-1492.75 19.87,-1486.75 19.87,-1480.75 19.87,-1480.75 19.87,-1468.75 19.87,-1468.75 19.87,-1462.75 25.87,-1456.75 31.87,-1456.75 31.87,-1456.75 379.06,-1456.75 379.06,-1456.75 385.06,-1456.75 391.06,-1462.75 391.06,-1468.75 391.06,-1468.75 391.06,-1480.75 391.06,-1480.75 391.06,-1486.75 385.06,-1492.75 379.06,-1492.75"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M397.44,-1492.75C397.44,-1492.75 50.25,-1492.75 50.25,-1492.75 44.25,-1492.75 38.25,-1486.75 38.25,-1480.75 38.25,-1480.75 38.25,-1468.75 38.25,-1468.75 38.25,-1462.75 44.25,-1456.75 50.25,-1456.75 50.25,-1456.75 397.44,-1456.75 397.44,-1456.75 403.44,-1456.75 409.44,-1462.75 409.44,-1468.75 409.44,-1468.75 409.44,-1480.75 409.44,-1480.75 409.44,-1486.75 403.44,-1492.75 397.44,-1492.75"/>
 
-<text xml:space="preserve" text-anchor="start" x="170.97" y="-1475.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">시작 전 화면</text>
+<text xml:space="preserve" text-anchor="start" x="189.34" y="-1475.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">시작 전 화면</text>
 
-<text xml:space="preserve" text-anchor="start" x="38.59" y="-1465.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">앱을 열면 · 링 자리에 Start · 채팅 · 힌트코드 입력은 써 볼 수 있음 (설명용)</text>
+<text xml:space="preserve" text-anchor="start" x="56.97" y="-1465.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">앱을 열면 · 링 자리에 Start · 채팅 · 힌트코드 입력은 써 볼 수 있음 (설명용)</text>
 
 </g>
 
@@ -450,11 +450,11 @@ html { scroll-behavior: smooth; }
 
 <title>시작</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M382.06,-1410.5C382.06,-1410.5 28.88,-1410.5 28.88,-1410.5 22.88,-1410.5 16.87,-1404.5 16.87,-1398.5 16.87,-1398.5 16.87,-1386.5 16.87,-1386.5 16.87,-1380.5 22.87,-1374.5 28.87,-1374.5 28.87,-1374.5 382.06,-1374.5 382.06,-1374.5 388.06,-1374.5 394.06,-1380.5 394.06,-1386.5 394.06,-1386.5 394.06,-1398.5 394.06,-1398.5 394.06,-1404.5 388.06,-1410.5 382.06,-1410.5"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M400.44,-1410.5C400.44,-1410.5 47.25,-1410.5 47.25,-1410.5 41.25,-1410.5 35.25,-1404.5 35.25,-1398.5 35.25,-1398.5 35.25,-1386.5 35.25,-1386.5 35.25,-1380.5 41.25,-1374.5 47.25,-1374.5 47.25,-1374.5 400.44,-1374.5 400.44,-1374.5 406.44,-1374.5 412.44,-1380.5 412.44,-1386.5 412.44,-1386.5 412.44,-1398.5 412.44,-1398.5 412.44,-1404.5 406.44,-1410.5 400.44,-1410.5"/>
 
-<text xml:space="preserve" text-anchor="start" x="185.22" y="-1393.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">홈 화면</text>
+<text xml:space="preserve" text-anchor="start" x="203.59" y="-1393.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">홈 화면</text>
 
-<text xml:space="preserve" text-anchor="start" x="35.59" y="-1383" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1:45:00 시작 · 가운데 큰 링 타이머(흰색) · 왼쪽 위 채팅 · 아래 힌트코드 입력</text>
+<text xml:space="preserve" text-anchor="start" x="53.97" y="-1383" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">1:45:00 시작 · 가운데 큰 링 타이머(흰색) · 왼쪽 위 채팅 · 아래 힌트코드 입력</text>
 
 </g>
 
@@ -464,11 +464,11 @@ html { scroll-behavior: smooth; }
 
 <title>시작전&#45;&gt;시작</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1456.34C205.47,-1445.68 205.47,-1431.85 205.47,-1419.87"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1456.34C223.84,-1445.68 223.84,-1431.85 223.84,-1419.87"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1419.97 205.47,-1412.97 203.02,-1419.97 207.92,-1419.97"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1419.97 223.85,-1412.97 221.4,-1419.97 226.3,-1419.97"/>
 
-<text xml:space="preserve" text-anchor="middle" x="227.59" y="-1431.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">Start 누름</text>
+<text xml:space="preserve" text-anchor="middle" x="245.97" y="-1431.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">Start 누름</text>
 
 </g>
 
@@ -478,11 +478,11 @@ html { scroll-behavior: smooth; }
 
 <title>안전</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M309.69,-1328.25C309.69,-1328.25 101.25,-1328.25 101.25,-1328.25 95.25,-1328.25 89.25,-1322.25 89.25,-1316.25 89.25,-1316.25 89.25,-1304.25 89.25,-1304.25 89.25,-1298.25 95.25,-1292.25 101.25,-1292.25 101.25,-1292.25 309.69,-1292.25 309.69,-1292.25 315.69,-1292.25 321.69,-1298.25 321.69,-1304.25 321.69,-1304.25 321.69,-1316.25 321.69,-1316.25 321.69,-1322.25 315.69,-1328.25 309.69,-1328.25"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M328.06,-1328.25C328.06,-1328.25 119.62,-1328.25 119.62,-1328.25 113.62,-1328.25 107.63,-1322.25 107.63,-1316.25 107.63,-1316.25 107.63,-1304.25 107.63,-1304.25 107.63,-1298.25 113.63,-1292.25 119.63,-1292.25 119.63,-1292.25 328.06,-1292.25 328.06,-1292.25 334.06,-1292.25 340.06,-1298.25 340.06,-1304.25 340.06,-1304.25 340.06,-1316.25 340.06,-1316.25 340.06,-1322.25 334.06,-1328.25 328.06,-1328.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="164.97" y="-1310.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">안전 모드 알림</text>
+<text xml:space="preserve" text-anchor="start" x="183.34" y="-1310.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">안전 모드 알림</text>
 
-<text xml:space="preserve" text-anchor="start" x="107.97" y="-1300.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">방패가 커지며 등장 + 로딩 막대 · 전체 화면</text>
+<text xml:space="preserve" text-anchor="start" x="126.34" y="-1300.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">방패가 커지며 등장 + 로딩 막대 · 전체 화면</text>
 
 </g>
 
@@ -492,11 +492,11 @@ html { scroll-behavior: smooth; }
 
 <title>시작&#45;&gt;안전</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1374.09C205.47,-1363.43 205.47,-1349.6 205.47,-1337.62"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1374.09C223.84,-1363.43 223.84,-1349.6 223.84,-1337.62"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1337.72 205.47,-1330.72 203.02,-1337.72 207.92,-1337.72"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1337.72 223.85,-1330.72 221.4,-1337.72 226.3,-1337.72"/>
 
-<text xml:space="preserve" text-anchor="middle" x="231.34" y="-1349" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 1 실패</text>
+<text xml:space="preserve" text-anchor="middle" x="249.72" y="-1349" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 1 실패</text>
 
 </g>
 
@@ -506,11 +506,11 @@ html { scroll-behavior: smooth; }
 
 <title>메인</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M398.94,-1246C398.94,-1246 12,-1246 12,-1246 6,-1246 0,-1240 0,-1234 0,-1234 0,-1222 0,-1222 0,-1216 6,-1210 12,-1210 12,-1210 398.94,-1210 398.94,-1210 404.94,-1210 410.94,-1216 410.94,-1222 410.94,-1222 410.94,-1234 410.94,-1234 410.94,-1240 404.94,-1246 398.94,-1246"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M435.69,-1246C435.69,-1246 12,-1246 12,-1246 6,-1246 0,-1240 0,-1234 0,-1234 0,-1222 0,-1222 0,-1216 6,-1210 12,-1210 12,-1210 435.69,-1210 435.69,-1210 441.69,-1210 447.69,-1216 447.69,-1222 447.69,-1222 447.69,-1234 447.69,-1234 447.69,-1240 441.69,-1246 435.69,-1246"/>
 
-<text xml:space="preserve" text-anchor="start" x="163.09" y="-1228.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">메인 화면 (1부)</text>
+<text xml:space="preserve" text-anchor="start" x="181.47" y="-1228.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">메인 화면 (1부)</text>
 
-<text xml:space="preserve" text-anchor="start" x="18.72" y="-1218.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">링 보라 · 링 안 진행도(서버 값 · 막대 0~50 보라 / 50~100 주황) · 오른쪽 위 목표 칸</text>
+<text xml:space="preserve" text-anchor="start" x="18.72" y="-1218.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">링 보라 · 링 안 진행도(서버 값 · 막대 두 칸 0~50 / 50~100 · 지금 부 색) · 오른쪽 위 목표 칸</text>
 
 </g>
 
@@ -520,11 +520,11 @@ html { scroll-behavior: smooth; }
 
 <title>안전&#45;&gt;메인</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1291.84C205.47,-1281.18 205.47,-1267.35 205.47,-1255.37"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1291.84C223.84,-1281.18 223.84,-1267.35 223.84,-1255.37"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1255.47 205.47,-1248.47 203.02,-1255.47 207.92,-1255.47"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1255.47 223.85,-1248.47 221.4,-1255.47 226.3,-1255.47"/>
 
-<text xml:space="preserve" text-anchor="middle" x="243.34" y="-1266.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">로딩 끝나면 자동</text>
+<text xml:space="preserve" text-anchor="middle" x="261.72" y="-1266.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">로딩 끝나면 자동</text>
 
 </g>
 
@@ -534,11 +534,11 @@ html { scroll-behavior: smooth; }
 
 <title>g1</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M280.44,-1177C280.44,-1177 130.5,-1177 130.5,-1177 124.5,-1177 118.5,-1171 118.5,-1165 118.5,-1165 118.5,-1153 118.5,-1153 118.5,-1147 124.5,-1141 130.5,-1141 130.5,-1141 280.44,-1141 280.44,-1141 286.44,-1141 292.44,-1147 292.44,-1153 292.44,-1153 292.44,-1165 292.44,-1165 292.44,-1171 286.44,-1177 280.44,-1177"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M298.81,-1177C298.81,-1177 148.88,-1177 148.88,-1177 142.88,-1177 136.88,-1171 136.88,-1165 136.88,-1165 136.88,-1153 136.88,-1153 136.88,-1147 142.88,-1141 148.88,-1141 148.88,-1141 298.81,-1141 298.81,-1141 304.81,-1141 310.81,-1147 310.81,-1153 310.81,-1153 310.81,-1165 310.81,-1165 310.81,-1171 304.81,-1177 298.81,-1177"/>
 
-<text xml:space="preserve" text-anchor="start" x="137.22" y="-1159.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 알렉스의 승인 확보</text>
+<text xml:space="preserve" text-anchor="start" x="155.59" y="-1159.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 알렉스의 승인 확보</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-1149.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 2</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-1149.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 2</text>
 
 </g>
 
@@ -548,9 +548,9 @@ html { scroll-behavior: smooth; }
 
 <title>메인&#45;&gt;g1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1209.4C205.47,-1202.26 205.47,-1193.88 205.47,-1186.06"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1209.4C223.84,-1202.26 223.84,-1193.88 223.84,-1186.06"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1186.07 205.47,-1179.07 203.02,-1186.07 207.92,-1186.07"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1186.07 223.85,-1179.07 221.4,-1186.07 226.3,-1186.07"/>
 
 </g>
 
@@ -560,11 +560,11 @@ html { scroll-behavior: smooth; }
 
 <title>g2</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M286.44,-1094.75C286.44,-1094.75 124.5,-1094.75 124.5,-1094.75 118.5,-1094.75 112.5,-1088.75 112.5,-1082.75 112.5,-1082.75 112.5,-1070.75 112.5,-1070.75 112.5,-1064.75 118.5,-1058.75 124.5,-1058.75 124.5,-1058.75 286.44,-1058.75 286.44,-1058.75 292.44,-1058.75 298.44,-1064.75 298.44,-1070.75 298.44,-1070.75 298.44,-1082.75 298.44,-1082.75 298.44,-1088.75 292.44,-1094.75 286.44,-1094.75"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M304.81,-1094.75C304.81,-1094.75 142.88,-1094.75 142.88,-1094.75 136.88,-1094.75 130.88,-1088.75 130.88,-1082.75 130.88,-1082.75 130.88,-1070.75 130.88,-1070.75 130.88,-1064.75 136.88,-1058.75 142.88,-1058.75 142.88,-1058.75 304.81,-1058.75 304.81,-1058.75 310.81,-1058.75 316.81,-1064.75 316.81,-1070.75 316.81,-1070.75 316.81,-1082.75 316.81,-1082.75 316.81,-1088.75 310.81,-1094.75 304.81,-1094.75"/>
 
-<text xml:space="preserve" text-anchor="start" x="131.22" y="-1077.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 오펠리아의 승인 확보</text>
+<text xml:space="preserve" text-anchor="start" x="149.59" y="-1077.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 오펠리아의 승인 확보</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-1067.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 3</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-1067.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 3</text>
 
 </g>
 
@@ -574,11 +574,11 @@ html { scroll-behavior: smooth; }
 
 <title>g1&#45;&gt;g2</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1140.59C205.47,-1129.93 205.47,-1116.1 205.47,-1104.12"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1140.59C223.84,-1129.93 223.84,-1116.1 223.84,-1104.12"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1104.22 205.47,-1097.22 203.02,-1104.22 207.92,-1104.22"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1104.22 223.85,-1097.22 221.4,-1104.22 226.3,-1104.22"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-1115.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-1115.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -588,11 +588,11 @@ html { scroll-behavior: smooth; }
 
 <title>g3</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M274.44,-1012.5C274.44,-1012.5 136.5,-1012.5 136.5,-1012.5 130.5,-1012.5 124.5,-1006.5 124.5,-1000.5 124.5,-1000.5 124.5,-988.5 124.5,-988.5 124.5,-982.5 130.5,-976.5 136.5,-976.5 136.5,-976.5 274.44,-976.5 274.44,-976.5 280.44,-976.5 286.44,-982.5 286.44,-988.5 286.44,-988.5 286.44,-1000.5 286.44,-1000.5 286.44,-1006.5 280.44,-1012.5 274.44,-1012.5"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M292.81,-1012.5C292.81,-1012.5 154.88,-1012.5 154.88,-1012.5 148.88,-1012.5 142.88,-1006.5 142.88,-1000.5 142.88,-1000.5 142.88,-988.5 142.88,-988.5 142.88,-982.5 148.88,-976.5 154.88,-976.5 154.88,-976.5 292.81,-976.5 292.81,-976.5 298.81,-976.5 304.81,-982.5 304.81,-988.5 304.81,-988.5 304.81,-1000.5 304.81,-1000.5 304.81,-1006.5 298.81,-1012.5 292.81,-1012.5"/>
 
-<text xml:space="preserve" text-anchor="start" x="143.22" y="-995.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 노아의 승인 확보</text>
+<text xml:space="preserve" text-anchor="start" x="161.59" y="-995.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 노아의 승인 확보</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-985" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 4</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-985" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 4</text>
 
 </g>
 
@@ -602,11 +602,11 @@ html { scroll-behavior: smooth; }
 
 <title>g2&#45;&gt;g3</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-1058.34C205.47,-1047.68 205.47,-1033.85 205.47,-1021.87"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-1058.34C223.84,-1047.68 223.84,-1033.85 223.84,-1021.87"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-1021.97 205.47,-1014.97 203.02,-1021.97 207.92,-1021.97"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-1021.97 223.85,-1014.97 221.4,-1021.97 226.3,-1021.97"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-1033.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-1033.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -616,11 +616,11 @@ html { scroll-behavior: smooth; }
 
 <title>g4</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M272.19,-930.25C272.19,-930.25 138.75,-930.25 138.75,-930.25 132.75,-930.25 126.75,-924.25 126.75,-918.25 126.75,-918.25 126.75,-906.25 126.75,-906.25 126.75,-900.25 132.75,-894.25 138.75,-894.25 138.75,-894.25 272.19,-894.25 272.19,-894.25 278.19,-894.25 284.19,-900.25 284.19,-906.25 284.19,-906.25 284.19,-918.25 284.19,-918.25 284.19,-924.25 278.19,-930.25 272.19,-930.25"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M290.56,-930.25C290.56,-930.25 157.12,-930.25 157.12,-930.25 151.12,-930.25 145.12,-924.25 145.12,-918.25 145.12,-918.25 145.12,-906.25 145.12,-906.25 145.12,-900.25 151.12,-894.25 157.12,-894.25 157.12,-894.25 290.56,-894.25 290.56,-894.25 296.56,-894.25 302.56,-900.25 302.56,-906.25 302.56,-906.25 302.56,-918.25 302.56,-918.25 302.56,-924.25 296.56,-930.25 290.56,-930.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="145.47" y="-912.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 오펠리아 재방문</text>
+<text xml:space="preserve" text-anchor="start" x="163.84" y="-912.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 오펠리아 재방문</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-902.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 5</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-902.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 5</text>
 
 </g>
 
@@ -630,11 +630,11 @@ html { scroll-behavior: smooth; }
 
 <title>g3&#45;&gt;g4</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-976.09C205.47,-965.43 205.47,-951.6 205.47,-939.62"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-976.09C223.84,-965.43 223.84,-951.6 223.84,-939.62"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-939.72 205.47,-932.72 203.02,-939.72 207.92,-939.72"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-939.72 223.85,-932.72 221.4,-939.72 226.3,-939.72"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-951" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-951" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -644,11 +644,11 @@ html { scroll-behavior: smooth; }
 
 <title>g5</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M274.44,-848C274.44,-848 136.5,-848 136.5,-848 130.5,-848 124.5,-842 124.5,-836 124.5,-836 124.5,-824 124.5,-824 124.5,-818 130.5,-812 136.5,-812 136.5,-812 274.44,-812 274.44,-812 280.44,-812 286.44,-818 286.44,-824 286.44,-824 286.44,-836 286.44,-836 286.44,-842 280.44,-848 274.44,-848"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M292.81,-848C292.81,-848 154.88,-848 154.88,-848 148.88,-848 142.88,-842 142.88,-836 142.88,-836 142.88,-824 142.88,-824 142.88,-818 148.88,-812 154.88,-812 154.88,-812 292.81,-812 292.81,-812 298.81,-812 304.81,-818 304.81,-824 304.81,-824 304.81,-836 304.81,-836 304.81,-842 298.81,-848 292.81,-848"/>
 
-<text xml:space="preserve" text-anchor="start" x="143.22" y="-830.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 에바의 승인 확보</text>
+<text xml:space="preserve" text-anchor="start" x="161.59" y="-830.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 에바의 승인 확보</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-820.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 6</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-820.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 6</text>
 
 </g>
 
@@ -658,11 +658,11 @@ html { scroll-behavior: smooth; }
 
 <title>g4&#45;&gt;g5</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-893.84C205.47,-883.18 205.47,-869.35 205.47,-857.37"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-893.84C223.84,-883.18 223.84,-869.35 223.84,-857.37"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-857.47 205.47,-850.47 203.02,-857.47 207.92,-857.47"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-857.47 223.85,-850.47 221.4,-857.47 226.3,-857.47"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-868.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-868.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -672,11 +672,11 @@ html { scroll-behavior: smooth; }
 
 <title>g6</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M260.19,-765.75C260.19,-765.75 150.75,-765.75 150.75,-765.75 144.75,-765.75 138.75,-759.75 138.75,-753.75 138.75,-753.75 138.75,-741.75 138.75,-741.75 138.75,-735.75 144.75,-729.75 150.75,-729.75 150.75,-729.75 260.19,-729.75 260.19,-729.75 266.19,-729.75 272.19,-735.75 272.19,-741.75 272.19,-741.75 272.19,-753.75 272.19,-753.75 272.19,-759.75 266.19,-765.75 260.19,-765.75"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M278.56,-765.75C278.56,-765.75 169.12,-765.75 169.12,-765.75 163.12,-765.75 157.12,-759.75 157.12,-753.75 157.12,-753.75 157.12,-741.75 157.12,-741.75 157.12,-735.75 163.12,-729.75 169.12,-729.75 169.12,-729.75 278.56,-729.75 278.56,-729.75 284.56,-729.75 290.56,-735.75 290.56,-741.75 290.56,-741.75 290.56,-753.75 290.56,-753.75 290.56,-759.75 284.56,-765.75 278.56,-765.75"/>
 
-<text xml:space="preserve" text-anchor="start" x="157.47" y="-748.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 릴리의 승인</text>
+<text xml:space="preserve" text-anchor="start" x="175.84" y="-748.35" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">목표: 릴리의 승인</text>
 
-<text xml:space="preserve" text-anchor="start" x="191.22" y="-738.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 7</text>
+<text xml:space="preserve" text-anchor="start" x="209.59" y="-738.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 7</text>
 
 </g>
 
@@ -686,11 +686,11 @@ html { scroll-behavior: smooth; }
 
 <title>g5&#45;&gt;g6</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-811.59C205.47,-800.93 205.47,-787.1 205.47,-775.12"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-811.59C223.84,-800.93 223.84,-787.1 223.84,-775.12"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-775.22 205.47,-768.22 203.02,-775.22 207.92,-775.22"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-775.22 223.85,-768.22 221.4,-775.22 226.3,-775.22"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-786.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-786.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -700,11 +700,11 @@ html { scroll-behavior: smooth; }
 
 <title>전환</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M397.81,-683.5C397.81,-683.5 13.12,-683.5 13.12,-683.5 7.12,-683.5 1.12,-677.5 1.12,-671.5 1.12,-671.5 1.12,-659.5 1.12,-659.5 1.12,-653.5 7.12,-647.5 13.12,-647.5 13.12,-647.5 397.81,-647.5 397.81,-647.5 403.81,-647.5 409.81,-653.5 409.81,-659.5 409.81,-659.5 409.81,-671.5 409.81,-671.5 409.81,-677.5 403.81,-683.5 397.81,-683.5"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M416.19,-683.5C416.19,-683.5 31.5,-683.5 31.5,-683.5 25.5,-683.5 19.5,-677.5 19.5,-671.5 19.5,-671.5 19.5,-659.5 19.5,-659.5 19.5,-653.5 25.5,-647.5 31.5,-647.5 31.5,-647.5 416.19,-647.5 416.19,-647.5 422.19,-647.5 428.19,-653.5 428.19,-659.5 428.19,-659.5 428.19,-671.5 428.19,-671.5 428.19,-677.5 422.19,-683.5 416.19,-683.5"/>
 
-<text xml:space="preserve" text-anchor="start" x="107.97" y="-666.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">전환부 (릴리의 방 · 진짜 이름 입력)</text>
+<text xml:space="preserve" text-anchor="start" x="126.34" y="-666.1" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">전환부 (릴리의 방 · 진짜 이름 입력)</text>
 
-<text xml:space="preserve" text-anchor="start" x="19.84" y="-656" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 8 · 9 · ALONE · 레버 · 보라 그대로 · 진행도 50 고정 · 채팅 · 힌트 입력 못 누름</text>
+<text xml:space="preserve" text-anchor="start" x="38.22" y="-656" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 8 · 9 · ALONE · 레버 · 보라 그대로 · 진행도 50 고정 · 채팅 · 힌트 입력 못 누름</text>
 
 </g>
 
@@ -714,11 +714,11 @@ html { scroll-behavior: smooth; }
 
 <title>g6&#45;&gt;전환</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-729.34C205.47,-718.68 205.47,-704.85 205.47,-692.87"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-729.34C223.84,-718.68 223.84,-704.85 223.84,-692.87"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-692.97 205.47,-685.97 203.02,-692.97 207.92,-692.97"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-692.97 223.85,-685.97 221.4,-692.97 226.3,-692.97"/>
 
-<text xml:space="preserve" text-anchor="middle" x="256.84" y="-704.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
+<text xml:space="preserve" text-anchor="middle" x="275.22" y="-704.25" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">승인 → 목표 완료 체크</text>
 
 </g>
 
@@ -728,11 +728,11 @@ html { scroll-behavior: smooth; }
 
 <title>비아</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M267.31,-601.25C267.31,-601.25 143.62,-601.25 143.62,-601.25 137.62,-601.25 131.62,-595.25 131.62,-589.25 131.62,-589.25 131.62,-577.25 131.62,-577.25 131.62,-571.25 137.62,-565.25 143.62,-565.25 143.62,-565.25 267.31,-565.25 267.31,-565.25 273.31,-565.25 279.31,-571.25 279.31,-577.25 279.31,-577.25 279.31,-589.25 279.31,-589.25 279.31,-595.25 273.31,-601.25 267.31,-601.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M285.69,-601.25C285.69,-601.25 162,-601.25 162,-601.25 156,-601.25 150,-595.25 150,-589.25 150,-589.25 150,-577.25 150,-577.25 150,-571.25 156,-565.25 162,-565.25 162,-565.25 285.69,-565.25 285.69,-565.25 291.69,-565.25 297.69,-571.25 297.69,-577.25 297.69,-577.25 297.69,-589.25 297.69,-589.25 297.69,-595.25 291.69,-601.25 285.69,-601.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="179.22" y="-583.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 등장</text>
+<text xml:space="preserve" text-anchor="start" x="197.59" y="-583.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 등장</text>
 
-<text xml:space="preserve" text-anchor="start" x="150.34" y="-573.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">보라 → 주황 · 대사 1001</text>
+<text xml:space="preserve" text-anchor="start" x="168.72" y="-573.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">보라 → 주황 · 대사 1001</text>
 
 </g>
 
@@ -742,11 +742,11 @@ html { scroll-behavior: smooth; }
 
 <title>전환&#45;&gt;비아</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-647.09C205.47,-636.43 205.47,-622.6 205.47,-610.62"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-647.09C223.84,-636.43 223.84,-622.6 223.84,-610.62"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-610.72 205.47,-603.72 203.02,-610.72 207.92,-610.72"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-610.72 223.85,-603.72 221.4,-610.72 226.3,-610.72"/>
 
-<text xml:space="preserve" text-anchor="middle" x="226.84" y="-622" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 내림</text>
+<text xml:space="preserve" text-anchor="middle" x="245.22" y="-622" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 내림</text>
 
 </g>
 
@@ -756,11 +756,11 @@ html { scroll-behavior: smooth; }
 
 <title>b1</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M274.44,-532.25C274.44,-532.25 136.5,-532.25 136.5,-532.25 130.5,-532.25 124.5,-526.25 124.5,-520.25 124.5,-520.25 124.5,-508.25 124.5,-508.25 124.5,-502.25 130.5,-496.25 136.5,-496.25 136.5,-496.25 274.44,-496.25 274.44,-496.25 280.44,-496.25 286.44,-502.25 286.44,-508.25 286.44,-508.25 286.44,-520.25 286.44,-520.25 286.44,-526.25 280.44,-532.25 274.44,-532.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M292.81,-532.25C292.81,-532.25 154.88,-532.25 154.88,-532.25 148.88,-532.25 142.88,-526.25 142.88,-520.25 142.88,-520.25 142.88,-508.25 142.88,-508.25 142.88,-502.25 148.88,-496.25 154.88,-496.25 154.88,-496.25 292.81,-496.25 292.81,-496.25 298.81,-496.25 304.81,-502.25 304.81,-508.25 304.81,-508.25 304.81,-520.25 304.81,-520.25 304.81,-526.25 298.81,-532.25 292.81,-532.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="143.22" y="-514.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 알렉스의 방</text>
+<text xml:space="preserve" text-anchor="start" x="161.59" y="-514.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 알렉스의 방</text>
 
-<text xml:space="preserve" text-anchor="start" x="161.59" y="-504.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 10 · 대사 1008</text>
+<text xml:space="preserve" text-anchor="start" x="179.97" y="-504.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 10 · 대사 1008</text>
 
 </g>
 
@@ -770,9 +770,9 @@ html { scroll-behavior: smooth; }
 
 <title>비아&#45;&gt;b1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-564.65C205.47,-557.51 205.47,-549.13 205.47,-541.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-564.65C223.84,-557.51 223.84,-549.13 223.84,-541.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-541.32 205.47,-534.32 203.02,-541.32 207.92,-541.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-541.32 223.85,-534.32 221.4,-541.32 226.3,-541.32"/>
 
 </g>
 
@@ -782,11 +782,11 @@ html { scroll-behavior: smooth; }
 
 <title>b2</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M280.44,-463.25C280.44,-463.25 130.5,-463.25 130.5,-463.25 124.5,-463.25 118.5,-457.25 118.5,-451.25 118.5,-451.25 118.5,-439.25 118.5,-439.25 118.5,-433.25 124.5,-427.25 130.5,-427.25 130.5,-427.25 280.44,-427.25 280.44,-427.25 286.44,-427.25 292.44,-433.25 292.44,-439.25 292.44,-439.25 292.44,-451.25 292.44,-451.25 292.44,-457.25 286.44,-463.25 280.44,-463.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M298.81,-463.25C298.81,-463.25 148.88,-463.25 148.88,-463.25 142.88,-463.25 136.88,-457.25 136.88,-451.25 136.88,-451.25 136.88,-439.25 136.88,-439.25 136.88,-433.25 142.88,-427.25 148.88,-427.25 148.88,-427.25 298.81,-427.25 298.81,-427.25 304.81,-427.25 310.81,-433.25 310.81,-439.25 310.81,-439.25 310.81,-451.25 310.81,-451.25 310.81,-457.25 304.81,-463.25 298.81,-463.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="137.22" y="-445.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 오펠리아의 방</text>
+<text xml:space="preserve" text-anchor="start" x="155.59" y="-445.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 오펠리아의 방</text>
 
-<text xml:space="preserve" text-anchor="start" x="161.59" y="-435.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 11 · 대사 1137</text>
+<text xml:space="preserve" text-anchor="start" x="179.97" y="-435.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 11 · 대사 1137</text>
 
 </g>
 
@@ -796,9 +796,9 @@ html { scroll-behavior: smooth; }
 
 <title>b1&#45;&gt;b2</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-495.65C205.47,-488.51 205.47,-480.13 205.47,-472.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-495.65C223.84,-488.51 223.84,-480.13 223.84,-472.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-472.32 205.47,-465.32 203.02,-472.32 207.92,-472.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-472.32 223.85,-465.32 221.4,-472.32 226.3,-472.32"/>
 
 </g>
 
@@ -808,11 +808,11 @@ html { scroll-behavior: smooth; }
 
 <title>b3</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M268.44,-394.25C268.44,-394.25 142.5,-394.25 142.5,-394.25 136.5,-394.25 130.5,-388.25 130.5,-382.25 130.5,-382.25 130.5,-370.25 130.5,-370.25 130.5,-364.25 136.5,-358.25 142.5,-358.25 142.5,-358.25 268.44,-358.25 268.44,-358.25 274.44,-358.25 280.44,-364.25 280.44,-370.25 280.44,-370.25 280.44,-382.25 280.44,-382.25 280.44,-388.25 274.44,-394.25 268.44,-394.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M286.81,-394.25C286.81,-394.25 160.88,-394.25 160.88,-394.25 154.88,-394.25 148.88,-388.25 148.88,-382.25 148.88,-382.25 148.88,-370.25 148.88,-370.25 148.88,-364.25 154.88,-358.25 160.88,-358.25 160.88,-358.25 286.81,-358.25 286.81,-358.25 292.81,-358.25 298.81,-364.25 298.81,-370.25 298.81,-370.25 298.81,-382.25 298.81,-382.25 298.81,-388.25 292.81,-394.25 286.81,-394.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="149.22" y="-376.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 노아의 방</text>
+<text xml:space="preserve" text-anchor="start" x="167.59" y="-376.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 노아의 방</text>
 
-<text xml:space="preserve" text-anchor="start" x="161.59" y="-366.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 12 · 대사 1209</text>
+<text xml:space="preserve" text-anchor="start" x="179.97" y="-366.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 12 · 대사 1209</text>
 
 </g>
 
@@ -822,9 +822,9 @@ html { scroll-behavior: smooth; }
 
 <title>b2&#45;&gt;b3</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-426.65C205.47,-419.51 205.47,-411.13 205.47,-403.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-426.65C223.84,-419.51 223.84,-411.13 223.84,-403.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-403.32 205.47,-396.32 203.02,-403.32 207.92,-403.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-403.32 223.85,-396.32 221.4,-403.32 226.3,-403.32"/>
 
 </g>
 
@@ -834,11 +834,11 @@ html { scroll-behavior: smooth; }
 
 <title>b4</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M268.44,-325.25C268.44,-325.25 142.5,-325.25 142.5,-325.25 136.5,-325.25 130.5,-319.25 130.5,-313.25 130.5,-313.25 130.5,-301.25 130.5,-301.25 130.5,-295.25 136.5,-289.25 142.5,-289.25 142.5,-289.25 268.44,-289.25 268.44,-289.25 274.44,-289.25 280.44,-295.25 280.44,-301.25 280.44,-301.25 280.44,-313.25 280.44,-313.25 280.44,-319.25 274.44,-325.25 268.44,-325.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M286.81,-325.25C286.81,-325.25 160.88,-325.25 160.88,-325.25 154.88,-325.25 148.88,-319.25 148.88,-313.25 148.88,-313.25 148.88,-301.25 148.88,-301.25 148.88,-295.25 154.88,-289.25 160.88,-289.25 160.88,-289.25 286.81,-289.25 286.81,-289.25 292.81,-289.25 298.81,-295.25 298.81,-301.25 298.81,-301.25 298.81,-313.25 298.81,-313.25 298.81,-319.25 292.81,-325.25 286.81,-325.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="149.22" y="-307.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 에바의 방</text>
+<text xml:space="preserve" text-anchor="start" x="167.59" y="-307.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 에바의 방</text>
 
-<text xml:space="preserve" text-anchor="start" x="161.59" y="-297.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 13 · 대사 1322</text>
+<text xml:space="preserve" text-anchor="start" x="179.97" y="-297.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 13 · 대사 1322</text>
 
 </g>
 
@@ -848,9 +848,9 @@ html { scroll-behavior: smooth; }
 
 <title>b3&#45;&gt;b4</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-357.65C205.47,-350.51 205.47,-342.13 205.47,-334.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-357.65C223.84,-350.51 223.84,-342.13 223.84,-334.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-334.32 205.47,-327.32 203.02,-334.32 207.92,-334.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-334.32 223.85,-327.32 221.4,-334.32 226.3,-334.32"/>
 
 </g>
 
@@ -860,11 +860,11 @@ html { scroll-behavior: smooth; }
 
 <title>b5</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M268.44,-256.25C268.44,-256.25 142.5,-256.25 142.5,-256.25 136.5,-256.25 130.5,-250.25 130.5,-244.25 130.5,-244.25 130.5,-232.25 130.5,-232.25 130.5,-226.25 136.5,-220.25 142.5,-220.25 142.5,-220.25 268.44,-220.25 268.44,-220.25 274.44,-220.25 280.44,-226.25 280.44,-232.25 280.44,-232.25 280.44,-244.25 280.44,-244.25 280.44,-250.25 274.44,-256.25 268.44,-256.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M286.81,-256.25C286.81,-256.25 160.88,-256.25 160.88,-256.25 154.88,-256.25 148.88,-250.25 148.88,-244.25 148.88,-244.25 148.88,-232.25 148.88,-232.25 148.88,-226.25 154.88,-220.25 160.88,-220.25 160.88,-220.25 286.81,-220.25 286.81,-220.25 292.81,-220.25 298.81,-226.25 298.81,-232.25 298.81,-232.25 298.81,-244.25 298.81,-244.25 298.81,-250.25 292.81,-256.25 286.81,-256.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="149.22" y="-238.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 릴리의 방</text>
+<text xml:space="preserve" text-anchor="start" x="167.59" y="-238.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 안내: 릴리의 방</text>
 
-<text xml:space="preserve" text-anchor="start" x="161.59" y="-228.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 14 · 대사 1432</text>
+<text xml:space="preserve" text-anchor="start" x="179.97" y="-228.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 14 · 대사 1432</text>
 
 </g>
 
@@ -874,9 +874,9 @@ html { scroll-behavior: smooth; }
 
 <title>b4&#45;&gt;b5</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-288.65C205.47,-281.51 205.47,-273.13 205.47,-265.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-288.65C223.84,-281.51 223.84,-273.13 223.84,-265.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-265.32 205.47,-258.32 203.02,-265.32 207.92,-265.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-265.32 223.85,-258.32 221.4,-265.32 226.3,-265.32"/>
 
 </g>
 
@@ -886,11 +886,11 @@ html { scroll-behavior: smooth; }
 
 <title>b6</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M260.94,-187.25C260.94,-187.25 150,-187.25 150,-187.25 144,-187.25 138,-181.25 138,-175.25 138,-175.25 138,-163.25 138,-163.25 138,-157.25 144,-151.25 150,-151.25 150,-151.25 260.94,-151.25 260.94,-151.25 266.94,-151.25 272.94,-157.25 272.94,-163.25 272.94,-163.25 272.94,-175.25 272.94,-175.25 272.94,-181.25 266.94,-187.25 260.94,-187.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M279.31,-187.25C279.31,-187.25 168.38,-187.25 168.38,-187.25 162.38,-187.25 156.38,-181.25 156.38,-175.25 156.38,-175.25 156.38,-163.25 156.38,-163.25 156.38,-157.25 162.38,-151.25 168.38,-151.25 168.38,-151.25 279.31,-151.25 279.31,-151.25 285.31,-151.25 291.31,-157.25 291.31,-163.25 291.31,-163.25 291.31,-175.25 291.31,-175.25 291.31,-181.25 285.31,-187.25 279.31,-187.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="164.97" y="-169.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 정체 공개</text>
+<text xml:space="preserve" text-anchor="start" x="183.34" y="-169.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">비아 정체 공개</text>
 
-<text xml:space="preserve" text-anchor="start" x="156.72" y="-159.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 15 LOVE 입력 뒤</text>
+<text xml:space="preserve" text-anchor="start" x="175.09" y="-159.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 15 LOVE 입력 뒤</text>
 
 </g>
 
@@ -900,9 +900,9 @@ html { scroll-behavior: smooth; }
 
 <title>b5&#45;&gt;b6</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-219.65C205.47,-212.51 205.47,-204.13 205.47,-196.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-219.65C223.84,-212.51 223.84,-204.13 223.84,-196.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-196.32 205.47,-189.32 203.02,-196.32 207.92,-196.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-196.32 223.85,-189.32 221.4,-196.32 226.3,-196.32"/>
 
 </g>
 
@@ -912,11 +912,11 @@ html { scroll-behavior: smooth; }
 
 <title>레버</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M306.69,-118.25C306.69,-118.25 104.25,-118.25 104.25,-118.25 98.25,-118.25 92.25,-112.25 92.25,-106.25 92.25,-106.25 92.25,-94.25 92.25,-94.25 92.25,-88.25 98.25,-82.25 104.25,-82.25 104.25,-82.25 306.69,-82.25 306.69,-82.25 312.69,-82.25 318.69,-88.25 318.69,-94.25 318.69,-94.25 318.69,-106.25 318.69,-106.25 318.69,-112.25 312.69,-118.25 306.69,-118.25"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M325.06,-118.25C325.06,-118.25 122.62,-118.25 122.62,-118.25 116.62,-118.25 110.62,-112.25 110.62,-106.25 110.62,-106.25 110.62,-94.25 110.62,-94.25 110.62,-88.25 116.62,-82.25 122.62,-82.25 122.62,-82.25 325.06,-82.25 325.06,-82.25 331.06,-82.25 337.06,-88.25 337.06,-94.25 337.06,-94.25 337.06,-106.25 337.06,-106.25 337.06,-112.25 331.06,-118.25 325.06,-118.25"/>
 
-<text xml:space="preserve" text-anchor="start" x="179.22" y="-100.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">레버 선택</text>
+<text xml:space="preserve" text-anchor="start" x="197.59" y="-100.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">레버 선택</text>
 
-<text xml:space="preserve" text-anchor="start" x="110.97" y="-90.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 16 · 폰은 힌트 코드로 레버 대기 연출</text>
+<text xml:space="preserve" text-anchor="start" x="129.34" y="-90.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">문제 16 · 폰은 힌트 코드로 레버 대기 연출</text>
 
 </g>
 
@@ -926,9 +926,9 @@ html { scroll-behavior: smooth; }
 
 <title>b6&#45;&gt;레버</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M205.47,-150.65C205.47,-143.51 205.47,-135.13 205.47,-127.31"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M223.84,-150.65C223.84,-143.51 223.84,-135.13 223.84,-127.31"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="207.92,-127.32 205.47,-120.32 203.02,-127.32 207.92,-127.32"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="226.3,-127.32 223.85,-120.32 221.4,-127.32 226.3,-127.32"/>
 
 </g>
 
@@ -938,11 +938,11 @@ html { scroll-behavior: smooth; }
 
 <title>탈출</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M176.94,-36C176.94,-36 78,-36 78,-36 72,-36 66,-30 66,-24 66,-24 66,-12 66,-12 66,-6 72,0 78,0 78,0 176.94,0 176.94,0 182.94,0 188.94,-6 188.94,-12 188.94,-12 188.94,-24 188.94,-24 188.94,-30 182.94,-36 176.94,-36"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M195.31,-36C195.31,-36 96.38,-36 96.38,-36 90.38,-36 84.38,-30 84.38,-24 84.38,-24 84.38,-12 84.38,-12 84.38,-6 90.38,0 96.38,0 96.38,0 195.31,0 195.31,0 201.31,0 207.31,-6 207.31,-12 207.31,-12 207.31,-24 207.31,-24 207.31,-30 201.31,-36 195.31,-36"/>
 
-<text xml:space="preserve" text-anchor="start" x="101.22" y="-18.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">탈출 엔딩</text>
+<text xml:space="preserve" text-anchor="start" x="119.59" y="-18.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">탈출 엔딩</text>
 
-<text xml:space="preserve" text-anchor="start" x="84.72" y="-8.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 아래 · 폰 꺼짐</text>
+<text xml:space="preserve" text-anchor="start" x="103.09" y="-8.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 아래 · 폰 꺼짐</text>
 
 </g>
 
@@ -952,11 +952,11 @@ html { scroll-behavior: smooth; }
 
 <title>레버&#45;&gt;탈출</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M188.55,-81.84C177.48,-70.45 162.88,-55.43 150.73,-42.93"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M206.92,-81.84C195.86,-70.45 181.26,-55.43 169.11,-42.93"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="152.53,-41.27 145.9,-37.96 149.02,-44.69 152.53,-41.27"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="170.91,-41.27 164.27,-37.96 167.39,-44.69 170.91,-41.27"/>
 
-<text xml:space="preserve" text-anchor="middle" x="192.52" y="-56.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 아래</text>
+<text xml:space="preserve" text-anchor="middle" x="210.89" y="-56.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 아래</text>
 
 </g>
 
@@ -966,11 +966,11 @@ html { scroll-behavior: smooth; }
 
 <title>행성</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M345.56,-36C345.56,-36 223.37,-36 223.37,-36 217.37,-36 211.37,-30 211.37,-24 211.37,-24 211.37,-12 211.37,-12 211.37,-6 217.37,0 223.37,0 223.37,0 345.56,0 345.56,0 351.56,0 357.56,-6 357.56,-12 357.56,-12 357.56,-24 357.56,-24 357.56,-30 351.56,-36 345.56,-36"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M363.94,-36C363.94,-36 241.75,-36 241.75,-36 235.75,-36 229.75,-30 229.75,-24 229.75,-24 229.75,-12 229.75,-12 229.75,-6 235.75,0 241.75,0 241.75,0 363.94,0 363.94,0 369.94,0 375.94,-6 375.94,-12 375.94,-12 375.94,-24 375.94,-24 375.94,-30 369.94,-36 363.94,-36"/>
 
-<text xml:space="preserve" text-anchor="start" x="258.22" y="-18.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">행성 엔딩</text>
+<text xml:space="preserve" text-anchor="start" x="276.6" y="-18.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">행성 엔딩</text>
 
-<text xml:space="preserve" text-anchor="start" x="230.09" y="-8.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 위 · 송출 화면 반복</text>
+<text xml:space="preserve" text-anchor="start" x="248.47" y="-8.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 위 · 송출 화면 반복</text>
 
 </g>
 
@@ -980,11 +980,11 @@ html { scroll-behavior: smooth; }
 
 <title>레버&#45;&gt;행성</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M222.61,-81.84C233.82,-70.45 248.61,-55.43 260.91,-42.93"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M240.99,-81.84C252.19,-70.45 266.98,-55.43 279.29,-42.93"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="262.65,-44.66 265.81,-37.95 259.16,-41.22 262.65,-44.66"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="281.02,-44.66 284.19,-37.95 277.53,-41.22 281.02,-44.66"/>
 
-<text xml:space="preserve" text-anchor="middle" x="266.2" y="-56.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 위</text>
+<text xml:space="preserve" text-anchor="middle" x="284.57" y="-56.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">레버 위</text>
 
 </g>
 
