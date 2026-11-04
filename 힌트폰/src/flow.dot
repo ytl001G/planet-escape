@@ -85,7 +85,7 @@ digraph G {
  "어디서든" [label=<<b>어느 화면에서든</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "끊김" [label=<<b>연결 끊김</b><br/><font point-size="10" color="#a39eab">와이파이 아이콘 + 연결이 끊겼습니다</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "재연결" [label=<<b>다시 연결</b><br/><font point-size="10" color="#a39eab">원래 화면으로</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
- "종료" [label=<<b>시간 종료</b><br/><font point-size="10" color="#a39eab">0:00:00 → 전체 화면 · 이후 미정</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "종료" [label=<<b>시간 종료</b><br/><font point-size="10" color="#a39eab">따로 페이지 없음 · 지금 화면 그대로 · 타이머 글자만 빨강 · 이후 미정</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "홈" -> "코드kb" [label="입력 칸"];
  "코드kb" -> "판별" [label="힌트 보기"];
  "판별" -> "r없는" [label=""];
