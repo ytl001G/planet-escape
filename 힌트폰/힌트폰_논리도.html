@@ -845,6 +845,39 @@ html { scroll-behavior: smooth; }
 
 <section id="rules">
 <h1 class="big" style="font-size:26px;margin:0">공통 규정</h1>
+<section><style>
+#bo { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 18px; margin-top: 10px; }
+#bo .op h4 { margin: 0 0 8px; font-size: 15px; } #bo .op p { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+#bo .ph { height: 430px; border-radius: 28px; padding: 18px 14px; display: flex; flex-direction: column; gap: 12px; color: #f2eef6;
+  background: radial-gradient(120% 70% at 70% 35%, #4a2160 0%, #1c1026 45%, #0b0910 100%); border: 1.5px solid #3a3541; overflow: hidden; font-family: inherit; }
+#bo .tm { font: 700 38px/1 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; display: grid; place-items: center; }
+#bo .card { padding: 14px; } #bo .card small { color: #cf86e6; font-size: 11px; font-weight: 700; } #bo .card b { display: block; font-size: 16px; margin-top: 4px; }
+#bo .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } #bo .b { height: 44px; display: grid; place-items: center; font-size: 14px; font-weight: 700; }
+/* A 틀 없음 */
+#bo .A .tm { height: 86px; font-size: 46px; text-shadow: 0 0 24px rgba(207,134,230,.45); }
+#bo .A .card { background: rgba(255,255,255,.06); border-radius: 16px; }
+#bo .A .b { border-radius: 12px; background: rgba(255,255,255,.10); } #bo .A .b.p { background: #cf86e6; color: #1a0f20; }
+/* B 유리 알약 */
+#bo .B .tm { height: 72px; margin: 0 4px; font-size: 34px; border-radius: 999px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 24px rgba(0,0,0,.35); }
+#bo .B .card { border-radius: 22px; background: rgba(255,255,255,.07); box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+#bo .B .b { border-radius: 999px; background: rgba(255,255,255,.10); box-shadow: inset 0 1px 0 rgba(255,255,255,.16); } #bo .B .b.p { background: linear-gradient(180deg, #dba0ee, #b86ad3); color: #1a0f20; }
+/* C 빛 테두리 */
+#bo .C .tm { height: 80px; border-radius: 18px; border: 1.5px solid transparent; background: linear-gradient(#170f1e, #170f1e) padding-box, linear-gradient(135deg, #cf86e6, rgba(207,134,230,.05) 60%, #7b5cff) border-box; box-shadow: 0 0 22px rgba(207,134,230,.25); }
+#bo .C .card { border-radius: 14px; border: 1px solid rgba(207,134,230,.35); background: rgba(20,12,26,.6); }
+#bo .C .b { border-radius: 12px; border: 1px solid rgba(207,134,230,.45); background: rgba(20,12,26,.6); } #bo .C .b.p { border-color: #cf86e6; box-shadow: 0 0 14px rgba(207,134,230,.45); color: #e9c2f5; }
+/* D 톤 채움 */
+#bo .D .tm { height: 80px; border-radius: 20px; background: rgba(207,134,230,.16); color: #f4dafb; }
+#bo .D .card { border-radius: 20px; background: rgba(255,255,255,.07); }
+#bo .D .b { border-radius: 16px; background: rgba(207,134,230,.16); color: #ecc8f7; } #bo .D .b.p { background: #cf86e6; color: #1a0f20; }
+/* E 둥근 링 */
+#bo .E .ring { width: 132px; height: 132px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#cf86e6 0 82%, rgba(255,255,255,.10) 0); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); }
+#bo .E .rw { position: relative; height: 132px; } #bo .E .rw .tm { position: absolute; inset: 0; font-size: 26px; }
+#bo .E .card { border-radius: 18px; background: rgba(255,255,255,.07); }
+#bo .E .b { border-radius: 999px; background: rgba(255,255,255,.10); } #bo .E .b.p { background: #cf86e6; color: #1a0f20; }
+</style>
+  <h2>타이머 · 버튼 틀 시안 <small>고르는 중 · 1부 보라 기준</small></h2>
+  <div id="bo"><div class="op"><h4>A. 틀 없음</h4><div class="ph A"><div class="tm">1:38:15</div><div class="card"><small>현재 목표</small><b>에바의 승인 확보</b></div><div class="row"><div class="b">힌트 보기</div><div class="b">진행도</div></div><div class="b p">다음 힌트</div></div><p>타이머는 상자 없이 숫자만 크게, 은은한 빛. 버튼은 테두리 없는 반투명 칸, 주 버튼만 색으로 채움.</p></div><div class="op"><h4>B. 유리 알약</h4><div class="ph B"><div class="tm">1:38:15</div><div class="card"><small>현재 목표</small><b>에바의 승인 확보</b></div><div class="row"><div class="b">힌트 보기</div><div class="b">진행도</div></div><div class="b p">다음 힌트</div></div><p>타이머를 둥근 알약 유리판에. 버튼도 끝이 완전히 둥근 알약, 위쪽에 얇은 빛 반사.</p></div><div class="op"><h4>C. 빛 테두리</h4><div class="ph C"><div class="tm">1:38:15</div><div class="card"><small>현재 목표</small><b>에바의 승인 확보</b></div><div class="row"><div class="b">힌트 보기</div><div class="b">진행도</div></div><div class="b p">다음 힌트</div></div><p>어두운 판 + 보라빛 그라데이션 테두리. 우주선 계기판 느낌. 주 버튼은 테두리가 빛남.</p></div><div class="op"><h4>D. 톤 채움</h4><div class="ph D"><div class="tm">1:38:15</div><div class="card"><small>현재 목표</small><b>에바의 승인 확보</b></div><div class="row"><div class="b">힌트 보기</div><div class="b">진행도</div></div><div class="b p">다음 힌트</div></div><p>테두리 없이 보라를 옅게 깐 판. 모서리 크게(20). 주 버튼만 진한 보라 — 요즘 폰 앱(머티리얼) 느낌.</p></div><div class="op"><h4>E. 둥근 링</h4><div class="ph E"><div class="rw"><div class="ring"></div><div class="tm">1:38:15</div></div><div class="card"><small>현재 목표</small><b>에바의 승인 확보</b></div><div class="row"><div class="b">힌트 보기</div><div class="b">진행도</div></div><div class="b p">다음 힌트</div></div><p>노션 와이어프레임의 큰 동그라미 타이머. 링이 남은 시간만큼 줄어듦. 버튼은 알약.</p></div></div>
+</section>
 <section>
   <h2>인물 색 <small>대표색은 칠과 점, 글자색은 어두운 바탕 위 이름 글자</small></h2>
   <div class="tbl"><table><thead><tr><th>인물</th><th>대표색 (노션 기준)</th><th>글자색 (밝게)</th><th>바탕 대비</th><th>쓰는 곳</th></tr></thead><tbody><tr><td>알렉스</td><td><span class="sw" style="background:#E53935"></span> #E53935</td><td><span class="sw" style="background:#E57373"></span> <b style="color:#E57373">알렉스</b> #E57373</td><td>6.1 : 1</td><td class=scr>칠 · 점 · 이름표 점</td></tr><tr><td>오펠리아</td><td><span class="sw" style="background:#FDD835"></span> #FDD835</td><td><span class="sw" style="background:#FFF176"></span> <b style="color:#FFF176">오펠리아</b> #FFF176</td><td>15.6 : 1</td><td class=scr>칠 · 점 · 이름표 점</td></tr><tr><td>노아</td><td><span class="sw" style="background:#43A047"></span> #43A047</td><td><span class="sw" style="background:#81C784"></span> <b style="color:#81C784">노아</b> #81C784</td><td>9.0 : 1</td><td class=scr>칠 · 점 · 이름표 점</td></tr><tr><td>에바</td><td><span class="sw" style="background:#1E88E5"></span> #1E88E5</td><td><span class="sw" style="background:#64B5F6"></span> <b style="color:#64B5F6">에바</b> #64B5F6</td><td>8.2 : 1</td><td class=scr>칠 · 점 · 이름표 점</td></tr><tr><td>릴리</td><td><span class="sw" style="background:#8E24AA"></span> #8E24AA</td><td><span class="sw" style="background:#BA68C8"></span> <b style="color:#BA68C8">릴리</b> #BA68C8</td><td>5.1 : 1</td><td class=scr>칠 · 점 · 이름표 점</td></tr><tr><td>비아</td><td><span class="sw" style="background:#FB8C00"></span> #FB8C00</td><td><span class="sw" style="background:#FFB74D"></span> <b style="color:#FFB74D">비아</b> #FFB74D</td><td>10.5 : 1</td><td class=scr>2부 말풍선 · 화자 점</td></tr></tbody></table></div><p class="note">이름 글자는 대표색 그대로 쓰지 않고 같은 계열의 밝은 색을 쓴다. 대비 4.5 : 1 이상이어야 읽힌다.</p>

@@ -50,7 +50,8 @@ css = '''
 #rules .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 4px; border: 1px solid var(--line); }
 #rules .note { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
 '''
-html = '<section id="rules">\n<h1 class="big" style="font-size:26px;margin:0">공통 규정</h1>\n' + colors + screen + font + size + btn + rules + '</section>\n'
+opts = pathlib.Path(__file__).with_name('rules_opts.html').read_text(encoding='utf-8')  # 시안: 고르면 지움
+html = '<section id="rules">\n<h1 class="big" style="font-size:26px;margin:0">공통 규정</h1>\n' + opts + colors + screen + font + size + btn + rules + '</section>\n'
 o = '<section id="assets">'; assert s.count(o) == 1
 s = s.replace(o, html + o).replace('</style>', css + '</style>', 1)
 p.write_text(s, encoding='utf-8'); print('rules tab ok')
