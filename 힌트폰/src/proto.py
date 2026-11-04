@@ -93,7 +93,14 @@ CSS = r'''
 #proto .idle .timer { width: 260px; height: 260px; margin: 0; font-size: 50px; }
 #proto .idle .timer circle { stroke-width: 4.5; }
 #proto .pre .timer .tp { stroke: var(--c0); }  /* 안전 모드 전엔 어느 화면이든 흰 링 (연결 끊김 포함) */
-#proto .idle .timer .tp { stroke: var(--c0); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
+#proto .lb { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+#proto .lb-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+#proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+#proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
+#proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-dock { justify-content: center; }
+#proto .idle .timer .tp { stroke: var(--c0); }
+#proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
 #proto .chatin + .kbd { margin-top: 8px; }
 #proto .ck .key { font: 500 16px var(--body); }
@@ -231,6 +238,7 @@ HTML = '''<section id="proto">
   <div class="panel">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
+    <div class="grp" role="group" aria-label="배치 시안"><button type="button" data-lay="a" aria-pressed="true">배치: 기본</button><button type="button" data-lay="b" aria-pressed="false">배치 시안: 타이머 가운데</button></div>
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
     <div class="codes">
@@ -334,6 +342,11 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
   return `<div class="head"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">${title}${sub ? `<small class="sub">${sub}</small>` : ''}</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`;
 }
 
+function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트 아래
+  const chat = `<div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div>`;
+  return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass">${g}</div>` : ''}</div><div class="idle">${timer}</div>`
+    + `<div class="dock glass lb-dock"><div class="app" data-act="codes" role="button" tabindex="0"><i>${ICON.bulb}</i>힌트코드</div></div></div>` + (S.map ? mapOv() : '');
+}
 function vMain() {
   let g = '';
   if (S.phase === 'pre') {
@@ -349,7 +362,9 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av" style="font-size:18px">V</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
-  if (S.phase === 'pre' && !S.run) return `<div class="idle">${timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>')}</div>` + dock();  // 시작 전: 앱만 열어 두고 설명 · 힌트코드 · 채팅은 열어 볼 수 있음
+  const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
+  if (LAYOUT === 'b') return layB(t0, S.phase === 'pre' ? '' : g);  // 배치 시안 B
+  if (S.phase === 'pre' && !S.run) return `<div class="idle">${t0}</div>` + dock();  // 시작 전: 앱만 열어 두고 설명 · 힌트코드 · 채팅은 열어 볼 수 있음
   if (S.phase === 'pre') return `<div class="idle">${timerBox()}</div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
@@ -686,6 +701,10 @@ $('pv-ed-in').onclick = () => {
 $('pv-ed-reset').onclick = () => { ED = { text: {}, color: {}, size: {} }; edSave(); edApplyStyle(); edBuild(); render(); edMsg('모두 되돌렸어요'); };
 edApplyStyle();
 
+let LAYOUT = 'a';  // 배치 시안 (진행을 처음부터 해도 유지)
+document.querySelectorAll('#proto [data-lay]').forEach(b => b.onclick = () => {
+  LAYOUT = b.dataset.lay; document.querySelectorAll('#proto [data-lay]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); render();
+});
 reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 감
 })();
 </script>
