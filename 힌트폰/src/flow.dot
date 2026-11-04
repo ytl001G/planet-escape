@@ -54,7 +54,7 @@ digraph G {
  "판별" [label=<<b>코드 판별</b><br/><font point-size="10" color="#a39eab">지금 부와 앱에 맞는 코드만</font>> shape=diamond style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r없는" [label=<<b>없는 코드</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r없는_0" [label=<<b>반응 없음</b><br/><font point-size="10" color="#a39eab">펼쳐 둔 앞 코드 힌트만 걷힘</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
- "r설명" [label=<<b>가짜 코드 0000</b><br/><font point-size="10" color="#a39eab">설명용 · 시작 전부터 언제나</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "r설명" [label=<<b>가짜 코드 0000</b><br/><font point-size="10" color="#a39eab">설명용 · Start 누르기 전에만</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r설명_0" [label=<<b>힌트 1</b><br/><font point-size="10" color="#a39eab">버튼 줄 아래로 펼침</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r설명_1" [label=<<b>힌트 2</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "r설명_2" [label=<<b>힌트 3</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];

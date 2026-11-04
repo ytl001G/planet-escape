@@ -26,7 +26,7 @@ DATA = {
                           '실험 조건과 실패 기록을 함께 남긴다.', '당장 돌아갈 방법은 아니지만, 연구를 이어 갈 가치는 있다.']},
     # 시험용 코드 (코드 형식은 아직 미정)
     'codes': {
-        '0000': {'kind': 'hint', 'part': 1, 'pct': 50, 'hints': ['예시 문구', '예시 문구', '예시 문구'], 'answer': '예시 문구'},  # 설명용 가짜 코드: 시작 전부터 언제나
+        '0000': {'kind': 'hint', 'part': 1, 'demo': True, 'pct': 50, 'hints': ['예시 문구', '예시 문구', '예시 문구'], 'answer': '예시 문구'},  # 설명용 가짜 코드: Start 누르기 전에만
         'ABCD': {'kind': 'hint', 'part': 1, 'pct': 38, 'hints': ['특정 동작을 통해 숨겨진 것을 알아내자.', '드래그했을 때 뭔가 보이는 것 같다.',
                                                               '각 행성일마다 한 글자씩 하이라이트되며, 이를 합쳐 답을 알 수 있다.'], 'answer': '끝없는탐구'},
         'KLMN': {'kind': 'hint', 'part': 2, 'pct': 72, 'hints': ['별자리 필름이 다시 필요해 보이네.', None, None], 'answer': None},
@@ -234,7 +234,7 @@ HTML = '''<section id="proto">
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
     <div class="codes">
-      <span><code>0000</code> 설명용 가짜 코드 · 언제나 (시작 전에도) · 힌트 3단계 + 정답 + 진행도</span>
+      <span><code>0000</code> 설명용 가짜 코드 · Start 누르기 전에만 · 힌트 3단계 + 정답 + 진행도</span>
       <span><code>ABCD</code> 1부 힌트 (문제 3) · 힌트 3단계 + 정답</span>
       <span><code>KLMN</code> 2부 힌트 (문제 10)</span>
       <span><code>WXYZ</code> 문제 16 · 대기 연출 6단계 → 그 뒤 심장 소리 (같은 코드를 다시 넣으면 다음 단계)</span>
@@ -524,7 +524,7 @@ function reply() { S.chat.push({ me: false }); if (S.view !== 'chat') { S.unread
 
 function check(code) {
   const c0 = D.codes[code], app = c0 && (S.mode === 'story') === (c0.kind === 'story');  // 힌트코드 앱은 힌트 코드만, 스토리코드 앱은 스토리 코드만
-  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') ? null : c0;  // 2부·스토리 코드는 비아 등장 후에만
+  const c = !app || ((c0.part === 2 || c0.kind === 'story') && S.phase !== 'p2') || (c0.demo && (S.run || S.phase !== 'pre')) ? null : c0;  // 가짜 코드는 Start 전에만  // 2부·스토리 코드는 비아 등장 후에만
   if (!c) {  // 없는 코드: 아무 반응 없음. 앞 코드의 힌트·진행도가 펼쳐져 있었다면 그것만 걷는다
     if (S.stale) { render(); const i = $('pv-in'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
     return null;
