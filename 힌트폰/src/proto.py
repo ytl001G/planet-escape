@@ -67,7 +67,8 @@ CSS = r'''
 #proto .sbar { position: absolute; top: 0; left: 0; right: 0; height: 30px; padding: 0 26px; display: flex; align-items: center; justify-content: space-between; font: 700 12px var(--body); color: #f2eef6; z-index: 5; pointer-events: none; font-variant-numeric: tabular-nums; }
 #proto .sbar .ic { display: flex; gap: 6px; align-items: center; }
 #proto .sbar .off { color: #E5484D; }
-#proto .hbar { position: absolute; bottom: 7px; left: 50%; width: 120px; height: 4px; margin-left: -60px; border-radius: 2px; background: rgba(255,255,255,.55); z-index: 5; pointer-events: none; }
+#proto .app.pop i { animation: apop .9s cubic-bezier(.2,1.6,.4,1); }
+@keyframes apop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 #proto .dock { display: flex; justify-content: space-around; padding: 12px 6px 10px; border-radius: 26px; }
 #proto .app { display: grid; justify-items: center; gap: 6px; cursor: pointer; font: 500 11px var(--body); color: #f2eef6; background: none; border: 0; }
 #proto .app i { position: relative; width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; color: #fff; background: linear-gradient(160deg, #a24bc4, #5a1f78); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
@@ -186,7 +187,7 @@ CSS = r'''
 HTML = '''<section id="proto">
 <h2 class="grp-title">시험해 보기</h2>
 <div class="proto-wrap">
-  <div class="stage" id="pv-stage"><div class="ph pre" id="pv"><div class="bg" id="pv-bg"></div><div class="sbar" id="pv-sbar" aria-hidden="true"></div><div class="hbar"></div><div class="layer" id="pv-screen"></div><div class="pz hidden" id="pv-pz" role="button" tabindex="0" aria-label="계속"><span><svg width="30" height="34" viewBox="0 0 30 34"><path d="M4 2 L28 17 L4 32 Z" fill="#fff"/></svg></span></div></div></div>
+  <div class="stage" id="pv-stage"><div class="ph pre" id="pv"><div class="bg" id="pv-bg"></div><div class="sbar" id="pv-sbar" aria-hidden="true"></div><div class="layer" id="pv-screen"></div><div class="pz hidden" id="pv-pz" role="button" tabindex="0" aria-label="계속"><span><svg width="30" height="34" viewBox="0 0 30 34"><path d="M4 2 L28 17 L4 32 Z" fill="#fff"/></svg></span></div></div></div>
   <div class="panel">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
@@ -265,8 +266,10 @@ function setBg() {
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
 function dock(on = true) {  // 아래 독: 폰 앱 아이콘처럼
-  const apps = [['codes', '힌트코드', ICON.bulb], ['story', '스토리코드', ICON.book], ['chat', '운영자 호출', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
-  return `<div class="dock glass${on ? '' : ' off'}">` + apps.map(([a, l, ic]) => `<div class="app"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
+  const apps = [['codes', '힌트코드', ICON.bulb], ['chat', '운영자 호출', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
+  if (S.phase === 'p2') apps.splice(1, 0, ['story', '스토리코드', ICON.book]);  // 비아가 들어온 뒤에만 생김
+  const pop = S.storyNew && S.view === 'main'; if (pop) S.storyNew = false;
+  return `<div class="dock glass${on ? '' : ' off'}">` + apps.map(([a, l, ic]) => `<div class="app${pop && a === 'story' ? ' pop' : ''}"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
 }
 function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
   const d = new Date(), t = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
@@ -467,7 +470,7 @@ const CTL = [
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
     () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.storyNew = true; S.introStep = 1; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],

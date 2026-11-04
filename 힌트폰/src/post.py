@@ -3,8 +3,9 @@ p=pathlib.Path(sys.argv[1]); s=p.read_text(encoding='utf-8')
 # 손으로 그린 옛 메인 화면들: 아래 '힌트코드' 버튼 → 폰 홈 화면의 아래 독(힌트코드 · 스토리코드 · 운영자 호출) + 상태 표시줄 · 홈 바
 def dock(x, y, w, cls, k):
     out = f'<rect x="{x-4*k:g}" y="{y-20*k:g}" width="{w+8*k:g}" height="{76*k:g}" rx="{20*k:g}" class="soft"/>'
-    for i, l in enumerate(('힌트코드', '스토리코드', '운영자 호출')):
-        cx = x + w * (i * 2 + 1) / 6
+    names = ('힌트코드', '스토리코드', '운영자 호출') if cls == 'via' else ('힌트코드', '운영자 호출')  # 스토리코드는 비아 등장 뒤에만
+    for i, l in enumerate(names):
+        cx = x + w * (i * 2 + 1) / (2 * len(names))
         out += f'<rect x="{cx-19*k:g}" y="{y-11*k:g}" width="{38*k:g}" height="{38*k:g}" rx="{10*k:g}" class="{cls}"/>'
         out += f'<text x="{cx:g}" y="{y+48*k:g}" text-anchor="middle" font-size="{9*k:g}" font-weight="500">{l}</text>'
     return out
@@ -21,7 +22,7 @@ s = s.replace('안전 모드 이전 메인 화면: 위에 타이머, 가운데 �
 big = iter(['n', 'lily', 'lily'])  # 안전 모드 이전 · (지운 스토리카드 화면) · 이후 1부
 def rep_big(m):
     x = int(m[1]); cls = 'via' if x == 350 else next(big); o = x - 40
-    return dock(x, 380, 210, cls, 1) + f'<rect x="{115+o}" y="442" width="60" height="3" rx="1.5" class="soft"/>' + sbar(o + 10)
+    return dock(x, 380, 210, cls, 1) + sbar(o + 10)
 s, n1 = re.subn(r'<rect x="(\d+)" y="372" width="210" height="50" rx="10" class="n"/>\s*<text x="\d+" y="402" text-anchor="middle" font-size="13" font-weight="700">힌트코드</text>', rep_big, s)
 small = iter(['lily', 'lily', 'via'])  # 안전 모드 가동 끝 · 비아 등장 전 · 비아 등장 후
 s, n2 = re.subn(r'<rect x="(\d+)" y="302" width="168" height="44" rx="8" class="n"/>\s*<text x="\d+" y="329" text-anchor="middle" font-size="12" font-weight="700">힌트코드</text>',

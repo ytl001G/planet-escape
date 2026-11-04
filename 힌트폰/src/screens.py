@@ -35,14 +35,15 @@ def ck(x, y, k=1, wdt=2):
 # 메인 화면형 (250x440)
 def M(o, time, guide_cls='lily', badge=False):
     return (R(20+o, 10, 250, 440, 'n', 30) + sbar(o + 10) + R(40+o, 52, 210, 58, 'soft', 10) + T(145+o, 99, time, 24, 700, 'middle')
-            + R(40+o, 124, 210, 220, guide_cls, 12) + dock(o, guide_cls, badge) + R(115+o, 440, 60, 3, 'soft', 1.5))
+            + R(40+o, 124, 210, 220, guide_cls, 12) + dock(o, guide_cls, badge))
 def sbar(o):  # 상태 표시줄: 시각 · 와이파이 · 배터리
     return (T(34+o, 29, '9:41', 9, 700) + f'<path d="M{o+228} 24 a6 6 0 0 1 9 0 M{o+230} 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="{o+232.5}" cy="28.5" r="1.2" fill="currentColor"/>'
             + R(o+242, 22.5, 14, 7.5, 'n', 2) + R(o+243.5, 24, 9, 4.5, 'soft', 1))
 def dock(o, cls, badge=False):  # 아래 독: 힌트코드 · 스토리코드 · 운영자 호출 앱 아이콘
     k = 'via' if cls == 'via' else 'n' if cls.startswith('n') else 'lily'
     out = R(36+o, 352, 218, 80, 'soft', 20)
-    for i, (x, l) in enumerate(((80, '힌트코드'), (145, '스토리코드'), (210, '운영자 호출'))):
+    apps = [(80, '힌트코드', 0), (145, '스토리코드', 1), (210, '운영자 호출', 2)] if k == 'via' else [(100, '힌트코드', 0), (190, '운영자 호출', 2)]  # 스토리코드는 비아 등장 뒤에만
+    for x, l, i in apps:
         out += R(x-19+o, 361, 38, 38, k, 10) + T(x+o, 420, l, 9, 500, 'middle')
         if i == 0: out += f'<circle cx="{x+o}" cy="377" r="6" fill="none" class="ln" stroke-width="1.6"/><path d="M{x-3+o} 387 H{x+3+o}" class="ln" stroke-width="1.6"/>'
         if i == 1: out += f'<path d="M{x-8+o} 372 Q{x+o} 368 {x+o} 373 Q{x+o} 368 {x+8+o} 372 V388 Q{x+o} 384 {x+o} 389 Q{x+o} 384 {x-8+o} 388 Z" fill="none" class="ln" stroke-width="1.5"/>'
