@@ -12,6 +12,12 @@ def sbar(o):
     return (f'<text x="{34+o}" y="29" font-size="9" font-weight="700">9:41</text>'
             f'<path d="M{o+228} 24 a6 6 0 0 1 9 0 M{o+230} 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="{o+232.5}" cy="28.5" r="1.2" fill="currentColor"/>'
             f'<rect x="{o+242}" y="22.5" width="14" height="7.5" rx="2" class="n"/><rect x="{o+243.5}" y="24" width="9" height="4.5" rx="1" class="soft"/>')
+o1 = '''      <rect x="40" y="52" width="210" height="58" rx="10" class="soft"/>
+      <text x="145" y="99" text-anchor="middle" font-size="24" font-weight="700">58:30</text>
+      <rect x="40" y="124" width="210" height="232" rx="12" class="n dashbox"/>'''
+assert s.count(o1) == 1  # 안전 모드 이전: 가운데 큰 타이머만 (빈 안내 창 없음)
+s = s.replace(o1, '      <text x="145" y="215" text-anchor="middle" font-size="44" font-weight="700">1:40:30</text>')
+s = s.replace('안전 모드 이전 메인 화면: 위에 타이머, 가운데 진행 가이드 자리는 비어 있고, 아래에 힌트코드 버튼.', '안전 모드 이전 메인 화면: 잠금 화면처럼 가운데 큰 타이머만 있고 안내 창은 없다. 아래에 앱 아이콘 세 개.', 1)
 big = iter(['n', 'lily', 'lily'])  # 안전 모드 이전 · (지운 스토리카드 화면) · 이후 1부
 def rep_big(m):
     x = int(m[1]); cls = 'via' if x == 350 else next(big); o = x - 40

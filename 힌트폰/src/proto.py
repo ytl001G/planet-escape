@@ -80,6 +80,7 @@ CSS = r'''
 #proto .p2 .toast i { background: linear-gradient(160deg, #ffa53d, #a85a00); }
 #proto .toast b { display: block; font: 700 13px var(--body); }
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
+#proto .idle { flex: 1; display: grid; place-items: center; font: 700 64px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
 #proto .srow .btn { height: auto; }
 #proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
@@ -295,6 +296,7 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
+  if (S.phase === 'pre') return `<div class="idle"><span data-time>${fmt()}</span></div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘

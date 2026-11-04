@@ -191,6 +191,7 @@ html { scroll-behavior: smooth; }
 #proto .p2 .toast i { background: linear-gradient(160deg, #ffa53d, #a85a00); }
 #proto .toast b { display: block; font: 700 13px var(--body); }
 @keyframes tdrop { from { transform: translateY(-24px); opacity: 0; } }
+#proto .idle { flex: 1; display: grid; place-items: center; font: 700 64px var(--display); font-variant-numeric: tabular-nums; letter-spacing: .01em; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
 #proto .srow { display: grid; grid-template-columns: 1fr 52px; gap: 8px; }
 #proto .srow .btn { height: auto; }
 #proto .op { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
@@ -349,11 +350,9 @@ html { scroll-behavior: smooth; }
 <section>
   <h3><span class="num">1</span>메인 화면 (안전 모드 이전)</h3>
   <figure>
-    <svg style="max-width:290px;margin:0 auto" viewBox="0 0 290 460" role="img" aria-label="안전 모드 이전 메인 화면: 위에 타이머, 가운데 진행 가이드 자리는 비어 있고, 아래에 힌트코드 버튼.">
+    <svg style="max-width:290px;margin:0 auto" viewBox="0 0 290 460" role="img" aria-label="안전 모드 이전 메인 화면: 잠금 화면처럼 가운데 큰 타이머만 있고 안내 창은 없다. 아래에 앱 아이콘 세 개.">
       <rect x="20" y="10" width="250" height="440" rx="30" class="n"/>
-      <rect x="40" y="52" width="210" height="58" rx="10" class="soft"/>
-      <text x="145" y="99" text-anchor="middle" font-size="24" font-weight="700">0:58:30</text>
-      <rect x="40" y="124" width="210" height="232" rx="12" class="n dashbox"/>
+      <text x="145" y="215" text-anchor="middle" font-size="44" font-weight="700">1:40:30</text>
       <rect x="36" y="360" width="218" height="76" rx="20" class="soft"/><rect x="56" y="369" width="38" height="38" rx="10" class="n"/><text x="75" y="428" text-anchor="middle" font-size="9" font-weight="500">힌트코드</text><rect x="126" y="369" width="38" height="38" rx="10" class="n"/><text x="145" y="428" text-anchor="middle" font-size="9" font-weight="500">스토리코드</text><rect x="196" y="369" width="38" height="38" rx="10" class="n"/><text x="215" y="428" text-anchor="middle" font-size="9" font-weight="500">운영자 호출</text><rect x="115" y="442" width="60" height="3" rx="1.5" class="soft"/><text x="44" y="29" font-size="9" font-weight="700">9:41</text><path d="M238 24 a6 6 0 0 1 9 0 M240 26.5 a3.2 3.2 0 0 1 5 0" fill="none" class="ln" stroke-width="1.4"/><circle cx="242.5" cy="28.5" r="1.2" fill="currentColor"/><rect x="252" y="22.5" width="14" height="7.5" rx="2" class="n"/><rect x="253.5" y="24" width="9" height="4.5" rx="1" class="soft"/>
     </svg>
   </figure>
@@ -614,7 +613,7 @@ html { scroll-behavior: smooth; }
       <rect x="10" y="20" width="360" height="282" rx="12" class="soft"/><text x="24" y="42" font-size="12" font-weight="700" class="t-mute">안전 모드 이전</text>
       <rect x="60" y="54" width="260" height="46" rx="8" class="n"/>
       <text x="190.0" y="73" text-anchor="middle" font-size="13" font-weight="700">게임 시작</text>
-      <text x="190.0" y="90" text-anchor="middle" font-size="11" class="t-mute">앱을 켜면 바로 메인 화면 · 1:45:00 타이머 시작 · 가이드 빈 칸</text>
+      <text x="190.0" y="90" text-anchor="middle" font-size="11" class="t-mute">앱을 켜면 바로 메인 화면 · 1:45:00 타이머 시작 · 가운데 큰 타이머만 (안내 창 없음)</text>
       <path d="M190.0 100 V116" class="ln" marker-end="url(#ah2)"/>
       <rect x="60" y="118" width="260" height="46" rx="8" class="n"/>
       <text x="190.0" y="137" text-anchor="middle" font-size="13" font-weight="700">문제 0 이름 입력</text>
@@ -883,7 +882,7 @@ html { scroll-behavior: smooth; }
   <div class="tbl"><table>
     <thead><tr><th>화면</th><th>상태</th><th>메모</th></tr></thead>
     <tbody>
-      <tr><td>메인 · 안전 모드 이전</td><td><span class="chip ok">시안 있음</span></td><td class="scr">폰 홈 화면처럼: 상태 표시줄 · 타이머 · 빈 진행 가이드 · 아래 독 앱 3개</td></tr>
+      <tr><td>메인 · 안전 모드 이전</td><td><span class="chip ok">시안 있음</span></td><td class="scr">폰 홈 화면처럼: 상태 표시줄 · 가운데 큰 타이머 (안내 창 없음) · 아래 독 앱 3개</td></tr>
       <tr><td>안전 모드 가동</td><td><span class="chip ok">시안 있음</span></td><td class="scr">감지·로딩 한 화면 → 진행 가이드, 2컷</td></tr>
       <tr><td>메인 · 1부</td><td><span class="chip ok">시안 있음</span></td><td class="scr">현재 목표 · 장소 · 할 일</td></tr>
       <tr><td>목표 창: 장소와 할 일</td><td><span class="chip ok">시안 있음</span></td><td class="scr">할 일 문구 받아야 함</td></tr>
@@ -1119,6 +1118,7 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
+  if (S.phase === 'pre') return `<div class="idle"><span data-time>${fmt()}</span></div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘
