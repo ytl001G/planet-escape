@@ -73,7 +73,7 @@ for k, t, sub, res in ROWS:
     prev = 'r' + k
     for i, (t2, s2, c2) in enumerate(res):
         nk = f'r{k}_{i}'; B.node(nk, t2, s2, c2)
-        B.edge(prev, nk, ('다음 힌트' if i < 3 else '정답 보기') if len(res) == 4 and i else ''); prev = nk
+        B.edge(prev, nk, ('다음' if i < 3 else '정답') if len(res) == 4 and i else ''); prev = nk
 B.node('채팅', '운영자 채팅', '위 줄 아래 구분선'); B.node('한글kb', '한글 키보드', '두벌식 · 시프트 · 한/영 · 띄어쓰기')
 B.node('배너', '알림 배너', '채팅 밖에서 답장 오면 위에 3.5초')
 B.edge('홈', '채팅', '독'); B.edge('채팅', '한글kb', '입력 칸'); B.edge('배너', '채팅', '누르면')

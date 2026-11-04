@@ -61,6 +61,8 @@ CSS = r'''
 #proto .sv > * { position: absolute; inset: 0; width: 100%; height: 100%; }
 #proto .sv.zoom .sv-in { animation: ppop .5s ease-out; }
 #proto .sf-t { animation: pfadein .5s .3s both; }
+@keyframes kbup { from { transform: translateY(100%); } }
+#proto .kbd.up { animation: kbup .28s cubic-bezier(.2,.8,.3,1); }
 @keyframes pfadein { from { opacity: 0; transform: translateY(6px); } }
 #proto .ph.paused * { animation-play-state: paused !important; }
 #proto .pz { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgba(0,0,0,.55); cursor: pointer; }
@@ -97,8 +99,10 @@ CSS = r'''
 #proto .lb-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 #proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
-#proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
-#proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-code .row { grid-template-columns: 1fr; }
+#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; padding-right: 104px; }
+#proto .lb-pct { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 84px; pointer-events: none; } #proto .lb-pct small { font: 500 11px var(--body); color: rgba(255,255,255,.65); }
+#proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
 #proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px 'IBM Plex Mono', monospace; padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
 #proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
@@ -171,7 +175,8 @@ CSS = r'''
 #proto .pct { display: grid; gap: 6px; justify-items: center; }
 #proto .pct i { display: block; width: 70%; height: 5px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
 #proto .pct i b { display: block; height: 100%; border-radius: 3px; transition: width .8s; }
-#proto .on1 .pct i b { background: var(--c1); } #proto .on2 .pct i b { background: var(--c2); }
+#proto .on1 .pct i b, #proto .lb-pct.t1 i b { background: var(--c1); } #proto .on2 .pct i b, #proto .lb-pct.t2 i b { background: var(--c2); }
+#proto .lb-pct { font: 700 14px var(--body); } #proto .lb-pct i { width: 100%; }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
 #proto .bia .av { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 12px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
 #proto .bia .say { background: rgba(24,21,30,.75); border: 1.5px solid rgba(255,255,255,.14); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
@@ -345,18 +350,18 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 
 function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트 아래
   const chat = `<div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div>`;
-  return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass">${g}</div>` : ''}</div><div class="idle">${timer}</div>`
+  return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
   const c = S.code && codeOK(S.code), p = c && c.part ? c.part : part();
-  const row = !c ? '' : `<div class="row">${c.pct != null ? `<div class="btn on${p}"><div class="pct">${c.pct}%<i><b style="width:${c.pct}%"></b></i></div></div>` : ''}`
-+ '</div>';
-  return `<div class="glass lb-code"><div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드"><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div>${row}</div>`;
+  const pct = c && c.pct != null ? `<div class="pct lb-pct t${p}"><span><small>진행도</small> ${c.pct}%</span><i><b style="width:${c.pct}%"></b></i></div>` : '';  // 입력 칸 안 오른쪽에 겹쳐 띄움: 창 크기 그대로
+  return `<div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div></div>`;
 }
-function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트코드 화면과 같은 힌트 · 다음 힌트 · 정답)
+function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트 보기 → 다음 → 정답)
   const { body } = hintBody();
-  return `<div class="mapov" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${esc(S.code)}</div><div class="scroll">${body}</div></div></div>`;
+  const nw = S.hpopNew; S.hpopNew = false;
+  return `<div class="mapov hpov${nw ? ' new' : ''}" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${esc(S.code)}</div><div class="scroll">${body}</div></div></div>`;
 }
 function vMain() {
   let g = '';
@@ -371,7 +376,7 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av" style="font-size:18px">V</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
+    g = `<div class="bia"><div class="av" style="font-size:18px">V</div>${S.biaTalk ? '<div class="say">음성 재생 중</div>' : ''}</div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   if (LAYOUT === 'b') return layB(t0, S.phase === 'pre' ? '' : g);  // 배치 시안 B
@@ -380,9 +385,16 @@ function vMain() {
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘
-function mapSvg(hi) {
-  const { inset: i, rx } = D.map;
-  const zones = D.map.rooms.map(([n, x, y, w, h]) => n === hi
+function mapSvg(hi) {  // 지금 갈 방은 인물 색 · 지나온 길은 점선 · 아직 갈 차례가 아닌 방은 회색
+  const { inset: i, rx } = D.map, R = Object.fromEntries(D.map.rooms.map(r => [r[0], r]));
+  const order = D.goals.map(g => g[1].replace(/의 방$/, '')), cur = order.indexOf(hi, S.goal) < 0 ? S.goal : order.indexOf(hi, S.goal);
+  const went = order.slice(0, cur + 1).filter((n, k, a) => R[n] && n !== a[k - 1]);
+  const later = n => !order.slice(0, cur + 1).includes(n);
+  const pt = n => { const [, x, y, w, h] = R[n]; return `${x + w / 2},${y + h / 2 - 10}`; };
+  const trail = went.length > 1 ? `<polyline class="trail" points="${went.map(pt).join(' ')}" style="fill:none;stroke:rgba(242,238,246,.6);stroke-width:2;stroke-dasharray:4 4;stroke-linejoin:round"/>`
+    + went.slice(0, -1).map(n => `<circle class="trail" cx="${pt(n).split(',')[0]}" cy="${pt(n).split(',')[1]}" r="3" style="fill:rgba(242,238,246,.75)"/>`).join('') : '';
+  const locks = D.map.rooms.filter(([n]) => n !== hi && later(n)).map(([n, x, y, w, h]) => `<rect class="lock" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:rgba(140,136,148,.28)"/>`).join('');
+  const zones = locks + trail + D.map.rooms.map(([n, x, y, w, h]) => n === hi
     ? `<rect class="zone" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:${NM[n]};fill-opacity:.42"/><text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" style="fill:#fff;font:700 15px var(--body)">${n}</text>`
     : `<text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" style="fill:rgba(242,238,246,.5);font:400 13px var(--body)">${n}</text>`).join('');
   return `<svg viewBox="-10 -10 304 196" role="img" aria-label="우주선 지도, ${hi}의 방 구역 표시"><path d="${D.map.hull}" style="fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.3);stroke-width:1.5"/>${zones}</svg>`;
@@ -394,7 +406,8 @@ function mapOv() {
 
 function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 끝에 지우기
   const rows = ['1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
-  return '<div class="kbd glass" role="group" aria-label="코드 키보드">' + rows.map((r, i) => '<div class="kr">'
+  const up = S.kbNew ? ' up' : ''; S.kbNew = false;
+  return `<div class="kbd glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => '<div class="kr">'
     + [...r].map(ch => `<div class="key${i ? '' : ' num'}" data-act="k:${ch}" role="button" tabindex="0">${ch}</div>`).join('')
     + (i === 3 ? `<div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
 }
@@ -412,9 +425,9 @@ function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안
     const st = S.open[S.code] || 0;
     if (c.kind === 'hint') {
       for (let i = 0; i < st; i++) body += `<div class="card h${p}"><span class="k ${p === 2 ? 't-via' : 't-lily'}">힌트 ${i + 1}</span>${c.hints[i] ? esc(c.hints[i]) : bars(2)}</div>`;
-      if (st < c.hints.length) body += `<div class="btn next${p}" data-act="next" role="button" tabindex="0">다음 힌트</div>`;
-      else if (!S.ans) body += '<div class="btn ans" data-act="ans" role="button" tabindex="0">정답 보기</div>';
-      else body += `<div class="card ansc"><span class="k">정답 보기</span><span class="v">${c.answer ? esc(c.answer) : bars(1)}</span></div>`;
+      if (st < c.hints.length) body += `<div class="btn next${p}" data-act="next" role="button" tabindex="0">${st ? '다음' : '힌트 보기'}</div>`;
+      else if (!S.ans) body += '<div class="btn ans" data-act="ans" role="button" tabindex="0">정답</div>';
+      else body += `<div class="card ansc"><span class="k">정답</span><span class="v">${c.answer ? esc(c.answer) : bars(1)}</span></div>`;
     } else if (c.kind === 'voice') {
       const n = c.steps.length, i = Math.min(st, n + 1) - 1;  // i === n: 6단계 뒤, 심장 소리만 반복
       const SPK = Object.assign({ 비아: 'var(--ch-bia)' }, NM);
@@ -492,7 +505,8 @@ function ckbd() {
   const L = CK[S.klang];
   const key = (ch, cls = '') => `<div class="key${cls}" data-act="ck:${esc(ch)}" role="button" tabindex="0">${esc(ch)}</div>`;
   const row = (r, i) => { const s = (S.kshift && r[1]) || r[0]; return [...s].map(ch => key(ch, i ? '' : ' num')).join(''); };
-  return '<div class="kbd glass ck" role="group" aria-label="채팅 키보드">'
+  const up = S.kbNew ? ' up' : ''; S.kbNew = false;
+  return `<div class="kbd glass ck${up}" role="group" aria-label="채팅 키보드">`
     + `<div class="kr">${row(L[0], 0)}</div><div class="kr">${row(L[1], 1)}</div><div class="kr">${row(L[2], 2)}</div>`
     + `<div class="kr"><div class="key mid${S.kshift ? ' on' : ''}" data-act="ckshift" role="button" tabindex="0" aria-label="시프트" aria-pressed="${S.kshift}">${ICON.shift}</div>${row(L[3], 3)}<div class="key mid" data-act="ckdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div></div>`
     + `<div class="kr"><div class="key wide2" data-act="cklang" role="button" tabindex="0" aria-label="한영 전환">${S.klang === 'ko' ? '한/영' : '영/한'}</div>${key('?')}<div class="key space" data-act="ck: " role="button" tabindex="0" aria-label="띄어쓰기"></div>${key('.')}</div></div>`;
@@ -509,8 +523,8 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 }
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:var(--c1)">') + '<div class="stripes"></div>';
-  const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
+  const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
+  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">음성 재생 중</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
@@ -570,16 +584,20 @@ function act(a) {
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
   if (a === 'chat') { S.ckb = false; S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
-  if (a === 'ckb') { if (!S.ckb) { S.ckb = true; render(); } return; }
+  if (a === 'ckb') { if (!S.ckb) { S.ckb = S.kbNew = true; render(); } return; }
   if (a === 'ckbx') { if (S.ckb) { S.ckb = false; render(); } return; }  // 대화 쪽을 누르면 키보드 내림
   if (a.startsWith('ck:')) { S.ct.push(a.slice(3)); if (S.kshift) { S.kshift = false; render(); } else setChat(); return; }
   if (a === 'ckdel') { S.ct.pop(); setChat(); return; }
   if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
   if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
   if (a === 'start') { S.run = true; render(); return; }
-  if (a === 'bhint') { const c = check(S.code); if (!c) return; act('hint'); if (c.kind !== 'story') { S.hpop = true; render(); } return; }  // 시안 B: 입력 → 힌트 팝업
+  if (a === 'bhint') {  // 시안 B: 입력 → 힌트 팝업
+    const c = check(S.code); if (!c) return;
+    if (c.kind !== 'hint') { act('hint'); if (c.kind === 'story') return; } else { S.kb = false; S.showHints = true; S.ans = (S.answered || {})[S.code] || false; }
+    S.hpop = S.hpopNew = true; render(); return;
+  }
   if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }
-  if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
+  if (a === 'kb') { if (!S.kb) { S.kb = S.kbNew = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
   if (a === 'codes') { S.kb = false; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
@@ -592,7 +610,8 @@ function act(a) {
     if (!c.demo) S.used[S.code] = true;  // 힌트 사용 횟수: 코드 하나당 1회 (가짜 코드는 안 셈)
     S.showHints = true; S.ans = (S.answered || {})[S.code] || false; render(); return;
   }
-  if (a === 'next') { const c = D.codes[S.code]; S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
+  if (a === 'next') { const c = D.codes[S.code]; if (!c.demo) S.used[S.code] = true;  // 힌트 보기(첫 힌트)도 사용으로 셈
+    S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
   if (a === 'ans') { S.ans = true; (S.answered = S.answered || {})[S.code] = true; render(); return; }
   if (a === 'pct') { const c = check(S.code); if (!c) return; S.kb = false; if (c.pct == null) { check('-'); return; } S.pct = c.pct; render(); return; }
 }

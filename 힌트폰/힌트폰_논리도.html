@@ -171,6 +171,8 @@ html { scroll-behavior: smooth; }
 #proto .sv > * { position: absolute; inset: 0; width: 100%; height: 100%; }
 #proto .sv.zoom .sv-in { animation: ppop .5s ease-out; }
 #proto .sf-t { animation: pfadein .5s .3s both; }
+@keyframes kbup { from { transform: translateY(100%); } }
+#proto .kbd.up { animation: kbup .28s cubic-bezier(.2,.8,.3,1); }
 @keyframes pfadein { from { opacity: 0; transform: translateY(6px); } }
 #proto .ph.paused * { animation-play-state: paused !important; }
 #proto .pz { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgba(0,0,0,.55); cursor: pointer; }
@@ -207,8 +209,10 @@ html { scroll-behavior: smooth; }
 #proto .lb-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 #proto .lb-goal { width: 64%; box-sizing: border-box; padding: 12px 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
-#proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
-#proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-code .row { grid-template-columns: 1fr; }
+#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .goal { font-size: 15px; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .say { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; padding-right: 104px; }
+#proto .lb-pct { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 84px; pointer-events: none; } #proto .lb-pct small { font: 500 11px var(--body); color: rgba(255,255,255,.65); }
+#proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
 #proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px 'IBM Plex Mono', monospace; padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
 #proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
@@ -281,7 +285,8 @@ html { scroll-behavior: smooth; }
 #proto .pct { display: grid; gap: 6px; justify-items: center; }
 #proto .pct i { display: block; width: 70%; height: 5px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
 #proto .pct i b { display: block; height: 100%; border-radius: 3px; transition: width .8s; }
-#proto .on1 .pct i b { background: var(--c1); } #proto .on2 .pct i b { background: var(--c2); }
+#proto .on1 .pct i b, #proto .lb-pct.t1 i b { background: var(--c1); } #proto .on2 .pct i b, #proto .lb-pct.t2 i b { background: var(--c2); }
+#proto .lb-pct { font: 700 14px var(--body); } #proto .lb-pct i { width: 100%; }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
 #proto .bia .av { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 12px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
 #proto .bia .say { background: rgba(24,21,30,.75); border: 1.5px solid rgba(255,255,255,.14); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
@@ -945,9 +950,9 @@ html { scroll-behavior: smooth; }
 
 </g>
 
-</svg></div><h3 style="font:700 16px var(--display);margin:28px 0 10px">2. 폰 화면 이동</h3><div style="overflow-x:auto"><svg role="img" aria-label="순서도 2 폰 화면 이동. 홈과 메인 화면에서 힌트코드 앱, 코드 키보드, 코드 판별을 거쳐 힌트와 정답으로 간다. 채팅과 한글 키보드, 알림 배너, 지도 팝업, 연결 끊김, 시간 종료도 있다." style="width:3409px;max-width:none;height:auto;display:block"
+</svg></div><h3 style="font:700 16px var(--display);margin:28px 0 10px">2. 폰 화면 이동</h3><div style="overflow-x:auto"><svg role="img" aria-label="순서도 2 폰 화면 이동. 홈과 메인 화면에서 힌트코드 앱, 코드 키보드, 코드 판별을 거쳐 힌트와 정답으로 간다. 채팅과 한글 키보드, 알림 배너, 지도 팝업, 연결 끊김, 시간 종료도 있다." style="width:3322px;max-width:none;height:auto;display:block"
 
- viewBox="0.00 0.00 2727.00 508.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ viewBox="0.00 0.00 2658.00 508.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 504)">
 
@@ -1393,9 +1398,9 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_1</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2410.58,-442C2410.58,-442 2361.89,-442 2361.89,-442 2355.89,-442 2349.89,-436 2349.89,-430 2349.89,-430 2349.89,-418 2349.89,-418 2349.89,-412 2355.89,-406 2361.89,-406 2361.89,-406 2410.58,-406 2410.58,-406 2416.58,-406 2422.58,-412 2422.58,-418 2422.58,-418 2422.58,-430 2422.58,-430 2422.58,-436 2416.58,-442 2410.58,-442"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2387.33,-442C2387.33,-442 2338.64,-442 2338.64,-442 2332.64,-442 2326.64,-436 2326.64,-430 2326.64,-430 2326.64,-418 2326.64,-418 2326.64,-412 2332.64,-406 2338.64,-406 2338.64,-406 2387.33,-406 2387.33,-406 2393.33,-406 2399.33,-412 2399.33,-418 2399.33,-418 2399.33,-430 2399.33,-430 2399.33,-436 2393.33,-442 2387.33,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="2368.61" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
+<text xml:space="preserve" text-anchor="start" x="2345.36" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
 
 </g>
 
@@ -1405,11 +1410,11 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_0&#45;&gt;r설명_1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.43,-424C2267.94,-424 2309.88,-424 2340.92,-424"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.42,-424C2260.92,-424 2292.54,-424 2317.53,-424"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2340.56,-426.45 2347.56,-424 2340.56,-421.55 2340.56,-426.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2317.26,-426.45 2324.26,-424 2317.26,-421.55 2317.26,-426.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2299.39" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2287.77" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1419,9 +1424,9 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_2</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2571.15,-442C2571.15,-442 2522.46,-442 2522.46,-442 2516.46,-442 2510.46,-436 2510.46,-430 2510.46,-430 2510.46,-418 2510.46,-418 2510.46,-412 2516.46,-406 2522.46,-406 2522.46,-406 2571.15,-406 2571.15,-406 2577.15,-406 2583.15,-412 2583.15,-418 2583.15,-418 2583.15,-430 2583.15,-430 2583.15,-436 2577.15,-442 2571.15,-442"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2524.65,-442C2524.65,-442 2475.96,-442 2475.96,-442 2469.96,-442 2463.96,-436 2463.96,-430 2463.96,-430 2463.96,-418 2463.96,-418 2463.96,-412 2469.96,-406 2475.96,-406 2475.96,-406 2524.65,-406 2524.65,-406 2530.65,-406 2536.65,-412 2536.65,-418 2536.65,-418 2536.65,-430 2536.65,-430 2536.65,-436 2530.65,-442 2524.65,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="2529.18" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
+<text xml:space="preserve" text-anchor="start" x="2482.68" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
 
 </g>
 
@@ -1431,11 +1436,11 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_1&#45;&gt;r설명_2</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2423.22,-424C2446.33,-424 2476.53,-424 2501.16,-424"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2399.9,-424C2416.85,-424 2437.25,-424 2455.14,-424"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2501.15,-426.45 2508.15,-424 2501.15,-421.55 2501.15,-426.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2454.88,-426.45 2461.88,-424 2454.88,-421.55 2454.88,-426.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2473.08" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2438.21" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1445,9 +1450,9 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_3</title>
 
-<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2707.34,-442C2707.34,-442 2669.9,-442 2669.9,-442 2663.9,-442 2657.9,-436 2657.9,-430 2657.9,-430 2657.9,-418 2657.9,-418 2657.9,-412 2663.9,-406 2669.9,-406 2669.9,-406 2707.34,-406 2707.34,-406 2713.34,-406 2719.34,-412 2719.34,-418 2719.34,-418 2719.34,-430 2719.34,-430 2719.34,-436 2713.34,-442 2707.34,-442"/>
+<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2637.59,-442C2637.59,-442 2600.15,-442 2600.15,-442 2594.15,-442 2588.15,-436 2588.15,-430 2588.15,-430 2588.15,-418 2588.15,-418 2588.15,-412 2594.15,-406 2600.15,-406 2600.15,-406 2637.59,-406 2637.59,-406 2643.59,-406 2649.59,-412 2649.59,-418 2649.59,-418 2649.59,-430 2649.59,-430 2649.59,-436 2643.59,-442 2637.59,-442"/>
 
-<text xml:space="preserve" text-anchor="start" x="2676.62" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
+<text xml:space="preserve" text-anchor="start" x="2606.87" y="-421.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
 
 </g>
 
@@ -1457,11 +1462,11 @@ html { scroll-behavior: smooth; }
 
 <title>r설명_2&#45;&gt;r설명_3</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2583.81,-424C2603.69,-424 2628.39,-424 2648.71,-424"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2537.23,-424C2550.51,-424 2565.61,-424 2579.13,-424"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2648.59,-426.45 2655.59,-424 2648.59,-421.55 2648.59,-426.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2578.93,-426.45 2585.93,-424 2578.93,-421.55 2578.93,-426.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2620.52" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답 보기</text>
+<text xml:space="preserve" text-anchor="middle" x="2562.4" y="-428.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답</text>
 
 </g>
 
@@ -1497,9 +1502,9 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_1</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2410.58,-384C2410.58,-384 2361.89,-384 2361.89,-384 2355.89,-384 2349.89,-378 2349.89,-372 2349.89,-372 2349.89,-360 2349.89,-360 2349.89,-354 2355.89,-348 2361.89,-348 2361.89,-348 2410.58,-348 2410.58,-348 2416.58,-348 2422.58,-354 2422.58,-360 2422.58,-360 2422.58,-372 2422.58,-372 2422.58,-378 2416.58,-384 2410.58,-384"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2387.33,-384C2387.33,-384 2338.64,-384 2338.64,-384 2332.64,-384 2326.64,-378 2326.64,-372 2326.64,-372 2326.64,-360 2326.64,-360 2326.64,-354 2332.64,-348 2338.64,-348 2338.64,-348 2387.33,-348 2387.33,-348 2393.33,-348 2399.33,-354 2399.33,-360 2399.33,-360 2399.33,-372 2399.33,-372 2399.33,-378 2393.33,-384 2387.33,-384"/>
 
-<text xml:space="preserve" text-anchor="start" x="2368.61" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
+<text xml:space="preserve" text-anchor="start" x="2345.36" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
 
 </g>
 
@@ -1509,11 +1514,11 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_0&#45;&gt;r1부_1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.43,-366C2267.94,-366 2309.88,-366 2340.92,-366"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.42,-366C2260.92,-366 2292.54,-366 2317.53,-366"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2340.56,-368.45 2347.56,-366 2340.56,-363.55 2340.56,-368.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2317.26,-368.45 2324.26,-366 2317.26,-363.55 2317.26,-368.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2299.39" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2287.77" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1523,9 +1528,9 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_2</title>
 
-<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2571.15,-384C2571.15,-384 2522.46,-384 2522.46,-384 2516.46,-384 2510.46,-378 2510.46,-372 2510.46,-372 2510.46,-360 2510.46,-360 2510.46,-354 2516.46,-348 2522.46,-348 2522.46,-348 2571.15,-348 2571.15,-348 2577.15,-348 2583.15,-354 2583.15,-360 2583.15,-360 2583.15,-372 2583.15,-372 2583.15,-378 2577.15,-384 2571.15,-384"/>
+<path fill="#33213b" stroke="#cf86e6" stroke-width="1.4" d="M2524.65,-384C2524.65,-384 2475.96,-384 2475.96,-384 2469.96,-384 2463.96,-378 2463.96,-372 2463.96,-372 2463.96,-360 2463.96,-360 2463.96,-354 2469.96,-348 2475.96,-348 2475.96,-348 2524.65,-348 2524.65,-348 2530.65,-348 2536.65,-354 2536.65,-360 2536.65,-360 2536.65,-372 2536.65,-372 2536.65,-378 2530.65,-384 2524.65,-384"/>
 
-<text xml:space="preserve" text-anchor="start" x="2529.18" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
+<text xml:space="preserve" text-anchor="start" x="2482.68" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
 
 </g>
 
@@ -1535,11 +1540,11 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_1&#45;&gt;r1부_2</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2423.22,-366C2446.33,-366 2476.53,-366 2501.16,-366"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2399.9,-366C2416.85,-366 2437.25,-366 2455.14,-366"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2501.15,-368.45 2508.15,-366 2501.15,-363.55 2501.15,-368.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2454.88,-368.45 2461.88,-366 2454.88,-363.55 2454.88,-368.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2473.08" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2438.21" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1549,9 +1554,9 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_3</title>
 
-<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2707.34,-384C2707.34,-384 2669.9,-384 2669.9,-384 2663.9,-384 2657.9,-378 2657.9,-372 2657.9,-372 2657.9,-360 2657.9,-360 2657.9,-354 2663.9,-348 2669.9,-348 2669.9,-348 2707.34,-348 2707.34,-348 2713.34,-348 2719.34,-354 2719.34,-360 2719.34,-360 2719.34,-372 2719.34,-372 2719.34,-378 2713.34,-384 2707.34,-384"/>
+<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2637.59,-384C2637.59,-384 2600.15,-384 2600.15,-384 2594.15,-384 2588.15,-378 2588.15,-372 2588.15,-372 2588.15,-360 2588.15,-360 2588.15,-354 2594.15,-348 2600.15,-348 2600.15,-348 2637.59,-348 2637.59,-348 2643.59,-348 2649.59,-354 2649.59,-360 2649.59,-360 2649.59,-372 2649.59,-372 2649.59,-378 2643.59,-384 2637.59,-384"/>
 
-<text xml:space="preserve" text-anchor="start" x="2676.62" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
+<text xml:space="preserve" text-anchor="start" x="2606.87" y="-363.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
 
 </g>
 
@@ -1561,11 +1566,11 @@ html { scroll-behavior: smooth; }
 
 <title>r1부_2&#45;&gt;r1부_3</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2583.81,-366C2603.69,-366 2628.39,-366 2648.71,-366"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2537.23,-366C2550.51,-366 2565.61,-366 2579.13,-366"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2648.59,-368.45 2655.59,-366 2648.59,-363.55 2648.59,-368.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2578.93,-368.45 2585.93,-366 2578.93,-363.55 2578.93,-368.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2620.52" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답 보기</text>
+<text xml:space="preserve" text-anchor="middle" x="2562.4" y="-370.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답</text>
 
 </g>
 
@@ -1653,9 +1658,9 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_1</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2410.58,-210C2410.58,-210 2361.89,-210 2361.89,-210 2355.89,-210 2349.89,-204 2349.89,-198 2349.89,-198 2349.89,-186 2349.89,-186 2349.89,-180 2355.89,-174 2361.89,-174 2361.89,-174 2410.58,-174 2410.58,-174 2416.58,-174 2422.58,-180 2422.58,-186 2422.58,-186 2422.58,-198 2422.58,-198 2422.58,-204 2416.58,-210 2410.58,-210"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2387.33,-210C2387.33,-210 2338.64,-210 2338.64,-210 2332.64,-210 2326.64,-204 2326.64,-198 2326.64,-198 2326.64,-186 2326.64,-186 2326.64,-180 2332.64,-174 2338.64,-174 2338.64,-174 2387.33,-174 2387.33,-174 2393.33,-174 2399.33,-180 2399.33,-186 2399.33,-186 2399.33,-198 2399.33,-198 2399.33,-204 2393.33,-210 2387.33,-210"/>
 
-<text xml:space="preserve" text-anchor="start" x="2368.61" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
+<text xml:space="preserve" text-anchor="start" x="2345.36" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 2</text>
 
 </g>
 
@@ -1665,11 +1670,11 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_0&#45;&gt;r2부_1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.43,-192C2267.94,-192 2309.88,-192 2340.92,-192"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2233.42,-192C2260.92,-192 2292.54,-192 2317.53,-192"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2340.56,-194.45 2347.56,-192 2340.56,-189.55 2340.56,-194.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2317.26,-194.45 2324.26,-192 2317.26,-189.55 2317.26,-194.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2299.39" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2287.77" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1679,9 +1684,9 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_2</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2571.15,-210C2571.15,-210 2522.46,-210 2522.46,-210 2516.46,-210 2510.46,-204 2510.46,-198 2510.46,-198 2510.46,-186 2510.46,-186 2510.46,-180 2516.46,-174 2522.46,-174 2522.46,-174 2571.15,-174 2571.15,-174 2577.15,-174 2583.15,-180 2583.15,-186 2583.15,-186 2583.15,-198 2583.15,-198 2583.15,-204 2577.15,-210 2571.15,-210"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2524.65,-210C2524.65,-210 2475.96,-210 2475.96,-210 2469.96,-210 2463.96,-204 2463.96,-198 2463.96,-198 2463.96,-186 2463.96,-186 2463.96,-180 2469.96,-174 2475.96,-174 2475.96,-174 2524.65,-174 2524.65,-174 2530.65,-174 2536.65,-180 2536.65,-186 2536.65,-186 2536.65,-198 2536.65,-198 2536.65,-204 2530.65,-210 2524.65,-210"/>
 
-<text xml:space="preserve" text-anchor="start" x="2529.18" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
+<text xml:space="preserve" text-anchor="start" x="2482.68" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">힌트 3</text>
 
 </g>
 
@@ -1691,11 +1696,11 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_1&#45;&gt;r2부_2</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2423.22,-192C2446.33,-192 2476.53,-192 2501.16,-192"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2399.9,-192C2416.85,-192 2437.25,-192 2455.14,-192"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2501.15,-194.45 2508.15,-192 2501.15,-189.55 2501.15,-194.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2454.88,-194.45 2461.88,-192 2454.88,-189.55 2454.88,-194.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2473.08" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음 힌트</text>
+<text xml:space="preserve" text-anchor="middle" x="2438.21" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">다음</text>
 
 </g>
 
@@ -1705,9 +1710,9 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_3</title>
 
-<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2707.34,-210C2707.34,-210 2669.9,-210 2669.9,-210 2663.9,-210 2657.9,-204 2657.9,-198 2657.9,-198 2657.9,-186 2657.9,-186 2657.9,-180 2663.9,-174 2669.9,-174 2669.9,-174 2707.34,-174 2707.34,-174 2713.34,-174 2719.34,-180 2719.34,-186 2719.34,-186 2719.34,-198 2719.34,-198 2719.34,-204 2713.34,-210 2707.34,-210"/>
+<path fill="#d9d4e0" stroke="#d9d4e0" stroke-width="1.4" d="M2637.59,-210C2637.59,-210 2600.15,-210 2600.15,-210 2594.15,-210 2588.15,-204 2588.15,-198 2588.15,-198 2588.15,-186 2588.15,-186 2588.15,-180 2594.15,-174 2600.15,-174 2600.15,-174 2637.59,-174 2637.59,-174 2643.59,-174 2649.59,-180 2649.59,-186 2649.59,-186 2649.59,-198 2649.59,-198 2649.59,-204 2643.59,-210 2637.59,-210"/>
 
-<text xml:space="preserve" text-anchor="start" x="2676.62" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
+<text xml:space="preserve" text-anchor="start" x="2606.87" y="-189.85" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#17151b">정답</text>
 
 </g>
 
@@ -1717,11 +1722,11 @@ html { scroll-behavior: smooth; }
 
 <title>r2부_2&#45;&gt;r2부_3</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2583.81,-192C2603.69,-192 2628.39,-192 2648.71,-192"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2537.23,-192C2550.51,-192 2565.61,-192 2579.13,-192"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2648.59,-194.45 2655.59,-192 2648.59,-189.55 2648.59,-194.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2578.93,-194.45 2585.93,-192 2578.93,-189.55 2578.93,-194.45"/>
 
-<text xml:space="preserve" text-anchor="middle" x="2620.52" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답 보기</text>
+<text xml:space="preserve" text-anchor="middle" x="2562.4" y="-196.75" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">정답</text>
 
 </g>
 
@@ -1757,11 +1762,11 @@ html { scroll-behavior: smooth; }
 
 <title>r16_1</title>
 
-<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2423.71,-152C2423.71,-152 2348.77,-152 2348.77,-152 2342.77,-152 2336.77,-146 2336.77,-140 2336.77,-140 2336.77,-128 2336.77,-128 2336.77,-122 2342.77,-116 2348.77,-116 2348.77,-116 2423.71,-116 2423.71,-116 2429.71,-116 2435.71,-122 2435.71,-128 2435.71,-128 2435.71,-140 2435.71,-140 2435.71,-146 2429.71,-152 2423.71,-152"/>
+<path fill="#211e26" stroke="#4a4452" stroke-width="1.4" d="M2400.46,-152C2400.46,-152 2325.52,-152 2325.52,-152 2319.52,-152 2313.52,-146 2313.52,-140 2313.52,-140 2313.52,-128 2313.52,-128 2313.52,-122 2319.52,-116 2325.52,-116 2325.52,-116 2400.46,-116 2400.46,-116 2406.46,-116 2412.46,-122 2412.46,-128 2412.46,-128 2412.46,-140 2412.46,-140 2412.46,-146 2406.46,-152 2400.46,-152"/>
 
-<text xml:space="preserve" text-anchor="start" x="2359.99" y="-134.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">심장 소리</text>
+<text xml:space="preserve" text-anchor="start" x="2336.74" y="-134.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">심장 소리</text>
 
-<text xml:space="preserve" text-anchor="start" x="2355.49" y="-124.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">6단계 뒤 반복</text>
+<text xml:space="preserve" text-anchor="start" x="2332.24" y="-124.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">6단계 뒤 반복</text>
 
 </g>
 
@@ -1771,9 +1776,9 @@ html { scroll-behavior: smooth; }
 
 <title>r16_0&#45;&gt;r16_1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2261.53,-134C2283.84,-134 2307.11,-134 2327.37,-134"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2261.44,-134C2276.01,-134 2290.73,-134 2304.24,-134"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2327.34,-136.45 2334.34,-134 2327.34,-131.55 2327.34,-136.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2304.12,-136.45 2311.12,-134 2304.12,-131.55 2304.12,-136.45"/>
 
 </g>
 
@@ -1809,11 +1814,11 @@ html { scroll-behavior: smooth; }
 
 <title>r스토리_1</title>
 
-<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2418.83,-94C2418.83,-94 2353.64,-94 2353.64,-94 2347.64,-94 2341.64,-88 2341.64,-82 2341.64,-82 2341.64,-70 2341.64,-70 2341.64,-64 2347.64,-58 2353.64,-58 2353.64,-58 2418.83,-58 2418.83,-58 2424.83,-58 2430.83,-64 2430.83,-70 2430.83,-70 2430.83,-82 2430.83,-82 2430.83,-88 2424.83,-94 2418.83,-94"/>
+<path fill="#36261a" stroke="#ffae4d" stroke-width="1.4" d="M2395.58,-94C2395.58,-94 2330.39,-94 2330.39,-94 2324.39,-94 2318.39,-88 2318.39,-82 2318.39,-82 2318.39,-70 2318.39,-70 2318.39,-64 2324.39,-58 2330.39,-58 2330.39,-58 2395.58,-58 2395.58,-58 2401.58,-58 2407.58,-64 2407.58,-70 2407.58,-70 2407.58,-82 2407.58,-82 2407.58,-88 2401.58,-94 2395.58,-94"/>
 
-<text xml:space="preserve" text-anchor="start" x="2360.36" y="-76.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">카드 13.5</text>
+<text xml:space="preserve" text-anchor="start" x="2337.11" y="-76.6" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-weight="bold" font-size="12.00" style="fill:#ece9f1">카드 13.5</text>
 
-<text xml:space="preserve" text-anchor="start" x="2364.86" y="-66.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">패턴 정답</text>
+<text xml:space="preserve" text-anchor="start" x="2341.61" y="-66.5" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif" font-size="10.00" style="fill:#a39eab">패턴 정답</text>
 
 </g>
 
@@ -1823,9 +1828,9 @@ html { scroll-behavior: smooth; }
 
 <title>r스토리_0&#45;&gt;r스토리_1</title>
 
-<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2241.06,-76C2270.85,-76 2304.94,-76 2332.49,-76"/>
+<path fill="none" stroke="#8a8494" stroke-width="1.2" d="M2241.21,-76C2263.69,-76 2288.14,-76 2309.12,-76"/>
 
-<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2332.37,-78.45 2339.37,-76 2332.37,-73.55 2332.37,-78.45"/>
+<polygon fill="#8a8494" stroke="#8a8494" stroke-width="1.2" points="2309.07,-78.45 2316.07,-76 2309.07,-73.55 2309.07,-78.45"/>
 
 </g>
 
@@ -2140,7 +2145,7 @@ html { scroll-behavior: smooth; }
       <tr><td>비아가 처음 나오는 순간</td><td><span class="chip ok">시안 있음</span></td><td class="scr">지직거림 → 주황 덮기 · 이름 ? → 비아</td></tr>
       <tr><td>코드 입력</td><td><span class="chip ok">시안 있음</span></td><td class="scr">입력 칸 · 힌트 보기 · 진행도</td></tr>
       <tr><td>진행도 %</td><td><span class="chip ok">시안 있음</span></td><td class="scr">% 기준(전체 / 문제별) 미정</td></tr>
-      <tr><td>힌트 펼침 (1부 · 2부)</td><td><span class="chip ok">시안 있음</span></td><td class="scr">다음 힌트 · 다 보면 정답 보기</td></tr>
+      <tr><td>힌트 펼침 (1부 · 2부)</td><td><span class="chip ok">시안 있음</span></td><td class="scr">다음 · 다 보면 정답</td></tr>
       <tr><td>정답 보기 전 · 후</td><td><span class="chip ok">시안 있음</span></td><td class="scr">같은 자리에서 버튼 → 정답 칸</td></tr>
       <tr><td>문제 16 힌트</td><td><span class="chip ok">시안 있음</span></td><td class="scr">레버 대기 6단계 · 화자 여럿 · 6칸 점 · 6단계 뒤 심장 소리 · 정답 보기 없음</td></tr>
       <tr><td>보너스 패턴 → 카드 13.5</td><td><span class="chip ok">시안 있음</span></td><td class="scr">점 배치를 보너스 문제 담당과 맞춰야 함</td></tr>
@@ -2190,7 +2195,7 @@ html { scroll-behavior: smooth; }
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><circle cx="24" cy="30" r="13" class="via"/><text x="24" y="34" text-anchor="middle" font-size="9" font-weight="700" class="t-via">비아</text><rect x="42" y="14" width="108" height="32" rx="8" class="n"/><text x="52" y="33.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text><circle cx="24" cy="68" r="13" class="via"/><text x="24" y="73" text-anchor="middle" font-size="13" font-weight="700" class="t-via">?</text><rect x="42" y="54" width="108" height="28" rx="8" class="n" opacity=".55"/><text x="52" y="71.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text></svg><b>비아 말 칸</b><span class="sub">지금 말 · 지난 말(흐림) · 이름표 ? / 비아</span><span class="use">2부 메인 · 비아 등장 · 문제 16</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="8" y="8" width="144" height="22" rx="6" class="n"/><rect x="8" y="34" width="144" height="22" rx="6" class="n"/><text x="18" y="50" text-anchor="start" font-size="12" font-weight="700">ABCD</text><rect x="8" y="60" width="144" height="22" rx="6" class="n" style="fill:none;stroke:#E5484D;stroke-width:2"/><text x="18" y="76" text-anchor="start" font-size="12" font-weight="700">QRST</text></svg><b>코드 입력 칸</b><span class="sub">빈 칸 · 입력됨(글자 그대로) · 오류(빨강)</span><span class="use">코드 입력</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="8" y="10" width="144" height="34" rx="8" class="lily"/><text x="18" y="24" text-anchor="start" font-size="9" font-weight="700" class="t-lily">힌트 1</text><text x="18" y="38.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text><rect x="8" y="50" width="144" height="34" rx="8" class="via"/><text x="18" y="64" text-anchor="start" font-size="9" font-weight="700" class="t-via">힌트 1</text><text x="18" y="78.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text></svg><b>힌트 카드</b><span class="sub">1부 · 2부 × 1~3줄 높이</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
-    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="10" y="20" width="140" height="50" rx="10" class="inv"/><text x="22" y="38" text-anchor="start" font-size="9" font-weight="700" class="t-inv">정답 보기</text><text x="22" y="60" text-anchor="start" font-size="15" font-weight="700" class="t-inv">끝없는탐구</text></svg><b>정답 칸</b><span class="sub">시스템 회색</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
+    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="10" y="20" width="140" height="50" rx="10" class="inv"/><text x="22" y="38" text-anchor="start" font-size="9" font-weight="700" class="t-inv">정답</text><text x="22" y="60" text-anchor="start" font-size="15" font-weight="700" class="t-inv">끝없는탐구</text></svg><b>정답 칸</b><span class="sub">시스템 회색</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><circle cx="30" cy="45" r="7" class="vfill"/><circle cx="50" cy="45" r="7" class="vfill"/><circle cx="70" cy="45" r="7" class="soft"/><circle cx="90" cy="45" r="7" class="soft"/><circle cx="110" cy="45" r="7" class="soft"/><circle cx="130" cy="45" r="7" class="soft"/></svg><b>단계 점</b><span class="sub">6칸 · 지나감 / 아직</span><span class="use">문제 16</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><circle cx="52" cy="41" r="6" style="fill:#1E88E5"/><text x="64" y="46" text-anchor="start" font-size="14" font-weight="700">에바</text><circle cx="52" cy="65" r="6" style="fill:#FB8C00"/><text x="64" y="70" text-anchor="start" font-size="14" font-weight="700">비아</text></svg><b>화자 이름표</b><span class="sub">인물 색 점 + 이름</span><span class="use">문제 16</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="10" y="12" width="42" height="66" rx="6" class="lily"/><rect x="59" y="12" width="42" height="66" rx="6" class="eva"/><rect x="108" y="12" width="42" height="66" rx="6" class="n"/><text x="17" y="32.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text><text x="66" y="32.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text><text x="115" y="32.6" font-size="10" text-anchor="start" class="t-mute">예시 문구</text></svg><b>스토리카드 틀</b><span class="sub">릴리 보라 · 에바 파랑 · 서명 없음</span><span class="use">스토리카드</span><span class="st"><span class="chip todo">만들 것</span> 릴리 · 에바만 시안</span></article>
@@ -2208,8 +2213,8 @@ html { scroll-behavior: smooth; }
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="16" y="28" width="128" height="36" rx="12" class="soft"/><rect x="24" y="36" width="20" height="20" rx="6" class="lily"/><text x="52" y="44" text-anchor="start" font-size="9" font-weight="700">채팅</text><text x="52" y="56.5" font-size="11" text-anchor="start" class="t-mute">예시 문구</text></svg><b>알림 배너</b><span class="sub">위에서 내려옴 · 채팅 + 내용 자리</span><span class="use">운영자 답장</span><span class="st"><span class="chip ok">시안 있음</span> 내용 문구 미정</span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="6" y="10" width="72" height="30" rx="8" class="n"/><text x="42" y="30" text-anchor="middle" font-size="10" font-weight="700">힌트 보기</text><rect x="82" y="10" width="72" height="30" rx="8" class="n"/><text x="118" y="30" text-anchor="middle" font-size="10" font-weight="700">진행도</text><rect x="6" y="50" width="72" height="30" rx="8" class="lily"/><text x="42" y="70" text-anchor="middle" font-size="10" font-weight="700">힌트 보기</text><rect x="82" y="50" width="72" height="30" rx="8" class="via"/><text x="118" y="70" text-anchor="middle" font-size="10" font-weight="700">힌트 보기</text></svg><b>힌트 보기 · 진행도</b><span class="sub">기본 · 켜짐 × 1부 · 2부</span><span class="use">코드 입력 · 힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
     <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="6" y="22" width="72" height="44" rx="8" class="lily"/><text x="42" y="42" text-anchor="middle" font-size="13" font-weight="700">38%</text><rect x="16" y="52" width="52" height="4" rx="2" class="soft"/><rect x="16" y="52" width="20" height="4" rx="2" class="bar"/><rect x="82" y="22" width="72" height="44" rx="8" class="via"/><text x="118" y="42" text-anchor="middle" font-size="13" font-weight="700">38%</text><rect x="92" y="52" width="52" height="4" rx="2" class="soft"/><rect x="92" y="52" width="20" height="4" rx="2" class="vfill"/></svg><b>진행도 % 버튼</b><span class="sub">막대 포함 × 1부 · 2부</span><span class="use">코드 입력 · 힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
-    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="6" y="26" width="72" height="36" rx="8" class="n"/><text x="42" y="49" text-anchor="middle" font-size="11" font-weight="700" class="t-lily">다음 힌트</text><rect x="82" y="26" width="72" height="36" rx="8" class="n"/><text x="118" y="49" text-anchor="middle" font-size="11" font-weight="700" class="t-via">다음 힌트</text></svg><b>다음 힌트</b><span class="sub">1부 · 2부</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
-    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="20" y="26" width="120" height="38" rx="10" class="inv"/><text x="80" y="50" text-anchor="middle" font-size="13" font-weight="700" class="t-inv">정답 보기</text></svg><b>정답 보기</b><span class="sub">버튼 → 정답 칸</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
+    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="6" y="26" width="72" height="36" rx="8" class="n"/><text x="42" y="49" text-anchor="middle" font-size="11" font-weight="700" class="t-lily">다음</text><rect x="82" y="26" width="72" height="36" rx="8" class="n"/><text x="118" y="49" text-anchor="middle" font-size="11" font-weight="700" class="t-via">다음 힌트</text></svg><b>다음</b><span class="sub">1부 · 2부</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
+    <article class="acard"><svg class="thumb" viewBox="0 0 160 90" aria-hidden="true"><rect x="20" y="26" width="120" height="38" rx="10" class="inv"/><text x="80" y="50" text-anchor="middle" font-size="13" font-weight="700" class="t-inv">정답</text></svg><b>정답</b><span class="sub">버튼 → 정답 칸</span><span class="use">힌트</span><span class="st"><span class="chip ok">시안 있음</span></span></article>
   </div>
 </section>
 
@@ -2352,18 +2357,18 @@ function head(title, sub = '') {  // sub: 제목 아래 작은 줄
 
 function layB(timer, g) {  // 배치 시안 B: 타이머 정가운데 · 목표 오른쪽 위 · 채팅 왼쪽 위 · 힌트 아래
   const chat = `<div class="app lb-chat" data-act="chat" role="button" tabindex="0"><i>${ICON.head}${S.unread ? `<span class="badge">${S.unread}</span>` : ''}</i>채팅</div>`;
-  return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass">${g}</div>` : ''}</div><div class="idle">${timer}</div>`
+  return `<div class="lb"><div class="lb-top">${chat}${g ? `<div class="lb-goal glass"${S.phase === 'p1' && !S.celebrate ? ' data-act="map" role="button" tabindex="0" aria-haspopup="dialog"' : ''}>${g}</div>` : ''}</div><div class="idle">${timer}</div>`
     + lbCode() + `</div>` + (S.kb ? kbd() : '') + (S.map ? mapOv() : '') + (S.hpop ? hintPop() : '');
 }
 function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드를 넣자마자 진행도가 보이고, 힌트 보기로 힌트코드 화면
   const c = S.code && codeOK(S.code), p = c && c.part ? c.part : part();
-  const row = !c ? '' : `<div class="row">${c.pct != null ? `<div class="btn on${p}"><div class="pct">${c.pct}%<i><b style="width:${c.pct}%"></b></i></div></div>` : ''}`
-+ '</div>';
-  return `<div class="glass lb-code"><div class="srow"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드"><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div>${row}</div>`;
+  const pct = c && c.pct != null ? `<div class="pct lb-pct t${p}"><span><small>진행도</small> ${c.pct}%</span><i><b style="width:${c.pct}%"></b></i></div>` : '';  // 입력 칸 안 오른쪽에 겹쳐 띄움: 창 크기 그대로
+  return `<div class="glass lb-code"><div class="srow"><div class="lb-in"><input class="input" id="pv-in" value="${esc(S.code)}" maxlength="8" autocomplete="off" spellcheck="false" inputmode="none" data-act="kb" aria-label="힌트코드" placeholder="힌트코드">${pct}</div><div class="btn" data-act="bhint" role="button" tabindex="0">입력</div></div></div>`;
 }
-function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트코드 화면과 같은 힌트 · 다음 힌트 · 정답)
+function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트 보기 → 다음 → 정답)
   const { body } = hintBody();
-  return `<div class="mapov" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${esc(S.code)}</div><div class="scroll">${body}</div></div></div>`;
+  const nw = S.hpopNew; S.hpopNew = false;
+  return `<div class="mapov hpov${nw ? ' new' : ''}" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${esc(S.code)}</div><div class="scroll">${body}</div></div></div>`;
 }
 function vMain() {
   let g = '';
@@ -2378,7 +2383,7 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    g = `<div class="bia"><div class="av" style="font-size:18px">V</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
+    g = `<div class="bia"><div class="av" style="font-size:18px">V</div>${S.biaTalk ? '<div class="say">음성 재생 중</div>' : ''}</div>` + (S.biaTalk ? wave() : '');  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   if (LAYOUT === 'b') return layB(t0, S.phase === 'pre' ? '' : g);  // 배치 시안 B
@@ -2387,9 +2392,16 @@ function vMain() {
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘
-function mapSvg(hi) {
-  const { inset: i, rx } = D.map;
-  const zones = D.map.rooms.map(([n, x, y, w, h]) => n === hi
+function mapSvg(hi) {  // 지금 갈 방은 인물 색 · 지나온 길은 점선 · 아직 갈 차례가 아닌 방은 회색
+  const { inset: i, rx } = D.map, R = Object.fromEntries(D.map.rooms.map(r => [r[0], r]));
+  const order = D.goals.map(g => g[1].replace(/의 방$/, '')), cur = order.indexOf(hi, S.goal) < 0 ? S.goal : order.indexOf(hi, S.goal);
+  const went = order.slice(0, cur + 1).filter((n, k, a) => R[n] && n !== a[k - 1]);
+  const later = n => !order.slice(0, cur + 1).includes(n);
+  const pt = n => { const [, x, y, w, h] = R[n]; return `${x + w / 2},${y + h / 2 - 10}`; };
+  const trail = went.length > 1 ? `<polyline class="trail" points="${went.map(pt).join(' ')}" style="fill:none;stroke:rgba(242,238,246,.6);stroke-width:2;stroke-dasharray:4 4;stroke-linejoin:round"/>`
+    + went.slice(0, -1).map(n => `<circle class="trail" cx="${pt(n).split(',')[0]}" cy="${pt(n).split(',')[1]}" r="3" style="fill:rgba(242,238,246,.75)"/>`).join('') : '';
+  const locks = D.map.rooms.filter(([n]) => n !== hi && later(n)).map(([n, x, y, w, h]) => `<rect class="lock" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:rgba(140,136,148,.28)"/>`).join('');
+  const zones = locks + trail + D.map.rooms.map(([n, x, y, w, h]) => n === hi
     ? `<rect class="zone" x="${x + i}" y="${y + i}" width="${w - 2 * i}" height="${h - 2 * i}" rx="${rx}" style="fill:${NM[n]};fill-opacity:.42"/><text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" style="fill:#fff;font:700 15px var(--body)">${n}</text>`
     : `<text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" style="fill:rgba(242,238,246,.5);font:400 13px var(--body)">${n}</text>`).join('');
   return `<svg viewBox="-10 -10 304 196" role="img" aria-label="우주선 지도, ${hi}의 방 구역 표시"><path d="${D.map.hull}" style="fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.3);stroke-width:1.5"/>${zones}</svg>`;
@@ -2401,7 +2413,8 @@ function mapOv() {
 
 function kbd() {  // 자체 키보드: 숫자 1줄 + 영문 3줄, 마지막 줄 끝에 지우기
   const rows = ['1234567890', 'QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
-  return '<div class="kbd glass" role="group" aria-label="코드 키보드">' + rows.map((r, i) => '<div class="kr">'
+  const up = S.kbNew ? ' up' : ''; S.kbNew = false;
+  return `<div class="kbd glass${up}" role="group" aria-label="코드 키보드">` + rows.map((r, i) => '<div class="kr">'
     + [...r].map(ch => `<div class="key${i ? '' : ' num'}" data-act="k:${ch}" role="button" tabindex="0">${ch}</div>`).join('')
     + (i === 3 ? `<div class="key wide" data-act="kdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div>` : '') + '</div>').join('') + '</div>';
 }
@@ -2419,9 +2432,9 @@ function hintBody() {  // 펼친 힌트 카드들 (힌트코드 화면 · 시안
     const st = S.open[S.code] || 0;
     if (c.kind === 'hint') {
       for (let i = 0; i < st; i++) body += `<div class="card h${p}"><span class="k ${p === 2 ? 't-via' : 't-lily'}">힌트 ${i + 1}</span>${c.hints[i] ? esc(c.hints[i]) : bars(2)}</div>`;
-      if (st < c.hints.length) body += `<div class="btn next${p}" data-act="next" role="button" tabindex="0">다음 힌트</div>`;
-      else if (!S.ans) body += '<div class="btn ans" data-act="ans" role="button" tabindex="0">정답 보기</div>';
-      else body += `<div class="card ansc"><span class="k">정답 보기</span><span class="v">${c.answer ? esc(c.answer) : bars(1)}</span></div>`;
+      if (st < c.hints.length) body += `<div class="btn next${p}" data-act="next" role="button" tabindex="0">${st ? '다음' : '힌트 보기'}</div>`;
+      else if (!S.ans) body += '<div class="btn ans" data-act="ans" role="button" tabindex="0">정답</div>';
+      else body += `<div class="card ansc"><span class="k">정답</span><span class="v">${c.answer ? esc(c.answer) : bars(1)}</span></div>`;
     } else if (c.kind === 'voice') {
       const n = c.steps.length, i = Math.min(st, n + 1) - 1;  // i === n: 6단계 뒤, 심장 소리만 반복
       const SPK = Object.assign({ 비아: 'var(--ch-bia)' }, NM);
@@ -2499,7 +2512,8 @@ function ckbd() {
   const L = CK[S.klang];
   const key = (ch, cls = '') => `<div class="key${cls}" data-act="ck:${esc(ch)}" role="button" tabindex="0">${esc(ch)}</div>`;
   const row = (r, i) => { const s = (S.kshift && r[1]) || r[0]; return [...s].map(ch => key(ch, i ? '' : ' num')).join(''); };
-  return '<div class="kbd glass ck" role="group" aria-label="채팅 키보드">'
+  const up = S.kbNew ? ' up' : ''; S.kbNew = false;
+  return `<div class="kbd glass ck${up}" role="group" aria-label="채팅 키보드">`
     + `<div class="kr">${row(L[0], 0)}</div><div class="kr">${row(L[1], 1)}</div><div class="kr">${row(L[2], 2)}</div>`
     + `<div class="kr"><div class="key mid${S.kshift ? ' on' : ''}" data-act="ckshift" role="button" tabindex="0" aria-label="시프트" aria-pressed="${S.kshift}">${ICON.shift}</div>${row(L[3], 3)}<div class="key mid" data-act="ckdel" role="button" tabindex="0" aria-label="지우기">${ICON.del}</div></div>`
     + `<div class="kr"><div class="key wide2" data-act="cklang" role="button" tabindex="0" aria-label="한영 전환">${S.klang === 'ko' ? '한/영' : '영/한'}</div>${key('?')}<div class="key space" data-act="ck: " role="button" tabindex="0" aria-label="띄어쓰기"></div>${key('.')}</div></div>`;
@@ -2516,8 +2530,8 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 }
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:var(--c1)">') + '<div class="stripes"></div>';
-  const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
+  const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
+  return timerBox() + `<div class="guide glass" style="border-color:var(--c2)"><div class="bia"><div class="av" style="font-size:18px">${name}</div><div class="say">음성 재생 중</div></div>${wave()}</div>` + dock(false, false);  // 비아 소개 중: 독은 보이되 못 누름
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:var(--err);font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
@@ -2577,16 +2591,20 @@ function act(a) {
   if (a === 'mapx') { S.map = false; render(); scr.querySelector('.room')?.focus(); return; }
   if (a === 'chat') { S.ckb = false; S.view = 'chat'; S.unread = 0; S.toast = false; render(); return; }
   if (a === 'home') { S.view = 'main'; S.patPath = []; render(); return; }
-  if (a === 'ckb') { if (!S.ckb) { S.ckb = true; render(); } return; }
+  if (a === 'ckb') { if (!S.ckb) { S.ckb = S.kbNew = true; render(); } return; }
   if (a === 'ckbx') { if (S.ckb) { S.ckb = false; render(); } return; }  // 대화 쪽을 누르면 키보드 내림
   if (a.startsWith('ck:')) { S.ct.push(a.slice(3)); if (S.kshift) { S.kshift = false; render(); } else setChat(); return; }
   if (a === 'ckdel') { S.ct.pop(); setChat(); return; }
   if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
   if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
   if (a === 'start') { S.run = true; render(); return; }
-  if (a === 'bhint') { const c = check(S.code); if (!c) return; act('hint'); if (c.kind !== 'story') { S.hpop = true; render(); } return; }  // 시안 B: 입력 → 힌트 팝업
+  if (a === 'bhint') {  // 시안 B: 입력 → 힌트 팝업
+    const c = check(S.code); if (!c) return;
+    if (c.kind !== 'hint') { act('hint'); if (c.kind === 'story') return; } else { S.kb = false; S.showHints = true; S.ans = (S.answered || {})[S.code] || false; }
+    S.hpop = S.hpopNew = true; render(); return;
+  }
   if (a === 'hpx') { S.hpop = false; S.showHints = false; render(); return; }
-  if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
+  if (a === 'kb') { if (!S.kb) { S.kb = S.kbNew = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
   if (a === 'codes') { S.kb = false; S.view = 'codes'; S.code = ''; S.pct = null; S.showHints = false; S.ans = false; render(); return; }
@@ -2599,7 +2617,8 @@ function act(a) {
     if (!c.demo) S.used[S.code] = true;  // 힌트 사용 횟수: 코드 하나당 1회 (가짜 코드는 안 셈)
     S.showHints = true; S.ans = (S.answered || {})[S.code] || false; render(); return;
   }
-  if (a === 'next') { const c = D.codes[S.code]; S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
+  if (a === 'next') { const c = D.codes[S.code]; if (!c.demo) S.used[S.code] = true;  // 힌트 보기(첫 힌트)도 사용으로 셈
+    S.open[S.code] = Math.min((S.open[S.code] || 0) + 1, c.hints.length); render(); return; }
   if (a === 'ans') { S.ans = true; (S.answered = S.answered || {})[S.code] = true; render(); return; }
   if (a === 'pct') { const c = check(S.code); if (!c) return; S.kb = false; if (c.pct == null) { check('-'); return; } S.pct = c.pct; render(); return; }
 }
