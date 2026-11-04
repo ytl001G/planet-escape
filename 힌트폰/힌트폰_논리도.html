@@ -2148,11 +2148,11 @@ function setBg() {
   bg.style.backgroundImage = k ? `url(${BG[k]})` : 'none';
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
-function dock(on = true) {  // 아래 독: 폰 앱 아이콘처럼
+function dock(on = true, story = S.phase === 'p2', dim = !on) {  // 아래 독: 폰 앱 아이콘처럼 (on=false면 못 누름, dim이면 흐리게)
   const apps = [['codes', '힌트코드', ICON.bulb], ['chat', '채팅', ICON.head + (S.unread ? `<span class="badge">${S.unread}</span>` : '')]];
-  if (S.phase === 'p2') apps.splice(1, 0, ['story', '스토리코드', ICON.book]);  // 비아가 들어온 뒤에만 생김
+  if (story) apps.splice(1, 0, ['story', '스토리코드', ICON.book]);  // 비아가 들어온 뒤에만 생김
   const pop = S.storyNew && S.view === 'main'; if (pop) S.storyNew = false;
-  return `<div class="dock glass${on ? '' : ' off'}">` + apps.map(([a, l, ic]) => `<div class="app${pop && a === 'story' ? ' pop' : ''}"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
+  return `<div class="dock glass${dim ? ' off' : ''}">` + apps.map(([a, l, ic]) => `<div class="app${pop && a === 'story' ? ' pop' : ''}"${on ? ` data-act="${a}" role="button" tabindex="0"` : ''}><i>${ic}</i>${l}</div>`).join('') + '</div>';
 }
 function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
   const d = new Date(), t = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
@@ -2318,7 +2318,7 @@ function vSafe() {  // 방패가 커지며 나타나고 아래 로딩 막대
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="guide glass">', '<div class="guide glass glitch" style="border-color:#cf86e6">') + '<div class="stripes"></div>';
   const lines = D.bia_intro[S.introStep - 1], name = S.introStep === 1 ? '?' : '비아';
-  return timerBox() + `<div class="guide glass" style="border-color:#ffae4d"><div class="bia"><div class="av" style="font-size:${name === '?' ? 18 : 12}px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div><div class="btn glass">힌트</div>`;
+  return timerBox() + `<div class="guide glass" style="border-color:#ffae4d"><div class="bia"><div class="av" style="font-size:${name === '?' ? 18 : 12}px">${name}</div><div class="say">${lines.map(esc).join('<br>')}</div></div>${wave()}</div>` + dock(false, false, false);  // 비아 소개 중: 독은 보이되 못 누름 · 스토리코드는 소개가 끝나야 톡 생김
 }
 function vEnd() {
   if (S.phase === 'end_time') return `<div class="center"><b style="font:700 64px var(--display);color:#E5484D;font-variant-numeric:tabular-nums">0:00:00</b>${bars()}</div>`;
@@ -2440,14 +2440,14 @@ $('pv-pz').onclick = () => setPause(false);
 $('pv-pz').onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPause(false); } };
 function panel() {
   [...ctl.children].forEach((b, i) => b.disabled = PAUSED || !CTL[i][1]());
-  const pb = $('pv-pause'); pb.textContent = PAUSED ? '계속' : '일시정지'; pb.setAttribute('aria-pressed', String(PAUSED));
+  const pb = $('pv-pause'); pb.textContent = PAUSED ? '재생' : '일시정지'; $('pv-pz').setAttribute('aria-label', '재생'); pb.setAttribute('aria-pressed', String(PAUSED));
   const ph = { pre: '안전 모드 이전', p1: '1부 · 릴리 안내', p2: '2부 · 비아 안내', end_escape: '탈출 엔딩', end_planet: '행성 엔딩', end_time: '시간 종료' }[S.phase];
   $('pv-state').textContent = '지금: ' + ph + (S.phase === 'p1' ? ` · 목표 ${S.goal + 1}/${D.goals.length}` : S.phase === 'p2' ? ` · 비아 안내 ${S.bia + 1}/${D.bia.length}` : '');
 }
 // 좁은 화면에서는 폰을 줄여 보이기
 function fit() { const st = $('pv-stage'), w = Math.min(384, st.parentElement.clientWidth); const k = w / 384; ph.style.transform = `scale(${k})`; st.style.width = 384 * k + 'px'; st.style.height = 827 * k + 'px'; }
 addEventListener('resize', fit); fit();
-reset();
+reset(); setPause(true);  // 페이지를 처음 열면 멈춘 채: 재생을 눌러야 시간이 감
 })();
 </script>
 <script>

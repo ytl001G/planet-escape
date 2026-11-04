@@ -1,6 +1,6 @@
 (() => { const out = []; const scr = () => document.getElementById('pv-screen'); const P = document.getElementById('pv-pause');
   const ctl = l => [...document.querySelectorAll('#pv-ctl button')].find(b => b.textContent === l); let t0;
-  setTimeout(() => { P.click(); t0 = scr().querySelector('[data-time]').textContent; out.push((P.textContent === '계속' ? 'PASS' : 'FAIL') + ' 멈춤 버튼'); }, 500);
+  setTimeout(() => { P.click(); t0 = scr().querySelector('[data-time]').textContent; out.push((P.textContent === '재생' ? 'PASS' : 'FAIL') + ' 멈춤 버튼'); }, 500);
   setTimeout(() => { out.push((scr().querySelector('[data-time]').textContent === t0 ? 'PASS' : 'FAIL') + ' 멈춘 동안 타이머 안 감');
     out.push((ctl('안전 모드 가동').disabled ? 'PASS' : 'FAIL') + ' 조작판 잠김');
     document.getElementById('pv-pz').click(); }, 4000);
