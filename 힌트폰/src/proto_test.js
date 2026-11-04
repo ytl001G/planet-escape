@@ -5,7 +5,7 @@
   const scr = () => document.getElementById('pv-screen');
   const has = t => scr().textContent.includes(t);
   const ctl = label => [...document.querySelectorAll('#pv-ctl button')].find(b => b.textContent === label);
-  const press = label => { const b = ctl(label); if (!b || b.disabled) { log(false, '조작판 버튼 못 누름: ' + label); return; } b.click(); };
+  const press = label => { const b = ctl(label); if (!b || b.disabled) { log(false, '조작판 버튼 못 누름: ' + label); return; } b.click(); if (label === '처음부터') document.querySelector('#pv-screen [data-act="start"]')?.click(); };  // 처음부터 → 시작 전 화면이니 Start까지
   const tap = act => { const el = scr().querySelector(`[data-act="${act}"]`); if (!el) { log(false, '화면 버튼 없음: ' + act); return; } el.click(); };
   const type = v => { const i = document.getElementById('pv-in'); i.value = v; i.dispatchEvent(new Event('input')); };
   const drag = idxs => {
@@ -20,6 +20,7 @@
   const steps = [];
   const at = (ms, fn) => steps.push([ms, fn]);
   at(300, () => log(!!document.querySelector('#pv-sbar span') && scr().querySelectorAll('.dock .app').length === 2 && !scr().querySelector('[data-act="story"]') && !document.querySelector('.hbar'), '홈 화면: 상태 표시줄 · 독 앱 2개 (스토리코드 아직 없음) · 홈 바 없음'));
+  at(301, () => { const s = document.getElementById('pv-screen'); log(!s.querySelector('[data-act="start"]') && !!s.querySelector('.idle [data-time]'), 'Start 누른 뒤: 시간 감'); });
   at(302, () => log(!!scr().querySelector('.idle [data-time]') && !!scr().querySelector('.idle [data-ring]') && !scr().querySelector('.guide'), '안전 모드 전: 큰 링 타이머 · 안내 창 없음'));
   at(301, () => log(!scr().querySelector('.load') && !!scr().querySelector('[data-time]'), '켜지자마자 메인(이전) · 시작 화면 없음'));
   at(2000, () => { log(!!scr().querySelector('[data-time]'), '메인(이전) 타이머'); press('스토리카드 1 띄우기'); log(has('보안이 아니잖아?'), '스토리카드 1 문구'); });

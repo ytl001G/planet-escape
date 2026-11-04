@@ -169,6 +169,8 @@ CSS = r'''
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
 @keyframes pwave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
 #proto .center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+#proto .recov { width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-size: 14px; line-height: 1.5; color: #d8d3df; text-align: left; }
+#proto .timer.start { cursor: pointer; }
 #proto .offmsg { margin: 0; font: 700 17px var(--display); color: #f2eef6; }
 #proto .load { width: 160px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.16); overflow: hidden; }
 #proto .load b { display: block; height: 100%; width: 0; background: var(--c1); border-radius: 3px; }
@@ -299,7 +301,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false);
-  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: true, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
+  S = { phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, pct: null, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
   render();
 }
@@ -348,6 +350,7 @@ function vMain() {
   } else if (S.phase === 'p2') {
     g = `<div class="bia"><div class="av">비아</div><div class="say">${tint(D.bia[S.bia])}</div></div>` + (S.biaTalk ? wave() : '');
   }
+  if (S.phase === 'pre' && !S.run) return `<div class="idle">${timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>')}</div>` + dock();  // 시작 전: 앱만 열어 두고 설명 · 힌트코드 · 채팅은 열어 볼 수 있음
   if (S.phase === 'pre') return `<div class="idle">${timerBox()}</div>` + dock();  // 안전 모드 전: 안내가 아직 없으니 잠금 화면처럼 큰 타이머만
   return timerBox() + `<div class="guide glass">${g}</div>` + dock() + (S.map ? mapOv() : '');
 }
@@ -495,7 +498,7 @@ function vEnd() {
   return `<div class="center" style="gap:14px">${ICON.sig}${L.slice(0, Math.min(st - 1, 4)).map((t, i) => `<b style="font-size:16px${i === 3 ? ';color:color-mix(in srgb, var(--c2), white 8%)' : ''}" class="${i === 3 ? 'blink' : ''}">${t}</b>`).join('')}</div>`;
 }
 function vOffline() {
-  return timerBox() + `<div class="guide glass"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p></div></div>` + dock(false);
+  return timerBox() + `<div class="guide glass"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p><div class="recov">예시 문구</div></div></div>` + dock(false);
 }
 
 function render() {
@@ -542,6 +545,7 @@ function act(a) {
   if (a === 'ckdel') { S.ct.pop(); setChat(); return; }
   if (a === 'ckshift') { S.kshift = !S.kshift; render(); return; }
   if (a === 'cklang') { S.klang = S.klang === 'ko' ? 'en' : 'ko'; S.kshift = false; render(); return; }
+  if (a === 'start') { S.run = true; render(); return; }
   if (a === 'kb') { if (!S.kb) { S.kb = true; render(); $('pv-in')?.focus(); } return; }
   if (a.startsWith('k:')) { setCode(S.code + a.slice(2)); return; }
   if (a === 'kdel') { setCode(S.code.slice(0, -1)); return; }
@@ -585,7 +589,7 @@ function bindPattern() {
 // 진행 바꾸기 (시험용 조작판)
 const CTL = [
   ['처음부터', () => true, () => reset()],
-  ['안전 모드 가동', () => S.phase === 'pre' && S.view === 'main', () => { S.view = 'safe'; render();
+  ['안전 모드 가동', () => S.phase === 'pre' && S.run && S.view === 'main', () => { S.view = 'safe'; render();
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
   ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
     () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; render(); later(() => { S.biaTalk = false; render(); }, 2600); } }],
@@ -623,7 +627,7 @@ const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
   ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .bia .say', '비아 대사', 14], ['#proto .msg', '채팅 말풍선', 14],
-  ['#proto .app', '독 앱 이름', 11], ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .toast b', '알림 배너 제목', 13]];
+  ['#proto .app', '독 앱 이름', 11], ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17], ['#proto .recov', '복구 안내 글', 14], ['#proto .toast b', '알림 배너 제목', 13]];
 const edCss = document.createElement('style'); document.head.append(edCss);
 function edApplyStyle() {
   const root = document.getElementById('proto');
@@ -688,7 +692,7 @@ $('pv-ed-in').onclick = () => {
 $('pv-ed-reset').onclick = () => { ED = { text: {}, color: {}, size: {} }; edSave(); edApplyStyle(); edBuild(); render(); edMsg('모두 되돌렸어요'); };
 edApplyStyle();
 
-reset(); setPause(true);  // 페이지를 처음 열면 멈춘 채: 재생을 눌러야 시간이 감
+reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 감
 })();
 </script>
 '''

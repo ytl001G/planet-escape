@@ -2,7 +2,8 @@ digraph G {
  graph [rankdir=TB bgcolor="transparent" nodesep=0.3 ranksep=0.45 fontname="Malgun Gothic" newrank=true];
  node [fontname="Malgun Gothic" fontsize=12 margin="0.26,0.08" penwidth=1.4];
  edge [fontname="Malgun Gothic" fontsize=10 color="#8a8494" fontcolor="#a39eab" arrowsize=0.7 penwidth=1.2];
- "시작" [label=<<b>홈 화면</b><br/><font point-size="10" color="#a39eab">앱을 켜면 바로 · 가운데 큰 링 타이머(흰색) 1:45:00 · 독: 힌트코드 · 채팅</font>> group="spine" shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "시작전" [label=<<b>시작 전 화면</b><br/><font point-size="10" color="#a39eab">앱을 열면 · 링 자리에 Start · 힌트코드 · 채팅은 열어 볼 수 있음 (설명용)</font>> group="spine" shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "시작" [label=<<b>홈 화면</b><br/><font point-size="10" color="#a39eab">1:45:00 시작 · 가운데 큰 링 타이머(흰색) · 독: 힌트코드 · 채팅</font>> group="spine" shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "안전" [label=<<b>안전 모드 알림</b><br/><font point-size="10" color="#a39eab">방패가 커지며 등장 + 로딩 막대 · 전체 화면</font>> group="spine" shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
  "메인" [label=<<b>메인 화면 (1부)</b><br/><font point-size="10" color="#a39eab">링 타이머 보라 · 목표 창 · 릴리 안내</font>> group="spine" shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
  "g1" [label=<<b>목표: 알렉스의 승인 확보</b><br/><font point-size="10" color="#a39eab">문제 2</font>> group="spine" shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
@@ -21,6 +22,7 @@ digraph G {
  "레버" [label=<<b>레버 선택</b><br/><font point-size="10" color="#a39eab">문제 16 · 폰은 힌트 코드로 레버 대기 연출</font>> group="spine" shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
  "탈출" [label=<<b>탈출 엔딩</b><br/><font point-size="10" color="#a39eab">레버 아래 · 폰 꺼짐</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "행성" [label=<<b>행성 엔딩</b><br/><font point-size="10" color="#a39eab">레버 위 · 송출 화면 반복</font>> shape=box style="rounded,filled" fillcolor="#36261a" color="#ffae4d" fontcolor="#ece9f1"];
+ "시작전" -> "시작" [label="Start 누름" weight="50"];
  "시작" -> "안전" [label="문제 1 실패" weight="50"];
  "안전" -> "메인" [label="로딩 끝나면 자동" weight="50"];
  "메인" -> "g1" [label="" weight="50"];
@@ -78,7 +80,7 @@ digraph G {
  "지도" [label=<<b>지도 팝업</b><br/><font point-size="10" color="#a39eab">1부 · 갈 방만 인물 색 · X · 바깥 · Esc로 닫힘</font>> shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
  "다시보기" [label=<<b>완료 목표 다시 보기</b><br/><font point-size="10" color="#a39eab">1부 · 끝낸 목표 체크</font>> shape=box style="rounded,filled" fillcolor="#33213b" color="#cf86e6" fontcolor="#ece9f1"];
  "어디서든" [label=<<b>어느 화면에서든</b>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
- "끊김" [label=<<b>연결 끊김</b><br/><font point-size="10" color="#a39eab">와이파이 아이콘 + 연결이 끊겼습니다</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
+ "끊김" [label=<<b>연결 끊김</b><br/><font point-size="10" color="#a39eab">와이파이 아이콘 + 연결이 끊겼습니다 + 복구 안내 창 (문구 미정)</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "재연결" [label=<<b>다시 연결</b><br/><font point-size="10" color="#a39eab">원래 화면으로</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "종료" [label=<<b>시간 종료</b><br/><font point-size="10" color="#a39eab">0:00:00 → 전체 화면 · 이후 미정</font>> shape=box style="rounded,filled" fillcolor="#211e26" color="#4a4452" fontcolor="#ece9f1"];
  "홈" -> "힌트앱" [label="독"];
