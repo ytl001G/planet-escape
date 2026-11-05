@@ -16,7 +16,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent)); from shipmap import ROOM
 DATA = {
     'goals': [['알렉스의 승인 확보', '알렉스의 방'], ['오펠리아의 승인 확보', '오펠리아의 방'], ['노아의 승인 확보', '노아의 방'],
               ['오펠리아 재방문', '오펠리아의 방'], ['에바의 승인 확보', '에바의 방'], ['릴리의 승인', '릴리의 방']],
-    'bia': ['우선 알렉스의 방에 다시 가 보지 않을래? 뭔가 남아 있는 것 같거든.',
+    'vea': ['우선 알렉스의 방에 다시 가 보지 않을래? 뭔가 남아 있는 것 같거든.',
             '오펠리아의 보고서에 제온이 뇌에 영향을 준다고 적혀 있었지? 그쪽을 다시 확인해 보자.',
             '혹시 노아가 가져간 거 아냐? 노아 방에 가 보자!',
             '네 방에 가 보자. 뭘 바꿔 놓았는지 궁금해.',
@@ -34,11 +34,11 @@ DATA = {
     },
     'pattern': [0, 6, 5],  # 시험용 정답: 가운데 → 왼쪽 위 → 왼쪽 아래 (실제 정답은 보너스 문제 담당에게 받기)
     'map': {'rooms': [list(r) for r in MAP_ROOMS], 'hull': MAP_HULL, 'inset': MAP_INSET, 'rx': MAP_RX},
-    'bia_intro': [['보호 시스템 로딩 중…', '로딩 완료.'], ['안녕! 나는 Virtual Entity AI.', '줄여서 V.E.A.', '그냥 비아라고 불러도 돼.']],
+    'vea_intro': [['보호 시스템 로딩 중…', '로딩 완료.'], ['안녕! 나는 Virtual Entity AI.', '줄여서 V.E.A.', '그냥 비아라고 불러도 돼.']],
 }
 
 CSS = r'''
-#proto { --ch-alex: #E53935; --cht-alex: #E57373; --ch-ophelia: #FDD835; --cht-ophelia: #FFF176; --ch-noah: #43A047; --cht-noah: #81C784; --ch-eva: #1E88E5; --cht-eva: #64B5F6; --ch-lily: #8E24AA; --cht-lily: #BA68C8; --ch-bia: #FB8C00; --c1: #cf86e6; --c2: #ffae4d; --err: #e5484d; --c0: #e9e6ee; }  /* 편집 패널에서 바꾸는 색 */
+#proto { --ch-alex: #E53935; --cht-alex: #E57373; --ch-ophelia: #FDD835; --cht-ophelia: #FFF176; --ch-noah: #43A047; --cht-noah: #81C784; --ch-eva: #1E88E5; --cht-eva: #64B5F6; --ch-lily: #8E24AA; --cht-lily: #BA68C8; --ch-vea: #FB8C00; --c1: #cf86e6; --c2: #ffae4d; --err: #e5484d; --c0: #e9e6ee; }  /* 편집 패널에서 바꾸는 색 */
 
 #proto { display: grid; gap: 16px; }
 #proto .proto-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: start; }
@@ -87,17 +87,17 @@ CSS = r'''
 #proto .lb-goal { height: 76px; box-sizing: border-box; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; gap: 2px; position: relative; overflow: hidden; }
 #proto .lb-goal .lbl { font-size: 10px; line-height: 1.2; } #proto .lb-goal .goal { font-size: 15px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #proto .lb-goal .center { flex-direction: row; gap: 10px; justify-content: flex-start; } #proto .lb-goal .bigck { width: 34px; height: 34px; } #proto .lb-goal .bigck svg { width: 18px; height: 18px; }
-#proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; }
+#proto .lb-goal:has(.vea) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .vea { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
-#proto .biarow { position: relative; flex: 1; align-self: stretch; display: flex; align-items: center; min-height: 30px; }
-#proto .biarow .bia { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 19px); } #proto .biarow.talk .bia { left: 0; } #proto .biarow .wave { margin-left: 48px; }
-#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.65,0,.35,1) both; } @keyframes bial { from { left: calc(50% - 19px); } }  /* 1) V가 가운데 → 왼쪽 */
-#proto .biarow.talk.mv .wave { animation: biaw .3s .65s both; } @keyframes biaw { from { opacity: 0; } }  /* 2) 다 옮겨 간 뒤에 음성 */
-#proto .biarow.talk.mv.enter .bia { animation: biae 1.2s cubic-bezier(.65,0,.35,1) both; } #proto .biarow.talk.mv.enter .wave { animation-delay: 1.25s; }  /* 처음 등장: 가운데에서 나타난 뒤 왼쪽으로 */
-@keyframes biae { 0% { left: calc(50% - 19px); opacity: 0; scale: .5; } 35% { left: calc(50% - 19px); opacity: 1; scale: 1; } 100% { left: 0; } }
-#proto .biarow.mv:not(.talk) .wave { animation: biaw2 .25s forwards; } @keyframes biaw2 { to { opacity: 0; } }  /* 3) 음성이 먼저 꺼지고 */
-#proto .biarow.mv:not(.talk) .bia { animation: biar .6s .3s cubic-bezier(.65,0,.35,1) both; } @keyframes biar { from { left: 0; } }  /* 4) 그다음 가운데로 */
-#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
+#proto .vearow { position: relative; flex: 1; align-self: stretch; display: flex; align-items: center; min-height: 30px; }
+#proto .vearow .vea { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 19px); } #proto .vearow.talk .vea { left: 0; } #proto .vearow .wave { margin-left: 48px; }
+#proto .vearow.talk.mv .vea { animation: veal .6s cubic-bezier(.65,0,.35,1) both; } @keyframes veal { from { left: calc(50% - 19px); } }  /* 1) V가 가운데 → 왼쪽 */
+#proto .vearow.talk.mv .wave { animation: veaw .3s .65s both; } @keyframes veaw { from { opacity: 0; } }  /* 2) 다 옮겨 간 뒤에 음성 */
+#proto .vearow.talk.mv.enter .vea { animation: veae 1.2s cubic-bezier(.65,0,.35,1) both; } #proto .vearow.talk.mv.enter .wave { animation-delay: 1.25s; }  /* 처음 등장: 가운데에서 나타난 뒤 왼쪽으로 */
+@keyframes veae { 0% { left: calc(50% - 19px); opacity: 0; scale: .5; } 35% { left: calc(50% - 19px); opacity: 1; scale: 1; } 100% { left: 0; } }
+#proto .vearow.mv:not(.talk) .wave { animation: veaw2 .25s forwards; } @keyframes veaw2 { to { opacity: 0; } }  /* 3) 음성이 먼저 꺼지고 */
+#proto .vearow.mv:not(.talk) .vea { animation: vear .6s .3s cubic-bezier(.65,0,.35,1) both; } @keyframes vear { from { left: 0; } }  /* 4) 그다음 가운데로 */
+#proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .vea .av { width: 30px; height: 30px; }
 #proto .lb-used { margin: 0 6px -6px; text-align: right; font: 500 12px var(--body); color: rgba(255,255,255,.65); }
 #proto .lb-code .srow { grid-template-columns: 1fr 84px; }
 #proto .lb.off .lb-chatbox, #proto .lb.off .lb-code, #proto .lb.off .lb-used { opacity: .45; pointer-events: none; }
@@ -163,8 +163,8 @@ CSS = r'''
 #proto .card .k { font-size: 12px; font-weight: 700; }
 #proto .card.ansc { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 55%) 60%, transparent); border: 1.5px solid var(--c1); color: #fff; } #proto .p2 .card.ansc { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 55%) 60%, transparent); border-color: var(--c2); }  /* 정답 칸: 힌트 카드처럼 반투명, 대신 덜 투명하고 더 어둡게 */
 #proto .card.ansc .v { font: 700 22px var(--display); }
-#proto .bia { display: flex; gap: 10px; align-items: flex-start; }
-#proto .bia .av { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 14px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
+#proto .vea { display: flex; gap: 10px; align-items: flex-start; }
+#proto .vea .av { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 14px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
 #proto .wave { display: flex; gap: 4px; align-items: center; height: 46px; justify-content: center; }
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
 @keyframes pwave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
@@ -298,7 +298,7 @@ function setPause(on) {
 }
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false); const pg = document.getElementById('pv-prog'); if (pg) pg.value = 0;
-  S = { prog: 0, phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, showHints: false,
+  S = { prog: 0, phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, vea: 0, story1: false, code: '', open: {}, used: {}, showHints: false,
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, introStep: 0, pending: false };
   render();
 }
@@ -363,8 +363,8 @@ function vMain() {
       g = `<div class="lbl">현재 목표</div><div class="goal">${esc(name)}</div><div class="room" data-act="map" role="button" tabindex="0" aria-haspopup="dialog">${ICON.pin}<span>${tint(room)}</span>${ICON.chev}</div>${bars(2)}`;
     }
   } else if (S.phase === 'p2') {
-    const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임 (위 CSS 순서)
-    g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" data-n="V" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
+    const mv = S.veaMv ? ' mv' : ''; S.veaMv = false;  // 말 시작 · 끝 때만 한 번 움직임 (위 CSS 순서)
+    g = `<div class="vearow${S.veaTalk ? ' talk' : ''}${mv}"><div class="vea"><div class="av" data-n="V" style="font-size:18px">V</div></div>${S.veaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer" ', '<div class="timer start" data-act="start" role="button" tabindex="0" ').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   return layB(t0, S.phase === 'pre' ? '' : g, !!S.trans);
@@ -494,8 +494,8 @@ function vSafe() {  // 메인 화면 위 팝업: 방패가 커지며 나타나�
 function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="lb-goal glass"', '<div class="lb-goal glass glitch" style="border-color:var(--c1)"') + '<div class="stripes"></div>';
   const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
-  const mv = S.biaMv ? ' mv enter' : ''; S.biaMv = false;  // 처음 나올 때만: 가운데에서 나타나 왼쪽으로 → 음성
-  return layB(timerBox(), `<div class="biarow talk${mv}"><div class="bia"><div class="av" data-n="${name}" style="font-size:18px">${name}</div></div>${wave()}</div>`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
+  const mv = S.veaMv ? ' mv enter' : ''; S.veaMv = false;  // 처음 나올 때만: 가운데에서 나타나 왼쪽으로 → 음성
+  return layB(timerBox(), `<div class="vearow talk${mv}"><div class="vea"><div class="av" data-n="${name}" style="font-size:18px">${name}</div></div>${wave()}</div>`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
 }
 function vEnd() { return '<div class="black"></div>'; }  // 일단 두 엔딩 다 화면이 검게 꺼짐 (예전 송출 · 끊김 연출은 git 5b98d9b)
 function vOffline() {  // 연결 끊김: 메인 화면 위를 통째로 덮고, 타이머만 그 자리 그 모양으로 위에 보임
@@ -603,10 +603,10 @@ const CTL = [
   ['처음부터', () => true, () => reset()],
   ['안전 모드 가동', () => S.phase === 'pre' && S.run && S.view === 'main', () => { S.view = 'safe'; render();
     later(() => { S.phase = 'p1'; S.view = 'main'; render(); scr.classList.remove('enter'); void scr.offsetWidth; scr.classList.add('enter'); }, 3700); }],
-  ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.bia < D.bia.length - 1),
-    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.bia++; S.biaTalk = true; S.biaMv = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 600 + 2600); } }],
+  ['목표 완료', () => (S.phase === 'p1' && S.view === 'main' && !S.celebrate && S.goal < D.goals.length - 1) || (S.phase === 'p2' && S.view === 'main' && S.vea < D.vea.length - 1),
+    () => { if (S.phase === 'p1') { S.celebrate = true; render(); later(() => { S.celebrate = false; S.goal++; render(); }, 1500); } else { S.vea++; S.veaTalk = true; S.veaMv = true; render(); later(() => { S.veaTalk = false; S.veaMv = true; render(); }, 600 + 2600); } }],
   ['ALONE 입력 (전환부)', () => S.phase === 'p1' && S.view === 'main' && !S.celebrate && !S.trans, () => { S.trans = true; render(); }],
-  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; S.biaMv = true; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.biaTalk = true; render(); later(() => { S.biaTalk = false; S.biaMv = true; render(); }, 2600); }, 1900 + 2600 + 3200); }],
+  ['2부로 · 비아 등장', () => S.phase === 'p1' && S.view === 'main', () => { S.view = 'intro'; S.introStep = 0; render(); later(() => { S.phase = 'p2'; S.introStep = 1; S.veaMv = true; render(); }, 1900); later(() => { S.introStep = 2; render(); }, 1900 + 2600); later(() => { S.view = 'main'; S.trans = false; S.veaTalk = true; render(); later(() => { S.veaTalk = false; S.veaMv = true; render(); }, 2600); }, 1900 + 2600 + 3200); }],
   ['운영자 답장 보내기', () => !S.phase.startsWith('end'), () => reply()],
   ['연결 끊김', () => !S.phase.startsWith('end') && !S.offline, () => { S.offline = true; render(); }],
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
@@ -637,7 +637,7 @@ function panel() {
   [...ctl.children].forEach((b, i) => b.disabled = PAUSED || !CTL[i][1]());
   const pb = $('pv-pause'); pb.textContent = PAUSED ? '재생' : '일시정지'; $('pv-pz').setAttribute('aria-label', '재생'); pb.setAttribute('aria-pressed', String(PAUSED));
   const ph = { pre: '안전 모드 이전', p1: '1부 · 릴리 안내', p2: '2부 · 비아 안내', end_escape: '탈출 엔딩', end_planet: '행성 엔딩' }[S.phase] + (S.tup ? ' · 시간 종료' : '');
-  $('pv-state').textContent = '지금: ' + ph + (S.phase === 'p1' ? ` · 목표 ${S.goal + 1}/${D.goals.length}` : S.phase === 'p2' ? ` · 비아 안내 ${S.bia + 1}/${D.bia.length}` : '');
+  $('pv-state').textContent = '지금: ' + ph + (S.phase === 'p1' ? ` · 목표 ${S.goal + 1}/${D.goals.length}` : S.phase === 'p2' ? ` · 비아 안내 ${S.vea + 1}/${D.vea.length}` : '');
 }
 // 좁은 화면에서는 폰을 줄여 보이기
 function fit() { const st = $('pv-stage'), w = Math.min(384, st.parentElement.clientWidth); const k = w / 384; ph.style.transform = `scale(${k})`; st.style.width = 384 * k + 'px'; st.style.height = 827 * k + 'px'; }
@@ -649,7 +649,7 @@ try { Object.assign(ED, JSON.parse(localStorage.getItem(ED_KEY) || '{}')); } cat
 const edSave = () => { try { localStorage.setItem(ED_KEY, JSON.stringify(ED)); } catch (e) {} };
 const SEEN = [];  // 폰에 나온 원래 문구 (처음 나온 순서)
 const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 색 (비아 안내)', '#ffae4d'], ['--err', '오류 · 시간 종료 빨강', '#e5484d'], ['--c0', '안전 모드 전 링', '#e9e6ee'],
-  ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
+  ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-vea', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
 const SIZES = [['#proto .idle .timer', '링 타이머 숫자', 50], ['#proto .timer', '채팅 위 작은 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
   ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .lb-used', '힌트 사용 횟수', 12], ['#proto .timer .prog', '진행도', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .msg', '채팅 말풍선', 14],
