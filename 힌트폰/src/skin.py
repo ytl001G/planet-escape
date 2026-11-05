@@ -12,7 +12,7 @@ CSS = (NINE('#proto.skin .lb-code', '입력_판', 16) + NINE('#proto.skin .input
        + NINE('#proto.skin .card.h1', '힌트_카드_틀_1부', 16) + NINE('#proto.skin .card.h2', '힌트_카드_틀_2부', 16)
        + NINE('#proto.skin .key', '키_기본', 8) + NINE('#proto.skin .key.num', '키_숫자줄', 8)
        + NINE('#proto.skin .key.space', '키_띄어쓰기', 8)
-       + f'#proto.skin .badge {{ background: {U("안읽음_배지")} center/100% no-repeat; }} #proto.skin .mapov {{ background: {U("덮개_어둡게")} 0 0/100% 100%; }} #proto.skin .stripes {{ background: {U("지직_줄무늬")} 0 0/100% 90px repeat-y; }}\n'  # 지금 화면에 쓰는 조각을 실제 에셋으로
+       + f'#proto.skin .badge {{ background: {U("안읽음_배지")} center/100% no-repeat; }} #proto.skin .stripes {{ background: {U("지직_줄무늬")} 0 0/100% 90px repeat-y; }}\n'  # 지금 화면에 쓰는 조각을 실제 에셋으로
        + NINE('#proto.skin .key.mid, #proto.skin .key.wide, #proto.skin .key.wide2', '키_넓은', 8) + NINE('#proto.skin .kbd', '키보드_판', 22)
        + '#proto.skin .lb-goal { padding-left: 24px; } #proto.skin .lb-goal:has(.bia), #proto.skin .lb-goal:has(.bigck) { padding-left: 14px; } #proto.skin .card.h1, #proto.skin .card.h2 { padding-left: 26px; }\n'  # 왼쪽 세로 막대만큼 글자를 띄움
        + '#proto.skin .idle .timer { width: 316px; height: 316px; font-size: 50px; } #proto.skin .idle .timer .prog { top: 63%; font-size: 14px; }\n'  # 시계는 키우고 남은 시간 글자는 줄임

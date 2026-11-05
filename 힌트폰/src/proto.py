@@ -104,9 +104,8 @@ CSS = r'''
 #proto .lb.unoff :is(.lb-chatbox, .lb-code, .lb-used) { animation: unoff .7s ease both; } @keyframes unoff { from { opacity: .45; } }
 #proto .lb.tooff :is(.lb-chatbox, .lb-code, .lb-used) { animation: tooff .5s ease both; } @keyframes tooff { from { opacity: 1; } }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; }
-#proto .mapov:has(.sfpop), #proto.skin .mapov:has(.sfpop) { background: none; }  /* 안전 모드 팝업은 뒤 화면을 어둡게 하지 않음 */
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
-#proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hph { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: -6px; } #proto .hpop .hph .mapx { position: static; flex: none; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 0 4px; }  /* 제목과 X를 한 줄에 */ #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
+#proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .mapbox.hpop { padding-top: 12px; } #proto .hpop .hph { display: flex; align-items: center; justify-content: space-between; gap: 8px; } #proto .hpop .hph .mapx { position: static; flex: none; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 0 4px; }  /* 제목과 X를 한 줄에 */ #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
 #proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
@@ -137,7 +136,7 @@ CSS = r'''
 #proto .room { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; color: color-mix(in srgb, var(--c1), white 15%); }
 #proto .room[data-act] { cursor: pointer; align-self: flex-start; border-radius: 6px; }
 #proto .room[data-act]:focus-visible { outline: 2px solid var(--c1); outline-offset: 3px; }
-#proto .mapov { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; padding: 18px; background: rgba(0,0,0,.55); animation: pfadein .25s; }
+#proto .mapov { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; padding: 18px; animation: pfadein .25s; }  /* 팝업 뒤 화면은 어둡게 하지 않음 */
 #proto .mapbox { position: relative; width: 100%; padding: 50px 12px 16px; background: rgba(24,21,30,.94); }
 #proto .sfpop { display: grid; justify-items: center; gap: 14px; padding: 26px 16px 24px; } #proto .sfpop .sv { width: 108px; height: 108px; }
 #proto .mapbox svg { display: block; width: 100%; height: auto; }
@@ -488,7 +487,7 @@ function vChat() {
   return `<div class="head chathead"><div class="back" data-act="home" role="button" aria-label="뒤로" tabindex="0">${ICON.back}</div><div class="ttl">채팅</div><div class="tm">${ICON.clock}<span data-tm>${fmt()}</span></div></div>`
     + `<div class="msgs" id="pv-msgs" role="log" aria-label="운영자 채팅" data-act="ckbx">${ms}</div><form class="chatin" id="pv-chat"><input id="pv-chatin" aria-label="운영자에게 보낼 말" autocomplete="off" inputmode="none" data-act="ckb" value="${esc(ctext())}"><button class="send" type="submit" aria-label="보내기" style="color:#fff">${ICON.send}</button></form>` + (S.ckb ? ckbd() : '');
 }
-function vSafe() {  // 메인 화면 위 팝업: 방패가 커지며 나타나고 아래 로딩 막대 (뒤 화면은 어둡게 보임)
+function vSafe() {  // 메인 화면 위 팝업: 방패가 커지며 나타나고 아래 로딩 막대 (뒤 화면은 그대로)
   return vMain() + `<div class="mapov"><div class="mapbox glass sfpop" role="dialog" aria-label="안전 모드 감지"><div class="sv zoom"><div class="sv-in">${SH}</div></div>`
     + '<b class="sf-t" style="font-size:18px">안전 모드 감지</b><div class="load go sf-t" style="--d:3s"><b></b></div></div></div>';
 }
