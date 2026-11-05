@@ -9,7 +9,7 @@ def NINE(sel, n, s):  # 모서리는 그대로 두고 가운데만 늘림 (borde
 
 c2l, c2d = AD.PART['2부'][1], AD.PART['2부'][2]
 CSS = (NINE('#proto.skin .lb-code', '입력_판', 16) + NINE('#proto.skin .input', '입력_칸', 12) + NINE('#proto.skin .btn', '버튼', 12) + NINE('#proto.skin .btn.ans', '버튼_정답', 12)
-       + NINE('#proto.skin .card.h1', '힌트_카드_틀_1부', 16) + NINE('#proto.skin .card.h2', '힌트_카드_틀_2부', 16) + NINE('#proto.skin .card.ansc', '정답_칸_틀', 14)
+       + NINE('#proto.skin .card.h1', '힌트_카드_틀_1부', 16) + NINE('#proto.skin .card.h2', '힌트_카드_틀_2부', 16)
        + NINE('#proto.skin .key', '키_기본', 8) + NINE('#proto.skin .key.num', '키_숫자줄', 8)
        + NINE('#proto.skin .key.space', '키_띄어쓰기', 8)
        + f'#proto.skin .badge {{ background: {U("안읽음_배지")} center/100% no-repeat; }} #proto.skin .mapov {{ background: {U("덮개_어둡게")} 0 0/100% 100%; }} #proto.skin .stripes {{ background: {U("지직_줄무늬")} 0 0/100% 90px repeat-y; }}\n'  # 지금 화면에 쓰는 조각을 실제 에셋으로
@@ -19,12 +19,12 @@ CSS = (NINE('#proto.skin .lb-code', '입력_판', 16) + NINE('#proto.skin .input
        + f"#proto.skin .ph.p1 .idle .timer::before {{ content: ''; position: absolute; inset: 0; background: {U('타이머_진행호_1부')} center/100% no-repeat; -webkit-mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); }} #proto.skin .ph.p2 .idle .timer::before {{ content: ''; position: absolute; inset: 0; background: {U('타이머_진행호_2부')} center/100% no-repeat; -webkit-mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); }} #proto.skin .ph.pre .idle .timer::before {{ content: ''; position: absolute; inset: 0; background: {U('타이머_진행호_이전')} center/100% no-repeat; -webkit-mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); mask: conic-gradient(#000 calc((100 - var(--off)) * 1%), transparent 0); }} #proto.skin .idle .timer .tp {{ stroke: none; }}\n"  # 진행호 = 에셋 그림 + 남은 만큼 가림막
        + '#proto.skin .idle .timer .tr { fill: none; stroke: none; } #proto.skin .idle .timer .tp { r: 66px; stroke-width: 3.6; }\n'
        + '#proto.skin .bigck { background-color: transparent; } #proto.skin .bigck svg { visibility: hidden; } #proto.skin .badge { outline: 2px solid #1a1220; }\n'
-       + f'#proto.skin .bia .av {{ border-color: transparent; background: {U("비아_동그라미_틀")} center/100% no-repeat; }} #proto.skin .bia .av[data-n="V"] {{ background: {U("비아_V_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .bia .av[data-n="?"] {{ background: {U("비아_물음표_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .wave span {{ background: {U("파형_막대")} 0 0/100% 100%; }}\n')
+       + f'#proto.skin .bia .av {{ border-color: transparent; background: {U("비아_동그라미_틀")} center/100% no-repeat; }} #proto.skin .bia .av[data-n="V"] {{ background: {U("비아_V_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .bia .av[data-n="?"] {{ background: {U("비아_물음표_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .wave span {{ background: none; border-image: {U("파형_막대")} 2.5 fill / 2.5px stretch; }}\n')
 for p, cls in (('1부', 'p1'), ('2부', 'p2'), ('이전', 'pre')):
     q = '1부' if p == '이전' else p; S0 = f'#proto.skin .ph.{cls}'
     CSS += (NINE(f'{S0} .lb-chatbox', f'채팅_칸_틀_{p}', 24) + NINE(f'{S0} .lb-goal', f'목표_칸_틀_{q}', 24)
             + NINE(f'{S0} .lb-goal:has(.bia), {S0} .lb-goal:has(.bigck), {S0} .mapbox', f'판_틀_{q}', 24)
-            + NINE(f'{S0} .btn:active', f'버튼_눌림_{q}', 12) + NINE(f'{S0} .key:active, {S0} .key.mid.on', f'키_눌림_{q}', 8)
+            + NINE(f'{S0} .card.ansc', f'정답_칸_틀_{q}', 14) + NINE(f'{S0} .btn:active', f'버튼_눌림_{q}', 12) + NINE(f'{S0} .key:active, {S0} .key.mid.on', f'키_눌림_{q}', 8)
             + f'{S0} .idle .timer {{ background: {U("타이머_링_틀_" + p)} center/100% 100% no-repeat; }} {S0} .bigck {{ background: {U("완료_체크_큰_" + q)} center/100% no-repeat; }}\n')
 
 def SI(body, w, h, vb='0 0 24 24', style=''): return f'<svg width="{w}" height="{h}" viewBox="{vb}" aria-hidden="true"{style}>{body}</svg>'

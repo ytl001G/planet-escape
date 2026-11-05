@@ -1,6 +1,6 @@
 # 폰 에셋 — '우주선 콘솔 HUD' 스타일 (모서리 깎은 판 · 눈금 링 · 선 2px 통일 · 글로우 없음)
 # 글자 · 숫자 · 시각은 넣지 않음 (앱이 씀) — 틀 · 판 · 아이콘만. 부마다 색만 바꿔 같은 모양으로 뽑음
-# SVG + PNG@3x(갤럭시 A13 1080px 폭 기준). 힌트폰 폴더에서: python assets_draw.py 에셋 [--svg-only]
+# SVG + PNG@3x(갤럭시 A13 1080px 폭 기준). 힌트폰 폴더에서: python assets_draw.py 에셋 [이름 …] [--all] [--svg-only] — 기본은 바뀐 것만
 import pathlib, re, subprocess, sys, math
 SP = pathlib.Path(__file__).parent
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
@@ -105,7 +105,8 @@ def field(err=False):
 A['입력_칸'] = field(); A['입력_칸_오류'] = field(True)
 A['버튼'] = bt(84, 54, 'url(#btn)', 'rgba(255,255,255,.22)', '1부')
 A['버튼_정답'] = bt(308, 52, 'url(#accw)', 'rgba(255,255,255,.5)', '1부')
-A['정답_칸_틀'] = svg(308, 70, f'<path d="{cham(1, 1, 306, 68, 10)}" fill="url(#accw)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>')
+for _p in ('1부', '2부'):  # 정답 칸: 흰색 말고 그 부 색을 진하게
+    A[f'정답_칸_틀_{_p}'] = svg(308, 70, f'<path d="{cham(1, 1, 306, 68, 10)}" fill="{PART[_p][2]}" stroke="{PART[_p][0]}" stroke-width="1.5"/>', p=_p)
 A['덮개_어둡게'] = svg(8, 8, '<rect width="8" height="8" fill="rgba(0,0,0,.55)"/>')
 A['키_기본'] = key(30, '#2b2433', '1부'); A['키_숫자줄'] = key(30, '#1f1a25', '1부'); A['키_넓은'] = key(52, '#1f1a25', '1부'); A['키_띄어쓰기'] = key(170, '#2b2433', '1부')
 A['키보드_판'] = svg(360, 220, '<path d="M0 20Q0 0 20 0H340Q360 0 360 20V220H0Z" fill="url(#panel)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>')
@@ -115,21 +116,29 @@ _LOGO = pathlib.Path('로고')
 if _LOGO.is_dir():
     import icon as _icon
     A['방패'] = (_LOGO / 'shield_plain.svg').read_text(encoding='utf-8')
-    A['앱_아이콘'] = _icon.full().replace('width="1024" height="1024"', 'width="256" height="256"')
-    A['앱_아이콘_회색'] = _icon.full('appicon-gray', 'gray').replace('width="1024" height="1024"', 'width="256" height="256"')
+    A['앱_아이콘'] = _icon.full().replace('width="1024" height="1024"', 'width="256" height="256"', 1)
+    A['앱_아이콘_회색'] = _icon.full('appicon-gray', 'gray').replace('width="1024" height="1024"', 'width="256" height="256"', 1)
 
 if __name__ == '__main__':
+    # 기본: 바뀐 것만 다시 뽑음 (SVG 내용이 다르거나 PNG가 없는 것) · 이름을 주면 그것만 (앞부분만 써도 됨: 정답_칸 → 정답_칸_틀_1부, _2부) · --all 은 전부
     OUT.mkdir(parents=True, exist_ok=True)
-    keep = {'_조립_미리보기.png'}
-    for f in OUT.glob('*'):
-        if f.is_file() and f.name not in keep: f.unlink()
-    for n, s in A.items(): (OUT / f'{n}.svg').write_text(s, encoding='utf-8')
+    want = args[1:]
+    for f in OUT.glob('*'):  # 지금 목록에 없는 옛 에셋 파일은 지움 (밑줄로 시작하는 미리보기 그림은 남김)
+        if f.is_file() and not f.name.startswith('_') and f.name.removesuffix('.svg').removesuffix('@3x.png') not in A: f.unlink(); print('지움', f.name)
+    def todo(n, s):
+        if want: return any(n.startswith(w) for w in want)
+        if '--all' in sys.argv: return True
+        f = OUT / f'{n}.svg'
+        return not f.exists() or f.read_text(encoding='utf-8') != s or ('--svg-only' not in sys.argv and not (OUT / f'{n}@3x.png').exists())
+    job = {n: s for n, s in A.items() if todo(n, s)}
+    assert job or not want, f'그런 이름의 에셋이 없음: {want}'
+    for n, s in job.items(): (OUT / f'{n}.svg').write_text(s, encoding='utf-8')
     if '--svg-only' not in sys.argv:  # PNG@3x: 엣지 헤드리스로 투명 배경 캡처
         E = r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'; tmp = SP / 'aout'; tmp.mkdir(exist_ok=True)
-        for n, s in A.items():
+        for n, s in job.items():
             w, h = map(int, re.match(r'<svg[^>]*width="(\d+)" height="(\d+)"', s).groups())
             (tmp / f'{n}.html').write_text(f'<!DOCTYPE html><html><head><meta charset="utf-8"><style>html,body{{margin:0;background:transparent}}svg{{display:block}}</style></head><body>{s}</body></html>', encoding='utf-8')
             try: subprocess.run([E, '--headless=new', '--disable-gpu', '--no-first-run', f'--user-data-dir={tmp / ("prof_" + str(abs(hash(n))))}', '--hide-scrollbars', '--force-device-scale-factor=3', '--default-background-color=00000000',
                                  f'--window-size={w},{h}', '--virtual-time-budget=500', f'--screenshot={OUT / (n + "@3x.png")}', (tmp / f'{n}.html').as_uri()], capture_output=True, timeout=60)
             except subprocess.TimeoutExpired: print('timeout', n)
-    print('assets', len(A), '→', OUT)
+    print('뽑음', len(job), '/', len(A), ':', ' '.join(job) if len(job) <= 12 else f'{len(job)}개', '→', OUT)

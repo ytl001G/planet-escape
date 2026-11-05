@@ -90,11 +90,11 @@ CSS = r'''
 #proto .lb-goal:has(.bia) { flex-direction: row; align-items: center; gap: 10px; } #proto .lb-goal .bia { align-items: center; } #proto .lb-goal .wave { height: 30px; flex: 1; }
 #proto .p1 .lb-goal { border-color: var(--c1); } #proto .p2 .lb-goal { border-color: var(--c2); }
 #proto .biarow { position: relative; flex: 1; align-self: stretch; display: flex; align-items: center; min-height: 30px; }
-#proto .biarow .bia { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 15px); } #proto .biarow.talk .bia { left: 0; } #proto .biarow .wave { margin-left: 40px; }
-#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.65,0,.35,1) both; } @keyframes bial { from { left: calc(50% - 15px); } }  /* 1) V가 가운데 → 왼쪽 */
+#proto .biarow .bia { position: absolute; top: 50%; translate: 0 -50%; left: calc(50% - 19px); } #proto .biarow.talk .bia { left: 0; } #proto .biarow .wave { margin-left: 48px; }
+#proto .biarow.talk.mv .bia { animation: bial .6s cubic-bezier(.65,0,.35,1) both; } @keyframes bial { from { left: calc(50% - 19px); } }  /* 1) V가 가운데 → 왼쪽 */
 #proto .biarow.talk.mv .wave { animation: biaw .3s .65s both; } @keyframes biaw { from { opacity: 0; } }  /* 2) 다 옮겨 간 뒤에 음성 */
 #proto .biarow.talk.mv.enter .bia { animation: biae 1.2s cubic-bezier(.65,0,.35,1) both; } #proto .biarow.talk.mv.enter .wave { animation-delay: 1.25s; }  /* 처음 등장: 가운데에서 나타난 뒤 왼쪽으로 */
-@keyframes biae { 0% { left: calc(50% - 15px); opacity: 0; scale: .5; } 35% { left: calc(50% - 15px); opacity: 1; scale: 1; } 100% { left: 0; } }
+@keyframes biae { 0% { left: calc(50% - 19px); opacity: 0; scale: .5; } 35% { left: calc(50% - 19px); opacity: 1; scale: 1; } 100% { left: 0; } }
 #proto .biarow.mv:not(.talk) .wave { animation: biaw2 .25s forwards; } @keyframes biaw2 { to { opacity: 0; } }  /* 3) 음성이 먼저 꺼지고 */
 #proto .biarow.mv:not(.talk) .bia { animation: biar .6s .3s cubic-bezier(.65,0,.35,1) both; } @keyframes biar { from { left: 0; } }  /* 4) 그다음 가운데로 */
 #proto .lb-goal[data-act] { cursor: pointer; } #proto .lb-goal .room { font-size: 12px; } #proto .lb-goal .bia .av { width: 30px; height: 30px; }
@@ -104,6 +104,7 @@ CSS = r'''
 #proto .lb.unoff :is(.lb-chatbox, .lb-code, .lb-used) { animation: unoff .7s ease both; } @keyframes unoff { from { opacity: .45; } }
 #proto .lb.tooff :is(.lb-chatbox, .lb-code, .lb-used) { animation: tooff .5s ease both; } @keyframes tooff { from { opacity: 1; } }
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; }
+#proto .mapov:has(.sfpop), #proto.skin .mapov:has(.sfpop) { background: none; }  /* 안전 모드 팝업은 뒤 화면을 어둡게 하지 않음 */
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
 #proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
@@ -161,10 +162,10 @@ CSS = r'''
 #proto .card.h1 { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 35%) 30%, transparent); border: 1.5px solid var(--c1); }
 #proto .card.h2 { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 28%, transparent); border: 1.5px solid var(--c2); }
 #proto .card .k { font-size: 12px; font-weight: 700; }
-#proto .card.ansc { background: #a7a3ad; color: #17151b; }
+#proto .card.ansc { background: color-mix(in srgb, var(--c1), black 40%); border: 1.5px solid var(--c1); color: #fff; } #proto .p2 .card.ansc { background: color-mix(in srgb, var(--c2), black 40%); border-color: var(--c2); }  /* 정답 칸: 그 부 색을 진하게 */
 #proto .card.ansc .v { font: 700 22px var(--display); }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
-#proto .bia .av { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 12px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
+#proto .bia .av { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 14px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
 #proto .wave { display: flex; gap: 4px; align-items: center; height: 46px; justify-content: center; }
 #proto .wave span { width: 5px; border-radius: 3px; background: var(--c2); animation: pwave 1s infinite ease-in-out; }
 @keyframes pwave { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
@@ -720,6 +721,7 @@ edApplyStyle();
 
 $('pv-prog').oninput = e => { S.prog = +e.target.value; render(); };
 reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 감
+setSkin(true);  // 처음부터 에셋 적용으로 보여 줌
 })();
 </script>
 '''

@@ -32,7 +32,7 @@
   at(300, () => log(window.__demo === true, 'Start 전: 0000 힌트 나옴'));
   at(301, () => { const s = document.getElementById('pv-screen'); log(!s.querySelector('[data-act="start"]') && !!s.querySelector('.idle [data-time]'), 'Start 누른 뒤: 시간 감'); });
   at(310, () => { tap('codes'); type('0000'); tap('hint'); log(!scr().querySelector('.card'), 'Start 뒤엔 0000 반응 없음'); tap('home');
-    press('연결 끊김'); log(getComputedStyle(scr().querySelector('.timer .tp')).stroke === 'rgb(233, 230, 238)', '안전 모드 전 끊김: 흰 링'); press('다시 연결'); });
+    press('연결 끊김'); log(document.getElementById('proto').classList.contains('skin') ? getComputedStyle(scr().querySelector('.timer'), '::before').backgroundImage.includes('svg') : getComputedStyle(scr().querySelector('.timer .tp')).stroke === 'rgb(233, 230, 238)', '안전 모드 전 끊김: 흰 링 (에셋 적용이면 이전 진행호)'); press('다시 연결'); });
   at(302, () => log(!!scr().querySelector('.idle [data-time]') && !!scr().querySelector('.idle [data-ring]') && !scr().querySelector('.guide'), '안전 모드 전: 큰 링 타이머 · 안내 창 없음'));
   at(301, () => log(!scr().querySelector('.load') && !!scr().querySelector('[data-time]'), '켜지자마자 메인(이전) · 시작 화면 없음'));
   at(2000, () => { log(!!scr().querySelector('[data-time]'), '메인(이전) 타이머'); press('스토리카드 1 띄우기'); log(has('보안이 아니잖아?'), '스토리카드 1 문구'); });
@@ -57,12 +57,12 @@
   at(7400, () => { tap('codes'); type('ABCD'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 1, '힌트 1 열림'); tap('next'); tap('next');
     log(scr().querySelectorAll('.card.h1').length === 3 && !scr().querySelector('[data-act="next"]'), '힌트 3까지'); tap('ans'); log(has('끝없는탐구'), '정답 보기'); });
   at(7600, () => { tap('home'); tap('codes'); type('ABCD'); tap('hint'); log(scr().querySelectorAll('.card.h1').length === 3, '본 힌트 다시 보기'); tap('home'); const pg = document.getElementById('pv-prog'); pg.value = 38; pg.dispatchEvent(new Event('input')); log(scr().querySelector('.timer [data-prog]')?.textContent === '진행도 38%', '진행도: 서버 값이 타이머 안에 바로'); pg.value = 0; pg.dispatchEvent(new Event('input')); });
-  at(7790, () => { const pr = document.getElementById('proto'), sk = v => document.querySelector(`#pv-skin [data-skin="${v}"]`).click(), chat0 = scr().querySelector('.lb-chat b svg').outerHTML;
+  at(7790, () => { const pr = document.getElementById('proto'), sk = v => document.querySelector(`#pv-skin [data-skin="${v}"]`).click(), def1 = pr.classList.contains('skin'), _0 = sk(0), chat0 = scr().querySelector('.lb-chat b svg').outerHTML;
     sk(1); const on = pr.classList.contains('skin') && scr().querySelector('.lb-chat b svg').outerHTML !== chat0 && !document.getElementById('pv-chatic');
     const bgs = v => document.querySelector(`#pv-bgs [data-bgs="${v}"]`).click(), bgi = () => document.getElementById('pv-bg').style.backgroundImage;
     const wf = n => document.querySelector(`#pv-wifi [data-wifi="${n}"]`).click(), sb = () => document.getElementById('pv-sbar').innerHTML; wf(1); const w1 = sb().includes('와이파이 1칸'); wf(3); const w3 = sb().includes('와이파이 3칸');
     bgs('topo'); const cl = bgi().startsWith('url("data:image/svg'); bgs('space'); const sp = bgi().startsWith('url(') && !bgi().includes('svg+xml');
-    sk(0); log(on && cl && sp && w1 && w3 && !pr.classList.contains('skin') && scr().querySelector('.lb-chat b svg').outerHTML === chat0 , '에셋 적용 · 미적용 전환 · 배경 우주 / 격자 · 채팅 시안 버튼 없음'); });
+    sk(0); log(def1 && on && cl && sp && w1 && w3 && !pr.classList.contains('skin') && scr().querySelector('.lb-chat b svg').outerHTML === chat0 , '처음엔 에셋 적용 · 적용 · 미적용 전환 · 배경 우주 / 시안 · 채팅 시안 버튼 없음'); });
   at(7800, () => { type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !has('38%'), '없는 코드: 앞 코드 힌트만 걷힘'); tap('home'); tap('codes'); type('QRST'); tap('hint'); log(document.getElementById('pv-in').value === 'QRST' && !scr().querySelector('.card') && !scr().querySelector('.err'), '없는 코드: 아무 반응 없음'); });
   at(9400, () => { type('EFGH'); tap('hint'); log(!scr().querySelector('.card'), '힌트 없는 문제 코드는 없음'); tap('home'); log(!!scr().querySelector('.room span span[style*="--cht-alex"]') && has('알렉스의 방'), '방 이름: 알렉스만 빨강'); tap('codes'); });
   at(9600, () => { type('PQRS'); tap('hint'); log(!document.getElementById('pv-pat'), '1부: 스토리 코드 반응 없음'); type('KLMN'); tap('hint'); log(!scr().querySelector('.card'), '1부: 2부 코드 반응 없음'); tap('home'); });
