@@ -47,7 +47,7 @@ for k, t, sub, cls in SP: A.node(k, t, sub, cls, group='spine')
 ks = [k for k, *_ in SP]
 for a, b in zip(ks, ks[1:]):
     A.edge(a, b, EL.get((a, b), '승인 → 목표 완료 체크' if a.startswith('g') else ''), weight=50)
-A.node('탈출', '탈출 엔딩', '레버 아래 · 폰 꺼짐'); A.node('행성', '행성 엔딩', '레버 위 · 송출 화면 반복', 'via')
+A.node('탈출', '탈출 엔딩', '레버 아래 · 화면이 검게 꺼짐'); A.node('행성', '행성 엔딩', '레버 위 · 화면이 검게 꺼짐 (일단)', 'via')
 A.edge('레버', '탈출', '레버 아래'); A.edge('레버', '행성', '레버 위')
 dot1, svg1 = A.svg('TB', '순서도 1 게임 진행에 따른 폰 화면. 홈 화면, 문제 1 실패 뒤 안전 모드 알림, 1부 메인 화면과 목표 6개, 비아 등장, 비아 안내 6단계, 레버 선택, 엔딩 두 가지.')
 

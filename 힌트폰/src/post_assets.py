@@ -38,6 +38,7 @@ css = '''
 #assets .afile div{box-sizing:border-box;height:56px;min-width:56px;background:#15111b;border-radius:6px;display:grid;place-items:center;padding:6px}
 #assets .afile img{max-width:138px;max-height:44px}
 #assets .afile figcaption{font-size:10px;color:var(--muted);white-space:nowrap}
+#assets .afile.used div{box-shadow:inset 0 0 0 2px #3fb950}#assets .afile.used figcaption{color:#3fb950}
 #assets h3.fk{font-size:14px;margin:12px 0 8px}\n
 #assets .bgprev { display: block; width: 100%; max-width: 980px; height: auto; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 12px; }
 #assets .who.me { border-color: var(--lily); color: var(--lily); }

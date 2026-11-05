@@ -7,9 +7,12 @@ def kind(f):
     if '시안' in f.stem: return '채팅 아이콘 시안'
     return next((k for k in ('1부', '2부', '이전') if f.stem.endswith('_' + k)), '공통')
 
+from skin import USED  # 시험판(에셋 적용)에 쓰이는 것
+
 def tile(f):
     u = base64.b64encode(f.read_bytes()).decode()
-    return f'    <figure class="afile"><div><img src="data:image/svg+xml;base64,{u}" alt="{f.stem}"></div><figcaption>{f.stem}</figcaption></figure>\n'
+    used = ' used" title="시험판에 쓰는 중' if f.stem in USED else ''
+    return f'    <figure class="afile{used}"><div><img src="data:image/svg+xml;base64,{u}" alt="{f.stem}"></div><figcaption>{f.stem}</figcaption></figure>\n'
 
 def section(folder='에셋'):
     fs = sorted(pathlib.Path(folder).glob('*.svg'))

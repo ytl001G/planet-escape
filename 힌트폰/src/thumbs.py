@@ -58,6 +58,7 @@ TH = {
     '안전 모드 이전 배경': phone(60, 7, 'soft'),
     '1부 배경': phone(60, 7, 'lily'),
     '2부 배경': phone(60, 7, 'via'),
+    '격자 배경 시안': ''.join(f'<rect x="{14 + i * 46}" y="8" width="38" height="74" rx="6" fill="url(#thc{i})"/>' for i in range(3)) + '<defs>' + ''.join(f'<radialGradient id="thc{i}" cx=".5" cy="0" r=".9"><stop offset="0" stop-color="{c}" stop-opacity=".45"/><stop offset=".7" stop-color="#131117"/></radialGradient>' for i, c in enumerate(('#e9e6ee', '#cf86e6', '#ffae4d'))) + '</defs>',
     '엔딩 배경': phone(32, 7, 'n', ' style="fill:#000;stroke:#000"') + phone(88, 7, 'n') + sig(108, 48, 0.55),
     # 채팅
     '참가자 말풍선': R(46, 14, 100, 30, 'lily', 12) + ph(58, 26, 76) + R(82, 52, 64, 24, 'lily', 12) + ph(94, 61, 40),
@@ -126,7 +127,7 @@ MOTION_TH = {
     '패턴 오답': two(hexdots(36, 45, 24, (0, 1, 2), True), hexdots(36, 45, 24)),
     '버튼 막힘 · 풀림': two(R(6, 30, 60, 30, 'soft', 8) + '<rect x="6" y="30" width="60" height="30" rx="8" fill="#000" opacity=".45"/>', R(6, 30, 60, 30, 'soft', 8)),
     '안 읽음 점 등장': two('<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8), '<circle cx="36" cy="47" r="15" class="n"/>' + chaticon(36, 43, 0.8) + badge(49, 34)),
-    '탈출 엔딩 끊김': two(phone(16, 7, 'n') + R(22, 34, 26, 4, 'soft', 2) + R(26, 46, 20, 4, 'soft', 2), phone(16, 7, 'n', ' style="fill:#000;stroke:#000"')),
+    '엔딩 꺼짐': two(phone(16, 7, 'n') + R(22, 34, 26, 4, 'soft', 2) + R(26, 46, 20, 4, 'soft', 2), phone(16, 7, 'n', ' style="fill:#000;stroke:#000"')),
 }
 
 def svg(body):

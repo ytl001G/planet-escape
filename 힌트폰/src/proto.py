@@ -8,7 +8,7 @@ def bg64(name):
     im = Image.open(HP / '배경' / f'{name}.png').convert('RGB').resize((540, 1204), Image.LANCZOS)
     b = io.BytesIO(); im.save(b, 'JPEG', quality=78)
     return 'data:image/jpeg;base64,' + base64.b64encode(b.getvalue()).decode()
-BG = {k: bg64(k) for k in ('bg_pre', 'bg_part1', 'bg_part2', 'bg_end_planet')}
+BG = {k: bg64(k) for k in ('bg_pre', 'bg_part1', 'bg_part2')}
 SHIELD = (HP / '로고' / 'shield_plain.svg').read_text(encoding='utf-8').replace('shield_', 'pv_shield_').replace('width="512" height="512"', 'width="100%" height="100%"')
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent)); from shipmap import ROOMS as MAP_ROOMS, HULL as MAP_HULL, INSET as MAP_INSET, RX as MAP_RX
@@ -230,7 +230,8 @@ HTML = '''<section id="proto">
     <div><h3>진행 바꾸기</h3><p class="state" id="pv-state"></p></div>
     <div class="grp"><button type="button" id="pv-pause" aria-pressed="false">일시정지</button></div>
     <div class="grp" id="pv-skin" role="group" aria-label="에셋"><span class="state">에셋</span><button type="button" data-skin="0" aria-pressed="true">미적용</button><button type="button" data-skin="1" aria-pressed="false">적용</button></div>
-    <div class="grp" id="pv-chatic" role="group" aria-label="채팅 아이콘 시안" hidden><span class="state">채팅 아이콘 시안</span><button type="button" data-chatic="A" aria-pressed="false">A</button><button type="button" data-chatic="B" aria-pressed="false">B</button><button type="button" data-chatic="C" aria-pressed="false">C</button><button type="button" data-chatic="D" aria-pressed="false">D</button><button type="button" data-chatic="E" aria-pressed="true">E</button><button type="button" data-chatic="F" aria-pressed="false">F</button></div>
+    <div class="grp" id="pv-wifi" role="group" aria-label="와이파이 칸 수"><span class="state">와이파이</span><button type="button" data-wifi="3" aria-pressed="true">3칸</button><button type="button" data-wifi="2" aria-pressed="false">2칸</button><button type="button" data-wifi="1" aria-pressed="false">1칸</button><button type="button" data-wifi="0" aria-pressed="false">0칸</button></div>
+    <div class="grp" id="pv-bgs" role="group" aria-label="배경 시안"><span class="state">배경</span><button type="button" data-bgs="space" aria-pressed="true">우주</button>__BGVBTN__</div>
     <label class="state" style="display:grid;gap:4px">진행도 (서버에서 받는 값) <input type="range" id="pv-prog" min="0" max="100" value="0" aria-label="진행도"></label>
     <div class="grp" id="pv-ctl"></div>
     <div><h3>시험용 코드</h3></div>
@@ -276,8 +277,6 @@ const ICON = {
   send: '<svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 10 H17 M11 4 L17 10 L11 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   ck: '<svg width="40" height="40" viewBox="0 0 40 40"><path d="M10 21 L17 28 L30 13" fill="none" stroke="#211e26" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   wifi: '<svg width="70" height="60" viewBox="-35 -30 70 60"><path d="M-22 -4 A31 31 0 0 1 22 -4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/><path d="M-13 5 A18 18 0 0 1 13 5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".35"/><circle cx="0" cy="14" r="3.5" fill="currentColor"/><path d="M-20 -18 L20 22" style="stroke:var(--c2)" stroke-width="3" stroke-linecap="round"/></svg>',
-  sig: '<svg width="90" height="70" viewBox="-45 -50 90 70"><circle r="6" style="fill:var(--c2)"/>' + [16, 28, 40].map((r, i) => `<path d="M${-r} ${-r*.6} A${r} ${r} 0 0 1 ${r} ${-r*.6}" fill="none" stroke="currentColor" stroke-width="2.5" opacity="${1-i*.25}"/>`).join('') + '</svg>',
-  note: '<svg width="40" height="44" viewBox="0 0 40 44"><path d="M14 36 V8 L34 2 V30" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="9" cy="37" r="6" style="fill:var(--c2)"/><circle cx="29" cy="31" r="6" style="fill:var(--c2)"/></svg>',
 };
 const NM = { 알렉스: 'var(--ch-alex)', 오펠리아: 'var(--ch-ophelia)', 노아: 'var(--ch-noah)', 에바: 'var(--ch-eva)', 릴리: 'var(--ch-lily)' };
 const NMT = { 알렉스: 'var(--cht-alex)', 오펠리아: 'var(--cht-ophelia)', 노아: 'var(--cht-noah)', 에바: 'var(--cht-eva)', 릴리: 'var(--cht-lily)' };  // 이름 글자색 (palette.py)
@@ -300,7 +299,7 @@ function setPause(on) {
 function reset() {
   clearLater(); if (typeof PAUSED !== 'undefined' && PAUSED) setPause(false); const pg = document.getElementById('pv-prog'); if (pg) pg.value = 0;
   S = { prog: 0, phase: 'pre', ct: [], ckb: false, klang: 'ko', kshift: false, view: 'main', time: 6300, run: false, goal: 0, bia: 0, story1: false, code: '', open: {}, used: {}, showHints: false,
-        chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, endStep: 0, introStep: 0, pending: false };
+        chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, introStep: 0, pending: false };
   render();
 }
 setInterval(() => { if (!PAUSED && S.run && S.time > 0 && !S.tup && !S.phase.startsWith('end')) { S.time--; if (!S.time) return timeUp(); const el = scr.querySelector('[data-time]'); if (el) el.textContent = fmt(); const rg = scr.querySelector('[data-ring]'); if (rg) rg.setAttribute('stroke-dashoffset', ringOff()); scr.querySelectorAll('[data-tm]').forEach(e => e.textContent = fmt()); } }, 1000);
@@ -308,14 +307,16 @@ const fmt = () => Math.floor(S.time / 3600) + ':' + String(Math.floor(S.time / 6
 function timeUp() { clearLater(); S.tup = true; S.offline = false; render(); }  // 따로 페이지 없이 지금 화면 그대로 · 타이머 글자만 빨강
 const part = () => S.phase === 'p2' ? 2 : 1;
 
+let BGS = 'space';  // 배경 시안: 우주(성운 그림) 또는 bgv.py의 등고선 · 육각 · 질감
 function setBg() {
-  const k = S.phase === 'pre' ? 'bg_pre' : S.phase === 'p1' ? 'bg_part1' : S.phase === 'p2' ? 'bg_part2' : S.phase === 'end_planet' ? 'bg_end_planet' : null;
-  bg.style.backgroundImage = k ? `url(${BG[k]})` : 'none';
+  const k = S.phase === 'pre' ? 'bg_pre' : S.phase === 'p1' ? 'bg_part1' : S.phase === 'p2' ? 'bg_part2' : null;  // 엔딩은 검정
+  bg.style.backgroundImage = !k ? 'none' : BGS === 'space' ? `url(${BG[k]})` : BGV[BGS][k];
   ph.className = 'ph ' + (S.phase === 'pre' ? 'pre' : S.phase === 'p2' ? 'p2' : 'p1') + (PAUSED ? ' paused' : '');
 }
+let WIFI = 3;  // 와이파이 칸 수 (조작판에서 바꿔 봄)
 function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
   const d = new Date(), t = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
-  $('pv-sbar').innerHTML = S.phase === 'end_escape' ? '' : `<span>${t}</span><span class="ic">${S.offline ? `<span class="off" aria-label="연결 끊김">${ICON.swoff}</span>` : ICON.sw}${ICON.bat}</span>`;
+  $('pv-sbar').innerHTML = S.phase === 'end_escape' ? '' : `<span>${t}</span><span class="ic">${S.offline ? `<span class="off" aria-label="연결 끊김">${ICON.swoff}</span>` : `<span aria-label="와이파이 ${WIFI}칸">${ICON['sw' + WIFI]}</span>`}${ICON.bat}</span>`;
 }
 setInterval(() => S && sbar(), 20000);
 function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은 시간 비율만큼 링이 남음
@@ -363,7 +364,7 @@ function vMain() {
     }
   } else if (S.phase === 'p2') {
     const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임 (위 CSS 순서)
-    g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
+    g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" data-n="V" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
   const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   return layB(t0, S.phase === 'pre' ? '' : g, !!S.trans);
@@ -494,16 +495,9 @@ function vIntro() {
   if (S.introStep === 0) return vMain().replace('<div class="lb-goal glass"', '<div class="lb-goal glass glitch" style="border-color:var(--c1)"') + '<div class="stripes"></div>';
   const name = S.introStep === 1 ? '?' : 'V';  // 동그라미 안: 비아 → V
   const mv = S.biaMv ? ' mv enter' : ''; S.biaMv = false;  // 처음 나올 때만: 가운데에서 나타나 왼쪽으로 → 음성
-  return layB(timerBox(), `<div class="biarow talk${mv}"><div class="bia"><div class="av" style="font-size:18px">${name}</div></div>${wave()}</div>`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
+  return layB(timerBox(), `<div class="biarow talk${mv}"><div class="bia"><div class="av" data-n="${name}" style="font-size:18px">${name}</div></div>${wave()}</div>`, true);  // 비아 소개 중: 채팅 · 입력은 보이되 못 누름
 }
-function vEnd() {
-  if (S.phase === 'end_escape') return S.endStep === 0 ? '<div class="center glitch"><b style="font-size:20px">탈출 절차를 시—</b></div><div class="stripes" style="opacity:.4"></div>' : '<div class="black"></div>';
-  const st = S.endStep;
-  if (st === 0) return `<div class="center">${ICON.sig}<b style="font-size:17px">행성 프로젝트를 실행합니다.</b></div>`;
-  if (st === 1) return `<div class="center"><div style="display:flex;gap:10px;align-items:flex-end">${ICON.sig}<span style="color:#fff">${ICON.note}</span></div><b style="font-size:17px">공개 구조 신호 송출을<br>시작합니다.</b></div>`;
-  const L = ['공개 구조 신호 송출 중.', '좌표 전송 중.', '생체 반응 전송 중.', '여기는 알파. 여기는 알파…'];
-  return `<div class="center" style="gap:14px">${ICON.sig}${L.slice(0, Math.min(st - 1, 4)).map((t, i) => `<b style="font-size:16px${i === 3 ? ';color:color-mix(in srgb, var(--c2), white 8%)' : ''}" class="${i === 3 ? 'blink' : ''}">${t}</b>`).join('')}</div>`;
-}
+function vEnd() { return '<div class="black"></div>'; }  // 일단 두 엔딩 다 화면이 검게 꺼짐 (예전 송출 · 끊김 연출은 git 5b98d9b)
 function vOffline() {  // 연결 끊김: 메인 화면 위를 통째로 덮고, 타이머만 그 자리 그 모양으로 위에 보임
   S.kb = S.ckb = S.hpop = false;
   return vMain() + `<div class="offov lb-off" role="alert"><div class="center">${ICON.wifi}<p class="offmsg">연결이 끊겼습니다</p></div></div>`;
@@ -618,20 +612,22 @@ const CTL = [
   ['다시 연결', () => S.offline, () => { S.offline = false; render(); }],
   ['타이머 −5분', () => S.run && !S.tup && !S.phase.startsWith('end'), () => { S.time = Math.max(0, S.time - 300); if (S.time) render(); else timeUp(); }],
   ['시간 종료', () => S.run && !S.tup && !S.phase.startsWith('end'), () => { S.time = 0; timeUp(); }],
-  ['탈출 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_escape'; S.endStep = 0; render(); later(() => { S.endStep = 1; render(); }, 1800); }],
-  ['행성 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_planet'; S.endStep = 0; render(); [2600, 5600, 6600, 7600, 8600].forEach((ms, i) => later(() => { S.endStep = i + 1; render(); }, ms)); }],
+  ['탈출 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_escape'; render(); }],
+  ['행성 엔딩', () => S.phase === 'p2' && S.view === 'main', () => { S.phase = 'end_planet'; render(); }],
 ];
 __SKINDECL__const ICON0 = Object.assign({}, ICON);
-let CHATIC = 'E';  // 기본 채팅 아이콘: 시안 E
+const CHATIC = 'E';  // 채팅 아이콘: 시안 E (A~F는 에셋 폴더에 남겨 둠, 바꾸려면 이 글자만)
 function setSkin(on) {  // 에셋 적용: #proto에 skin 클래스 + 아이콘을 새 에셋으로 바꿔 끼움
   document.getElementById('proto').classList.toggle('skin', on);
   Object.assign(ICON, on ? Object.assign({}, SKINICON, { chatL: SKINCHAT[CHATIC] }) : ICON0);
   $('pv-skin').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.skin === '1') === on)));
-  $('pv-chatic').hidden = !on; render();
+  render();
 }
 $('pv-skin').addEventListener('click', e => { const b = e.target.closest('[data-skin]'); if (b) setSkin(b.dataset.skin === '1'); });
-$('pv-chatic').addEventListener('click', e => { const b = e.target.closest('[data-chatic]'); if (!b) return; CHATIC = b.dataset.chatic;
-  $('pv-chatic').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); setSkin(true); });
+$('pv-wifi').addEventListener('click', e => { const b = e.target.closest('[data-wifi]'); if (!b) return; WIFI = +b.dataset.wifi;
+  $('pv-wifi').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); sbar(); });
+$('pv-bgs').addEventListener('click', e => { const b = e.target.closest('[data-bgs]'); if (!b) return; BGS = b.dataset.bgs;
+  $('pv-bgs').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); render(); });
 const ctl = $('pv-ctl');
 CTL.forEach(([label, ok, fn], i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.onclick = () => { if (ok()) fn(); }; ctl.append(b); });
 $('pv-pause').onclick = () => setPause(!PAUSED);
@@ -655,7 +651,7 @@ const SEEN = [];  // 폰에 나온 원래 문구 (처음 나온 순서)
 const COLORS = [['--c1', '1부 색 (릴리 안내)', '#cf86e6'], ['--c2', '2부 색 (비아 안내)', '#ffae4d'], ['--err', '오류 · 시간 종료 빨강', '#e5484d'], ['--c0', '안전 모드 전 링', '#e9e6ee'],
   ['--ch-alex', '알렉스 (지도 구역)', '#E53935'], ['--ch-ophelia', '오펠리아 (지도 구역)', '#FDD835'], ['--ch-noah', '노아 (지도 구역)', '#43A047'], ['--ch-eva', '에바 (지도 구역)', '#1E88E5'], ['--ch-lily', '릴리 (지도 구역)', '#8E24AA'], ['--ch-bia', '비아 (말하는 사람 점)', '#FB8C00'],
   ['--cht-alex', '알렉스 이름 글자', '#E57373'], ['--cht-ophelia', '오펠리아 이름 글자', '#FFF176'], ['--cht-noah', '노아 이름 글자', '#81C784'], ['--cht-eva', '에바 이름 글자', '#64B5F6'], ['--cht-lily', '릴리 이름 글자', '#BA68C8']];
-const SIZES = [['#proto .idle .timer', '안전 모드 전 링 숫자', 50], ['#proto .timer', '링 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
+const SIZES = [['#proto .idle .timer', '링 타이머 숫자', 50], ['#proto .timer', '채팅 위 작은 타이머 숫자', 30], ['#proto .goal', '목표 제목', 19], ['#proto .room', '목표 방 이름', 14], ['#proto .lbl', '‘현재 목표’ 같은 작은 제목', 12],
   ['#proto .btn', '버튼 글자', 15], ['#proto .head .ttl', '위 줄 제목', 16], ['#proto .lb-used', '힌트 사용 횟수', 12], ['#proto .timer .prog', '진행도', 12], ['#proto .input', '코드 입력 칸', 20], ['#proto .card', '힌트 카드 글', 14], ['#proto .msg', '채팅 말풍선', 14],
   ['#proto .key', '키보드 글자', 16], ['#proto .offmsg', '연결 끊김 문구', 17]];
 const edCss = document.createElement('style'); document.head.append(edCss);
@@ -729,7 +725,8 @@ reset();  // 처음엔 시작 전 화면: 폰의 Start를 눌러야 시간이 �
 '''
 sys.path.insert(0, str(pathlib.Path(__file__).parent)); from icon import inline
 sys.path.insert(0, str(pathlib.Path(__file__).parent)); import skin
-CSS += skin.CSS; JS = JS.replace('__SKINDECL__', skin.JSDECL)
+import bgv
+CSS += skin.CSS; JS = JS.replace('__SKINDECL__', skin.JSDECL + bgv.JSDECL); HTML = HTML.replace('__BGVBTN__', bgv.BUTTONS)  # 배경 시안 (우주 말고)
 JS = JS.replace('__APPICON__', json.dumps(inline('pv-appicon', '100%'))).replace('__DATA__', json.dumps(DATA, ensure_ascii=False)).replace('__BG__', json.dumps(BG)).replace('__SHIELDS__', json.dumps(SHIELD, ensure_ascii=False))
 OUT.write_text(json.dumps({'css': CSS, 'html': HTML, 'js': JS}, ensure_ascii=False), encoding='utf-8')
 print('proto', len(JS) // 1024, 'KB js')

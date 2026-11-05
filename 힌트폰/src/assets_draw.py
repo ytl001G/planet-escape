@@ -37,11 +37,15 @@ IC = {
  '체크': ln('M5 12.5l4.5 4.5L19 7.5', 2.6), '닫기': ln('M6 6l12 12M18 6L6 18', 2.4), '꺾쇠': ln('M9 5l7 7-7 7', 2.4),
  '뒤로': ln('M15 5l-7 7 7 7', 2.4), '보내기': ln('M3.5 12h15M13 6l6 6-6 6', 2.4),
  '지우기': ln('M9 4.5h10.5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9L2.5 12Z') + ln('M12 9l6 6M18 9l-6 6'), '시프트': ln('M12 3.5 4 12h4.5v8h7v-8H20Z'),
- '와이파이': '<path d="M12 19.2l2.9-3.4a4.3 4.3 0 0 0-5.8 0ZM12 9.4a10 10 0 0 1 7 2.8l1.6-1.8A12.4 12.4 0 0 0 12 7a12.4 12.4 0 0 0-8.6 3.4l1.6 1.8a10 10 0 0 1 7-2.8Zm0 3.5a6.6 6.6 0 0 1 4.6 1.8l1.5-1.8A9 9 0 0 0 12 10.4a9 9 0 0 0-6.1 2.3l1.5 1.8a6.6 6.6 0 0 1 4.6-1.8Z" fill="currentColor"/>',
- '와이파이_끊김': ln('M3.4 10.4A12.4 12.4 0 0 1 20.6 10.4M6.6 13.6a8 8 0 0 1 10.8 0', 2, ' opacity=".4"') + dot(12, 18, 1.8) + ln('M4 4l16 16', 2.2),
- '배터리': '<rect x="2.5" y="7.5" width="16" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".6"/><rect x="4.3" y="9.3" width="11" height="5.4" rx="1.3" fill="currentColor"/><rect x="19.8" y="10" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".6"/>',
+ '배터리': '<rect x="2.5" y="7.5" width="16" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="19.8" y="10" width="1.8" height="4" rx=".9" fill="currentColor"/>',  # 틀만: 남은 양은 앱이 안쪽 막대(배터리_채움) 폭으로 그림
 }
 # 채팅 아이콘 시안 — 운영자(우주선 관제)와 통신하는 느낌
+def wifi(n, off=False):  # 와이파이: 점 + 호 3개, 칸 수(n)만큼 진하게 · 끊김은 같은 모양에 사선 (한 벌로 일관되게)
+    arcs = ('M8.82 15.82A4.5 4.5 0 0 1 15.18 15.82', 'M5.99 12.99A8.5 8.5 0 0 1 18.01 12.99', 'M3.16 10.16A12.5 12.5 0 0 1 20.84 10.16')
+    return (''.join(ln(d, 2, '' if i < n else ' opacity=".28"') for i, d in enumerate(arcs)) + dot(12, 19, 1.7)
+            + (ln('M4.5 3.5 19.5 20.5', 2.2) if off else ''))
+IC['와이파이'] = wifi(3); IC['와이파이_끊김'] = wifi(0, True)
+for _n in range(4): IC[f'와이파이_{_n}칸'] = wifi(_n)
 CHAT = {
  'A': ln('M6 4h12l3 3v8l-3 3h-7l-5 4v-4H6l-3-3V7Z') + dot(8.5, 11, 1.3) + dot(12, 11, 1.3) + dot(15.5, 11, 1.3),                       # 각진 말풍선 + 점 3
  'B': ln('M4.5 14v-2a7.5 7.5 0 0 1 15 0v2') + ln('M4.5 13h2.5v6H6a1.5 1.5 0 0 1-1.5-1.5Z M19.5 13H17v6h1a1.5 1.5 0 0 0 1.5-1.5Z') + ln('M18.5 19v.5a2.5 2.5 0 0 1-2.5 2.5h-3'),  # 관제 헤드셋
@@ -58,6 +62,7 @@ def icon(body, col): return svg(48, 48, body.replace('currentColor', col), '0 0 
 A = {}
 for k, b in IC.items(): A[f'아이콘_{k}'] = icon(b, INK)
 A['아이콘_와이파이_끊김'] = icon(IC['와이파이_끊김'], ERR)
+A['배터리_채움'] = svg(33, 16, f'<rect width="33" height="16" rx="3.9" fill="{INK}"/>')  # 아이콘_배터리 안쪽 (24칸 기준 x4.3 y9.3, 가득 차면 폭 11 · 높이 5.4) · 폭을 남은 % 만큼 줄여 씀
 for k, b in CHAT.items(): A[f'아이콘_채팅_시안{k}'] = icon(b, INK)
 
 def ring_frame(dotc, p):  # 타이머 링 틀: 60칸 눈금 · 바탕 · 안쪽 링 · 네 방위 점. 진행 호는 따로
@@ -88,6 +93,7 @@ for p, (c, l, d, card, press) in PART.items():
 # 2부만 쓰는 것: 비아 동그라미 틀 · V 마크 · 파형 막대 · 지직 줄무늬
 c2, l2, d2 = PART['2부'][:3]
 A['비아_동그라미_틀'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/>', p='2부')
+A['비아_물음표_마크'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/><path d="M15.2 15.6a4.8 4.8 0 1 1 7 4.3c-1.5.8-2.2 1.7-2.2 3.3v.6" fill="none" stroke="url(#acc)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="28.8" r="1.9" fill="url(#acc)"/>', p='2부')  # 이름 밝히기 전 (대사 1002 전)
 A['비아_V_마크'] = svg(40, 40, f'<circle cx="20" cy="20" r="18.5" fill="#1a1220" stroke="{c2}" stroke-width="1.5"/><path d="M12.5 13 20 28 27.5 13" fill="none" stroke="url(#acc)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>', p='2부')
 A['파형_막대'] = svg(5, 44, f'<rect width="5" height="44" rx="2.5" fill="url(#acc)"/>', p='2부')
 A['지직_줄무늬'] = svg(32, 90, f'<rect y="28" width="32" height="6" fill="{c2}" fill-opacity=".55"/>', p='2부')
