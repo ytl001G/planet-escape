@@ -106,7 +106,7 @@ CSS = r'''
 #proto .lb-code { padding: 12px; border-radius: 18px; display: grid; gap: 10px; } #proto .lb-in { position: relative; } #proto .lb-in .input { width: 100%; box-sizing: border-box; }
 #proto .mapov:has(.sfpop), #proto.skin .mapov:has(.sfpop) { background: none; }  /* 안전 모드 팝업은 뒤 화면을 어둡게 하지 않음 */
 #proto .mapov.hpov { animation: none; } #proto .mapov.hpov.new { animation: pfadein .25s; }
-#proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 4px 48px 6px 4px; } #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
+#proto .hpop { display: flex; flex-direction: column; gap: 10px; max-height: 80%; padding-top: 16px; } #proto .hpop .hph { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: -6px; } #proto .hpop .hph .mapx { position: static; flex: none; } #proto .hpop .hpt { font: 700 16px var(--body); padding: 0 4px; }  /* 제목과 X를 한 줄에 */ #proto .hpop .scroll { overflow: auto; display: grid; gap: 10px; }
 #proto .idle .timer .tp { stroke: var(--c0); }
 #proto .p1 .lb .idle .timer .tp { stroke: var(--c1); } #proto .p2 .lb .idle .timer .tp { stroke: var(--c2); }  /* 안전 모드 전: 아직 릴리 안내 전이라 무채색 */
 #proto .kbd { margin: auto -14px -18px; padding: 10px 4px 14px; border-radius: 20px 20px 0 0; display: grid; gap: 8px; flex: none; }
@@ -146,7 +146,7 @@ CSS = r'''
 #proto .ex { color: rgba(242,238,246,.45); font: 400 13px/1.5 var(--body); }
 #proto .btn { height: 52px; border-radius: 10px; display: grid; place-items: center; font: 700 15px var(--body); cursor: pointer; border: 1.5px solid rgba(255,255,255,.2); background: rgba(24,21,30,.72); color: #f2eef6; position: relative; }
 #proto .btn.next1 { color: color-mix(in srgb, var(--c1), white 15%); } #proto .btn.next2 { color: color-mix(in srgb, var(--c2), white 8%); }
-#proto .btn.ans { background: #a7a3ad; border-color: #a7a3ad; color: #17151b; }
+#proto .btn.ans { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 30%) 50%, transparent); border-color: var(--c1); color: #fff; } #proto .p2 .btn.ans { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 50%, transparent); border-color: var(--c2); }  /* 정답 버튼: 흰색 말고 부 색 반투명 */
 #proto .btn:active { transform: translateY(1px); }
 #proto .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 #proto .head { display: grid; grid-template-columns: 96px 1fr 96px; align-items: center; margin: -34px -18px 0; padding: 34px 18px 12px; box-sizing: content-box; min-height: 40px; border-bottom: 1px solid rgba(255,255,255,.16); background: rgba(12,10,16,.5); }
@@ -162,7 +162,7 @@ CSS = r'''
 #proto .card.h1 { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 35%) 30%, transparent); border: 1.5px solid var(--c1); }
 #proto .card.h2 { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 28%, transparent); border: 1.5px solid var(--c2); }
 #proto .card .k { font-size: 12px; font-weight: 700; }
-#proto .card.ansc { background: color-mix(in srgb, var(--c1), black 40%); border: 1.5px solid var(--c1); color: #fff; } #proto .p2 .card.ansc { background: color-mix(in srgb, var(--c2), black 40%); border-color: var(--c2); }  /* 정답 칸: 그 부 색을 진하게 */
+#proto .card.ansc { background: color-mix(in srgb, color-mix(in srgb, var(--c1), black 55%) 60%, transparent); border: 1.5px solid var(--c1); color: #fff; } #proto .p2 .card.ansc { background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 55%) 60%, transparent); border-color: var(--c2); }  /* 정답 칸: 힌트 카드처럼 반투명, 대신 덜 투명하고 더 어둡게 */
 #proto .card.ansc .v { font: 700 22px var(--display); }
 #proto .bia { display: flex; gap: 10px; align-items: flex-start; }
 #proto .bia .av { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--c2); background: color-mix(in srgb, color-mix(in srgb, var(--c2), black 30%) 30%, transparent); display: grid; place-items: center; font: 700 14px var(--body); color: color-mix(in srgb, var(--c2), white 8%); }
@@ -347,7 +347,7 @@ function lbCode() {  // 시안 B 아래: 힌트코드 입력 창. 맞는 코드�
 function hintPop() {  // 시안 B: 입력을 누르면 뜨는 힌트 팝업 (힌트 보기 → 다음 → 정답)
   const { body } = hintBody();
   const nw = S.hpopNew; S.hpopNew = false;
-  return `<div class="mapov hpov${nw ? ' new' : ''}" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div><div class="hpt">${D.codes[S.code]?.q ? `문제 ${D.codes[S.code].q}` : '예시 문구'}</div><div class="scroll">${body}</div></div></div>`;
+  return `<div class="mapov hpov${nw ? ' new' : ''}" data-act="hpx"><div class="mapbox glass hpop" data-act="noop" role="dialog" aria-label="힌트"><div class="hph"><div class="hpt">${D.codes[S.code]?.q ? `문제 ${D.codes[S.code].q}` : '예시 문구'}</div><div class="mapx" data-act="hpx" role="button" tabindex="0" aria-label="힌트 닫기">${ICON.x}</div></div><div class="scroll">${body}</div></div></div>`;
 }
 function vMain() {
   let g = '';

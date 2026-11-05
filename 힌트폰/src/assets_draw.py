@@ -99,14 +99,17 @@ A['파형_막대'] = svg(5, 44, f'<rect width="5" height="44" rx="2.5" fill="url
 A['지직_줄무늬'] = svg(32, 90, f'<rect y="28" width="32" height="6" fill="{c2}" fill-opacity=".55"/>', p='2부')
 # 부와 무관한 것
 A['안읽음_배지'] = svg(22, 22, f'<circle cx="11" cy="11" r="10" fill="{ERR}" stroke="#1a1220" stroke-width="2"/>')
+A['닫기_버튼'] = svg(34, 34, f'<circle cx="17" cy="17" r="16.25" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/><g transform="translate(9 9) scale(.6667)" style="color:{INK}">{IC["닫기"]}</g>')  # 지도 · 힌트 팝업 X
 A['입력_판'] = svg(332, 78, panel(332, 78, 14, brackets=False))
 def field(err=False):
     return svg(212, 54, f'<path d="{cham(1, 1, 210, 52, 8)}" fill="#120e16" stroke="{ERR if err else "rgba(255,255,255,.22)"}" stroke-width="1.5"/>')
 A['입력_칸'] = field(); A['입력_칸_오류'] = field(True)
 A['버튼'] = bt(84, 54, 'url(#btn)', 'rgba(255,255,255,.22)', '1부')
-A['버튼_정답'] = bt(308, 52, 'url(#accw)', 'rgba(255,255,255,.5)', '1부')
 for _p in ('1부', '2부'):  # 정답 칸: 흰색 말고 그 부 색을 진하게
-    A[f'정답_칸_틀_{_p}'] = svg(308, 70, f'<path d="{cham(1, 1, 306, 68, 10)}" fill="{PART[_p][2]}" stroke="{PART[_p][0]}" stroke-width="1.5"/>', p=_p)
+    _r, _g, _b = (int(PART[_p][0][i:i + 2], 16) for i in (1, 3, 5))
+    _mix = lambda k, a: f'rgba({_r * k:.0f},{_g * k:.0f},{_b * k:.0f},{a})'  # 부 색을 k만큼 어둡게 + 투명도 a (CSS color-mix와 같은 값)
+    A[f'정답_칸_틀_{_p}'] = svg(308, 70, f'<path d="{cham(1, 1, 306, 68, 10)}" fill="{_mix(.45, .6)}" stroke="{PART[_p][0]}" stroke-width="1.5"/>', p=_p)
+    A[f'버튼_정답_{_p}'] = bt(308, 52, _mix(.7, .5), PART[_p][0], _p)
 A['덮개_어둡게'] = svg(8, 8, '<rect width="8" height="8" fill="rgba(0,0,0,.55)"/>')
 A['키_기본'] = key(30, '#2b2433', '1부'); A['키_숫자줄'] = key(30, '#1f1a25', '1부'); A['키_넓은'] = key(52, '#1f1a25', '1부'); A['키_띄어쓰기'] = key(170, '#2b2433', '1부')
 A['키보드_판'] = svg(360, 220, '<path d="M0 20Q0 0 20 0H340Q360 0 360 20V220H0Z" fill="url(#panel)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>')
