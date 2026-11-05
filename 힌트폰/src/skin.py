@@ -20,7 +20,7 @@ CSS = (NINE('#proto.skin .lb-code', '입력_판', 16) + NINE('#proto.skin .input
        + '#proto.skin .idle .timer .tr { fill: none; stroke: none; } #proto.skin .idle .timer .tp { r: 66px; stroke-width: 3.6; }\n'
        + f'#proto.skin .mapx {{ border-color: transparent; background: {U("닫기_버튼")} center/100% no-repeat; }} #proto.skin .mapx svg {{ visibility: hidden; }}\n'
        + '#proto.skin .bigck { background-color: transparent; } #proto.skin .bigck svg { visibility: hidden; } #proto.skin .badge { outline: 2px solid #1a1220; }\n'
-       + f'#proto.skin .bia .av {{ border-color: transparent; background: {U("비아_동그라미_틀")} center/100% no-repeat; }} #proto.skin .bia .av[data-n="V"] {{ background: {U("비아_V_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .bia .av[data-n="?"] {{ background: {U("비아_물음표_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .wave span {{ background: none; border-image: {U("파형_막대")} 2.5 fill / 2.5px stretch; }}\n')
+       + f'#proto.skin .bia .av {{ border-color: transparent; background: {U("비아_동그라미_틀")} center/100% no-repeat; }} #proto.skin .bia .av[data-n="V"] {{ background: {U("비아_V_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .bia .av[data-n="?"] {{ background: {U("비아_물음표_마크")} center/100% no-repeat; color: transparent; }} #proto.skin .wave span {{ background: none; border-image: {U("파형_막대")} 2.5 0 fill / 2.5px 0 stretch; }}\n')
 for p, cls in (('1부', 'p1'), ('2부', 'p2'), ('이전', 'pre')):
     q = '1부' if p == '이전' else p; S0 = f'#proto.skin .ph.{cls}'
     CSS += (NINE(f'{S0} .lb-chatbox', f'채팅_칸_틀_{p}', 24) + NINE(f'{S0} .lb-goal', f'목표_칸_틀_{q}', 24)
