@@ -302,7 +302,7 @@ function reset() {
         chat: [], unread: 0, offline: false, celebrate: false, patPath: [], patBad: false, introStep: 0, pending: false };
   render();
 }
-setInterval(() => { if (!PAUSED && S.run && S.time > 0 && !S.tup && !S.phase.startsWith('end')) { S.time--; if (!S.time) return timeUp(); const el = scr.querySelector('[data-time]'); if (el) el.textContent = fmt(); const rg = scr.querySelector('[data-ring]'); if (rg) rg.setAttribute('stroke-dashoffset', ringOff()); scr.querySelectorAll('[data-tm]').forEach(e => e.textContent = fmt()); } }, 1000);
+setInterval(() => { if (!PAUSED && S.run && S.time > 0 && !S.tup && !S.phase.startsWith('end')) { S.time--; if (!S.time) return timeUp(); const el = scr.querySelector('[data-time]'); if (el) el.textContent = fmt(); const rg = scr.querySelector('[data-ring]'); if (rg) { rg.setAttribute('stroke-dashoffset', ringOff()); rg.closest('.timer').style.setProperty('--off', ringOff()); } scr.querySelectorAll('[data-tm]').forEach(e => e.textContent = fmt()); } }, 1000);
 const fmt = () => Math.floor(S.time / 3600) + ':' + String(Math.floor(S.time / 60) % 60).padStart(2, '0') + ':' + String(S.time % 60).padStart(2, '0');  // 105분 → 1:45:00
 function timeUp() { clearLater(); S.tup = true; S.offline = false; render(); }  // 따로 페이지 없이 지금 화면 그대로 · 타이머 글자만 빨강
 const part = () => S.phase === 'p2' ? 2 : 1;
@@ -321,7 +321,7 @@ function sbar() {  // 상태 표시줄: 폰 시각 · 와이파이 · 배터리
 setInterval(() => S && sbar(), 20000);
 function ringOff() { return (100 * (1 - S.time / 6300)).toFixed(2); }  // 남은 시간 비율만큼 링이 남음
 function timerBox() {
-  return `<div class="timer"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? progBox() : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
+  return `<div class="timer" style="--off:${ringOff()}"><svg viewBox="0 0 156 156" aria-hidden="true"><circle class="tr" cx="78" cy="78" r="72"/><circle class="tp" data-ring cx="78" cy="78" r="72" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${ringOff()}"/></svg><span data-time>${fmt()}</span>${S.phase !== 'pre' || S.run ? progBox() : ''}</div>`;  // 진행도: 서버에서 실시간으로 받는 값
 }
 function progBox() {  // 전환부(진짜 이름 입력 ~ 비아 등장)는 50 고정
   const v = S.trans || S.view === 'intro' ? 50 : S.prog;
@@ -366,7 +366,7 @@ function vMain() {
     const mv = S.biaMv ? ' mv' : ''; S.biaMv = false;  // 말 시작 · 끝 때만 한 번 움직임 (위 CSS 순서)
     g = `<div class="biarow${S.biaTalk ? ' talk' : ''}${mv}"><div class="bia"><div class="av" data-n="V" style="font-size:18px">V</div></div>${S.biaTalk || mv ? wave() : ''}</div>`;  // 비아 대사 글은 PC 화면에, 폰엔 재생 중 표시만
   }
-  const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer">', '<div class="timer start" data-act="start" role="button" tabindex="0">').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
+  const t0 = S.phase === 'pre' && !S.run ? timerBox().replace('<div class="timer" ', '<div class="timer start" data-act="start" role="button" tabindex="0" ').replace(/<span data-time>.*?<\/span>/, '<span>Start</span>') : timerBox();
   return layB(t0, S.phase === 'pre' ? '' : g, !!S.trans);
 }
 // 지도 팝업: 갈 방만 그 사람 색으로 칠함. 바깥이나 X를 누르면 닫힘

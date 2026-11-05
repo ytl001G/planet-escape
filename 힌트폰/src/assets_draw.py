@@ -110,6 +110,14 @@ A['덮개_어둡게'] = svg(8, 8, '<rect width="8" height="8" fill="rgba(0,0,0,.
 A['키_기본'] = key(30, '#2b2433', '1부'); A['키_숫자줄'] = key(30, '#1f1a25', '1부'); A['키_넓은'] = key(52, '#1f1a25', '1부'); A['키_띄어쓰기'] = key(170, '#2b2433', '1부')
 A['키보드_판'] = svg(360, 220, '<path d="M0 20Q0 0 20 0H340Q360 0 360 20V220H0Z" fill="url(#panel)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>')
 
+# 로고 폴더에 따로 있던 것도 에셋으로 같이 (방패 · 앱 아이콘 보라 · 회색)
+_LOGO = pathlib.Path('로고')
+if _LOGO.is_dir():
+    import icon as _icon
+    A['방패'] = (_LOGO / 'shield_plain.svg').read_text(encoding='utf-8')
+    A['앱_아이콘'] = _icon.full().replace('width="1024" height="1024"', 'width="256" height="256"')
+    A['앱_아이콘_회색'] = _icon.full('appicon-gray', 'gray').replace('width="1024" height="1024"', 'width="256" height="256"')
+
 if __name__ == '__main__':
     OUT.mkdir(parents=True, exist_ok=True)
     keep = {'_조립_미리보기.png'}

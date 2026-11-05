@@ -1,10 +1,11 @@
 # 에셋 목록의 '에셋 파일' 칸: 힌트폰/에셋 폴더(assets_draw.py가 만듦)의 SVG를 실제 그림으로 보여 줌
 import pathlib, base64
 
-KINDS = ('공통', '1부', '2부', '이전', '채팅 아이콘 시안')
+KINDS = ('로고 · 앱 아이콘', '공통', '1부', '2부', '이전', '채팅 아이콘 시안')
 
 def kind(f):
     if '시안' in f.stem: return '채팅 아이콘 시안'
+    if f.stem.startswith(('방패', '앱_아이콘')): return '로고 · 앱 아이콘'
     return next((k for k in ('1부', '2부', '이전') if f.stem.endswith('_' + k)), '공통')
 
 from skin import USED  # 시험판(에셋 적용)에 쓰이는 것
